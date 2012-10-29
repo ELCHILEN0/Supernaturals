@@ -19,6 +19,4 @@ public class Player {
 	public void setPower(Integer power) {
 		this.power = power;
 	}
-	
-	
 }

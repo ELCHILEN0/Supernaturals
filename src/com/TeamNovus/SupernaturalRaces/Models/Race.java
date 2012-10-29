@@ -11,7 +11,15 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
 public interface Race {
+	/**
+	 * The name of the race
+	 * Must be unique
+	 */
 	String name();
+	/**
+	 * The tag of the race for use with chat systems
+	 * @return
+	 */
 	String tag();
 	
 	void onPlayerJoinRace(Event event);
