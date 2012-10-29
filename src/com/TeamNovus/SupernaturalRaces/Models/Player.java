@@ -1,8 +1,11 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
+import java.util.List;
+
 public class Player {
 	private String race;
 	private Integer power;
+	private List<String> targets;
 	
 	public String getRace() {
 		return race;
@@ -18,5 +21,17 @@ public class Player {
 
 	public void setPower(Integer power) {
 		this.power = power;
+	}
+	
+	public void setTargets(List<String> targets) {
+		this.targets = targets;
+	}
+	
+	public List<String> getTargets() {
+		return targets;
+	}
+	
+	public boolean isTarget(String s) {
+		return targets.contains(s);
 	}
 }

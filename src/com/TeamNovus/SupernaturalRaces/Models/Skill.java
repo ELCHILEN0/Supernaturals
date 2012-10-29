@@ -1,5 +1,8 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
+import com.TeamNovus.SupernaturalRaces.Events.SkillPostprocessEvent;
+import com.TeamNovus.SupernaturalRaces.Events.SkillPreprocessEvent;
+
 public interface Skill {
 	/**
 	 * The name of the skill
@@ -13,11 +16,17 @@ public interface Skill {
 	String[] alias();
 	
 	/**
+	 * Called when the skill is to be executed
+	 * This is the bulk of the interface
+	 */
+	void onSkill();
+	
+	/**
 	 * Called before the skill occurs
 	 */
-	void onSkillPreprocess();
+	void onSkillPreprocess(SkillPreprocessEvent event);
 	/**
 	 * Called after the skill occurs
 	 */
-	void onSkillPostprocess();
+	void onSkillPostprocess(SkillPostprocessEvent event);
 }
