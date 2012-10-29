@@ -17,8 +17,6 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		SNPlayer player = plugin.getPlayerManager().getPlayer(event.getPlayer());
-		player.setRace("Ghoul");
-		plugin.getLogger().info(player.getRace());
 	}
 	
 }
