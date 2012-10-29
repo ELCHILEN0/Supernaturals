@@ -2,7 +2,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.util.List;
 
-public class Player {
+public class SNPlayer {
 	private String race;
 	private Integer power;
 	private List<String> targets;
