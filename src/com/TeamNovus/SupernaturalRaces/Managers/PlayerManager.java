@@ -10,6 +10,7 @@ import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Races.AngelRace;
+import com.TeamNovus.SupernaturalRaces.Races.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Races.PriestRace;
 
 public class PlayerManager {
@@ -30,6 +31,7 @@ public class PlayerManager {
 	public void registerRaces() {
 		races.add(new PriestRace());
 		races.add(new AngelRace());
+		races.add(new DemonRace());
 	}
 	
 	public HashMap<String, SNPlayer> getPlayers() {
@@ -58,6 +60,6 @@ public class PlayerManager {
 	}
 	
 	public Race getRace(SNPlayer player) {
-		return new PriestRace();
+		return new DemonRace();
 	}
 }

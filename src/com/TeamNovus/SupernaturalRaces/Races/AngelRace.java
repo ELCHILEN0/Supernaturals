@@ -2,7 +2,9 @@ package com.TeamNovus.SupernaturalRaces.Races;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -10,6 +12,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -73,6 +77,10 @@ public class AngelRace implements Race {
 
 	@Override
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			return;
+		}
+		
 		if(event.getMaterial().equals(Material.FEATHER)) {
 			if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
 				Vector apply = new Vector(0, 1, 0);
@@ -81,7 +89,14 @@ public class AngelRace implements Race {
 			}
 		}
 		
-		
+		if(event.getMaterial().equals(Material.SUGAR)) {
+			for(Entity entity : event.getPlayer().getNearbyEntities(5, 5, 5)) {
+				if(entity instanceof Player) {
+					Player player = (Player) entity;
+					player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 5, 3));
+				}
+			}
+		}
 	}
 
 	@Override
