@@ -13,6 +13,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		// TODO: Code to execute onEnable
 		playerManager = new PlayerManager(this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+		playerManager.getPlayer("ELCHILEN0").setRace("ranger");
 	}
 	
 	@Override

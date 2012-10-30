@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 import com.TeamNovus.SupernaturalRaces.Events.SkillPostprocessEvent;
 import com.TeamNovus.SupernaturalRaces.Events.SkillPreprocessEvent;
 
-public interface Skill {
+public interface Spell {
 	/**
 	 * The name of the skill
 	 * Must be unique

@@ -5,15 +5,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.TeamNovus.SupernaturalRaces.Models.Skill;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
 public class SkillPreprocessEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Player player;
     private Entity target;
-    private Skill skill;
+    private Spell skill;
     
-    public SkillPreprocessEvent(Player player, Entity target, Skill skill) {
+    public SkillPreprocessEvent(Player player, Entity target, Spell skill) {
     	this.player = player;
     	this.target = target;
     	this.skill = skill;
@@ -32,7 +32,7 @@ public class SkillPreprocessEvent extends Event {
 		return target;
 	}
 
-	public Skill getSkill() {
+	public Spell getSkill() {
 		return skill;
 	}
 }
