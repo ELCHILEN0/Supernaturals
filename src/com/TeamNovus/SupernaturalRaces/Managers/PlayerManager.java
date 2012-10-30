@@ -58,10 +58,6 @@ public class PlayerManager {
 	}
 	
 	public Race getRace(SNPlayer player) {
-		for(Race race : races) {
-			if(player.getRace().equalsIgnoreCase(race.name()))
-				return race;
-		}
-		return new AngelRace();
+		return new PriestRace();
 	}
 }

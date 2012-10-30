@@ -111,16 +111,12 @@ public class PriestRace implements Race {
 
 	@Override
 	public void onPlayerDamage(PlayerDamageEvent event) {
-		// TODO Auto-generated method stub
-		
+		event.setDamage(event.getDamage()/2);
 	}
 
 	@Override
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	
 
+	}
 }

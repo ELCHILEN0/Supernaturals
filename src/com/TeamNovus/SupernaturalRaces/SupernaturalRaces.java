@@ -14,7 +14,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		// TODO: Code to execute onEnable
 		playerManager = new PlayerManager(this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		getServer().getPluginManager().registerEvents(new EntityListener(), this);
+		getServer().getPluginManager().registerEvents(new EntityListener(this), this);
 	}
 	
 	@Override
