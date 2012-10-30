@@ -1,15 +1,14 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 
@@ -35,9 +34,6 @@ public interface Race {
 	void onPlayerTeleport(PlayerTeleportEvent event);
 	void onPlayerInteract(PlayerInteractEvent event);
 	
-	void onPlayerDamage(EntityDamageEvent event);
-	
-	void onProjectileHitEvent(ProjectileHitEvent event);
-	
-	void onInventoryClick(InventoryClickEvent event);
+	void onPlayerDamage(PlayerDamageEvent event);
+	void onPlayerDamageEntity(PlayerDamageEntityEvent event);		
 }

@@ -2,6 +2,7 @@ package com.TeamNovus.SupernaturalRaces;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 
@@ -13,7 +14,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		// TODO: Code to execute onEnable
 		playerManager = new PlayerManager(this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		playerManager.getPlayer("ELCHILEN0").setRace("ranger");
+		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 	}
 	
 	@Override

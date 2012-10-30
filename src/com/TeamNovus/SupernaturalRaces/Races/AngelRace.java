@@ -2,11 +2,9 @@ package com.TeamNovus.SupernaturalRaces.Races;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -14,6 +12,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.util.Vector;
 
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
@@ -33,7 +33,6 @@ public class AngelRace implements Race {
 	@Override
 	public void onPlayerJoinRace(PlayerJoinRaceEvent event) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -80,32 +79,30 @@ public class AngelRace implements Race {
 				apply.multiply(1);
 				event.getPlayer().setVelocity(event.getPlayer().getVelocity().add(apply));
 			}
-		}		
+		}
+		
+		
 	}
 
 	@Override
-	public void onPlayerDamage(EntityDamageEvent event) {
+	public void onPlayerDamage(PlayerDamageEvent event) {
+		Player player = event.getPlayer();
+		
 		if(event.getCause().equals(DamageCause.FALL)) {
 			event.setCancelled(true);
 		}
 		
-		if(event.getCause().equals(DamageCause.FIRE)) {
-			event.setDamage(event.getDamage() + 1);
+		if(player.getWorld().getTime() < 12000) {
+			event.setDamage(event.getDamage()/2);
 		}
 		
-		if(event.getCause().equals(DamageCause.POISON)) {
-			event.setDamage(event.getDamage() + 1);
+		if(player.getWorld().getTime() > 12000) {
+			event.setDamage(event.getDamage()*2);
 		}
 	}
 
 	@Override
-	public void onProjectileHitEvent(ProjectileHitEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onInventoryClick(InventoryClickEvent event) {
+	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,15 +1,14 @@
 package com.TeamNovus.SupernaturalRaces.Races;
 
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
@@ -80,20 +79,15 @@ public class HumanRace implements Race {
 	}
 
 	@Override
-	public void onPlayerDamage(EntityDamageEvent event) {
+	public void onPlayerDamage(PlayerDamageEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onProjectileHitEvent(ProjectileHitEvent event) {
+	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void onInventoryClick(InventoryClickEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
 }

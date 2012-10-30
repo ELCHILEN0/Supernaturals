@@ -10,7 +10,6 @@ import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Races.AngelRace;
-import com.TeamNovus.SupernaturalRaces.Races.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Races.PriestRace;
 
 public class PlayerManager {
@@ -63,6 +62,6 @@ public class PlayerManager {
 			if(player.getRace().equalsIgnoreCase(race.name()))
 				return race;
 		}
-		return new PriestRace();
+		return new AngelRace();
 	}
 }
