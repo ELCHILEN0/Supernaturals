@@ -2,29 +2,24 @@ package com.TeamNovus.SupernaturalRaces.Events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called when a player is damaged.
  */
-public class PlayerDamageEvent extends Event implements Cancellable {
+public class PlayerDamageEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 	private boolean canceled;
-    private Player damagee;
     private DamageCause cause;
     private Integer damage;
     
-    public PlayerDamageEvent(Player damagee, DamageCause cause, Integer damage) {
-    	this.damagee = damagee;
+    public PlayerDamageEvent(Player player, DamageCause cause, Integer damage) {
+    	super(player);
     	this.cause = cause;
     	this.damage = damage;
     }
-	
-	public Player getPlayer() {
-		return damagee;
-	}
 
 	public DamageCause getCause() {
 		return cause;

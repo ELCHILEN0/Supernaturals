@@ -3,31 +3,26 @@ package com.TeamNovus.SupernaturalRaces.Events;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called when a Player damages an entity
  */
-public class PlayerDamageEntityEvent extends Event implements Cancellable {
+public class PlayerDamageEntityEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 	private boolean canceled;
-    private Player damager;
-    private Entity damagee;
+    private Entity damaged;
     private DamageCause cause;
     private Integer damage;
     
-    public PlayerDamageEntityEvent(Player damager, Entity damagee, DamageCause cause, Integer damage) {
-    	this.damager = damager;
-    	this.damagee = damagee;
+    public PlayerDamageEntityEvent(Player player, Entity damaged, DamageCause cause, Integer damage) {
+    	super(player);
+    	this.damaged = damaged;
     	this.cause = cause;
     	this.damage = damage;
     }
-	
-	public Player getPlayer() {
-		return damager;
-	}
 
 	public DamageCause getDamageCause() {
 		return cause;
@@ -42,7 +37,7 @@ public class PlayerDamageEntityEvent extends Event implements Cancellable {
 	}
 
 	public Entity getEntity() {
-		return damagee;
+		return damaged;
 	}
 	
 	@Override

@@ -93,11 +93,13 @@ public class RaceManager {
 	}
 	
 	public void onPlayerDamageEvent(PlayerDamageEvent event) {
-		System.out.println("[RaceManager] Player Damage Event Called!");
+		SNRace race = getRace(event);
+		race.onPlayerDamage(event);
 	}
 	
 	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
-		System.out.println("[RaceManager] Player Damage Entity Event Called!");
+		SNRace race = getRace(event);
+		race.onPlayerDamageEntity(event);
 	}
 	
 }
