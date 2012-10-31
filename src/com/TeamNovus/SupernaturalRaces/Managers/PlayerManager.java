@@ -1,51 +1,31 @@
 package com.TeamNovus.SupernaturalRaces.Managers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Races.AngelRace;
-import com.TeamNovus.SupernaturalRaces.Races.DemonRace;
-import com.TeamNovus.SupernaturalRaces.Races.PriestRace;
+import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 
 public class PlayerManager {
 	private SupernaturalRaces plugin;
 	private HashMap<String, SNPlayer> players = new HashMap<String, SNPlayer>();
-	private List<Race> races = new ArrayList<Race>();
 	
 	public PlayerManager(SupernaturalRaces plugin) {
 		this.plugin = plugin;
 		this.plugin.getDataFolder();
-		registerRaces();
-	}
-	
-	/**
-	 * This registers any custom races.
-	 * TODO: Search the build-path and a specified folder.
-	 */
-	public void registerRaces() {
-		races.add(new PriestRace());
-		races.add(new AngelRace());
-		races.add(new DemonRace());
 	}
 	
 	public HashMap<String, SNPlayer> getPlayers() {
 		return players;
 	}
 	
-	public HashMap<String, SNPlayer> getPlayersInRace(String race) {
-		HashMap<String, SNPlayer> racePlayers = new HashMap<String, SNPlayer>();
-		for(String player : players.keySet()) {
-			if(players.get(player).getRace().equalsIgnoreCase(race)) {
-				racePlayers.put(player, players.get(player));
-			}
-		}
-		return racePlayers;
+	/**
+	 * Get a SNPlayer from a Player
+	 */
+	public SNPlayer getPlayer(Player player) {
+		return getPlayer(player.getName());
 	}
 	
 	public SNPlayer getPlayer(String name) {
@@ -55,11 +35,16 @@ public class PlayerManager {
 		return players.get(name);
 	}
 	
-	public SNPlayer getPlayer(Player player) {
-		return getPlayer(player.getName());
-	}
-	
-	public Race getRace(SNPlayer player) {
-		return new DemonRace();
+	/**
+	 * Get all the players in a race
+	 */
+	public HashMap<String, SNPlayer> getPlayersInRace(SNRace race) {
+		HashMap<String, SNPlayer> racePlayers = new HashMap<String, SNPlayer>();
+		for(String player : players.keySet()) {
+			if(players.get(player).getRace().equalsIgnoreCase(race.name())) {
+				racePlayers.put(player, players.get(player));
+			}
+		}
+		return racePlayers;
 	}
 }

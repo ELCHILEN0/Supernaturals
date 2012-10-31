@@ -2,19 +2,17 @@ package com.TeamNovus.SupernaturalRaces;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
-import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
+import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
 
 public class SupernaturalRaces extends JavaPlugin {
 	private PlayerManager playerManager;
+	private RaceManager raceManager;
 
 	@Override
 	public void onEnable() {
-		// TODO: Code to execute onEnable
 		playerManager = new PlayerManager(this);
-		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		getServer().getPluginManager().registerEvents(new EntityListener(this), this);
+		raceManager = new RaceManager(this);
 	}
 	
 	@Override
@@ -24,5 +22,9 @@ public class SupernaturalRaces extends JavaPlugin {
 
 	public PlayerManager getPlayerManager() {
 		return playerManager;
+	}
+	
+	public RaceManager getRaceManager() {
+		return raceManager;
 	}
 }
