@@ -1,0 +1,6 @@
+storage:
+  type: sqlite
+  host: localhost
+  port: 3600
+  username: root
+  password: root
