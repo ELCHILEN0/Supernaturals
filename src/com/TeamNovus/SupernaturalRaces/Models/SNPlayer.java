@@ -3,8 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Models;
 import java.util.List;
 
 public class SNPlayer {
-	private String race;
-	private Integer power;
+	private String race = "Human";
+	private Integer power = 50;
 	private List<String> targets;
 	
 	public String getRace() {

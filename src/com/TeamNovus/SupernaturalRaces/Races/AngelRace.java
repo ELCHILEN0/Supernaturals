@@ -25,6 +25,11 @@ public class AngelRace implements SNRace {
 	public Integer maxPower() {
 		return 100;
 	}
+	
+	@Override
+	public Integer powerIncrement() {
+		return 10;
+	}
 
 	@Override
 	public List<SNSpell> spells() {

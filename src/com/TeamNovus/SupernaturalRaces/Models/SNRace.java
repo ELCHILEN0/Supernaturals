@@ -19,6 +19,11 @@ public interface SNRace {
 	Integer maxPower();
 	
 	/**
+	 * The increment when gaining power
+	 */
+	Integer powerIncrement();
+	
+	/**
 	 * The spells registered to the race
 	 * @return
 	 */

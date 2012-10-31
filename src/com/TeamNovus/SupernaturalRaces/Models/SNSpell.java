@@ -41,5 +41,5 @@ public interface SNSpell {
 	/**
 	 * The code to execute on the spell.
 	 */
-	void execute(Player sender);
+	Boolean execute(Player sender);
 }

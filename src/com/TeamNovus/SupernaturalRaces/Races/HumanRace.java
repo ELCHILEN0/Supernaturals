@@ -23,6 +23,11 @@ public class HumanRace implements SNRace {
 	}
 
 	@Override
+	public Integer powerIncrement() {
+		return 0;
+	}
+	
+	@Override
 	public List<SNSpell> spells() {
 		return new ArrayList<SNSpell>();
 	}

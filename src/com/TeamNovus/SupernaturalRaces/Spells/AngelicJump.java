@@ -48,12 +48,14 @@ public class AngelicJump implements SNSpell {
 	}
 
 	@Override
-	public void execute(Player player) {
+	public Boolean execute(Player player) {
 		if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
 			Vector apply = new Vector(0, 1, 0);
 			apply.multiply(1);
 			player.setVelocity(player.getVelocity().add(apply));
+			return true;
 		}
+		return false;
 	}
 
 }

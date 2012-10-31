@@ -17,17 +17,17 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {	
-		// TODO: Execute code when players 
+		plugin.getRaceManager().onPlayerInteractEvent(event);
 	}
 	
 	@EventHandler
 	public void onPlayerDamage(PlayerDamageEvent event) {
-		// TODO: Execute code when players are damaged
+		plugin.getRaceManager().onPlayerDamageEvent(event);
 	}
 
 	@EventHandler
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
-		// TODO: Execute code when players damage
+		plugin.getRaceManager().onPlayerDamageEntityEvent(event);
 	}
 	
 }
