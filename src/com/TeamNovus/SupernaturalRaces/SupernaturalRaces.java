@@ -6,24 +6,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
+import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
-import com.TeamNovus.SupernaturalRaces.Util.Database;
 
 public class SupernaturalRaces extends JavaPlugin {
+	private DataManager database;
 	private PlayerManager playerManager;
 	private RaceManager raceManager;
-	private Database database;
 
 	@Override
 	public void onEnable() {
+		reloadConfiguration();
+		
 		playerManager = new PlayerManager(this);
 		raceManager = new RaceManager(this);
-		
-		connect();
-		
-		playerManager.load();
-		
+						
 		getServer().getPluginManager().registerEvents(new EntityListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 		
@@ -36,22 +34,11 @@ public class SupernaturalRaces extends JavaPlugin {
 		// TODO: Code to execute onDisable
 	}
 	
-	public void connect() {
-		if(getConfig().getString("storage.type").equalsIgnoreCase("mysql")) {
-			database = new Database(this, "localhost", "test", "root", "root");
-		} else {
-			database = new Database(this, getDataFolder() + File.separator + "data.dat");
+	public void reloadConfiguration() {
+		if(!(new File(getDataFolder() + File.separator + "config.yml").exists())) {
+			saveDefaultConfig();
 		}
-		
-		System.out.println("Checking tables for any modifications...");
-		database.query("CREATE  TABLE IF NOT EXISTS `sn_players` (" +
-				"  `name` INT NOT NULL ," +
-				"  `race` TEXT NULL ," +
-				"  `power` INT NOT NULL DEFAULT 0 ," +
-				"  PRIMARY KEY (`name`) ,"  +
-				"  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )" +
-				"ENGINE = InnoDB");
-		System.out.println("SQL loaded sucessfully!");
+		reloadConfig();
 	}
 
 	public PlayerManager getPlayerManager() {
@@ -62,7 +49,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		return raceManager;
 	}
 	
-	public Database getDb() {
+	public DataManager getDb() {
 		return database;
 	}
 }

@@ -15,6 +15,8 @@ public class PlayerListener implements Listener {
 		this.plugin = plugin;
 	}
 	
+	// TODO: Use player events instead of hooking each event
+	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {	
 		plugin.getRaceManager().onPlayerInteractEvent(event);

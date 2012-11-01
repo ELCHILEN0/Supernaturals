@@ -1,7 +1,5 @@
 package com.TeamNovus.SupernaturalRaces.Managers;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
@@ -23,6 +21,11 @@ public class PlayerManager {
 		return players;
 	}
 
+	public void setPlayers(HashMap<String, SNPlayer> players) {
+		players.clear();
+		players.putAll(players);
+	}
+	
 	/**
 	 * Get a SNPlayer from a Player
 	 */
@@ -48,32 +51,5 @@ public class PlayerManager {
 			}
 		}
 		return racePlayers;
-	}
-
-	public void save() {
-		for(String name : players.keySet()) {
-			Integer count = plugin.getDb().resultInt(plugin.getDb().query("SELECT COUNT(*) FROM `sn_players` WHERE `name` = " + name), 0);
-			if(count == 0) {
-				plugin.getDb().query("INSERT INTO `sn_players` (`name`, `race`, `power`) VALUES (" + name + ", " + players.get(name).getRace() + ", " + players.get(name).getPower() + ")");
-			} else {
-				plugin.getDb().query("UPDATE `sn_players` WHERE `name` = " + name + " SET `race` = " + players.get(name).getRace() + ", `power` = " + players.get(name).getPower());
-			}
-		}
-	}
-
-	public void load() {
-		players.clear();
-		ResultSet result = plugin.getDb().query("SELECT * FROM `sn_players`");
-		try {
-			while(result.next()) {
-				SNPlayer player = new SNPlayer();
-				player.setRace(result.getString(1));
-				player.setPower(result.getInt(2));
-				players.put(result.getString(0), player);
-			}
-			result.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 }

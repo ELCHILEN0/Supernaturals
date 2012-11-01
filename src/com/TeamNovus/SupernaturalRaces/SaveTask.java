@@ -10,6 +10,6 @@ public class SaveTask implements Runnable {
 	
 	@Override
 	public void run() {
-		plugin.getPlayerManager().save();
+
 	}
 }
