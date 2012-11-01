@@ -1,8 +1,10 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SNPlayer {
+public class SNPlayer implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String race = "Human";
 	private Integer power = 50;
 	private List<String> targets;
