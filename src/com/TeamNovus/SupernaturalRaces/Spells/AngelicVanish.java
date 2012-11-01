@@ -3,24 +3,27 @@ package com.TeamNovus.SupernaturalRaces.Spells;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class AngelicJump implements SNSpell {
-
+public class AngelicVanish implements SNSpell {
+	
 	@Override
 	public String name() {
-		return "AngelicJump";
+		return "AngelicVanish";
 	}
 
 	@Override
 	public String desc() {
-		return "Jump like an angel!";
+		return "Vanish for a short period of time!";
 	}
 
 	@Override
@@ -33,13 +36,13 @@ public class AngelicJump implements SNSpell {
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.FEATHER);
+		bindings.add(Material.BOOK);
 		return bindings;
 	}
 
 	@Override
 	public Integer power() {
-		return 20;
+		return 40;
 	}
 
 	@Override
@@ -49,12 +52,7 @@ public class AngelicJump implements SNSpell {
 
 	@Override
 	public Boolean execute(Player player) {
-		if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-			Vector apply = new Vector(0, 1, 0);
-			apply.multiply(1);
-			player.setVelocity(player.getVelocity().add(apply));
-			return true;
-		}
-		return false;
+		player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 5, 0));
+		return true;
 	}
 }

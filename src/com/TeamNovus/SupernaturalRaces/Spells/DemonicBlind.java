@@ -3,24 +3,26 @@ package com.TeamNovus.SupernaturalRaces.Spells;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.util.Vector;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class AngelicJump implements SNSpell {
+public class DemonicBlind implements SNSpell {
 
 	@Override
 	public String name() {
-		return "AngelicJump";
+		return "DemonicBlind";
 	}
 
 	@Override
 	public String desc() {
-		return "Jump like an angel!";
+		return "Blind nearby targets with your demonic powers!";
 	}
 
 	@Override
@@ -29,17 +31,17 @@ public class AngelicJump implements SNSpell {
 		actions.add(Action.LEFT_CLICK_AIR);
 		return actions;
 	}
-	
+
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.FEATHER);
+		bindings.add(Material.SUGAR);		
 		return bindings;
 	}
 
 	@Override
 	public Integer power() {
-		return 20;
+		return 30;
 	}
 
 	@Override
@@ -48,13 +50,14 @@ public class AngelicJump implements SNSpell {
 	}
 
 	@Override
-	public Boolean execute(Player player) {
-		if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-			Vector apply = new Vector(0, 1, 0);
-			apply.multiply(1);
-			player.setVelocity(player.getVelocity().add(apply));
-			return true;
+	public Boolean execute(Player sender) {
+		for(Entity e : sender.getNearbyEntities(5, 5, 5)) {
+			if(e instanceof Player) {
+				((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 5, 0));
+				((Player) e).sendMessage(ChatColor.RED + "You have been blinded by " + sender.getName() + "!");
+			}
 		}
+		
 		return false;
 	}
 }

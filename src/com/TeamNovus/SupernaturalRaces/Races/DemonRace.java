@@ -12,14 +12,14 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
-import com.TeamNovus.SupernaturalRaces.Spells.AngelicJump;
-import com.TeamNovus.SupernaturalRaces.Spells.AngelicVanish;
+import com.TeamNovus.SupernaturalRaces.Spells.DemonicBlind;
+import com.TeamNovus.SupernaturalRaces.Spells.DemonicRage;
 
-public class AngelRace implements SNRace {
+public class DemonRace implements SNRace {
 
 	@Override
 	public String name() {
-		return "Angel";
+		return "Demon";
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class AngelRace implements SNRace {
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new AngelicJump());
-		spells.add(new AngelicVanish());
+		spells.add(new DemonicBlind());
+		spells.add(new DemonicRage());
 		return spells;
 	}
 
@@ -55,16 +55,18 @@ public class AngelRace implements SNRace {
 	public void onPlayerDamage(PlayerDamageEvent event) {
 		Player player = event.getPlayer();
 		
-		if(event.getCause().equals(DamageCause.FALL)) {
+		if(event.getCause().equals(DamageCause.FIRE_TICK)) {
 			event.setCancelled(true);
 		}
 		
-		if(player.getWorld().getTime() < 12000) {
-			event.setDamage(event.getDamage()/2);
+		if(event.getCause().equals(DamageCause.DROWNING)) {
+			event.setDamage(event.getDamage()*3);
+			return;
 		}
 		
-		if(player.getWorld().getTime() > 12000) {
+		if(player.getLocation().getBlock().isLiquid()) {
 			event.setDamage(event.getDamage()*2);
+			return;
 		}
 	}
 	

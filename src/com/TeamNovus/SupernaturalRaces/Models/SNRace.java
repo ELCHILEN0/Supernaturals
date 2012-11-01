@@ -25,7 +25,6 @@ public interface SNRace {
 	
 	/**
 	 * The spells registered to the race
-	 * @return
 	 */
 	List<SNSpell> spells();
 	

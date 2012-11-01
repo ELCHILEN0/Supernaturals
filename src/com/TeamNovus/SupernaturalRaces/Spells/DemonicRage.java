@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.util.Vector;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class AngelicJump implements SNSpell {
-
+public class DemonicRage implements SNSpell {
+	
 	@Override
 	public String name() {
-		return "AngelicJump";
+		return "DemonicRage";
 	}
 
 	@Override
 	public String desc() {
-		return "Jump like an angel!";
+		return "Boost your attack and defence using unholy powers!";
 	}
 
 	@Override
@@ -29,17 +29,17 @@ public class AngelicJump implements SNSpell {
 		actions.add(Action.LEFT_CLICK_AIR);
 		return actions;
 	}
-	
+
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.FEATHER);
+		bindings.add(Material.FIREBALL);		
 		return bindings;
 	}
 
 	@Override
 	public Integer power() {
-		return 20;
+		return 30;
 	}
 
 	@Override
@@ -48,13 +48,10 @@ public class AngelicJump implements SNSpell {
 	}
 
 	@Override
-	public Boolean execute(Player player) {
-		if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-			Vector apply = new Vector(0, 1, 0);
-			apply.multiply(1);
-			player.setVelocity(player.getVelocity().add(apply));
-			return true;
-		}
-		return false;
+	public Boolean execute(Player sender) {
+		sender.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 5, 3));
+		sender.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 5, 3));
+		
+		return true;
 	}
 }
