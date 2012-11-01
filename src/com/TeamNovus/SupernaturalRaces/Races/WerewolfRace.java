@@ -3,39 +3,41 @@ package com.TeamNovus.SupernaturalRaces.Races;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
-import com.TeamNovus.SupernaturalRaces.Spells.HolyBuff;
-import com.TeamNovus.SupernaturalRaces.Spells.HolyHeal;
-import com.TeamNovus.SupernaturalRaces.Spells.HolySummon;
+import com.TeamNovus.SupernaturalRaces.Spells.WolfHowl;
 
-public class PriestRace implements SNRace {
-
+public class WerewolfRace implements SNRace {
+	private SupernaturalRaces plugin;
+	
+	public WerewolfRace(SupernaturalRaces plugin) {
+		this.plugin = plugin;
+	}
+	
 	@Override
 	public String name() {
-		return "Priest";
+		return "Werewolf";
 	}
 
 	@Override
 	public Integer maxPower() {
-		return 100;
+		return 75;
 	}
 	
 	@Override
 	public Integer powerIncrement() {
-		return 15;
+		return 20;
 	}
 
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new HolyBuff());
-		spells.add(new HolyHeal());
-		spells.add(new HolySummon());
+		spells.add(new WolfHowl(plugin));
 		return spells;
 	}
 
@@ -52,12 +54,15 @@ public class PriestRace implements SNRace {
 
 	@Override
 	public void onPlayerDamage(PlayerDamageEvent event) {		
-		event.setDamage(event.getDamage()/2);
+		// TODO Auto-generated method stub
+
 	}
 	
 	@Override
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
-		// TODO Auto-generated method stub
+		if(event.getPlayer().getWorld().getTime() > 12000) {
+			event.setDamage(event.getDamage()*2);
+		}
 		
 	}
 }

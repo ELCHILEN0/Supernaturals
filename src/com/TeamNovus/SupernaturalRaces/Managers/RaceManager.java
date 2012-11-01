@@ -15,6 +15,8 @@ import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Races.AngelRace;
+import com.TeamNovus.SupernaturalRaces.Races.PriestRace;
+import com.TeamNovus.SupernaturalRaces.Races.WerewolfRace;
 
 public class RaceManager {
 	private SupernaturalRaces plugin;
@@ -53,7 +55,7 @@ public class RaceManager {
 				return race;
 			}
 		}
-		return new AngelRace();
+		return new WerewolfRace(plugin);
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {

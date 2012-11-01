@@ -3,14 +3,11 @@ package com.TeamNovus.SupernaturalRaces.Spells;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 

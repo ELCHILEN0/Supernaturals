@@ -55,6 +55,8 @@ public class HolyHeal implements SNSpell {
 				((Player) e).sendMessage(ChatColor.YELLOW + sender.getName() + " has healed you!");
 			}
 		}
+		sender.setHealth(sender.getHealth() + 5);
+		sender.sendMessage(ChatColor.YELLOW + "You have healed yourself!");
 		return true;
 	}
 	

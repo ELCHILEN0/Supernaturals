@@ -2,6 +2,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.util.List;
 
+
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
@@ -27,7 +28,7 @@ public interface SNRace {
 	 * The spells registered to the race
 	 */
 	List<SNSpell> spells();
-	
+		
 	void onPlayerJoinRace(PlayerJoinRaceEvent event);
 	void onPlayerLeaveRace(PlayerLeaveRaceEvent event);
 		

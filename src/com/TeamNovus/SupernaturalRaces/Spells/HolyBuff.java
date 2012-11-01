@@ -58,6 +58,10 @@ public class HolyBuff implements SNSpell {
 				((Player) e).sendMessage(ChatColor.YELLOW + sender.getName() + " has gifted you with buffs!");
 			}
 		}
+		sender.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 10, 0));
+		sender.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 10, 0));
+		sender.sendMessage(ChatColor.YELLOW + "You have given yourself buffs!");
+		
 		return true;
 	}
 

@@ -16,7 +16,10 @@ public class ResetRaceAttributeTask {
 	 * @param key - The key to set
 	 * @param value - The value to set the key to when resetting
 	 */
-	public ResetRaceAttributeTask(final SupernaturalRaces plugin, final Player player, final Integer ticks, final String key, final Object value) {		
+	public ResetRaceAttributeTask(final SupernaturalRaces plugin, final Player player, final Integer ticks, final String key, final Object original, final Object value) {		
+		
+		SNPlayer p = plugin.getPlayerManager().getPlayer(player);
+		p.setAttribute(key, original);
 		
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override
