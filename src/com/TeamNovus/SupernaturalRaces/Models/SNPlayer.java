@@ -1,6 +1,7 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 public class SNPlayer implements Serializable {
@@ -8,6 +9,7 @@ public class SNPlayer implements Serializable {
 	private String race = "Human";
 	private Integer power = 50;
 	private List<String> targets;
+	private HashMap<String, Object> raceAttributes;
 	
 	public String getRace() {
 		return race;
@@ -35,5 +37,21 @@ public class SNPlayer implements Serializable {
 	
 	public boolean isTarget(String s) {
 		return targets.contains(s);
+	}
+	
+	public Object getAttribute(String key) {
+		return raceAttributes.get(key);
+	}
+	
+	public void setAttribute(String key, Object value) {
+		raceAttributes.put(key, value);
+	}
+
+	public HashMap<String, Object> getRaceAttributes() {
+		return raceAttributes;
+	}
+
+	public void setRaceAttributes(HashMap<String, Object> raceAttributes) {
+		this.raceAttributes = raceAttributes;
 	}
 }
