@@ -1,8 +1,8 @@
-package com.TeamNovus.SupernaturalRaces.Race.Angel;
+package com.TeamNovus.SupernaturalRaces.Race.Demon;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -11,29 +11,30 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 
-public class AngelicEvents implements SNEvents {
+public class DemonicEvents implements SNEvents {
 
 	@Override
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
 	public void onPlayerDamage(PlayerDamageEvent event) {
-		
 		Player player = event.getPlayer();
-				
-		if(event.getCause().equals(DamageCause.FALL)) {
+		
+		if(event.getCause().equals(DamageCause.FIRE_TICK)) {
 			event.setCancelled(true);
 		}
 		
-		if(player.getWorld().getTime() < 12000) {
-			event.setDamage(event.getDamage()/2);
+		if(event.getCause().equals(DamageCause.DROWNING)) {
+			event.setDamage(event.getDamage()*3);
+			return;
 		}
 		
-		if(player.getWorld().getTime() > 12000) {
+		if(player.getLocation().getBlock().isLiquid()) {
 			event.setDamage(event.getDamage()*2);
+			return;
 		}		
 	}
 
@@ -60,4 +61,5 @@ public class AngelicEvents implements SNEvents {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

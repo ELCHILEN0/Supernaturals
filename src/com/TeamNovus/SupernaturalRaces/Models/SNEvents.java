@@ -13,7 +13,7 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
  * Multiple SNEvents can be added to specific races.  Each event will be called
  * in the order that it is added to the events.
  */
-public interface SNEvent {
+public interface SNEvents {
 
 	void onPlayerDamageEntity(PlayerDamageEntityEvent event);
 	

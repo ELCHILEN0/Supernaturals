@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Angel;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNEvent;
+import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
@@ -33,8 +33,8 @@ public class AngelRace implements SNRace {
 	}
 
 	@Override
-	public List<SNEvent> events() {
-		List<SNEvent> playerEvents = new ArrayList<SNEvent>();
+	public List<SNEvents> events() {
+		List<SNEvents> playerEvents = new ArrayList<SNEvents>();
 		playerEvents.add(new AngelicEvents());
 		return playerEvents;
 	}

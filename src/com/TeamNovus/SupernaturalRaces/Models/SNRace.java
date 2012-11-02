@@ -26,5 +26,5 @@ public interface SNRace {
 	/**
 	 * The events registered to the race
 	 */
-	List<SNEvent> events();
+	List<SNEvents> events();
 }

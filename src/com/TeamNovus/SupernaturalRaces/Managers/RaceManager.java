@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEvent;
+import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
@@ -76,28 +76,28 @@ public class RaceManager {
 	
 	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
 		SNRace race = getRace(event);
-		for(SNEvent sne : race.events()) {
+		for(SNEvents sne : race.events()) {
 			sne.onPlayerDamageEntity(event);
 		}
 	}
 	
 	public void onPlayerDamageEvent(PlayerDamageEvent event) {
 		SNRace race = getRace(event);
-		for(SNEvent sne : race.events()) {
+		for(SNEvents sne : race.events()) {
 			sne.onPlayerDamage(event);
 		}
 	}
 	
 	public void onPlayerDeathEvent(PlayerDeathEvent event) {
 		SNRace race = getRace(event);
-		for(SNEvent sne : race.events()) {
+		for(SNEvents sne : race.events()) {
 			sne.onPlayerDeath(event);
 		}
 	}
 	
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 		SNRace race = getRace(event);
-		for(SNEvent sne : race.events()) {
+		for(SNEvents sne : race.events()) {
 			sne.onPlayerRespawn(event);
 		}
 	}

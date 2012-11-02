@@ -3,10 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Priest;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
+import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
@@ -37,24 +34,9 @@ public class PriestRace implements SNRace {
 	}
 
 	@Override
-	public void onPlayerJoinRace(PlayerJoinRaceEvent event) {
-		
-	}
-
-	@Override
-	public void onPlayerLeaveRace(PlayerLeaveRaceEvent event) {
-		
-	}
-
-
-	@Override
-	public void onPlayerDamage(PlayerDamageEvent event) {		
-		event.setDamage(event.getDamage()/2);
-	}
-	
-	@Override
-	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
-		// TODO Auto-generated method stub
-		
+	public List<SNEvents> events() {
+		List<SNEvents> playerEvents = new ArrayList<SNEvents>();
+		playerEvents.add(null);
+		return playerEvents;
 	}
 }

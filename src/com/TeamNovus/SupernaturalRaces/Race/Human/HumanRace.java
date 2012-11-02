@@ -3,10 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Human;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
+import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
@@ -31,25 +28,10 @@ public class HumanRace implements SNRace {
 	public List<SNSpell> spells() {
 		return new ArrayList<SNSpell>();
 	}
-
+	
 	@Override
-	public void onPlayerJoinRace(PlayerJoinRaceEvent event) {	
-		
-	}
-
-	@Override
-	public void onPlayerLeaveRace(PlayerLeaveRaceEvent event) {	
-		
-	}
-
-	@Override
-	public void onPlayerDamage(PlayerDamageEvent event) {		
-		
-	}
-
-	@Override
-	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {	
-		
+	public List<SNEvents> events() {
+		return new ArrayList<SNEvents>();
 	}
 
 }
