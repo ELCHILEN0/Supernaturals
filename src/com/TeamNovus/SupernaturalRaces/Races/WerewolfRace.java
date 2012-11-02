@@ -3,7 +3,6 @@ package com.TeamNovus.SupernaturalRaces.Races;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
@@ -11,13 +10,9 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Spells.WolfHowl;
+import com.TeamNovus.SupernaturalRaces.Spells.WolfSummon;
 
 public class WerewolfRace implements SNRace {
-	private SupernaturalRaces plugin;
-	
-	public WerewolfRace(SupernaturalRaces plugin) {
-		this.plugin = plugin;
-	}
 	
 	@Override
 	public String name() {
@@ -37,7 +32,8 @@ public class WerewolfRace implements SNRace {
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new WolfHowl(plugin));
+		spells.add(new WolfHowl());
+		spells.add(new WolfSummon());
 		return spells;
 	}
 
@@ -63,6 +59,5 @@ public class WerewolfRace implements SNRace {
 		if(event.getPlayer().getWorld().getTime() > 12000) {
 			event.setDamage(event.getDamage()*2);
 		}
-		
 	}
 }
