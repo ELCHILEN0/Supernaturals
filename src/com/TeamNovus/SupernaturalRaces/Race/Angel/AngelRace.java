@@ -27,8 +27,9 @@ public class AngelRace implements SNRace {
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new AngelicJump());
-		spells.add(new AngelicVanish());
+		spells.add(new Soar());
+		spells.add(new Luminatus());
+		spells.add(new Blind());
 		return spells;
 	}
 

@@ -1,6 +1,7 @@
 package com.TeamNovus.SupernaturalRaces.Race.Priest;
 
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -30,6 +31,12 @@ public class PriestEvents implements SNEvents {
 
 	@Override
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPlayerMove(PlayerMoveEvent event) {
 		// TODO Auto-generated method stub
 		
 	}

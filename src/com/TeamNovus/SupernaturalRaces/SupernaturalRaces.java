@@ -13,19 +13,22 @@ import com.TeamNovus.SupernaturalRaces.Tasks.PowerRegenTask;
 import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
 
 public class SupernaturalRaces extends JavaPlugin {
-	private DataManager database;
-	private PlayerManager playerManager;
-	private RaceManager raceManager;
+	private static SupernaturalRaces plugin;
+	private static DataManager database;
+	private static PlayerManager playerManager;
+	private static RaceManager raceManager;
 
 	@Override
 	public void onEnable() {
+		plugin = this;
+		
 		reloadConfiguration();
 		
-		playerManager = new PlayerManager(this);
-		raceManager = new RaceManager(this);
+		playerManager = new PlayerManager();
+		raceManager = new RaceManager();
 						
-		getServer().getPluginManager().registerEvents(new EntityListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+		getServer().getPluginManager().registerEvents(new EntityListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(this), 20L * 10, 20L * 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 20L * 300, 20L * 300);
@@ -43,15 +46,19 @@ public class SupernaturalRaces extends JavaPlugin {
 		reloadConfig();
 	}
 
-	public PlayerManager getPlayerManager() {
+	public static SupernaturalRaces getPlugin() {
+		return plugin;
+	}
+	
+	public static PlayerManager getPlayerManager() {
 		return playerManager;
 	}
 	
-	public RaceManager getRaceManager() {
+	public static RaceManager getRaceManager() {
 		return raceManager;
 	}
 	
-	public DataManager getDb() {
+	public static DataManager getDb() {
 		return database;
 	}
 }

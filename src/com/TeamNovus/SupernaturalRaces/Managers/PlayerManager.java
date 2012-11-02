@@ -4,18 +4,11 @@ import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
-import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 
 public class PlayerManager {
-	private SupernaturalRaces plugin;
 	private HashMap<String, SNPlayer> players = new HashMap<String, SNPlayer>();
-
-	public PlayerManager(SupernaturalRaces plugin) {
-		this.plugin = plugin;
-		this.plugin.getDataFolder();
-	}
 
 	public HashMap<String, SNPlayer> getPlayers() {
 		return players;

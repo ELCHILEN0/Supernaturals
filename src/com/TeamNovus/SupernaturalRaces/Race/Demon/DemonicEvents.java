@@ -3,6 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Demon;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -46,6 +47,12 @@ public class DemonicEvents implements SNEvents {
 
 	@Override
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPlayerMove(PlayerMoveEvent event) {
 		// TODO Auto-generated method stub
 		
 	}

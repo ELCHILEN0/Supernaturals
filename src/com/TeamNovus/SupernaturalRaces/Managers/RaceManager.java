@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,12 +24,7 @@ import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
 
 public class RaceManager {
-	private SupernaturalRaces plugin;
 	private List<SNRace> races = new ArrayList<SNRace>();
-
-	public RaceManager(SupernaturalRaces plugin) {
-		this.plugin = plugin;
-	}
 
 	/**
 	 * Register any races other than the default race.
@@ -66,15 +62,15 @@ public class RaceManager {
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {
-		return plugin.getPlayerManager().getPlayer(event.getPlayer());
+		return SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer());
 	}
 
 	private SNRace getRace(PlayerEvent event) {
-		return plugin.getRaceManager().getRace(plugin.getPlayerManager().getPlayer(event.getPlayer()));
+		return SupernaturalRaces.getRaceManager().getRace(SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer()));
 	}
 	
 	private SNRace getRace(PlayerDeathEvent event) {
-		return plugin.getRaceManager().getRace(plugin.getPlayerManager().getPlayer(event.getEntity()));
+		return SupernaturalRaces.getRaceManager().getRace(SupernaturalRaces.getPlayerManager().getPlayer(event.getEntity()));
 	}
 	
 	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
@@ -102,6 +98,13 @@ public class RaceManager {
 		SNRace race = getRace(event);
 		for(SNEvents sne : race.events()) {
 			sne.onPlayerRespawn(event);
+		}
+	}
+	
+	public void onPlayerMoveEvent(PlayerMoveEvent event) {
+		SNRace race = getRace(event);
+		for(SNEvents sne : race.events()) {
+			sne.onPlayerMove(event);
 		}
 	}
 

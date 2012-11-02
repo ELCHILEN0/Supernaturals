@@ -1,6 +1,7 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -22,6 +23,8 @@ public interface SNEvents {
 	void onPlayerDeath(PlayerDeathEvent event);
 	
 	void onPlayerRespawn(PlayerRespawnEvent event);
+	
+	void onPlayerMove(PlayerMoveEvent event);
 	
 	void onPlayerJoinRace(PlayerJoinRaceEvent event);
 	

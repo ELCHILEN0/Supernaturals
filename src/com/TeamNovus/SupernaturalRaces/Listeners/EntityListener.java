@@ -11,11 +11,6 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 
 public class EntityListener implements Listener {
-	private SupernaturalRaces plugin;
-
-	public EntityListener(SupernaturalRaces plugin) {
-		this.plugin = plugin;
-	}
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
@@ -25,7 +20,7 @@ public class EntityListener implements Listener {
 										   event.getCause(),
 										   event.getDamage());
 			
-			plugin.getServer().getPluginManager().callEvent(newEvent);
+			SupernaturalRaces.getPlugin().getServer().getPluginManager().callEvent(newEvent);
 			
 			event.setDamage(newEvent.getDamage());
 			
@@ -44,7 +39,7 @@ public class EntityListener implements Listener {
 												   event.getCause(),
 												   event.getDamage());
 			
-			plugin.getServer().getPluginManager().callEvent(newEvent);
+			SupernaturalRaces.getPlugin().getServer().getPluginManager().callEvent(newEvent);
 
 			event.setDamage(newEvent.getDamage());
 						
