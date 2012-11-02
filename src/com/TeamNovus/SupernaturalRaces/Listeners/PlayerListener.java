@@ -2,7 +2,9 @@ package com.TeamNovus.SupernaturalRaces.Listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
@@ -14,8 +16,6 @@ public class PlayerListener implements Listener {
 	public PlayerListener(SupernaturalRaces plugin) {
 		this.plugin = plugin;
 	}
-	
-	// TODO: Use player events instead of hooking each event
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {	
@@ -30,6 +30,16 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		plugin.getRaceManager().onPlayerDamageEntityEvent(event);
+	}
+	
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		plugin.getRaceManager().onPlayerDeathEvent(event);
+
+	}
+	
+	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+		plugin.getRaceManager().onPlayerRespawnEvent(event);
+
 	}
 	
 }

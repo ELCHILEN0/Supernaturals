@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
+import com.TeamNovus.SupernaturalRaces.Models.SNEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
-import com.TeamNovus.SupernaturalRaces.Races.AngelRace;
-import com.TeamNovus.SupernaturalRaces.Races.DemonRace;
-import com.TeamNovus.SupernaturalRaces.Races.PriestRace;
-import com.TeamNovus.SupernaturalRaces.Races.WerewolfRace;
+import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 
 public class RaceManager {
 	private SupernaturalRaces plugin;
@@ -33,10 +33,10 @@ public class RaceManager {
 	 * by default.
 	 */
 	public void registerRaces() {
-		races.add(new AngelRace());
-		races.add(new DemonRace());
-		races.add(new PriestRace());
-		races.add(new WerewolfRace());
+//		races.add(new AngelRace());
+//		races.add(new DemonRace());
+//		races.add(new PriestRace());
+//		races.add(new WerewolfRace());
 	}
 
 	public List<SNRace> getRaces() {
@@ -59,7 +59,7 @@ public class RaceManager {
 				return race;
 			}
 		}
-		return new WerewolfRace();
+		return new AngelRace();
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {
@@ -68,6 +68,38 @@ public class RaceManager {
 
 	private SNRace getRace(PlayerEvent event) {
 		return plugin.getRaceManager().getRace(plugin.getPlayerManager().getPlayer(event.getPlayer()));
+	}
+	
+	private SNRace getRace(PlayerDeathEvent event) {
+		return plugin.getRaceManager().getRace(plugin.getPlayerManager().getPlayer(event.getEntity()));
+	}
+	
+	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
+		SNRace race = getRace(event);
+		for(SNEvent sne : race.events()) {
+			sne.onPlayerDamageEntity(event);
+		}
+	}
+	
+	public void onPlayerDamageEvent(PlayerDamageEvent event) {
+		SNRace race = getRace(event);
+		for(SNEvent sne : race.events()) {
+			sne.onPlayerDamage(event);
+		}
+	}
+	
+	public void onPlayerDeathEvent(PlayerDeathEvent event) {
+		SNRace race = getRace(event);
+		for(SNEvent sne : race.events()) {
+			sne.onPlayerDeath(event);
+		}
+	}
+	
+	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+		SNRace race = getRace(event);
+		for(SNEvent sne : race.events()) {
+			sne.onPlayerRespawn(event);
+		}
 	}
 
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
@@ -95,15 +127,5 @@ public class RaceManager {
 				}
 			}
 		}
-	}
-	
-	public void onPlayerDamageEvent(PlayerDamageEvent event) {
-		SNRace race = getRace(event);
-		race.onPlayerDamage(event);
-	}
-	
-	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
-		SNRace race = getRace(event);
-		race.onPlayerDamageEntity(event);
 	}
 }
