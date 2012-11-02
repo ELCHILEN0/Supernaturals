@@ -82,7 +82,7 @@ public class WolfHowl implements SNSpell {
 		}
 		
 		if(targetEntity != null) {
-			sender.sendMessage(ChatColor.YELLOW + "The creatures have been summoned and are now targeting your enemies!");
+			sender.sendMessage(ChatColor.GREEN + "The creatures have been summoned and are now targeting your enemies!");
 		}
 		return true;
 	}

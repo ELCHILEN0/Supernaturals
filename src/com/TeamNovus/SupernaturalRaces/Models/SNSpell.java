@@ -17,7 +17,7 @@ public interface SNSpell {
 	 * The spells description.
 	 */
 	String desc();
-	
+		
 	/**
 	 * The click actions required to activate the spell.
 	 */

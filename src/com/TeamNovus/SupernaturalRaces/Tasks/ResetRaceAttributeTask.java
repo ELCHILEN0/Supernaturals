@@ -1,7 +1,8 @@
-package com.TeamNovus.SupernaturalRaces;
+package com.TeamNovus.SupernaturalRaces.Tasks;
 
 import org.bukkit.entity.Player;
 
+import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 
 public class ResetRaceAttributeTask {

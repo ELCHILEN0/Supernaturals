@@ -9,6 +9,8 @@ import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
+import com.TeamNovus.SupernaturalRaces.Tasks.PowerRegenTask;
+import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
 
 public class SupernaturalRaces extends JavaPlugin {
 	private DataManager database;
@@ -25,7 +27,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EntityListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 		
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(this), 20L * 20, 20L * 20);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(this), 20L * 10, 20L * 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 20L * 300, 20L * 300);
 	}
 	
