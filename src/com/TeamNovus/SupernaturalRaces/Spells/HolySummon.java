@@ -49,7 +49,7 @@ public class HolySummon implements SNSpell {
 
 	@Override
 	public Boolean execute(Player sender) {
-		sender.getWorld().spawnEntity(sender.getTargetBlock(null, 5).getLocation(), EntityType.COW);
+		sender.getWorld().spawnEntity(sender.getLocation(), EntityType.COW);
 		return true;
 	}
 	
