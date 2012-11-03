@@ -14,16 +14,16 @@ import com.TeamNovus.SupernaturalRaces.Metadata.SNBooleanAttribute;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class PhaseWalk implements SNSpell {
+public class HolySpirit implements SNSpell {
 
 	@Override
 	public String name() {
-		return "PhaseWalk";
+		return "HolySpirit";
 	}
 
 	@Override
 	public String desc() {
-		return "Your speed causes the attackers to miss!";
+		return "Leave your body and attack as a Spirit!";
 	}
 
 	@Override

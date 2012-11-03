@@ -29,7 +29,7 @@ public class PriestRace implements SNRace {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
 		spells.add(new Renew());
 		spells.add(new Cure());
-		spells.add(new PhaseWalk());
+		spells.add(new HolySpirit());
 		return spells;
 	}
 

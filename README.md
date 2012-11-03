@@ -13,8 +13,18 @@ Players then have the option of converting to another type of class with the /co
    - Takes 0 damage from falling
    - Soar: Jump higher than normal. Requires 100 Power + 1 FEAHTER.
    - Luminatus: Night vision for 30 seconds. Requires 150 Power + 1 GLOWSTONE_DUST. 
-   - Blind: Blind nearby players for 30 seconds. Requires 200 Power + Consumes 1 SUGAR.
+   - Blind: Blind nearby players for 30 seconds. Requires 200 Power + 1 SUGAR.
 * Demon
+   - Takes 0 damage from FIRE/LAVA
+   - Takes 125% damage when hurt in WATER
+   - FireRing: Cast a ring of fire around you. Requires 300 Power + 1 FIREBALL.
+   - Explode: Damage nearby players by 5.  Radius of 5.  Requires 200 Power + SULPHUR.
+   - ShockHeal: Get healed 50-75%.  Requires 100 Power + GLOWSTONE_DUST.
 * Priest
+   - Takes 80% damage.
+   - Deals 125% damage against UNDEAD races.
+   - HolySpirit: 65% chance to avoid attacks for 30 seconds. Requires 400 Power + SUGAR.
+   - Cure: Cure yourself of all maladies.  Requires 100 Power + CLAY_BALL.
+   - Renew: Buffer nearby players.  Requires 150 Power + GLOWSTONE_DUST.
 * Vampire
 * Werewolf
