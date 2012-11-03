@@ -23,8 +23,17 @@ Players then have the option of converting to another type of class with the /co
 * Priest
    - Takes 80% damage.
    - Deals 125% damage against UNDEAD races.
-   - HolySpirit: 65% chance to avoid attacks for 30 seconds. Requires 400 Power + SUGAR.
-   - Cure: Cure yourself of all maladies.  Requires 100 Power + CLAY_BALL.
-   - Renew: Buffer nearby players.  Requires 150 Power + GLOWSTONE_DUST.
+   - HolySpirit: 65% chance to avoid attacks for 30 SECONDS. Requires 400 Power + SUGAR.
+   - Cure: Cure yourself of all maladies. Requires 100 Power + CLAY_BALL.
+   - Renew: Buffer nearby players. Radius of 5. Requires 150 Power + GLOWSTONE_DUST.
 * Vampire
+   - Has a 2% chance to burn for 1 SECOND during DAY.
+   - Has a 25% chance to make ENTITIES bleed for 30 SECONDS during NIGHT.
+   - Deals 120% damage during NIGHT.
+   - Receives SPEED_POTION_EFFECT during NIGHT.
+   - Vanish: Vanish for 60 SECONDS. Requires 300 Power + SUGAR.
 * Werewolf
+   - Deals 125% damage during NIGHT
+   - Howl: Attract nearby mobs + have them target an ENTITY. Attraction radius 20 from target. Requires 1000 Power + SULFUR.
+   - Scent: Track a player for 5 MINUTES. Requires 500 Power + COMPASS.
+   - Train: Summon a wolf.  Requires 50 Power + BONE.
