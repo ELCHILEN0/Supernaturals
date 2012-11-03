@@ -5,24 +5,21 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class DemonicBlind implements SNSpell {
+public class ShockHeal implements SNSpell {
 
 	@Override
 	public String name() {
-		return "DemonicBlind";
+		return "ShockHeal";
 	}
 
 	@Override
 	public String desc() {
-		return "Blind nearby targets with your demonic powers!";
+		return "Heal yourself with a strike of lightning!";
 	}
 
 	@Override
@@ -35,7 +32,7 @@ public class DemonicBlind implements SNSpell {
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.SUGAR);		
+		bindings.add(Material.GLOWSTONE_DUST);
 		return bindings;
 	}
 
@@ -51,13 +48,10 @@ public class DemonicBlind implements SNSpell {
 
 	@Override
 	public Boolean execute(Player sender) {
-		for(Entity e : sender.getNearbyEntities(5, 5, 5)) {
-			if(e instanceof Player) {
-				((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 5, 0));
-				((Player) e).sendMessage(ChatColor.RED + "You have been blinded by " + sender.getName() + "!");
-			}
-		}
-		
-		return false;
+		sender.getWorld().strikeLightning(sender.getLocation());
+		sender.setHealth(sender.getMaxHealth());
+		sender.sendMessage(ChatColor.GOLD + "Lighting has struck and has healed you!");
+		return true;
 	}
+
 }

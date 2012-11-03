@@ -58,7 +58,7 @@ public class RaceManager {
 				return race;
 			}
 		}
-		return new AngelRace();
+		return new DemonRace();
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {

@@ -54,8 +54,9 @@ public class Blind implements SNSpell {
 	public Boolean execute(Player sender) {
 		for(Entity e : sender.getNearbyEntities(5, 5, 5)) {
 			if(e instanceof Player) {
-				((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 0));
-				((Player) e).playEffect(((Player) e).getLocation(), Effect.SMOKE, 1);
+				Player target = ((Player) e);
+				target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 0));
+				target.playEffect(target.getLocation(), Effect.SMOKE, 1);
 			}
 		}
 		sender.sendMessage(ChatColor.GOLD + "Your enemies have been blinded!");

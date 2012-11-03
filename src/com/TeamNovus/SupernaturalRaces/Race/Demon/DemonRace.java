@@ -27,8 +27,9 @@ public class DemonRace implements SNRace {
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new DemonicBlind());
-		spells.add(new DemonicRage());
+		spells.add(new FireRing());
+		spells.add(new Explode());
+		spells.add(new ShockHeal());
 		return spells;
 	}
 
