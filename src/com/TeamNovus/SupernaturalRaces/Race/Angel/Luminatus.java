@@ -35,7 +35,7 @@ public class Luminatus implements SNSpell {
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.GLOWSTONE);
+		bindings.add(Material.GLOWSTONE_DUST);
 		return bindings;
 	}
 

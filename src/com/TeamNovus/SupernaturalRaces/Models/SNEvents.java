@@ -15,7 +15,7 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
  * in the order that it is added to the events.
  */
 public interface SNEvents {
-
+	
 	void onPlayerDamageEntity(PlayerDamageEntityEvent event);
 	
 	void onPlayerDamage(PlayerDamageEvent event);

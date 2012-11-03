@@ -5,6 +5,9 @@ import java.io.File;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.SupernaturalRaces.Commands.ConvertCmd;
+import com.TeamNovus.SupernaturalRaces.Commands.InfoCmd;
+import com.TeamNovus.SupernaturalRaces.Commands.PowerCmd;
+import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
 import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
@@ -29,10 +32,9 @@ public class SupernaturalRaces extends JavaPlugin {
 		raceManager = new RaceManager();
 		
 		getCommand("convert").setExecutor(new ConvertCmd());
-//		getCommand("races").setExecutor(new Convert());
-//		getCommand("spells").setExecutor(new Convert());
-//		getCommand("power").setExecutor(new Convert());
-//		getCommand("info").setExecutor(new Convert());
+		getCommand("races").setExecutor(new RacesCmd());
+		getCommand("power").setExecutor(new PowerCmd());
+		getCommand("info").setExecutor(new InfoCmd());
 						
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(), this);

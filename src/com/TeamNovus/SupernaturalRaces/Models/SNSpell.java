@@ -14,7 +14,8 @@ public interface SNSpell {
 	String name();
 	
 	/**
-	 * The spells description.
+	 * Additional information about the spell.
+	 * ex. Damage surrounding players!
 	 */
 	String desc();
 		
