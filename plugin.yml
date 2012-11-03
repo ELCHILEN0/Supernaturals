@@ -8,3 +8,13 @@ commands:
   supernatural:
     description: Default command for all SupernaturalRaces commands!
     aliases: sn
+  convert:
+    description: Convert to another race!
+  power:
+    description: See your current power!
+  races:
+    description: See all the races you can join!
+  spells:
+    description: See all the spells your race can use!
+  info:
+    description: See a races info!

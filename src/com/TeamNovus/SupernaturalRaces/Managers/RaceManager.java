@@ -21,11 +21,17 @@ import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
+import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
 
 public class RaceManager {
 	private List<SNRace> races = new ArrayList<SNRace>();
 
+	
+	public RaceManager() {
+		registerRaces();
+	}
+	
 	/**
 	 * Register any races other than the default race.
 	 * The Human races is returned for players without a race
@@ -35,6 +41,7 @@ public class RaceManager {
 		races.add(new AngelRace());
 		races.add(new DemonRace());
 		races.add(new PriestRace());
+		races.add(new VampireRace());
 		races.add(new WerewolfRace());
 	}
 
@@ -58,7 +65,7 @@ public class RaceManager {
 				return race;
 			}
 		}
-		return new DemonRace();
+		return new WerewolfRace();
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {

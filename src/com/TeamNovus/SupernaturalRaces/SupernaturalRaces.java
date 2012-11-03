@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.TeamNovus.SupernaturalRaces.Commands.ConvertCmd;
 import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
@@ -26,17 +27,30 @@ public class SupernaturalRaces extends JavaPlugin {
 		
 		playerManager = new PlayerManager();
 		raceManager = new RaceManager();
+		
+		getCommand("convert").setExecutor(new ConvertCmd());
+//		getCommand("races").setExecutor(new Convert());
+//		getCommand("spells").setExecutor(new Convert());
+//		getCommand("power").setExecutor(new Convert());
+//		getCommand("info").setExecutor(new Convert());
 						
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(this), 20L * 10, 20L * 10);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 20L * 300, 20L * 300);
 	}
 	
 	@Override
 	public void onDisable() {
-		// TODO: Code to execute onDisable
+		// Set all static references to null
+		plugin = null;
+		database = null;
+		playerManager = null;
+		raceManager = null;
+		
+		// Cancel all tasks
+		getServer().getScheduler().cancelTasks(this);		
 	}
 	
 	public void reloadConfiguration() {

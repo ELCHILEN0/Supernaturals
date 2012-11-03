@@ -3,7 +3,11 @@ package com.TeamNovus.SupernaturalRaces.Race.Werewolf;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.server.EntityWolf;
+
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -11,7 +15,7 @@ import org.bukkit.event.block.Action;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class WolfSummon implements SNSpell {
+public class Train implements SNSpell {
 	
 	@Override
 	public String name() {
@@ -53,7 +57,16 @@ public class WolfSummon implements SNSpell {
 		Wolf wolf = (Wolf)sender.getWorld().spawnEntity(sender.getLocation(), EntityType.WOLF);
 		wolf.setTamed(true);
 		wolf.setOwner(sender);
+		wolf = setColor(wolf, DyeColor.YELLOW);
 		return true;
 	}
+	
+    public static Wolf setColor(Wolf wolf, DyeColor color){
+        EntityWolf ent = (EntityWolf) ((CraftLivingEntity)wolf).getHandle();
+        ent.setCollarColor(color.getData());
+        return wolf;
+    }
+
+
 	
 }

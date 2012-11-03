@@ -21,8 +21,9 @@ public class WerewolfEvents implements SNEvents {
 
 	@Override
 	public void onPlayerDamage(PlayerDamageEvent event) {
-		// TODO Auto-generated method stub
-		
+		if(event.getPlayer().getWorld().getTime() > 12000) {
+			event.setDamage(event.getDamage()*2);
+		}
 	}
 
 	@Override

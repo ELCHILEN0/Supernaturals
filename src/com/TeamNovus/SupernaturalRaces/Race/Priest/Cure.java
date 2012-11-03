@@ -5,22 +5,22 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class HolyHeal implements SNSpell {
+public class Cure implements SNSpell {
 
 	@Override
 	public String name() {
-		return "HolyHeal";
+		return "Cure";
 	}
 
 	@Override
 	public String desc() {
-		return "Heal yourself and your nearby players!";
+		return "Cure yourself of all maladies!";
 	}
 
 	@Override
@@ -33,13 +33,13 @@ public class HolyHeal implements SNSpell {
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.GLOWSTONE_DUST);
+		bindings.add(Material.CLAY_BALL);
 		return bindings;
 	}
 
 	@Override
 	public Integer power() {
-		return 25;
+		return 30;
 	}
 
 	@Override
@@ -49,15 +49,17 @@ public class HolyHeal implements SNSpell {
 
 	@Override
 	public Boolean execute(Player sender) {
-		for(Entity e : sender.getNearbyEntities(5, 5, 5)) {
-			if(e instanceof Player) {
-				((Player) e).setHealth(((Player) e).getHealth() + 5);
-				((Player) e).sendMessage(ChatColor.YELLOW + sender.getName() + " has healed you!");
-			}
-		}
-		sender.setHealth(sender.getHealth() + 5);
-		sender.sendMessage(ChatColor.YELLOW + "You have healed yourself!");
+		sender.setHealth(sender.getMaxHealth());
+		sender.removePotionEffect(PotionEffectType.BLINDNESS);
+		sender.removePotionEffect(PotionEffectType.CONFUSION);
+		sender.removePotionEffect(PotionEffectType.HARM);
+		sender.removePotionEffect(PotionEffectType.HUNGER);
+		sender.removePotionEffect(PotionEffectType.POISON);
+		sender.removePotionEffect(PotionEffectType.SLOW);
+		sender.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+		sender.removePotionEffect(PotionEffectType.WEAKNESS);
+		sender.removePotionEffect(PotionEffectType.WITHER);
+		sender.sendMessage(ChatColor.GOLD + "You have been cleared of all your maladies!");
 		return true;
 	}
-	
 }

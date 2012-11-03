@@ -15,7 +15,7 @@ import org.bukkit.event.block.Action;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
-public class WolfHowl implements SNSpell {
+public class Howl implements SNSpell {
 	
 	@Override
 	public String name() {
@@ -73,6 +73,11 @@ public class WolfHowl implements SNSpell {
 				}
 			}
 		}
+		
+		if(targetEntity == null) {
+			sender.sendMessage(ChatColor.RED + "You must be looking at an entity!");
+			return false;
+		}
                 
 		for(Entity e : sender.getNearbyEntities(20, 20, 20)) {
 			if(e instanceof Monster) {
@@ -81,9 +86,7 @@ public class WolfHowl implements SNSpell {
 			}
 		}
 		
-		if(targetEntity != null) {
-			sender.sendMessage(ChatColor.GREEN + "The creatures have been summoned and are now targeting your enemies!");
-		}
+		sender.sendMessage(ChatColor.GOLD + "The creatures have been summoned to attack your enemies!");
 		return true;
 	}
 
