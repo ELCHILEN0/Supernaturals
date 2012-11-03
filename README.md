@@ -7,14 +7,13 @@ attached to it.  Each player starts out as a Human which is a representation of 
 Players then have the option of converting to another type of class with the /convert command.
 
 ## Races
-* Angel
-   - Takes 75% damage during daytime
-   - Takes 125% damage during nighttime
-   - No fall damage
-   - (Luminatus) Night vision for 30 seconds
-   - (Soar) Jump higher than normal
-   - (Blind) Blind nearby players for 10 seconds
-  
+* Angel: 10/1000
+   - Takes 75% damage during DAY
+   - Takes 125% damage during NIGHT
+   - Takes 0 damage from falling
+   - Soar: Jump higher than normal. Requires 100 Power + 1 FEAHTER.
+   - Luminatus: Night vision for 30 seconds. Requires 150 Power + 1 GLOWSTONE_DUST. 
+   - Blind: Blind nearby players for 30 seconds. Requires 200 Power + Consumes 1 SUGAR.
 * Demon
 * Priest
 * Vampire
