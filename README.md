@@ -9,11 +9,11 @@ Players then have the option of converting to another type of class with the /co
 ## Races
 * Angel
    - Takes 75% damage during daytime
-   - Takes 125% damage during nighttime
-   - No fall damage
-   - (Luminatus) Night vision for 30 seconds
-   - (Soar) Jump higher than normal
-   - (Blind) Blind nearby players for 10 seconds
+   - Takes 125% damage during nighttime
+   - No fall damage
+   - (Luminatus) Night vision for 30 seconds
+   - (Soar) Jump higher than normal
+   - (Blind) Blind nearby players for 10 seconds
   
 * Demon
 * Priest
