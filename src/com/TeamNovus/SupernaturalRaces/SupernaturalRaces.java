@@ -13,7 +13,6 @@ import com.TeamNovus.SupernaturalRaces.Database.Database;
 import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultEntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultWorldListener;
-import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
 import com.TeamNovus.SupernaturalRaces.Managers.EventManager;
@@ -22,10 +21,9 @@ import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
 
 public class SupernaturalRaces extends JavaPlugin {
 	private static SupernaturalRaces plugin;
-	private static DataManager database;
 	private static PlayerManager playerManager;
 	private static RaceManager raceManager;
-	private Database db;
+	private static Database db;
 
 
 	@Override
@@ -45,9 +43,8 @@ public class SupernaturalRaces extends JavaPlugin {
 		getCommand("info").setExecutor(new InfoCmd());
 		
 		db.connect();
-//		db.setup();
-//		db.load();
-//		db.save();
+		db.setup();
+		db.load();
 						
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
@@ -55,18 +52,19 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DefaultWorldListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 600, 20L * 600);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 5, 20L * 5);
 	}
 	
 	@Override
 	public void onDisable() {
+		db.save();
+		db.close();
+		
 		// Set all static references to null
 		plugin = null;
-		database = null;
+		db = null;
 		playerManager = null;
 		raceManager = null;
-		
-		db.close();
 		
 		// Cancel all tasks
 		getServer().getScheduler().cancelTasks(this);		
@@ -91,7 +89,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		return raceManager;
 	}
 	
-	public static DataManager getDb() {
-		return database;
+	public static Database getDb() {
+		return db;
 	}
 }

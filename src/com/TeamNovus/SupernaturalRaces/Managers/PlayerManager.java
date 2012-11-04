@@ -15,8 +15,11 @@ public class PlayerManager {
 	}
 
 	public void setPlayers(HashMap<String, SNPlayer> players) {
-		players.clear();
-		players.putAll(players);
+		this.players.clear();
+		for(String key : players.keySet()) {
+			System.out.println(key);
+			this.players.put(key, players.get(key));
+		}
 	}
 	
 	/**
