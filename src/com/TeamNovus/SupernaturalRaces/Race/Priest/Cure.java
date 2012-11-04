@@ -50,7 +50,6 @@ public class Cure implements SNSpell {
 	@Override
 	public Boolean execute(Player sender) {
 		sender.setHealth(sender.getMaxHealth());
-		sender.setFireTicks(0);
 		sender.removePotionEffect(PotionEffectType.BLINDNESS);
 		sender.removePotionEffect(PotionEffectType.CONFUSION);
 		sender.removePotionEffect(PotionEffectType.HARM);
