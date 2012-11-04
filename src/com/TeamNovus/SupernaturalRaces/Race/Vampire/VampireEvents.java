@@ -41,7 +41,7 @@ public class VampireEvents implements SNEventListener {
 								if(e instanceof Player) ((Player) e).sendMessage(ChatColor.GREEN + "Your wounds have healed!");
 							}
 						},
-						20L * 30);
+						20L * 10);
 			}
 		}
 	}

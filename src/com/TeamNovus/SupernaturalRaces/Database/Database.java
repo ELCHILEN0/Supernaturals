@@ -12,22 +12,31 @@ import java.sql.Connection;
 import java.util.HashMap;
 
 public class Database {
-	protected Connection connection;
+	private String url;
 
-	final protected synchronized void connect() throws ClassNotFoundException, SQLException {
+	public void connect() {
 		String host = SupernaturalRaces.getPlugin().getConfig().getString("storage.host");
 		String port = SupernaturalRaces.getPlugin().getConfig().getString("storage.port");
 		String database = SupernaturalRaces.getPlugin().getConfig().getString("storage.database");
 		String username = SupernaturalRaces.getPlugin().getConfig().getString("storage.username");
 		String password = SupernaturalRaces.getPlugin().getConfig().getString("storage.password");
 
-		Class.forName("com.mysql.jdbc.Driver");
-		connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+		System.out.println("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + username + (password.equals("") ? "" : "&password=" + password));
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + username + (password.equals("") ? "" : "&password=" + password);
+			DriverManager.getConnection(url);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	final protected synchronized void setup() {
+	public void setup() {
 		try {
-			PreparedStatement statement = connection.prepareStatement(
+			PreparedStatement statement = getConnection().prepareStatement(
 					"CREATE TABLE IF NOT EXISTS `sn_players` (" +
 					"`player` VARCHAR(16) NOT NULL," +
 					"`race` VARCHAR(255) NOT NULL," +
@@ -41,10 +50,10 @@ public class Database {
 		}
 	}
 	
-	final protected synchronized void load() {
+	public void load() {
 		HashMap<String, SNPlayer> players = new HashMap<String, SNPlayer>();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM `sn_players`");
+			PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM `sn_players`");
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
 				SNPlayer player = new SNPlayer();
@@ -56,10 +65,47 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
-	public synchronized void close() {
+	
+	public void save() {
 		try {
-			connection.close();
+			for(String name : SupernaturalRaces.getPlayerManager().getPlayers().keySet()) {
+				PreparedStatement count = getConnection().prepareStatement("SELECT COUNT(*) WHERE `player` = ?");
+				PreparedStatement insert = getConnection().prepareStatement("INSERT INTO `sn_players` (`player`, `race`, `power`)");
+				PreparedStatement update = getConnection().prepareStatement("UPDATE `sn_players` WHERE `player` = ? SET `race` = ?, `power` = ?");
+				
+				count.setString(0, name);
+				SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(name);
+				
+				int c = count.executeUpdate();
+				if(c == 0) {
+					insert.setString(0, name);
+					insert.setString(1, player.getRace());
+					insert.setInt(2, player.getPower());
+					insert.executeUpdate();
+				} else {
+					update.setString(0, name);
+					update.setString(1, player.getRace());
+					update.setInt(2, player.getPower());
+					update.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Connection getConnection() {
+		try {
+			return DriverManager.getConnection(url);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void close() {
+		try {
+			DriverManager.getConnection(url).close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

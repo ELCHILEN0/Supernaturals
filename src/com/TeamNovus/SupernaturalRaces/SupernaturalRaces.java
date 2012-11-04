@@ -9,6 +9,7 @@ import com.TeamNovus.SupernaturalRaces.Commands.HelpCommand;
 import com.TeamNovus.SupernaturalRaces.Commands.InfoCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.PowerCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
+import com.TeamNovus.SupernaturalRaces.Database.Database;
 import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultEntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultWorldListener;
@@ -24,6 +25,8 @@ public class SupernaturalRaces extends JavaPlugin {
 	private static DataManager database;
 	private static PlayerManager playerManager;
 	private static RaceManager raceManager;
+	private Database db;
+
 
 	@Override
 	public void onEnable() {
@@ -33,12 +36,18 @@ public class SupernaturalRaces extends JavaPlugin {
 		
 		playerManager = new PlayerManager();
 		raceManager = new RaceManager();
+		db = new Database();
 		
-		getCommand("supernaturals").setExecutor(new HelpCommand());
+		getCommand("supernatural").setExecutor(new HelpCommand());
 		getCommand("convert").setExecutor(new ConvertCmd());
 		getCommand("races").setExecutor(new RacesCmd());
 		getCommand("power").setExecutor(new PowerCmd());
 		getCommand("info").setExecutor(new InfoCmd());
+		
+		db.connect();
+//		db.setup();
+//		db.load();
+//		db.save();
 						
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
@@ -56,6 +65,8 @@ public class SupernaturalRaces extends JavaPlugin {
 		database = null;
 		playerManager = null;
 		raceManager = null;
+		
+		db.close();
 		
 		// Cancel all tasks
 		getServer().getScheduler().cancelTasks(this);		

@@ -1,6 +1,7 @@
 storage:
-  type: sqlite
+  type: mysql
   host: localhost
   port: 3600
   username: root
   password: root
+  database: elchilen0

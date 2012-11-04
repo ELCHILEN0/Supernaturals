@@ -39,6 +39,5 @@ Players then have the option of converting to another type of class with the /co
    - Vanish: Vanish for 60 SECONDS. Requires 300 Power + SUGAR.
 * Werewolf
    - Deals 125% damage during NIGHT
-   - Howl: Attract nearby mobs + have them target an ENTITY. Attraction radius 20 from target. Requires 1000 Power + SULFUR.
    - Scent: Track a player for 5 MINUTES. Requires 500 Power + COMPASS.
    - Train: Summon a wolf.  Requires 50 Power + BONE.
