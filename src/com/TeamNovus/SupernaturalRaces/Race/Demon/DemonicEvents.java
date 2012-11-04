@@ -24,8 +24,7 @@ public class DemonicEvents implements SNEvents {
 	public void onPlayerDamage(PlayerDamageEvent event) {
 		Player player = event.getPlayer();
 		
-		if(event.getCause().equals(DamageCause.FIRE_TICK) || event.getCause().equals(DamageCause.FIRE) || event.getCause().equals(DamageCause.LAVA)) {
-			player.setFireTicks(0);
+		if(event.getCause().equals(DamageCause.FIRE_TICK)) {
 			event.setCancelled(true);
 		}
 		
