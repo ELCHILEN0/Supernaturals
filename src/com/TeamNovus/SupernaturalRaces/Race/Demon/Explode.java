@@ -41,7 +41,7 @@ public class Explode implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 30;
+		return 200;
 	}
 
 	@Override

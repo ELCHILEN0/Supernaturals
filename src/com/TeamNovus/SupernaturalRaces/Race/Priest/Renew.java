@@ -42,7 +42,7 @@ public class Renew implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 30;
+		return 150;
 	}
 
 	@Override

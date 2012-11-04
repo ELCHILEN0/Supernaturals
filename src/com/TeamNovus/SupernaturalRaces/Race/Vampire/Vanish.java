@@ -40,7 +40,7 @@ public class Vanish implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 60;
+		return 300;
 	}
 
 	@Override

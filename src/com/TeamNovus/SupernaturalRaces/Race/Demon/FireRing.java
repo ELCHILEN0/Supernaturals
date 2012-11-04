@@ -39,7 +39,7 @@ public class FireRing implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 50;
+		return 300;
 	}
 
 	@Override

@@ -16,12 +16,12 @@ public class WerewolfRace implements SNRace {
 
 	@Override
 	public Integer maxPower() {
-		return 75;
+		return 750;
 	}
 	
 	@Override
 	public Integer powerIncrement() {
-		return 20;
+		return 30;
 	}
 
 	@Override

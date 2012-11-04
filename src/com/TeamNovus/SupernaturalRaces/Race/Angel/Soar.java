@@ -40,7 +40,7 @@ public class Soar implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 10;
+		return 30;
 	}
 
 	@Override

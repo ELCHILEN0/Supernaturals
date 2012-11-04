@@ -23,7 +23,7 @@ public class SupernaturalRaces extends JavaPlugin {
 	private static SupernaturalRaces plugin;
 	private static PlayerManager playerManager;
 	private static RaceManager raceManager;
-	private static Database db;
+	private static Database database;
 
 
 	@Override
@@ -34,7 +34,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		
 		playerManager = new PlayerManager();
 		raceManager = new RaceManager();
-		db = new Database();
+		database = new Database();
 		
 		getCommand("supernatural").setExecutor(new HelpCommand());
 		getCommand("convert").setExecutor(new ConvertCmd());
@@ -42,9 +42,9 @@ public class SupernaturalRaces extends JavaPlugin {
 		getCommand("power").setExecutor(new PowerCmd());
 		getCommand("info").setExecutor(new InfoCmd());
 		
-		db.connect();
-		db.setup();
-		db.load();
+		database.connect();
+		database.setup();
+		database.load();
 						
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
@@ -52,17 +52,17 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DefaultWorldListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 5, 20L * 5);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 60, 20L * 60);
 	}
 	
 	@Override
 	public void onDisable() {
-		db.save();
-		db.close();
+		database.save();
+		database.close();
 		
 		// Set all static references to null
 		plugin = null;
-		db = null;
+		database = null;
 		playerManager = null;
 		raceManager = null;
 		
@@ -90,6 +90,6 @@ public class SupernaturalRaces extends JavaPlugin {
 	}
 	
 	public static Database getDb() {
-		return db;
+		return database;
 	}
 }

@@ -16,7 +16,7 @@ public class DemonRace implements SNRace {
 
 	@Override
 	public Integer maxPower() {
-		return 100;
+		return 1000;
 	}
 	
 	@Override

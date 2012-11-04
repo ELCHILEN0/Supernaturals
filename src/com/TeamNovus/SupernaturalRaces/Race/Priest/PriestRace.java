@@ -16,12 +16,12 @@ public class PriestRace implements SNRace {
 
 	@Override
 	public Integer maxPower() {
-		return 100;
+		return 800;
 	}
 	
 	@Override
 	public Integer powerIncrement() {
-		return 15;
+		return 20;
 	}
 
 	@Override

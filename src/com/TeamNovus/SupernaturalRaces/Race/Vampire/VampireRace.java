@@ -16,12 +16,12 @@ public class VampireRace implements SNRace {
 
 	@Override
 	public Integer maxPower() {
-		return 150;
+		return 750;
 	}
 
 	@Override
 	public Integer powerIncrement() {
-		return 5;
+		return 35;
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class HolySpirit implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 30;
+		return 400;
 	}
 
 	@Override

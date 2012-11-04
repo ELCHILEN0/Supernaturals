@@ -42,7 +42,7 @@ public class Blind implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 20;
+		return 200;
 	}
 
 	@Override

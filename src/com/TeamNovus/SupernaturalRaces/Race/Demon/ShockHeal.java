@@ -38,7 +38,7 @@ public class ShockHeal implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 30;
+		return 100;
 	}
 
 	@Override

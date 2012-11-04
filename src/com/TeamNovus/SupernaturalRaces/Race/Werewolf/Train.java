@@ -44,7 +44,7 @@ public class Train implements SNSpell {
 
 	@Override
 	public Integer power() {
-		return 20;
+		return 50;
 	}
 
 	@Override

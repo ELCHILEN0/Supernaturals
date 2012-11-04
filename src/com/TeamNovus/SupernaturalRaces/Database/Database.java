@@ -60,9 +60,6 @@ public class Database {
 				players.put(result.getString(1), player);
 			}
 			SupernaturalRaces.getPlayerManager().setPlayers(players);
-			for(SNPlayer player: SupernaturalRaces.getPlayerManager().getPlayers().values()) {
-				System.out.println(player.getRace());
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
