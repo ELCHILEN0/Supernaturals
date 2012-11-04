@@ -1,4 +1,4 @@
-package com.TeamNovus.SupernaturalRaces.Event;
+package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

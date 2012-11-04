@@ -3,7 +3,6 @@ author: ELCHILEN0
 description: PVP taken to its limits with supernatural races!
 version: 1.0.0
 main: com.TeamNovus.SupernaturalRaces.SupernaturalRaces
-depends: [Vault]
 commands:
   supernatural:
     description: Default command for all SupernaturalRaces commands!
