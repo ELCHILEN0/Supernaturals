@@ -18,10 +18,14 @@ import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
 
 public class RaceManager {
 	private List<SNRace> races = new ArrayList<SNRace>();
-
 	
 	public RaceManager() {
 		registerRaces();
@@ -72,6 +76,15 @@ public class RaceManager {
 	}
 
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
+		FPlayer me = FPlayers.i.get(event.getPlayer());
+		FLocation from = me.getLastStoodAt();
+		Faction faction = (Board.getFactionAt(from));
+
+		if(faction.isSafeZone()) {
+			event.getPlayer().sendMessage(ChatColor.RED + "You cannot cast spells inside a safezone!");
+			return;
+		}
+		
 		SNRace race = getRace(event);
 		SNPlayer player = getPlayer(event);
 		for(SNSpell spell : race.spells()) {

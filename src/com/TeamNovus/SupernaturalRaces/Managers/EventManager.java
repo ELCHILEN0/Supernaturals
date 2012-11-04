@@ -69,7 +69,7 @@ public class EventManager implements Listener {
 	 * @param sender - The MAIN player to determine the race
 	 * @param event - The event to trigger
 	 */
-	public void invokeEvents(Player sender, Event event) {
+	public void invokeEvents(Player sender, Event event) {		
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
 		SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
 		

@@ -18,6 +18,11 @@ public class InfoCmd implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Usage: /info <Race>");
 			return true;
 		} else if(args.length == 1) {
+			if(!(sender.hasPermission("supernaturalraces.info"))) {
+				sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+				return false;
+			}
+			
 			for(SNRace race : SupernaturalRaces.getRaceManager().getRaces()) {
 				if(args[0].equalsIgnoreCase(race.name())) {
 					sender.sendMessage(ChatColor.GOLD + race.name());

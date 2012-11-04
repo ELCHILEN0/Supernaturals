@@ -27,7 +27,6 @@ public class WerewolfRace implements SNRace {
 	@Override
 	public List<SNSpell> spells() {
 		List<SNSpell> spells = new ArrayList<SNSpell>();
-		spells.add(new Howl());
 		spells.add(new Train());
 		spells.add(new Scent());
 		return spells;

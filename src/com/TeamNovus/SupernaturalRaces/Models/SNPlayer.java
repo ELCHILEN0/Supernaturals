@@ -1,17 +1,12 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.TeamNovus.SupernaturalRaces.Metadata.SNAttribute;
 
-public class SNPlayer implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class SNPlayer {
 	private String race = "Human";
-	private Integer power = 50;
-	private List<String> targets = new ArrayList<String>();
+	private Integer power = 0;
 	private HashMap<String, SNAttribute> raceAttributes = new HashMap<String, SNAttribute>();
 	
 	public String getRace() {
@@ -28,18 +23,6 @@ public class SNPlayer implements Serializable {
 
 	public void setPower(Integer power) {
 		this.power = power;
-	}
-	
-	public void setTargets(List<String> targets) {
-		this.targets = targets;
-	}
-	
-	public List<String> getTargets() {
-		return targets;
-	}
-	
-	public boolean isTarget(String s) {
-		return targets.contains(s);
 	}
 	
 	public SNAttribute getAttribute(String key) {

@@ -66,7 +66,4 @@ public class Train implements SNSpell {
         ent.setCollarColor(color.getData());
         return wolf;
     }
-
-
-	
 }

@@ -19,6 +19,11 @@ public class ConvertCmd implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Usage: /convert <Race> [Player]");
 			return true;
 		} else if(args.length == 1) {
+			if(!(sender.hasPermission("supernaturalraces.convert"))) {
+				sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+				return false;
+			}
+			
 			if(!(sender instanceof Player)) {
 				sender.sendMessage("This command can only be run as a player!");
 				return false;
@@ -34,9 +39,14 @@ public class ConvertCmd implements CommandExecutor {
 			
 			player.sendMessage(ChatColor.RED + "The specified race was not found! Type /races to see all the avliable races!");
 			return false;
-		} else if(args.length >= 2) {			
+		} else if(args.length >= 2) {
+			if(!(sender.hasPermission("supernaturalraces.convert.others"))) {
+				sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+				return false;
+			}
+			
 			if(Bukkit.getPlayer(args[1]) == null) {
-				sender.sendMessage("The specified player is not online!");
+				sender.sendMessage(ChatColor.RED + "The specified player is not online!");
 				return false;
 			}
 			

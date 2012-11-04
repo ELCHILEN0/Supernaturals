@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 
 /**
- * This class is used for overriding behiavor that is not dependent on a player or a race.
+ * This class is used for overriding behavior that is not dependent on a player or a race.
  * Any listener can be pointed here and it is best to use attributes, metadata etc.
  */
 public class DefaultEntityListener implements Listener {

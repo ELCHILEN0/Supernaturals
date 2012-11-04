@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.SupernaturalRaces.Commands.ConvertCmd;
+import com.TeamNovus.SupernaturalRaces.Commands.HelpCommand;
 import com.TeamNovus.SupernaturalRaces.Commands.InfoCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.PowerCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
@@ -33,6 +34,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		playerManager = new PlayerManager();
 		raceManager = new RaceManager();
 		
+		getCommand("supernaturals").setExecutor(new HelpCommand());
 		getCommand("convert").setExecutor(new ConvertCmd());
 		getCommand("races").setExecutor(new RacesCmd());
 		getCommand("power").setExecutor(new PowerCmd());
@@ -44,7 +46,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DefaultWorldListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 20L * 300, 20L * 300);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 600, 20L * 600);
 	}
 	
 	@Override

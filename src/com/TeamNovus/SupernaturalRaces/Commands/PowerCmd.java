@@ -14,10 +14,16 @@ public class PowerCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
+			if(!(sender.hasPermission("supernaturalraces.power"))) {
+				sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+				return false;
+			}
+			
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "This command cannot be run from the console!");
 				return false;
 			}
+			
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer((Player) sender);
 			SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
 			sender.sendMessage(ChatColor.YELLOW + "Power: " + player.getPower() + "/" + race.maxPower());

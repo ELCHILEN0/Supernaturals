@@ -1,7 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Tasks;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
@@ -20,7 +19,6 @@ public class PowerRegenTask implements Runnable {
 				} else {
 					p.setPower(p.getPower() + r.powerIncrement());
 				}
-				player.sendMessage(ChatColor.YELLOW + "New Power: " + p.getPower() + "/" + r.maxPower());
 			}
 		}			
 	}

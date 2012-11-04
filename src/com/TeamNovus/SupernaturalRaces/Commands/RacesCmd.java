@@ -10,6 +10,11 @@ import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 
 public class RacesCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(sender.hasPermission("supernaturalraces.races"))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return false;
+		}
+		
 		sender.sendMessage(ChatColor.BLUE + "Availiable Races:");
 		for(SNRace race : SupernaturalRaces.getRaceManager().getRaces()) {
 			sender.sendMessage(ChatColor.GOLD + race.name());
