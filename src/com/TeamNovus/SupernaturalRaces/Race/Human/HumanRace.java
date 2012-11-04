@@ -31,7 +31,7 @@ public class HumanRace implements SNRace {
 	
 	@Override
 	public List<Class<? extends SNEventListener>> events() {
-		List<Class<? extends SNEventListener>> test = new ArrayList<Class<? extends SNEventListener>>();
-		return test;
+		List<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
+		return events;
 	}
 }
