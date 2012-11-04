@@ -8,11 +8,11 @@ import com.TeamNovus.SupernaturalRaces.Commands.ConvertCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.InfoCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.PowerCmd;
 import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
-import com.TeamNovus.SupernaturalRaces.Listeners.EntityListener;
-import com.TeamNovus.SupernaturalRaces.Listeners.PlayerListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Managers.DataManager;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
+import com.TeamNovus.SupernaturalRaces.Managers.SNEventManager;
 import com.TeamNovus.SupernaturalRaces.Tasks.PowerRegenTask;
 import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
 
@@ -36,8 +36,8 @@ public class SupernaturalRaces extends JavaPlugin {
 		getCommand("power").setExecutor(new PowerCmd());
 		getCommand("info").setExecutor(new InfoCmd());
 						
-		getServer().getPluginManager().registerEvents(new EntityListener(), this);
-		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+		getServer().getPluginManager().registerEvents(new CustomListener(), this);
+		getServer().getPluginManager().registerEvents(new SNEventManager(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 20L * 300, 20L * 300);

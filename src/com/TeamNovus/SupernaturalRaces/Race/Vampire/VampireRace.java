@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Vampire;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
@@ -32,9 +32,9 @@ public class VampireRace implements SNRace {
 	}
 
 	@Override
-	public List<SNEvents> events() {
-		List<SNEvents> events = new ArrayList<SNEvents>();
-		events.add(new VampireEvents());
+	public List<Class<? extends SNEventListener>> events() {
+		List<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
+		events.add(VampireEvents.class);
 		return events;
 	}
 

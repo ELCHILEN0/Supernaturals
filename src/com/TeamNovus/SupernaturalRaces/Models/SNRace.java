@@ -2,6 +2,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.util.List;
 
+
 public interface SNRace {
 	/**
 	 * The name of the race
@@ -26,5 +27,6 @@ public interface SNRace {
 	/**
 	 * The events registered to the race
 	 */
-	List<SNEvents> events();
+	List<Class<? extends SNEventListener>> events();
+	
 }

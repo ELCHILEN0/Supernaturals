@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Race.Human;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 
@@ -30,8 +30,8 @@ public class HumanRace implements SNRace {
 	}
 	
 	@Override
-	public List<SNEvents> events() {
-		return new ArrayList<SNEvents>();
+	public List<Class<? extends SNEventListener>> events() {
+		List<Class<? extends SNEventListener>> test = new ArrayList<Class<? extends SNEventListener>>();
+		return test;
 	}
-
 }

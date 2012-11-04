@@ -49,7 +49,6 @@ public class HolySpirit implements SNSpell {
 	public Boolean consume() {
 		return true;
 	}
-
 	
 	@Override
 	public Boolean execute(final Player sender) {
@@ -60,14 +59,14 @@ public class HolySpirit implements SNSpell {
 					public void run() {
 						SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
 						player.setAttribute("phaseWalking", new SNBooleanAttribute(false));
-						sender.sendMessage(ChatColor.GOLD + "Your phasewalk has halted!");
+						sender.sendMessage(ChatColor.GOLD + "You have returned to your body!");
 						sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
 					}
 			}, 20 * 30);
 		
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
 		player.setAttribute("phaseWalking", new SNBooleanAttribute(true));
-		sender.sendMessage(ChatColor.GOLD + "You have began phasewalking!");
+		sender.sendMessage(ChatColor.GOLD + "You have left your body!");
 		sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
 		return true;
 	}

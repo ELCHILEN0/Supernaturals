@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEvents;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.SNRace;
 import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
+import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
@@ -65,7 +60,7 @@ public class RaceManager {
 				return race;
 			}
 		}
-		return new WerewolfRace();
+		return new HumanRace();
 	}
 
 	private SNPlayer getPlayer(PlayerEvent event) {
@@ -74,45 +69,6 @@ public class RaceManager {
 
 	private SNRace getRace(PlayerEvent event) {
 		return SupernaturalRaces.getRaceManager().getRace(SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer()));
-	}
-	
-	private SNRace getRace(PlayerDeathEvent event) {
-		return SupernaturalRaces.getRaceManager().getRace(SupernaturalRaces.getPlayerManager().getPlayer(event.getEntity()));
-	}
-	
-	public void onPlayerDamageEntityEvent(PlayerDamageEntityEvent event) {
-		SNRace race = getRace(event);
-		for(SNEvents sne : race.events()) {
-			sne.onPlayerDamageEntity(event);
-		}
-	}
-	
-	public void onPlayerDamageEvent(PlayerDamageEvent event) {
-		SNRace race = getRace(event);
-		for(SNEvents sne : race.events()) {
-			sne.onPlayerDamage(event);
-		}
-	}
-	
-	public void onPlayerDeathEvent(PlayerDeathEvent event) {
-		SNRace race = getRace(event);
-		for(SNEvents sne : race.events()) {
-			sne.onPlayerDeath(event);
-		}
-	}
-	
-	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
-		SNRace race = getRace(event);
-		for(SNEvents sne : race.events()) {
-			sne.onPlayerRespawn(event);
-		}
-	}
-	
-	public void onPlayerMoveEvent(PlayerMoveEvent event) {
-		SNRace race = getRace(event);
-		for(SNEvents sne : race.events()) {
-			sne.onPlayerMove(event);
-		}
 	}
 
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
