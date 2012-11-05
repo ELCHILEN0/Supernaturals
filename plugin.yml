@@ -21,14 +21,14 @@ permissions:
     default: true
     children:
       supernaturalraces.convert: true
-      supernaturalraces.sninfo: true
+      supernaturalraces.info: true
       supernaturalraces.power: true
       supernaturalraces.races: true
   supernaturalraces.convert:
     description: Allows access to /convert <Race>
   supernaturalraces.convert.others:
     description: Allows access to /convert <Race> <Player>
-  supernaturalraces.sninfo:
+  supernaturalraces.info:
     description: Allows access to /sninfo <Race>
   supernaturalraces.power:
     description: Allows access to /power

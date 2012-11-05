@@ -2,9 +2,7 @@ SupernaturalRaces
 =================
 
 TODO:
-* Add More Events
-   - EntityCombustEvent, EntityShootBowEvent, EntityRegainHealthEvent, EntityTargetLivingEntityEvent,
-   	 FoodLevelChangeEvent, ProjectileHitEvent, ProjectileLaunchEvent
+* Add more races and improve spells to feature instant spells, delayed spells, distance spells, and effect spells!
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events

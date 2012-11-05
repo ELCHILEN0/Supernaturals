@@ -15,7 +15,7 @@ public class InfoCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(ChatColor.RED + "Usage: /info <Race>");
+			sender.sendMessage(ChatColor.RED + "Usage: /sninfo <Race>");
 			return true;
 		} else if(args.length == 1) {
 			if(!(sender.hasPermission("supernaturalraces.info"))) {
