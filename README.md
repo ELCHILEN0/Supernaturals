@@ -2,7 +2,18 @@ SupernaturalRaces
 =================
 
 TODO:
-* Add more races and improve spells to feature instant spells, delayed spells, distance spells, and effect spells!
+* [Dev/User] Add more races and improve spells to feature instant spells, delayed spells, repeating spells, long-range spells, area spell!
+* [Dev/User] Add Reagents which allow consumption of Money, Power, Items, Exp, Health, Hunger
+* [Dev/User] Add SpellEffects as a substitute to adding sound or visual effects (Caster, TargetEntity, TargetLocation).
+* [Dev] Add a CommandManager that uses the /supernaturals [sn] sub-command.
+* [Dev] Add onSpellCast(), onSpellPreprocess(), onSpellPostprocess()
+
+Spell Inheritance Tree:
+	Spell:
+	  -> Instant Spell	  
+	  -> Delayed Spell
+	    -> -> Long Range Spell
+	    -> -> Area Spell	  
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events
