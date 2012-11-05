@@ -25,7 +25,6 @@ public class SupernaturalRaces extends JavaPlugin {
 	private static RaceManager raceManager;
 	private static Database database;
 
-
 	@Override
 	public void onEnable() {
 		plugin = this;
@@ -40,7 +39,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		getCommand("convert").setExecutor(new ConvertCmd());
 		getCommand("races").setExecutor(new RacesCmd());
 		getCommand("power").setExecutor(new PowerCmd());
-		getCommand("info").setExecutor(new InfoCmd());
+		getCommand("sninfo").setExecutor(new InfoCmd());
 		
 		database.connect();
 		database.setup();

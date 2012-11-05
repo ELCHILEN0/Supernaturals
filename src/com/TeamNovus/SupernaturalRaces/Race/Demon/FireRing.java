@@ -33,7 +33,7 @@ public class FireRing implements SNSpell {
 	@Override
 	public List<Material> bindings() {
 		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.FIREBALL);
+		bindings.add(Material.REDSTONE);
 		return bindings;
 	}
 

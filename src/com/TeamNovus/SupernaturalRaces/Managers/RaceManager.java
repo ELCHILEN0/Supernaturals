@@ -42,6 +42,7 @@ public class RaceManager {
 		races.add(new PriestRace());
 		races.add(new VampireRace());
 		races.add(new WerewolfRace());
+		races.add(new HumanRace());
 	}
 
 	public List<SNRace> getRaces() {
@@ -76,20 +77,20 @@ public class RaceManager {
 	}
 
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		FPlayer me = FPlayers.i.get(event.getPlayer());
-		FLocation from = me.getLastStoodAt();
-		Faction faction = (Board.getFactionAt(from));
-
-		if(faction.isSafeZone()) {
-			event.getPlayer().sendMessage(ChatColor.RED + "You cannot cast spells inside a safezone!");
-			return;
-		}
-		
 		SNRace race = getRace(event);
 		SNPlayer player = getPlayer(event);
 		for(SNSpell spell : race.spells()) {
 			if(spell.actions().contains(event.getAction())) {
-				if(event.getItem() != null && spell.bindings().contains(event.getItem().getType())) {					
+				if(event.getItem() != null && spell.bindings().contains(event.getItem().getType())) {	
+					FPlayer me = FPlayers.i.get(event.getPlayer());
+					FLocation from = me.getLastStoodAt();
+					Faction faction = (Board.getFactionAt(from));
+
+					if(faction.isSafeZone()) {
+						event.getPlayer().sendMessage(ChatColor.RED + "You cannot cast spells inside a safezone!");
+						return;
+					}
+					
 					if(spell.power() > player.getPower()) {
 						event.getPlayer().sendMessage(ChatColor.RED + "" + spell.power() + " power is needed to perform this spell!");
 						return;

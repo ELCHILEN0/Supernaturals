@@ -13,22 +13,23 @@ commands:
     description: See your current power!
   races:
     description: See all the races you can join!
-  info:
-    description: See a races info!
+  sninfo:
+    description: See a races information!
 permissions:
   supernaturalraces.player:
     description: Grants players permission to player commands.
+    default: true
     children:
       supernaturalraces.convert: true
-      supernaturalraces.info: true
+      supernaturalraces.sninfo: true
       supernaturalraces.power: true
       supernaturalraces.races: true
   supernaturalraces.convert:
     description: Allows access to /convert <Race>
   supernaturalraces.convert.others:
     description: Allows access to /convert <Race> <Player>
-  supernaturalraces.info:
-    description: Allows access to /info <Race>
+  supernaturalraces.sninfo:
+    description: Allows access to /sninfo <Race>
   supernaturalraces.power:
     description: Allows access to /power
   supernaturalraces.races:
