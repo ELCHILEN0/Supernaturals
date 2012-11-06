@@ -28,7 +28,7 @@ public class Reagent {
 	 * @param player - The player to check
 	 * @return - Boolean - If the player has the reagents
 	 */
-	public boolean hasReagents(Player player) {
+	public boolean has(Player player) {
 		SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
 		if(player.getExp() >= exp && player.getHealth() > health && player.getFoodLevel() >= hunger && player.getInventory().contains(items) && snp.getPower() >= power) {
 			return true;
@@ -41,13 +41,17 @@ public class Reagent {
 	 * Be sure to check if the player has the reagents before attempting
 	 * @param player - The player with to consume
 	 */
-	public void consumeReagents(Player player) {
+	public void consume(Player player) {
 		SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
 		player.setExp(player.getExp() - exp);
 		player.setHealth(player.getHealth() - health);
 		player.setFoodLevel(player.getFoodLevel() - hunger);
 		player.getInventory().remove(items);
 		snp.setPower(snp.getPower() - power);
+	}
+	
+	public String toString() {
+		return String.format("Money %s, Exp %s, Health %s, Hunger %s, Items %s, Power %s", money, exp, health, hunger, items, power);
 	}
 	
 }
