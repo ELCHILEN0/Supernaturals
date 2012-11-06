@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
 
 public class PowerCmd implements CommandExecutor {
 	@Override
@@ -25,7 +25,7 @@ public class PowerCmd implements CommandExecutor {
 			}
 			
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer((Player) sender);
-			SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
+			Race race = SupernaturalRaces.getRaceManager().getRace(player);
 			sender.sendMessage(ChatColor.YELLOW + "Power: " + player.getPower() + "/" + race.maxPower());
 			return true;
 		}

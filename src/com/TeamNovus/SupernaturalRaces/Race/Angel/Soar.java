@@ -1,18 +1,16 @@
 package com.TeamNovus.SupernaturalRaces.Race.Angel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Models.Reagent;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class Soar implements SNSpell {
+public class Soar implements Spell {
 
 	@Override
 	public String name() {
@@ -20,32 +18,23 @@ public class Soar implements SNSpell {
 	}
 
 	@Override
-	public String desc() {
-		return "Soar above the heavens!";
-	}
-
-	@Override
-	public List<Action> actions() {
-		List<Action> actions = new ArrayList<Action>();
-		actions.add(Action.LEFT_CLICK_AIR);
-		return actions;
+	public String info() {
+		return "Jump higher than normal!";
 	}
 	
 	@Override
-	public List<Material> bindings() {
-		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.FEATHER);
-		return bindings;
+	public Material binding() {
+		return Material.FEATHER;
 	}
 
 	@Override
-	public Integer power() {
-		return 30;
+	public Reagent required() {
+		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.FEATHER, 1), 30);
 	}
 
 	@Override
-	public Boolean consume() {
-		return true;
+	public Reagent consume() {
+		return required();
 	}
 
 	@Override

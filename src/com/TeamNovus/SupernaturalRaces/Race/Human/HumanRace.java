@@ -3,11 +3,11 @@ package com.TeamNovus.SupernaturalRaces.Race.Human;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class HumanRace implements SNRace {
+public class HumanRace implements Race {
 
 	@Override
 	public String name() {
@@ -25,8 +25,8 @@ public class HumanRace implements SNRace {
 	}
 	
 	@Override
-	public List<SNSpell> spells() {
-		return new ArrayList<SNSpell>();
+	public List<Spell> spells() {
+		return new ArrayList<Spell>();
 	}
 	
 	@Override

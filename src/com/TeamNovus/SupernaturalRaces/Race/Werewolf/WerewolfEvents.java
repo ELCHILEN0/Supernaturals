@@ -2,8 +2,8 @@ package com.TeamNovus.SupernaturalRaces.Race.Werewolf;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 
 public class WerewolfEvents implements SNEventListener {
 

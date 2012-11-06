@@ -1,14 +1,13 @@
 package com.TeamNovus.SupernaturalRaces.Commands;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
 public class InfoCmd implements CommandExecutor {
 
@@ -23,20 +22,17 @@ public class InfoCmd implements CommandExecutor {
 				return false;
 			}
 			
-			for(SNRace race : SupernaturalRaces.getRaceManager().getRaces()) {
+			for(Race race : SupernaturalRaces.getRaceManager().getRaces()) {
 				if(args[0].equalsIgnoreCase(race.name())) {
 					sender.sendMessage(ChatColor.GOLD + race.name());
 					sender.sendMessage(ChatColor.BLUE + "  Max Power: " + ChatColor.YELLOW + race.maxPower());
 					sender.sendMessage(ChatColor.BLUE + "  Power Increment: " + ChatColor.YELLOW + race.powerIncrement());
-					for(SNSpell spell : race.spells()) {
+					for(Spell spell : race.spells()) {
 						sender.sendMessage(ChatColor.GOLD + "  " + spell.name());
-						sender.sendMessage(ChatColor.BLUE + "    Power: " + ChatColor.YELLOW + spell.power());
-						String bindings = new String();
-						for(Material mat : spell.bindings()) {
-							bindings = bindings + mat.name();
-						}
-						sender.sendMessage(ChatColor.BLUE + "    Bindings: " + ChatColor.YELLOW + bindings);
-						sender.sendMessage(ChatColor.BLUE + "    Description: " + ChatColor.YELLOW + spell.desc());
+						sender.sendMessage(ChatColor.BLUE + "    Info: " + ChatColor.YELLOW + spell.info());
+						sender.sendMessage(ChatColor.BLUE + "    Bound to: " + ChatColor.YELLOW + spell.binding().name());
+						sender.sendMessage(ChatColor.BLUE + "    Reagents: " + ChatColor.YELLOW + spell.reagent().toString());
+						sender.sendMessage(ChatColor.BLUE + "    Consumes: " + ChatColor.YELLOW + spell.consume().toString());
 					}
 				}
 			}

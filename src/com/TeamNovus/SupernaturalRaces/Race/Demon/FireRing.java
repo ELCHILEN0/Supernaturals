@@ -6,12 +6,14 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Models.Reagent;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class FireRing implements SNSpell {
+public class FireRing implements Spell {
 
 	@Override
 	public String name() {
@@ -19,32 +21,23 @@ public class FireRing implements SNSpell {
 	}
 
 	@Override
-	public String desc() {
-		return "Surround yourself with a ring of fire!";
+	public String info() {
+		return "Cast a fire ring around you!";
 	}
 
 	@Override
-	public List<Action> actions() {
-		List<Action> actions = new ArrayList<Action>();
-		actions.add(Action.LEFT_CLICK_AIR);
-		return actions;
+	public Material binding() {
+		return Material.REDSTONE;
 	}
 
 	@Override
-	public List<Material> bindings() {
-		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.REDSTONE);
-		return bindings;
+	public Reagent required() {
+		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.REDSTONE, 5), 300);
 	}
 
 	@Override
-	public Integer power() {
-		return 300;
-	}
-
-	@Override
-	public Boolean consume() {
-		return true;
+	public Reagent consume() {
+		return required();
 	}
 
 	@Override
@@ -102,8 +95,10 @@ public class FireRing implements SNSpell {
 		locations.add(sender.getLocation().add(-4, 0, 1));
 		locations.add(sender.getLocation().add(-3, 0, 2));
 		
+		List<Block> before = new ArrayList<Block>();
 		for(Location l : locations) {
 			if(l.getBlock().getType().equals(Material.AIR)) {
+				before.add(l.getBlock());
 				l.getBlock().setType(Material.FIRE);
 			}
 		}

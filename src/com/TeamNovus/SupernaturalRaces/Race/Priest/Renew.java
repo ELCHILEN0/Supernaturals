@@ -1,20 +1,18 @@
 package com.TeamNovus.SupernaturalRaces.Race.Priest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Models.Reagent;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class Renew implements SNSpell {
+public class Renew implements Spell {
 
 	@Override
 	public String name() {
@@ -22,32 +20,23 @@ public class Renew implements SNSpell {
 	}
 
 	@Override
-	public String desc() {
-		return "Bring your comrades back into the fight!";
+	public String info() {
+		return "Give nearby players incrased damage and damage resistance for 10 seconds!";
 	}
 
 	@Override
-	public List<Action> actions() {
-		List<Action> actions = new ArrayList<Action>();
-		actions.add(Action.LEFT_CLICK_AIR);
-		return actions;
+	public Material binding() {
+		return Material.GLOWSTONE_DUST;
 	}
 
 	@Override
-	public List<Material> bindings() {
-		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.GLOWSTONE_DUST);
-		return bindings;
+	public Reagent required() {
+		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.GLOWSTONE_DUST, 1), 150);
 	}
 
 	@Override
-	public Integer power() {
-		return 150;
-	}
-
-	@Override
-	public Boolean consume() {
-		return true;
+	public Reagent consume() {
+		return required();
 	}
 
 	@Override
@@ -55,7 +44,7 @@ public class Renew implements SNSpell {
 		for(Entity entity : sender.getNearbyEntities(5, 5, 5)) {
 			if(entity instanceof Player) {
 				Player player = ((Player) entity);
-				player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20 * 10, 0));
+				player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 10, 0));
 				player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 10, 0));
 				player.playEffect(sender.getLocation(), Effect.POTION_BREAK, 0);
 				player.sendMessage(ChatColor.GOLD + sender.getDisplayName() + " has rejuvenated you!");

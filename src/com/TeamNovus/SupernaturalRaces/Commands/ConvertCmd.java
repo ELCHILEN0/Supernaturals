@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
 
 public class ConvertCmd implements CommandExecutor {
 
@@ -65,7 +65,7 @@ public class ConvertCmd implements CommandExecutor {
 	}
 	
 	public boolean attemptConvert(SNPlayer player, String race) {
-		for(SNRace r : SupernaturalRaces.getRaceManager().getRaces()) {
+		for(Race r : SupernaturalRaces.getRaceManager().getRaces()) {
 			if(race.equalsIgnoreCase(r.name()) && !(player.getRace().equals(r.name()))) {
 				player.setRace(r.name());
 				return true;

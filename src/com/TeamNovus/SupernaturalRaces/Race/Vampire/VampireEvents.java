@@ -9,8 +9,8 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 
 public class VampireEvents implements SNEventListener {
 

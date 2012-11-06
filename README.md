@@ -12,6 +12,7 @@ Spell Inheritance Tree:
 	Spell:
 	  -> Instant Spell	  
 	  -> Delayed Spell
+	  -> Repeating Spell
 	    -> -> Long Range Spell
 	    -> -> Area Spell	  
 

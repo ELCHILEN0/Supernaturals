@@ -17,10 +17,10 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
 
 public class EventManager implements Listener {
 	
@@ -71,7 +71,7 @@ public class EventManager implements Listener {
 	 */
 	public void invokeEvents(Player sender, Event event) {		
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
-		SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
+		Race race = SupernaturalRaces.getRaceManager().getRace(player);
 		
 		for(Class<? extends SNEventListener> c : race.events()) {
 			for(Method method : c.getMethods()) {

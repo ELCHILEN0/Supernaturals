@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 
 public class DemonicEvents implements SNEventListener {
 	

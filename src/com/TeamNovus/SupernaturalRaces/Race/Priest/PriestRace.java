@@ -3,11 +3,11 @@ package com.TeamNovus.SupernaturalRaces.Race.Priest;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class PriestRace implements SNRace {
+public class PriestRace implements Race {
 
 	@Override
 	public String name() {
@@ -25,8 +25,8 @@ public class PriestRace implements SNRace {
 	}
 
 	@Override
-	public List<SNSpell> spells() {
-		List<SNSpell> spells = new ArrayList<SNSpell>();
+	public List<Spell> spells() {
+		List<Spell> spells = new ArrayList<Spell>();
 		spells.add(new Renew());
 		spells.add(new Cure());
 		spells.add(new HolySpirit());

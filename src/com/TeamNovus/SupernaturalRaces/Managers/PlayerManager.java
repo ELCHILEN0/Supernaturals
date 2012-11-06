@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.SNRace;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
 
 public class PlayerManager {
 	private HashMap<String, SNPlayer> players = new HashMap<String, SNPlayer>();
@@ -36,7 +36,7 @@ public class PlayerManager {
 	/**
 	 * Get all the players in a race
 	 */
-	public HashMap<String, SNPlayer> getPlayersInRace(SNRace race) {
+	public HashMap<String, SNPlayer> getPlayersInRace(Race race) {
 		HashMap<String, SNPlayer> racePlayers = new HashMap<String, SNPlayer>();
 		for(String player : players.keySet()) {
 			if(players.get(player).getRace().equalsIgnoreCase(race.name())) {

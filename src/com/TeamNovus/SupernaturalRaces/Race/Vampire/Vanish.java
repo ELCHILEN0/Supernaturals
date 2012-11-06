@@ -1,18 +1,16 @@
 package com.TeamNovus.SupernaturalRaces.Race.Vampire;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.TeamNovus.SupernaturalRaces.Models.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Models.Reagent;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class Vanish implements SNSpell {
+public class Vanish implements Spell {
 
 	@Override
 	public String name() {
@@ -20,32 +18,23 @@ public class Vanish implements SNSpell {
 	}
 
 	@Override
-	public String desc() {
-		return "Vanish from your enemies!";
+	public String info() {
+		return "Vanish from your enemies for 60 seconds!";
 	}
 
 	@Override
-	public List<Action> actions() {
-		List<Action> actions = new ArrayList<Action>();
-		actions.add(Action.LEFT_CLICK_AIR);
-		return actions;
+	public Material binding() {
+		return Material.SUGAR;
 	}
 
 	@Override
-	public List<Material> bindings() {
-		List<Material> bindings = new ArrayList<Material>();
-		bindings.add(Material.SUGAR);
-		return bindings;
+	public Reagent required() {
+		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.SUGAR, 1), 300);
 	}
 
 	@Override
-	public Integer power() {
-		return 300;
-	}
-
-	@Override
-	public Boolean consume() {
-		return true;
+	public Reagent consume() {
+		return required();
 	}
 
 	@Override
@@ -54,6 +43,7 @@ public class Vanish implements SNSpell {
 			sender.sendMessage(ChatColor.RED + "Your powers are ineffective in daytime.");
 			return false;
 		}
+		
 		sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 60, 0));
 		sender.sendMessage(ChatColor.GOLD + "You blend in with the night!");
 		return true;
