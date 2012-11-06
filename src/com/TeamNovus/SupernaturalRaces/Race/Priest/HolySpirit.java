@@ -10,6 +10,7 @@ import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Metadata.SNBooleanAttribute;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class HolySpirit implements Spell {
@@ -31,7 +32,7 @@ public class HolySpirit implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.SUGAR, 5), 400);
+		return new Reagent(0.0, 0, 0, 0, 400, new ItemBag(new ItemStack(Material.SUGAR, 10)));
 	}
 
 	@Override

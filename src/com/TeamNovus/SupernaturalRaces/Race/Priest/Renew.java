@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class Renew implements Spell {
@@ -31,7 +32,7 @@ public class Renew implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.GLOWSTONE_DUST, 1), 150);
+		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 1)));
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 import com.TeamNovus.SupernaturalRaces.Util.SpellUtil;
 
@@ -30,7 +31,7 @@ public class Train implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.BONE, 4), 50);
+		return new Reagent(0.0, 0, 0, 0, 50, new ItemBag(new ItemStack(Material.BONE, 4)));
 	}
 
 	@Override

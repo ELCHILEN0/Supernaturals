@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class Soar implements Spell {
@@ -29,7 +30,7 @@ public class Soar implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.FEATHER, 1), 30);
+		return new Reagent(0.0, 0, 0, 0, 100, new ItemBag(new ItemStack(Material.FEATHER, 2)));
 	}
 
 	@Override

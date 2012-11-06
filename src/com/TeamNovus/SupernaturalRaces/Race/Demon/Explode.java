@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class Explode implements Spell {
@@ -30,7 +31,7 @@ public class Explode implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.SULPHUR, 1), 200);
+		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.SULPHUR, 1)));
 	}
 
 	@Override

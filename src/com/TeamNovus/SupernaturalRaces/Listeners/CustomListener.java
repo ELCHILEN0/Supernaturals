@@ -85,7 +85,7 @@ public class CustomListener implements Listener {
 						
 			for(Spell spell : race.spells()) {
 				if(spell.binding().equals(event.getMaterial())) {
-					if(spell.consume().has(event.getPlayer())) {
+					if(spell.required().has(event.getPlayer())) {
 						if(spell.execute(event.getPlayer())) {
 							spell.consume().consume(event.getPlayer());
 						}

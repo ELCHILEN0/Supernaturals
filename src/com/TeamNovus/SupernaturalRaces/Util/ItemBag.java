@@ -1,26 +1,35 @@
 package com.TeamNovus.SupernaturalRaces.Util;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemBag {
-	private ItemStack[] itemStacks;
+	private List<ItemStack> itemStacks;
 
 	public ItemBag(ItemStack... itemStacks) {
-		this.itemStacks = itemStacks;
+		this.itemStacks = Arrays.asList(itemStacks);
 	}
 	
-	public Boolean has(Player player) {
+	public Boolean has(Player player) {		
 		for(ItemStack stack : itemStacks) {
-			if(!(player.getInventory().contains(stack))) {
-				return false;
+			int total = 0;
+			for(ItemStack s : player.getInventory().all(stack.getType()).values()) {
+				total += s.getAmount();
 			}
+
+			if(total < stack.getAmount())
+				return false;
 		}
 		return true;
 	}
 	
 	public void consume(Player player) {
-		player.getInventory().removeItem(itemStacks);
+		for(ItemStack stack : itemStacks) {
+			player.getInventory().removeItem(stack);
+		}
 	}
 	
 }

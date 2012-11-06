@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class ShockHeal implements Spell {
@@ -27,7 +28,7 @@ public class ShockHeal implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.GLOWSTONE_DUST, 1), 100);
+		return new Reagent(0.0, 0, 0, 0, 100, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 1)));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class ShockHeal implements Spell {
 	@Override
 	public Boolean execute(Player sender) {
 		sender.getWorld().strikeLightning(sender.getLocation());
-		sender.setHealth(sender.getMaxHealth());
+		sender.setHealth(sender.getHealth() + sender.getHealth()*75);
 		sender.sendMessage(ChatColor.GOLD + "You have been healed by lightning!");
 		return true;
 	}

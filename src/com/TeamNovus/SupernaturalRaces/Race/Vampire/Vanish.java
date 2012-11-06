@@ -8,6 +8,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class Vanish implements Spell {
@@ -29,7 +30,7 @@ public class Vanish implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.SUGAR, 1), 300);
+		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.SUGAR, 1)));
 	}
 
 	@Override

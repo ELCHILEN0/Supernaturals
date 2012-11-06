@@ -31,7 +31,7 @@ public class InfoCmd implements CommandExecutor {
 						sender.sendMessage(ChatColor.GOLD + "  " + spell.name());
 						sender.sendMessage(ChatColor.BLUE + "    Info: " + ChatColor.YELLOW + spell.info());
 						sender.sendMessage(ChatColor.BLUE + "    Bound to: " + ChatColor.YELLOW + spell.binding().name());
-						sender.sendMessage(ChatColor.BLUE + "    Reagents: " + ChatColor.YELLOW + spell.reagent().toString());
+						sender.sendMessage(ChatColor.BLUE + "    Reagents: " + ChatColor.YELLOW + spell.required().toString());
 						sender.sendMessage(ChatColor.BLUE + "    Consumes: " + ChatColor.YELLOW + spell.consume().toString());
 					}
 				}

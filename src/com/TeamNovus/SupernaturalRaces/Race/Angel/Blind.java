@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class Blind implements Spell {
@@ -31,7 +32,7 @@ public class Blind implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.SUGAR, 1), 200);
+		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.SUGAR, 1)));
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class Blind implements Spell {
 		for(Entity e : sender.getNearbyEntities(5, 5, 5)) {
 			if(e instanceof Player) {
 				Player target = ((Player) e);
-				target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 0));
+				target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 30, 0));
 				target.playEffect(target.getLocation(), Effect.SMOKE, 1);
 			}
 		}

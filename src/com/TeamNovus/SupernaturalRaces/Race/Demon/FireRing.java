@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class FireRing implements Spell {
@@ -32,7 +33,7 @@ public class FireRing implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, new ItemStack(Material.REDSTONE, 5), 300);
+		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.REDSTONE, 5)));
 	}
 
 	@Override
