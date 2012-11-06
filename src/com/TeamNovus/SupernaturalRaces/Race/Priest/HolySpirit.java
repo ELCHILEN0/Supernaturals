@@ -8,9 +8,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Metadata.SNBooleanAttribute;
-import com.TeamNovus.SupernaturalRaces.Models.Reagent;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class HolySpirit implements Spell {
 

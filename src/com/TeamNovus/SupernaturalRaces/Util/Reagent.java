@@ -1,9 +1,10 @@
-package com.TeamNovus.SupernaturalRaces.Models;
+package com.TeamNovus.SupernaturalRaces.Util;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 
 public class Reagent {
 	// TODO: Money

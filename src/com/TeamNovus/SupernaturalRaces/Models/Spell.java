@@ -3,6 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Models;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.TeamNovus.SupernaturalRaces.Util.Reagent;
+
 public interface Spell {	
 	/**
 	 * The name of the spell.

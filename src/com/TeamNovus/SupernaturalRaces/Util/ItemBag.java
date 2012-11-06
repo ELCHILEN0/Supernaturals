@@ -1,4 +1,4 @@
-package com.TeamNovus.SupernaturalRaces.Models;
+package com.TeamNovus.SupernaturalRaces.Util;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

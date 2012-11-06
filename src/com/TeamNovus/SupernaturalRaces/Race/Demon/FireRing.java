@@ -10,8 +10,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.TeamNovus.SupernaturalRaces.Models.Reagent;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class FireRing implements Spell {
 

@@ -5,8 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.TeamNovus.SupernaturalRaces.Models.Reagent;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class ShockHeal implements Spell {
 
