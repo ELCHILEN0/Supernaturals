@@ -1,6 +1,7 @@
 package com.TeamNovus.SupernaturalRaces.Tasks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
@@ -19,48 +20,53 @@ public class PowerRegenTask implements Runnable {
 		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
 			Race race = SupernaturalRaces.getRaceManager().getRace(player);
-			
+						
 			if(player.getPower() < race.maxPower() && race.powerIncrement() != 0) {
 				if(race.equals(new DemonRace())) {
 					if(p.getWorld().getBiome(p.getLocation().getBlockX(), p.getLocation().getBlockZ()).equals(Biome.HELL)) {
-						regenPower(player, 1.5);
+						regenPower(p, 1.5);
 					} else if(p.getWorld().getTime() > 12000) {
-						regenPower(player, 1.0);
+						regenPower(p, 1.0);
 					}
 				}
 
 				if(race.equals(new AngelRace())) {
 					if(p.getWorld().getTime() < 12000) {
-						regenPower(player, 2.0);
+						regenPower(p, 2.0);
 					}
 				}
 				
 				if(race.equals(new PriestRace())) {
-					regenPower(player, 1.25);
+					regenPower(p, 1.25);
 				}
 				
 				if(race.equals(new VampireRace())) {
 					if(p.getWorld().getTime() > 12000) {
-						regenPower(player, 2.5);
+						regenPower(p, 2.5);
 					}
 				}
 				
 				if(race.equals(new WerewolfRace())) {
 					if(p.getWorld().getTime() > 12000) {
-						regenPower(player, 2.5);
+						regenPower(p, 2.5);
 					}
 				}
 			}
 		}			
 	}
 	
-	public void regenPower(SNPlayer player, Double enhancement) {
+	public void regenPower(Player p, Double enhancement) {
+		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
 		Race race = SupernaturalRaces.getRaceManager().getRace(player);
+		Integer increment = (int) (race.powerIncrement() * enhancement);
 
-		if(player.getPower() + race.powerIncrement() > race.maxPower()) {
-			player.setPower(player.getPower() + (race.maxPower() - player.getPower()));					
-		} else { 
-			player.setPower((int) (player.getPower() + race.powerIncrement()*enhancement));
+		if(player.getPower() < race.maxPower()) {
+			if(player.getPower() + increment > race.maxPower()) {
+				player.setPower(player.getPower() + (race.maxPower() - player.getPower()));					
+			} else { 
+				player.setPower(player.getPower() + increment);
+			}
+			p.sendMessage(ChatColor.YELLOW + "+ " + increment + " Power");
 		}
 	}
 
