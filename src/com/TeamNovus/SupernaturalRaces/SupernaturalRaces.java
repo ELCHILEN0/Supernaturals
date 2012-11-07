@@ -12,7 +12,7 @@ import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
 import com.TeamNovus.SupernaturalRaces.Database.Database;
 import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultEntityListener;
-import com.TeamNovus.SupernaturalRaces.Listeners.DefaultWorldListener;
+import com.TeamNovus.SupernaturalRaces.Listeners.DefaultServerListener;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
 import com.TeamNovus.SupernaturalRaces.Managers.EventManager;
@@ -48,10 +48,16 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
 		getServer().getPluginManager().registerEvents(new DefaultEntityListener(), this);
-		getServer().getPluginManager().registerEvents(new DefaultWorldListener(), this);
+		getServer().getPluginManager().registerEvents(new DefaultServerListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 60, 20L * 60);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			@Override
+			public void run() {
+				new DefaultServerListener().onServerTick();
+			}
+		}, 1, 1);
 	}
 	
 	@Override

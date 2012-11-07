@@ -17,8 +17,8 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 

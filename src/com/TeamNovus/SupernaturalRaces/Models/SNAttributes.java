@@ -1,15 +1,22 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
 public class SNAttributes {
-	private boolean phaseWalking = false;
-
-	public boolean isPhaseWalking() {
-		return phaseWalking;
+	private int remainingPhaseWalk = -1;
+	private int remainingBleeding = -1;
+	
+	public int getRemainingPhaseWalk() {
+		return remainingPhaseWalk;
+	}
+	
+	public void setRemainingPhaseWalk(int remainingPhaseWalk) {
+		this.remainingPhaseWalk = remainingPhaseWalk;
 	}
 
-	public void setPhaseWalking(boolean phaseWalking) {
-		this.phaseWalking = phaseWalking;
+	public int getRemainingBleeding() {
+		return remainingBleeding;
 	}
 
-
+	public void setRemainingBleeding(int remainingBleeding) {
+		this.remainingBleeding = remainingBleeding;
+	}
 }

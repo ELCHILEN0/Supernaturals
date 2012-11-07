@@ -3,8 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Race.Werewolf;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
 public class WerewolfRace implements Race {

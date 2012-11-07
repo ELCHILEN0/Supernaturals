@@ -40,21 +40,9 @@ public class HolySpirit implements Spell {
 	}
 	
 	@Override
-	public Boolean execute(final Player sender) {
-		
-		SupernaturalRaces.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(SupernaturalRaces.getPlugin(),
-				new Runnable() {
-					@Override
-					public void run() {
-						SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
-						player.setPhaseWalking(false);
-						sender.sendMessage(ChatColor.GOLD + "You have returned to your body!");
-						sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
-					}
-			}, 20 * 30);
-		
+	public Boolean execute(Player sender) {
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
-		player.setPhaseWalking(true);
+		player.setRemainingPhaseWalk(player.getRemainingPhaseWalk() + 20 * 30);
 		sender.sendMessage(ChatColor.GOLD + "You have left your body!");
 		sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
 		return true;

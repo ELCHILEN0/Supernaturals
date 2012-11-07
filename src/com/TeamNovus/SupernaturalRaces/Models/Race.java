@@ -2,7 +2,6 @@ package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
 
 
 public interface Race {

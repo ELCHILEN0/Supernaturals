@@ -5,8 +5,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventHandler;
-import com.TeamNovus.SupernaturalRaces.Listeners.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 
 public class PriestEvents implements SNEventListener {
@@ -15,7 +15,7 @@ public class PriestEvents implements SNEventListener {
 	public void onPlayerDamage(PlayerDamageEvent event) {
 		if(event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer());
-			if(player.isPhaseWalking()) {
+			if(player.getRemainingPhaseWalk() > 0) {
 				if((Math.random()*100) > 45) {
 					event.getPlayer().sendMessage(ChatColor.GOLD + "Avoided!");
 					event.setCancelled(true);
@@ -24,7 +24,7 @@ public class PriestEvents implements SNEventListener {
 			}
 		}
 		
-		event.setDamage(event.getDamage()/5*4);		
+		event.setDamage(event.getDamage()*(9/10));		
 		return;
 	}
 }

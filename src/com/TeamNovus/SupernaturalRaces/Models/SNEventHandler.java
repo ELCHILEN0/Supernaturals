@@ -1,4 +1,4 @@
-package com.TeamNovus.SupernaturalRaces.Listeners;
+package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
