@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Metadata.SNBooleanAttribute;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
@@ -48,14 +47,14 @@ public class HolySpirit implements Spell {
 					@Override
 					public void run() {
 						SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
-						player.setAttribute("phaseWalking", new SNBooleanAttribute(false));
+						player.setPhaseWalking(false);
 						sender.sendMessage(ChatColor.GOLD + "You have returned to your body!");
 						sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
 					}
 			}, 20 * 30);
 		
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
-		player.setAttribute("phaseWalking", new SNBooleanAttribute(true));
+		player.setPhaseWalking(true);
 		sender.sendMessage(ChatColor.GOLD + "You have left your body!");
 		sender.playEffect(sender.getLocation(), Effect.SMOKE, 0);
 		return true;

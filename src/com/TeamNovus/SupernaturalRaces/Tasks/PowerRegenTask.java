@@ -59,7 +59,7 @@ public class PowerRegenTask implements Runnable {
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
 		Race race = SupernaturalRaces.getRaceManager().getRace(player);
 		Integer increment = (int) (race.powerIncrement() * enhancement);
-
+		
 		if(player.getPower() < race.maxPower()) {
 			if(player.getPower() + increment > race.maxPower()) {
 				player.setPower(player.getPower() + (race.maxPower() - player.getPower()));					
