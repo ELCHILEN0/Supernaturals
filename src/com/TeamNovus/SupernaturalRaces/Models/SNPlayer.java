@@ -1,6 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-public class SNPlayer extends SNAttribute {
+public class SNPlayer extends SNAttributes {
 	private String race = "Human";
 	private Integer power = 0;
 	

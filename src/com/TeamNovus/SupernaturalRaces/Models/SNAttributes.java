@@ -1,6 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-public class SNAttribute {
+public class SNAttributes {
 	private boolean phaseWalking = false;
 
 	public boolean isPhaseWalking() {
