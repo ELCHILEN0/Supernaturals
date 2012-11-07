@@ -62,6 +62,10 @@ public class SupernaturalRaces extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
+		// Cancel all tasks
+		getServer().getScheduler().cancelTasks(this);
+		
+		// Save to database and close the connection
 		database.save();
 		database.close();
 		
@@ -70,9 +74,6 @@ public class SupernaturalRaces extends JavaPlugin {
 		database = null;
 		playerManager = null;
 		raceManager = null;
-		
-		// Cancel all tasks
-		getServer().getScheduler().cancelTasks(this);		
 	}
 	
 	public void reloadConfiguration() {
