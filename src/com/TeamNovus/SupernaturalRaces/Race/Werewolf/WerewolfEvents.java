@@ -1,5 +1,10 @@
 package com.TeamNovus.SupernaturalRaces.Race.Werewolf;
 
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
@@ -11,13 +16,23 @@ public class WerewolfEvents implements SNEventListener {
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
 		if(event.getPlayer().getWorld().getTime() > 12000) {
 			event.setDamage(event.getDamage()*2);
-		}		
+		}
+	}
+	
+	@SNEventHandler
+	public void onPlayerDamageByEntity(PlayerDamageByEntityEvent event) {
+		if(event.getEntity() instanceof Player) {
+			Player attacker = (Player) event.getEntity();
+			if(attacker.getItemInHand().equals(new ItemStack(Material.IRON_SWORD))) {
+				event.setDamage(event.getDamage()*2);
+			}
+		}
 	}
 
 	@SNEventHandler
 	public void onPlayerDamage(PlayerDamageEvent event) {
 		if(event.getPlayer().getWorld().getTime() > 12000) {
 			event.setDamage(event.getDamage()*2);
-		}
+		}		
 	}
 }

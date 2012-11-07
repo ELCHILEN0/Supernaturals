@@ -1,11 +1,14 @@
 package com.TeamNovus.SupernaturalRaces.Race.Vampire;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
@@ -20,6 +23,16 @@ public class VampireEvents implements SNEventListener {
 				Player player = (Player) event.getEntity();
 				SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
 				snp.setRemainingBleeding(snp.getRemainingBleeding() + 20*30);
+			}
+		}
+	}
+	
+	@SNEventHandler
+	public void onPlayerDamageByEntity(PlayerDamageByEntityEvent event) {
+		if(event.getEntity() instanceof Player) {
+			Player attacker = (Player) event.getEntity();
+			if(attacker.getItemInHand().equals(new ItemStack(Material.IRON_SWORD))) {
+				event.setDamage(event.getDamage()*2);
 			}
 		}
 	}

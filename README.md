@@ -51,6 +51,7 @@ Players then have the option of converting to another type of class with the /co
    - Power: 1000 - 10
      - 250% during NIGHT.
      - 0% power during DAY.
+     - Takes 300% damage from WOODEN_SWORDS.
    - Effects:
      - Has a 2% chance to burn for 1 SECOND during DAY.
      - Has a 25% chance to make ENTITIES bleed for 30 SECONDS during NIGHT.
@@ -65,7 +66,8 @@ Players then have the option of converting to another type of class with the /co
    - Effects:
      - Gains 25 power per 10 seconds during NIGHT.
      - Gains 0 power per 10 seconds during DAY.
-     - Deals 125% damage during NIGHT
+     - Deals 125% damage during NIGHT.
+     - Takes 200% damage from IRON_SWORDS.
    - Spells:
      - Scent: Track a player for 5 MINUTES. Requires 500 Power + 1 COMPASS.
      - Train: Summon a wolf.  Requires 50 Power + 4 BONE.
