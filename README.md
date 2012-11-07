@@ -5,6 +5,7 @@ TODO:
 * [Dev] Add a CommandManager that uses the /supernaturals [sn] sub-command.
 * [Dev] Add onSpellCast(), onSpellPreprocess(), onSpellPostprocess()
 * [Dev/User] Change power regen to be every tick and to check if the player meets the requirements.
+* [User] Tell players what they are missing from their reagents/requirements.
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events
@@ -14,9 +15,9 @@ Players then have the option of converting to another type of class with the /co
 ## Races
 * Angel:
    - Power: 1250
-     - Gains 20 during DAY.
-     - Gains 5 during NIGHT.
-   - Effects:  
+     - Gains 200% during DAY.
+     - Gains 50% during NIGHT.
+   - Effects:
      - Takes 75% damage during DAY
      - Takes 125% damage during NIGHT
      - Takes 0 damage from falling
