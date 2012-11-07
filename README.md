@@ -5,7 +5,8 @@ TODO:
 * [Dev] Add a CommandManager that uses the /supernaturals [sn] sub-command.
 * [Dev] Add onSpellCast(), onSpellPreprocess(), onSpellPostprocess()
 * [User] Tell players what they are missing from their reagents/requirements.
-* [User] Add some cool new races + spells!!!
+* [User] Add some cool new races + spells!!! [Adaro, Lich, Ghost, Brute, Knight, Mage]
+* [User] Work on shrines to convert. (Signs? Block Formations?)
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events
