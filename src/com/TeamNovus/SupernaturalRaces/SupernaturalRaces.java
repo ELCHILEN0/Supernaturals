@@ -4,15 +4,13 @@ import java.io.File;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.TeamNovus.SupernaturalRaces.Commands.ConvertCmd;
-import com.TeamNovus.SupernaturalRaces.Commands.HelpCommand;
-import com.TeamNovus.SupernaturalRaces.Commands.InfoCmd;
-import com.TeamNovus.SupernaturalRaces.Commands.PowerCmd;
-import com.TeamNovus.SupernaturalRaces.Commands.RacesCmd;
+import com.TeamNovus.SupernaturalRaces.Commands.BaseCommandExecutor;
+import com.TeamNovus.SupernaturalRaces.Commands.DefaultCommands;
 import com.TeamNovus.SupernaturalRaces.Database.Database;
 import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultEntityListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultServerListener;
+import com.TeamNovus.SupernaturalRaces.Managers.CommandManager;
 import com.TeamNovus.SupernaturalRaces.Managers.PlayerManager;
 import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
 import com.TeamNovus.SupernaturalRaces.Managers.EventManager;
@@ -21,6 +19,7 @@ import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
 
 public class SupernaturalRaces extends JavaPlugin {
 	private static SupernaturalRaces plugin;
+	private static CommandManager commandManager;
 	private static PlayerManager playerManager;
 	private static RaceManager raceManager;
 	private static Database database;
@@ -30,20 +29,19 @@ public class SupernaturalRaces extends JavaPlugin {
 		plugin = this;
 		
 		reloadConfiguration();
-		
+
+		commandManager = new CommandManager();
 		playerManager = new PlayerManager();
 		raceManager = new RaceManager();
 		database = new Database();
 		
-		getCommand("supernatural").setExecutor(new HelpCommand());
-		getCommand("convert").setExecutor(new ConvertCmd());
-		getCommand("races").setExecutor(new RacesCmd());
-		getCommand("power").setExecutor(new PowerCmd());
-		getCommand("sninfo").setExecutor(new InfoCmd());
+		getCommand("supernatural").setExecutor(new BaseCommandExecutor());
 		
 		database.connect();
 		database.setup();
 		database.load();
+		
+		commandManager.registerClass(DefaultCommands.class);
 						
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
@@ -72,6 +70,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		// Set all static references to null
 		plugin = null;
 		database = null;
+		commandManager = null;
 		playerManager = null;
 		raceManager = null;
 	}
@@ -97,5 +96,9 @@ public class SupernaturalRaces extends JavaPlugin {
 	
 	public static Database getDb() {
 		return database;
+	}
+
+	public static CommandManager getCommandManager() {
+		return commandManager;
 	}
 }
