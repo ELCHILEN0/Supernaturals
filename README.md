@@ -4,8 +4,8 @@ SupernaturalRaces
 TODO:
 * [Dev] Add a CommandManager that uses the /supernaturals [sn] sub-command.
 * [Dev] Add onSpellCast(), onSpellPreprocess(), onSpellPostprocess()
-* [Dev/User] Change power regen to be every tick and to check if the player meets the requirements.
 * [User] Tell players what they are missing from their reagents/requirements.
+* [User] Add some cool new races + spells!!!
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events
