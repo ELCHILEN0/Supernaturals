@@ -28,7 +28,7 @@ public class BaseCommandExecutor implements CommandExecutor {
 		BaseCommand command = SupernaturalRaces.getCommandManager().getCommand(args[0]);
 
 		if((args.length < command.min()) || (args.length > command.max() && command.max() != -1)) {
-			sender.sendMessage("/" + commandLabel + " " + command.aliases()[0] + " " + command.usage());
+			sender.sendMessage(ChatColor.RED + "Usage: /" + commandLabel + " " + command.aliases()[0] + " " + command.usage());
 			return false;
 		}
 		

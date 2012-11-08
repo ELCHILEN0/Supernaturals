@@ -14,7 +14,7 @@ import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 
 public class PlayerCommands {
 
-	@BaseCommand(aliases = "convert", description = "Convert yourself or another player to a race!", usage = "convert <Race> [Player]", min = 2, max = 3)
+	@BaseCommand(aliases = "convert", description = "Convert yourself or another player to a race!", usage = "<Race> [Player]", min = 2, max = 3)
 	public void onConvertCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 2) {
 			if(!(sender instanceof Player)) {
@@ -73,7 +73,7 @@ public class PlayerCommands {
 
 	}
 
-	@BaseCommand(aliases = "races", description = "View all the availiable races!", usage = "races")
+	@BaseCommand(aliases = "races", description = "View all the availiable races!", usage = "")
 	public void onRacesCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(sender.hasPermission("supernaturalraces.races"))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
@@ -86,7 +86,7 @@ public class PlayerCommands {
 		}
 	}
 
-	@BaseCommand(aliases = "race", description = "View information about a race!", usage = "race <Race>", min = 2, max = 2)
+	@BaseCommand(aliases = "race", description = "View information about a race!", usage = "<Race>", min = 2, max = 2)
 	public void onRaceInfoCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(SupernaturalRaces.getRaceManager().getBestRace(args[1]) == null) {
 			sender.sendMessage(ChatColor.RED + "The specified race was not found!");
@@ -103,7 +103,7 @@ public class PlayerCommands {
 		}
 	}
 	
-	@BaseCommand(aliases = "spell", description = "View information about a spell!", usage = "spell <Spell>", min = 2, max = 2)
+	@BaseCommand(aliases = "spell", description = "View information about a spell!", usage = "<Spell>", min = 2, max = 2)
 	public void onSpellInfoCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(SupernaturalRaces.getRaceManager().getBestSpell(args[1]) == null) {
 			sender.sendMessage(ChatColor.RED + "The specified spell was not found!");
@@ -144,7 +144,7 @@ public class PlayerCommands {
 	}
 
 
-	@BaseCommand(aliases = "power", description = "View your total power!", usage = "power")
+	@BaseCommand(aliases = "power", description = "View your total power!", usage = "")
 	public void onPowerCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be run from the console!");

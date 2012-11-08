@@ -16,6 +16,7 @@ import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 
 /**
  * This class is designed to listen to and trigger any custom listeners
@@ -90,8 +91,19 @@ public class CustomListener implements Listener {
 							spell.consume().consume(event.getPlayer());
 						}
 					} else {
-						event.getPlayer().sendMessage(ChatColor.RED + "You do not have the required reagents to cast this spell!");
-						event.getPlayer().sendMessage(ChatColor.RED + "To see information on a certain spell do /sn spell <Spell>!");
+						event.getPlayer().sendMessage(ChatColor.BLUE + "Requires:");
+						if(spell.required().getMoneyCost() != 0)
+							event.getPlayer().sendMessage(ChatColor.BLUE + "   Money: " + ChatColor.YELLOW + spell.required().getMoneyCost());
+						if(spell.required().getExpCost() != 0)
+							event.getPlayer().sendMessage(ChatColor.BLUE + "   Experience: " + ChatColor.YELLOW + spell.required().getExpCost());
+						if(spell.required().getHealthCost() != 0)
+							event.getPlayer().sendMessage(ChatColor.BLUE + "   Health: " + ChatColor.YELLOW + spell.required().getHealthCost());
+						if(spell.required().getHungerCost() != 0)
+							event.getPlayer().sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + spell.required().getHungerCost());
+						if(spell.required().getPowerCost() != 0)
+							event.getPlayer().sendMessage(ChatColor.BLUE + "   Power: " + ChatColor.YELLOW + spell.required().getPowerCost());
+						if(spell.required().getItemBagCost() != new ItemBag());
+						event.getPlayer().sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + spell.required().getItemBagCost().toString());
 					}
 				}
 			}
