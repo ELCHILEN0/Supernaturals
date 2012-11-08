@@ -21,7 +21,7 @@ public class VampireRace implements Race {
 
 	@Override
 	public Integer powerIncrement() {
-		return 35;
+		return 10;
 	}
 
 	@Override

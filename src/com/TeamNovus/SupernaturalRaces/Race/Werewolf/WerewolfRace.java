@@ -21,7 +21,7 @@ public class WerewolfRace implements Race {
 	
 	@Override
 	public Integer powerIncrement() {
-		return 30;
+		return 10;
 	}
 
 	@Override

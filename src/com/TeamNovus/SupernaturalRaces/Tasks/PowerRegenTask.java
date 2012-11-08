@@ -22,17 +22,19 @@ public class PowerRegenTask implements Runnable {
 			Race race = SupernaturalRaces.getRaceManager().getRace(player);
 						
 			if(player.getPower() < race.maxPower() && race.powerIncrement() != 0) {
+				if(race instanceof AngelRace) {
+					if(p.getWorld().getTime() < 12000) {
+						regenPower(p, 2.0);
+					} else {
+						regenPower(p, .5);
+					}
+				}
+				
 				if(race instanceof DemonRace) {
 					if(p.getWorld().getBiome(p.getLocation().getBlockX(), p.getLocation().getBlockZ()).equals(Biome.HELL)) {
 						regenPower(p, 1.5);
 					} else if(p.getWorld().getTime() > 12000) {
 						regenPower(p, 1.0);
-					}
-				}
-
-				if(race instanceof AngelRace) {
-					if(p.getWorld().getTime() < 12000) {
-						regenPower(p, 2.0);
 					}
 				}
 				
