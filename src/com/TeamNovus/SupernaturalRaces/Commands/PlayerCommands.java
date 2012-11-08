@@ -98,7 +98,7 @@ public class PlayerCommands {
 		sender.sendMessage(ChatColor.GOLD + race.name() + ":");
 		sender.sendMessage(ChatColor.BLUE + "   Max Power: " + ChatColor.YELLOW + race.maxPower());
 		sender.sendMessage(ChatColor.BLUE + "   Default Power Gain: " + ChatColor.YELLOW + race.powerIncrement());
-		sender.sendMessage(ChatColor.BLUE + "Info: " + ChatColor.YELLOW + race.info());
+		// TODO: sender.sendMessage("Info: " + race.info());
 		sender.sendMessage(ChatColor.BLUE + "   Spells:");
 		for(Spell spell : race.spells()) {
 			sender.sendMessage(ChatColor.GOLD + "      - " + spell.name());
