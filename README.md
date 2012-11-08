@@ -2,9 +2,7 @@ SupernaturalRaces
 =================
 
 TODO:
-* [Dev] Add a CommandManager that uses the /supernaturals [sn] sub-command.
 * [Dev] Add onSpellCast(), onSpellPreprocess(), onSpellPostprocess()
-* [User] Tell players what they are missing from their reagents/requirements.
 * [User] Add some cool new races + spells!!! [Adaro, Lich, Ghost, Brute, Knight, Mage]
 * [User] Work on shrines to convert. (Signs? Block Formations?)
 
