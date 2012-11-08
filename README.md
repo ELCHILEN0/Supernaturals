@@ -24,7 +24,7 @@ Players then have the option of converting to another type of class with the /co
      - Luminatus: Night vision for 30 seconds. Requires 150 Power + 1 GLOWSTONE_DUST. 
      - Blind: Blind nearby players for 30 seconds. Requires 200 Power + 1 SUGAR.
 * Demon
-   - Power: 1000
+   - Power: 750
      - Gains 15 in NETHER.
      - Gains 10 during NIGHT.
      - Gains 0 during DAY
@@ -34,7 +34,7 @@ Players then have the option of converting to another type of class with the /co
    - Spells:
      - FireRing: Cast a ring of fire around you. Requires 300 Power + 5 REDSTONE.
      - Explode: Damage nearby players by 5.  Radius of 5.  Requires 200 Power + 1 SULPHUR.
-     - ShockHeal: Get healed 50-75%.  Requires 100 Power + 1 GLOWSTONE_DUST.
+     - ShockHeal: Get healed 50%.  Requires 100 Power + 1 GLOWSTONE_DUST.
 * Priest
    - Power: 1500
      - Gains 13 power ALWAYS.
@@ -46,12 +46,12 @@ Players then have the option of converting to another type of class with the /co
      - Cure: Cure yourself of all maladies. Requires 100 Power + 1 CLAY_BALL.
      - Renew: Buffer nearby players. Radius of 5. Requires 150 Power + 1 GLOWSTONE_DUST.
 * Vampire
-   - Power: 1000 - 10
+   - Power: 1000 
      - 250% during NIGHT.
      - 0% power during DAY.
      - Takes 300% damage from WOODEN_SWORDS.
    - Effects:
-     - Has a 2% chance to burn for 1 SECOND during DAY.
+     - Has a 10% chance to burn for 1 SECOND during DAY when SPRINTING.
      - Has a 25% chance to make ENTITIES bleed for 30 SECONDS during NIGHT.
      - Deals 120% damage during NIGHT.
      - Receives SPEED_POTION_EFFECT during NIGHT.

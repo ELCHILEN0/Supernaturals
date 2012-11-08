@@ -25,13 +25,17 @@ public class VampireEvents implements SNEventListener {
 				snp.setRemainingBleeding(snp.getRemainingBleeding() + 20*30);
 			}
 		}
+		
+		if(event.getPlayer().getWorld().getTime() > 12000) {
+			event.setDamage((int) (event.getDamage() * 1.25));
+		}
 	}
 	
 	@SNEventHandler
 	public void onPlayerDamageByEntity(PlayerDamageByEntityEvent event) {
 		if(event.getEntity() instanceof Player) {
 			Player attacker = (Player) event.getEntity();
-			if(attacker.getItemInHand().equals(new ItemStack(Material.IRON_SWORD))) {
+			if(attacker.getItemInHand().equals(new ItemStack(Material.WOOD_SWORD))) {
 				event.setDamage(event.getDamage()*2);
 			}
 		}

@@ -1,30 +1,33 @@
 package com.TeamNovus.SupernaturalRaces.Race.Priest;
 
-import org.bukkit.ChatColor;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
+import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
+import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
+import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
 
 public class PriestEvents implements SNEventListener {
 	
 	@SNEventHandler
 	public void onPlayerDamage(PlayerDamageEvent event) {
-		if(event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer());
-			if(player.getRemainingPhaseWalk() > 0) {
-				if((Math.random()*100) > 45) {
-					event.getPlayer().sendMessage(ChatColor.GOLD + "Avoided!");
-					event.setCancelled(true);
-					return;
-				}
+		event.setDamage((int) (event.getDamage() * .80));
+	}
+	
+	@SNEventHandler
+	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
+		if(event.getEntity() instanceof Player) {
+			SNPlayer target = SupernaturalRaces.getPlayerManager().getPlayer((Player) event.getEntity());
+			Race race = SupernaturalRaces.getRaceManager().getRace(target);
+			if(race instanceof DemonRace || race instanceof VampireRace || race instanceof WerewolfRace) {
+				event.setDamage((int) (event.getDamage() * 1.25));
 			}
 		}
-		
-		event.setDamage(event.getDamage()*(9/10));		
-		return;
 	}
 }

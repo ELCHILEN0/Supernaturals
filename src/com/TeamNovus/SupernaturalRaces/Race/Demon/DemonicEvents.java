@@ -18,13 +18,8 @@ public class DemonicEvents implements SNEventListener {
 			event.setCancelled(true);
 		}
 		
-		if(event.getCause().equals(DamageCause.DROWNING)) {
-			event.setDamage(event.getDamage()*3);
-			return;
-		}
-		
 		if(player.getLocation().getBlock().isLiquid()) {
-			event.setDamage(event.getDamage()*2);
+			event.setDamage((int) (event.getDamage() * 1.25));
 			return;
 		}		
 	}

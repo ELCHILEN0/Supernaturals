@@ -41,6 +41,7 @@ public class PlayerCommands {
 			}
 
 			player.setRace(race.name());
+			player.setPower(0);
 			sender.sendMessage(ChatColor.YELLOW + "You are now a(n) " + ChatColor.GREEN + race.name() + ChatColor.YELLOW + "!");
 		} else {	
 			if(!(sender.hasPermission("supernaturalraces.convert.others."+args[1].toLowerCase()))) {
@@ -67,6 +68,7 @@ public class PlayerCommands {
 			}
 
 			player.setRace(race.name());
+			player.setPower(0);
 			SupernaturalRaces.getPlugin().getServer().getPlayer(args[2]).sendMessage(ChatColor.GREEN + "You are now a(n) " + ChatColor.YELLOW + race.name() + ChatColor.GREEN + "!");
 			sender.sendMessage(ChatColor.YELLOW + Bukkit.getPlayer(args[2]).getDisplayName() + ChatColor.GREEN + " is now a(n) " + ChatColor.YELLOW + race.name() + ChatColor.GREEN + "!");
 		}

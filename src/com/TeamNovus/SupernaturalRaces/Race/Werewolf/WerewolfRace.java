@@ -29,6 +29,7 @@ public class WerewolfRace implements Race {
 		List<Spell> spells = new ArrayList<Spell>();
 		spells.add(new Train());
 		spells.add(new Scent());
+		spells.add(new Haste());
 		return spells;
 	}
 

@@ -18,12 +18,12 @@ public class AngelicEvents implements SNEventListener {
 		}
 		
 		if(player.getWorld().getTime() < 12000) {
-			event.setDamage(event.getDamage()/2);
+			event.setDamage((int) (event.getDamage()*.75));
 			return;
 		}
 		
 		if(player.getWorld().getTime() > 12000) {
-			event.setDamage(event.getDamage()*2);
+			event.setDamage((int) (event.getDamage() * 1.25));
 			return;
 		}			
 	}

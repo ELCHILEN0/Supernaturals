@@ -1,36 +1,31 @@
 name: SupernaturalRaces
 author: ELCHILEN0
 description: PVP taken to its limits with supernatural races!
-version: 1.0.0
+version: 1.1.0
 main: com.TeamNovus.SupernaturalRaces.SupernaturalRaces
 commands:
   supernatural:
     description: Default command for all SupernaturalRaces commands!
     aliases: sn
-  convert:
-    description: Convert to another race!
-  power:
-    description: See your current power!
-  races:
-    description: See all the races you can join!
-  sninfo:
-    description: See a races information!
 permissions:
   supernaturalraces.player:
     description: Grants players permission to player commands.
     default: true
     children:
       supernaturalraces.convert: true
-      supernaturalraces.info: true
-      supernaturalraces.power: true
       supernaturalraces.races: true
+      supernaturalraces.race: true
+      supernaturalraces.spell: true
+      supernaturalraces.power: true
   supernaturalraces.convert:
-    description: Allows access to /convert <Race>
+    description: Allows access to /sn convert <Race>
   supernaturalraces.convert.others:
-    description: Allows access to /convert <Race> <Player>
-  supernaturalraces.info:
-    description: Allows access to /sninfo <Race>
-  supernaturalraces.power:
-    description: Allows access to /power
+    description: Allows access to /sn convert <Race> <Player>
   supernaturalraces.races:
-    description: Allows access to /races
+    description: Allows access to /sn races
+  supernaturalraces.race:
+    description: Allows access to /sn race <Race>
+  supernaturalraces.spell:
+    description: Allows access to /sn spell <Spell>
+  supernaturalraces.power:
+    description: Allows access to /sn power

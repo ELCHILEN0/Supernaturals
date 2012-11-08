@@ -28,6 +28,7 @@ public class VampireRace implements Race {
 	public List<Spell> spells() {
 		List<Spell> spells = new ArrayList<Spell>();
 		spells.add(new Vanish());
+		spells.add(new Strenghten());
 		return spells;
 	}
 

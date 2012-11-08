@@ -39,7 +39,7 @@ public class ShockHeal implements Spell {
 	@Override
 	public Boolean execute(Player sender) {
 		sender.getWorld().strikeLightning(sender.getLocation());
-		sender.setHealth(sender.getHealth() + sender.getHealth()*75);
+		sender.setHealth(sender.getHealth() + (int) (sender.getMaxHealth()*.5));
 		sender.sendMessage(ChatColor.GOLD + "You have been healed by lightning!");
 		return true;
 	}

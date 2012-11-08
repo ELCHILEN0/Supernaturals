@@ -42,10 +42,7 @@ public class DefaultServerListener implements Listener {
 			} if(snp.getRemainingPhaseWalk() == 0) {
 				snp.setRemainingPhaseWalk(snp.getRemainingPhaseWalk() - 1);
 				player.sendMessage(ChatColor.GOLD + "You have returned to your body!");
-			}
-			
-			
-			
+			}	
 		}
 	}
 	
