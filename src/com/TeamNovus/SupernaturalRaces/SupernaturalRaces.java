@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.SupernaturalRaces.Commands.BaseCommandExecutor;
 import com.TeamNovus.SupernaturalRaces.Commands.DefaultCommands;
+import com.TeamNovus.SupernaturalRaces.Commands.PlayerCommands;
 import com.TeamNovus.SupernaturalRaces.Database.Database;
 import com.TeamNovus.SupernaturalRaces.Listeners.CustomListener;
 import com.TeamNovus.SupernaturalRaces.Listeners.DefaultEntityListener;
@@ -42,6 +43,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		database.load();
 		
 		commandManager.registerClass(DefaultCommands.class);
+		commandManager.registerClass(PlayerCommands.class);
 						
 		getServer().getPluginManager().registerEvents(new CustomListener(), this);
 		getServer().getPluginManager().registerEvents(new EventManager(), this);
@@ -61,6 +63,7 @@ public class SupernaturalRaces extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		// Cancel all tasks
+		getServer().getScheduler().cancelTasks(this);
 		getServer().getScheduler().cancelTasks(this);
 		
 		// Save to database and close the connection

@@ -13,6 +13,10 @@ public class ItemBag {
 		this.itemStacks = Arrays.asList(itemStacks);
 	}
 	
+	public List<ItemStack> getStacks() {
+		return itemStacks;
+	}
+	
 	public Boolean has(Player player) {		
 		for(ItemStack stack : itemStacks) {
 			int total = 0;
@@ -30,6 +34,15 @@ public class ItemBag {
 		for(ItemStack stack : itemStacks) {
 			player.getInventory().removeItem(stack);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String s = "";
+		for(ItemStack stack : itemStacks) {
+			s += stack.getType().toString() + "x" + stack.getAmount() + " ";
+		}
+		return s.trim();
 	}
 	
 }

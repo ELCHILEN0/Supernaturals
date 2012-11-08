@@ -50,6 +50,30 @@ public class Reagent {
 		snp.setPower(snp.getPower() - power);
 	}
 	
+	public Double getMoneyCost() {
+		return money;
+	}
+	
+	public Integer getExpCost() {
+		return exp;
+	}
+	
+	public Integer getHealthCost() {
+		return health;
+	}
+	
+	public Integer getHungerCost() {
+		return hunger;
+	}
+	
+	public Integer getPowerCost() {
+		return power;
+	}
+	
+	public ItemBag getItemBagCost() {
+		return items;
+	}
+	
 	public String toString() {
 		return String.format("Money %s, Exp %s, Health %s, Hunger %s, Items %s, Power %s", money, exp, health, hunger, items, power);
 	}

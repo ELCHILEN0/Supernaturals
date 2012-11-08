@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
@@ -54,5 +55,27 @@ public class RaceManager {
 			}
 		}
 		return new HumanRace();
+	}
+	
+	/**
+	 * Gets the best matching race by its name
+	 */
+	public Race getBestRace(String s) {
+		for(Race race : races) {
+			if(race.name().toLowerCase().startsWith(s.toLowerCase())) {
+				return race;
+			}
+		}
+		return null;
+	}
+	
+	public Spell getBestSpell(String s) {
+		for(Race race : races) {
+			for(Spell spell : race.spells())
+				if(spell.name().toLowerCase().startsWith(s.toLowerCase())) {
+					return spell;
+				}
+		}
+		return null;
 	}
 }

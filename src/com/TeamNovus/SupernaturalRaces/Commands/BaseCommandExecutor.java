@@ -13,15 +13,15 @@ public class BaseCommandExecutor implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
 			sender.sendMessage(ChatColor.YELLOW + "<>--------------[ " + ChatColor.AQUA + "SupernaturalRaces" + ChatColor.YELLOW  + " ]--------------<>");
-			sender.sendMessage(ChatColor.AQUA + "SupernaturalRaces allows you to become a unique race!");
+			sender.sendMessage(ChatColor.AQUA + "SupernaturalRaces allows you to convert to a unique race!");
 			sender.sendMessage(ChatColor.AQUA + "Each race has custom spells, effects and abilities!");
-			sender.sendMessage(ChatColor.AQUA + "To get started you should familiarize yourself with the plugin!");
-			sender.sendMessage(ChatColor.AQUA + "Type " + ChatColor.YELLOW + "/sn tutorial" + ChatColor.AQUA + " to continue!");
+			sender.sendMessage(ChatColor.AQUA + "To view the tutorial type: " + ChatColor.YELLOW + "/sn tutorial" + ChatColor.AQUA + "!");
+			sender.sendMessage(ChatColor.AQUA + "To view all the commands type: " + ChatColor.YELLOW + "/sn help" + ChatColor.AQUA + "!");
 			return false;
 		}
 		
 		if(SupernaturalRaces.getCommandManager().getCommand(args[0]) == null) {
-			sender.sendMessage("The specified command was not found!");
+			sender.sendMessage(ChatColor.RED + "The specified command was not found!");
 			return false;
 		}
 		
