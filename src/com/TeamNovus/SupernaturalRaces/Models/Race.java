@@ -11,6 +11,11 @@ public interface Race {
 	String name();
 	
 	/**
+	 * Additional info about the race
+	 */
+	String info();
+	
+	/**
 	 * The max power of the race
 	 */
 	Integer maxPower();
