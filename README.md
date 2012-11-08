@@ -16,8 +16,8 @@ Players then have the option of converting to another type of class with the /co
 ## Races
 * Angel:
    - Power: 1250
-     - Gains 200% during DAY.
-     - Gains 50% during NIGHT.
+     - Gains 20 during DAY.
+     - Gains 5 during NIGHT.
    - Effects:
      - Takes 75% damage during DAY
      - Takes 125% damage during NIGHT
@@ -49,14 +49,14 @@ Players then have the option of converting to another type of class with the /co
      - Cure: Cure yourself of all maladies. Requires 100 Power + 1 CLAY_BALL.
      - Renew: Buffer nearby players. Radius of 5. Requires 150 Power + 1 GLOWSTONE_DUST.
 * Vampire
-   - Power: 1000 - 10
+   - Power: 1000
      - 250% during NIGHT.
      - 0% power during DAY.
-     - Takes 300% damage from WOODEN_SWORDS.
    - Effects:
      - Has a 2% chance to burn for 1 SECOND during DAY.
      - Has a 25% chance to make ENTITIES bleed for 30 SECONDS during NIGHT.
      - Deals 120% damage during NIGHT.
+     - Takes 300% damage from WOODEN_SWORDS.
      - Receives SPEED_POTION_EFFECT during NIGHT.
    - Spells:
      - Vanish: Vanish for 60 SECONDS. Requires 300 Power + 1 SUGAR.

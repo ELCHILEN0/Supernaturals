@@ -13,6 +13,11 @@ public class DemonRace implements Race {
 	public String name() {
 		return "Demon";
 	}
+	
+	@Override
+	public String info() {
+		return "Gain 15 power in the NETHER, 10 during NIGHT and 0 during DAY.  Takes NO damage from FIRE and 125% damage in WATER.";
+	}
 
 	@Override
 	public Integer maxPower() {

@@ -15,6 +15,11 @@ public class HumanRace implements Race {
 	}
 
 	@Override
+	public String info() {
+		return "Just regular Steve.  No special powers or weaknesses.";
+	}
+	
+	@Override
 	public Integer maxPower() {
 		return 0;
 	}

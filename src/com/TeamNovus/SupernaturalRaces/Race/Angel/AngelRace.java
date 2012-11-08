@@ -13,6 +13,11 @@ public class AngelRace implements Race {
 	public String name() {
 		return "Angel";
 	}
+	
+	@Override
+	public String info() {
+		return "Gain 20 power during the DAY, 5 during NIGHT.  Take 75% damage during DAY, 125% during NIGHT and NO damage from FALLING.";
+	}
 
 	@Override
 	public Integer maxPower() {

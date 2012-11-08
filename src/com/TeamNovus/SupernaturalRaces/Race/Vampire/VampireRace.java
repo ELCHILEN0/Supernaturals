@@ -13,6 +13,11 @@ public class VampireRace implements Race {
 	public String name() {
 		return "Vampire";
 	}
+	
+	@Override
+	public String info() {
+		return "Gains 25 power during NIGHT 0 during DAY.  SPEED_EFFECT at NIGHT and a chance to burn during DAY.  Deals 120% damage and can make players BLEED during NIGHT and takes 300% damage from WOODEN_SWORDS.";
+	}
 
 	@Override
 	public Integer maxPower() {

@@ -13,7 +13,7 @@ public interface Race {
 	/**
 	 * Additional info about the race
 	 */
-	String info();
+	String[] info();
 	
 	/**
 	 * The max power of the race

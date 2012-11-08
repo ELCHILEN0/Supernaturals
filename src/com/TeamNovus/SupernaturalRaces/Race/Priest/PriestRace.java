@@ -13,6 +13,11 @@ public class PriestRace implements Race {
 	public String name() {
 		return "Priest";
 	}
+	
+	@Override
+	public String info() {
+		return "Takes 80% damage at all times.";
+	}
 
 	@Override
 	public Integer maxPower() {
@@ -21,7 +26,7 @@ public class PriestRace implements Race {
 	
 	@Override
 	public Integer powerIncrement() {
-		return 20;
+		return 13;
 	}
 
 	@Override
