@@ -9,6 +9,7 @@ import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
+import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
@@ -31,6 +32,7 @@ public class RaceManager {
 		races.add(new PriestRace());
 		races.add(new VampireRace());
 		races.add(new WerewolfRace());
+		races.add(new MageRace());
 		races.add(new HumanRace());
 	}
 

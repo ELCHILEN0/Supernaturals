@@ -10,6 +10,7 @@ import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
+import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
@@ -52,6 +53,10 @@ public class PowerRegenTask implements Runnable {
 					if(p.getWorld().getTime() > 12000) {
 						regenPower(p, 2.5);
 					}
+				}
+				
+				if(race instanceof MageRace) {
+					regenPower(p, 2.0);
 				}
 			}
 		}			

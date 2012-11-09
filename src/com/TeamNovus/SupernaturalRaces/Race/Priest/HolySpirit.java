@@ -13,7 +13,6 @@ import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
 public class HolySpirit implements Spell {
-
 	@Override
 	public String name() {
 		return "HolySpirit";

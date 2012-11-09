@@ -3,6 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 public class SNAttributes {
 	private int remainingPhaseWalk = -1;
 	private int remainingBleeding = -1;
+	private int remainingIceWalk = -1;
 	
 	public int getRemainingPhaseWalk() {
 		return remainingPhaseWalk;
@@ -18,5 +19,13 @@ public class SNAttributes {
 
 	public void setRemainingBleeding(int remainingBleeding) {
 		this.remainingBleeding = remainingBleeding;
+	}
+
+	public int getRemainingIceWalk() {
+		return remainingIceWalk;
+	}
+
+	public void setRemainingIceWalk(int remainingIceWalk) {
+		this.remainingIceWalk = remainingIceWalk;
 	}
 }

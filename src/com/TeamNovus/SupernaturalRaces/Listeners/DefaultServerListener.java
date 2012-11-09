@@ -43,6 +43,13 @@ public class DefaultServerListener implements Listener {
 				snp.setRemainingPhaseWalk(snp.getRemainingPhaseWalk() - 1);
 				player.sendMessage(ChatColor.GOLD + "You have returned to your body!");
 			}	
+			
+			if(snp.getRemainingIceWalk() > 0) {
+				snp.setRemainingIceWalk(snp.getRemainingIceWalk() - 1);
+			} if(snp.getRemainingIceWalk() == 0) {
+				snp.setRemainingIceWalk(snp.getRemainingIceWalk() - 1);
+				player.sendMessage(ChatColor.GOLD + "You no longer can walk on water!");
+			}
 		}
 	}
 	
