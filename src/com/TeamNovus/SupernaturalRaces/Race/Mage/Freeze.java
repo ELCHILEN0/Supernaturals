@@ -23,10 +23,7 @@ public class Freeze implements Spell {
 		return "Freeze";
 	}
 
-	@Override
-	public String info() {
-		return "Freeze a player in an ice cube!";
-	}
+
 
 	@Override
 	public Reagent required() {

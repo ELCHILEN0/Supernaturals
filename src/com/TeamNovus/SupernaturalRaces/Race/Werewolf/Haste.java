@@ -18,10 +18,7 @@ public class Haste implements Spell {
 		return "Haste";
 	}
 
-	@Override
-	public String info() {
-		return "Gain SPEED for 60 SECONDS!";
-	}
+
 
 	@Override
 	public Reagent required() {

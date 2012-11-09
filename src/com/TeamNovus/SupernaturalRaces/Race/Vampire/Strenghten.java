@@ -18,10 +18,7 @@ public class Strenghten implements Spell {
 		return null;
 	}
 
-	@Override
-	public String info() {
-		return "Give yourself DAMAGE_RESISTANCE and INCREASE_DAMAGE for 30 SECONDS.";
-	}
+
 
 	@Override
 	public Reagent required() {

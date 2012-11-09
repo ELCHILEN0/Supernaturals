@@ -17,10 +17,7 @@ public class Cure implements Spell {
 		return "Cure";
 	}
 
-	@Override
-	public String info() {
-		return "Heal yourself of every malady!";
-	}
+
 
 	@Override
 	public Material binding() {

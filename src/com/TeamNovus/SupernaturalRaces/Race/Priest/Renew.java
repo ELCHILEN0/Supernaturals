@@ -20,10 +20,7 @@ public class Renew implements Spell {
 		return "Renew";
 	}
 
-	@Override
-	public String info() {
-		return "Give nearby players incrased damage and damage resistance for 10 seconds!";
-	}
+
 
 	@Override
 	public Material binding() {

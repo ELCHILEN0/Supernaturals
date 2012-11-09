@@ -20,10 +20,7 @@ public class Blind implements Spell {
 		return "Blind";
 	}
 
-	@Override
-	public String info() {
-		return "Blinds nearby players for 20 seconds!";
-	}
+
 
 	@Override
 	public Material binding() {

@@ -16,10 +16,7 @@ public class ShockHeal implements Spell {
 		return "ShockHeal";
 	}
 
-	@Override
-	public String info() {
-		return "Instantly give yourself max health!";
-	}
+
 
 	@Override
 	public Material binding() {

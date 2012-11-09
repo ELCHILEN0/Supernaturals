@@ -18,10 +18,7 @@ public class Combust implements Spell {
 		return "Freeze";
 	}
 
-	@Override
-	public String info() {
-		return "Cause a player to combust!";
-	}
+
 
 	@Override
 	public Reagent required() {

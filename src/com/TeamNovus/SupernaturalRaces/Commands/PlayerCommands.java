@@ -114,7 +114,6 @@ public class PlayerCommands {
 		
 		Spell spell = SupernaturalRaces.getRaceManager().getBestSpell(args[1]);
 		sender.sendMessage(ChatColor.GOLD + "" + spell.name());
-		sender.sendMessage(ChatColor.BLUE + "   Info: " + ChatColor.YELLOW + spell.info());
 		sender.sendMessage(ChatColor.BLUE + "   Bound to: " + ChatColor.YELLOW + spell.binding().name());
 		sender.sendMessage(ChatColor.BLUE + "   Requires:");
 		if(spell.required().getMoneyCost() != 0)

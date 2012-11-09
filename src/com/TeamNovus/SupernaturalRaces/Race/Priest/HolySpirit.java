@@ -18,10 +18,7 @@ public class HolySpirit implements Spell {
 		return "HolySpirit";
 	}
 
-	@Override
-	public String info() {
-		return "Leave your body and attack as a Spirit!";
-	}
+
 
 	@Override
 	public Material binding() {

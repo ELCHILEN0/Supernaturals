@@ -18,10 +18,7 @@ public class Soar implements Spell {
 		return "Soar";
 	}
 
-	@Override
-	public String info() {
-		return "Jump higher than normal!";
-	}
+
 	
 	@Override
 	public Material binding() {

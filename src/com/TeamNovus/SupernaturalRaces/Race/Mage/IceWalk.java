@@ -19,10 +19,7 @@ public class IceWalk implements Spell {
 		return "IceWalk";
 	}
 
-	@Override
-	public String info() {
-		return "Walk on water!";
-	}
+
 
 	@Override
 	public Material binding() {

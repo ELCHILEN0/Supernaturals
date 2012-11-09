@@ -19,10 +19,7 @@ public class Explode implements Spell {
 		return "Explode";
 	}
 
-	@Override
-	public String info() {
-		return "Damage nearby players in a radius of 5!";
-	}
+
 
 	@Override
 	public Material binding() {

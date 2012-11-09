@@ -19,10 +19,7 @@ public class Train implements Spell {
 		return "WolfSummon";
 	}
 
-	@Override
-	public String info() {
-		return "Summon a wolf to be your loyal companion!";
-	}
+
 
 	@Override
 	public Material binding() {

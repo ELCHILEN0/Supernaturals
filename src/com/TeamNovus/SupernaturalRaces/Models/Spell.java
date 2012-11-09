@@ -12,11 +12,6 @@ public interface Spell {
 	String name();
 	
 	/**
-	 * Information on what the spell does.
-	 */
-	String info();
-	
-	/**
 	 * The required to cast the spell.
 	 */
 	Reagent required();

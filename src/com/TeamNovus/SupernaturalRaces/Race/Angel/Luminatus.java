@@ -19,10 +19,7 @@ public class Luminatus implements Spell {
 		return "Luminatus";
 	}
 
-	@Override
-	public String info() {
-		return "Night Vision for 25 seconds!";
-	}
+
 	
 	@Override
 	public Material binding() {

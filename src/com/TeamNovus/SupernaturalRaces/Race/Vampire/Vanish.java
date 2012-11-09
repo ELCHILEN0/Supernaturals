@@ -18,10 +18,7 @@ public class Vanish implements Spell {
 		return "Vanish";
 	}
 
-	@Override
-	public String info() {
-		return "Vanish from your enemies for 60 seconds!";
-	}
+
 
 	@Override
 	public Material binding() {

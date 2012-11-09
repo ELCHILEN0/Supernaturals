@@ -22,10 +22,7 @@ public class FireRing implements Spell {
 		return "FireRing";
 	}
 
-	@Override
-	public String info() {
-		return "Cast a fire ring around you!";
-	}
+
 
 	@Override
 	public Material binding() {

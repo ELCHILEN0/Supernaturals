@@ -19,10 +19,7 @@ public class Scent implements Spell {
 		return "Scent";
 	}
 
-	@Override
-	public String info() {
-		return "Make your compass point towards a player for 5 minutes!";
-	}
+
 
 	@Override
 	public Material binding() {
