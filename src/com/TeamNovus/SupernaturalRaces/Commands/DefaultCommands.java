@@ -18,6 +18,7 @@ public class DefaultCommands {
 			sender.sendMessage(ChatColor.GOLD + "   Chapter 3 " + ChatColor.BLUE + "-" + ChatColor.GOLD + " Commands");
 			sender.sendMessage(ChatColor.GOLD + "   Chapter 4 " + ChatColor.BLUE + "-" + ChatColor.GOLD + " Races");
 			sender.sendMessage(ChatColor.GOLD + "   Chapter 5 " + ChatColor.BLUE + "-" + ChatColor.GOLD + " Spells");
+			sender.sendMessage(ChatColor.GREEN + "To continue on to gameplay type: " + ChatColor.AQUA + "/sn tutorial 1");
 		} else if(page == 1) {
 			sender.sendMessage(ChatColor.GREEN + "Overview:");
 			sender.sendMessage(ChatColor.GOLD + "SupernaturalRaces was is found ONLY on NovusCraft!");

@@ -107,12 +107,13 @@ public class PlayerCommands {
 	
 	@BaseCommand(aliases = "spell", description = "View information about a spell!", usage = "<Spell>", min = 2, max = 2)
 	public void onSpellInfoCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(SupernaturalRaces.getRaceManager().getBestSpell(args[1]) == null) {
+		Spell spell = SupernaturalRaces.getRaceManager().getBestSpell(args[1].toLowerCase());
+
+		if(spell == null) {
 			sender.sendMessage(ChatColor.RED + "The specified spell was not found!");
 			return;
 		}
 		
-		Spell spell = SupernaturalRaces.getRaceManager().getBestSpell(args[1]);
 		sender.sendMessage(ChatColor.GOLD + "" + spell.name());
 		sender.sendMessage(ChatColor.BLUE + "   Bound to: " + ChatColor.YELLOW + spell.binding().name());
 		sender.sendMessage(ChatColor.BLUE + "   Requires:");
