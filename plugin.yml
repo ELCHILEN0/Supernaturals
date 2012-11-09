@@ -12,7 +12,12 @@ permissions:
     description: Grants players permission to player commands.
     default: true
     children:
-      supernaturalraces.convert: true
+      supernaturalraces.convert.angel: true
+      supernaturalraces.convert.demon: true
+      supernaturalraces.convert.priest: true
+      supernaturalraces.convert.werewolf: true
+      supernaturalraces.convert.vampire: true
+      supernaturalraces.convert.human: true
       supernaturalraces.races: true
       supernaturalraces.race: true
       supernaturalraces.spell: true
