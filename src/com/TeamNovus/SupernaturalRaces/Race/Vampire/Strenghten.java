@@ -15,10 +15,8 @@ public class Strenghten implements Spell {
 
 	@Override
 	public String name() {
-		return null;
+		return "Strenghten";
 	}
-
-
 
 	@Override
 	public Reagent required() {

@@ -19,13 +19,7 @@ public class FireRing implements Spell {
 
 	@Override
 	public String name() {
-		return "FireRing";
-	}
-
-
-
-	@Override
-	public Material binding() {
+		return "FireRing"
 		return Material.REDSTONE;
 	}
 

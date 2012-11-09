@@ -16,13 +16,7 @@ public class Train implements Spell {
 	
 	@Override
 	public String name() {
-		return "WolfSummon";
-	}
-
-
-
-	@Override
-	public Material binding() {
+		return "WolfSummon"
 		return Material.BONE;
 	}
 
