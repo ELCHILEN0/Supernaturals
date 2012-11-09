@@ -28,6 +28,8 @@ public class MageRace implements Race {
 	public List<Spell> spells() {
 		List<Spell> spells = new ArrayList<Spell>();
 		spells.add(new IceWalk());
+		spells.add(new Freeze());
+		spells.add(new Combust());
 		return spells;
 	}
 

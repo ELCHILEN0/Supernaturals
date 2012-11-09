@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
@@ -96,13 +97,28 @@ public class FireRing implements Spell {
 		locations.add(sender.getLocation().add(-4, 0, 1));
 		locations.add(sender.getLocation().add(-3, 0, 2));
 		
-		List<Block> before = new ArrayList<Block>();
+		List<Block> changed = new ArrayList<Block>();
 		for(Location l : locations) {
 			if(l.getBlock().getType().equals(Material.AIR)) {
-				before.add(l.getBlock());
+				changed.add(l.getBlock());
 				l.getBlock().setType(Material.FIRE);
 			}
 		}
+		
+		final List<Block> restore = changed;
+		SupernaturalRaces.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(
+				SupernaturalRaces.getPlugin(), 
+				new Runnable() {
+					
+					@Override
+					public void run() {
+						for(Block block : restore) {
+							block.setType(Material.AIR);
+						}
+						
+					}
+				}, 20 * 30);
+		
 		sender.sendMessage(ChatColor.GOLD + "A ring of fire has been cast around you!");
 		return true;
 	}
