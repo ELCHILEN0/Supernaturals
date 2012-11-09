@@ -20,8 +20,6 @@ public class Renew implements Spell {
 		return "Renew";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.GLOWSTONE_DUST;

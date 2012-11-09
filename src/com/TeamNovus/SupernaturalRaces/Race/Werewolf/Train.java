@@ -19,8 +19,6 @@ public class Train implements Spell {
 		return "WolfSummon";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.BONE;

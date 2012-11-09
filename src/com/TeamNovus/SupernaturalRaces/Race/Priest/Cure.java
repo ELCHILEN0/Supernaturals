@@ -17,8 +17,6 @@ public class Cure implements Spell {
 		return "Cure";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.CLAY_BALL;

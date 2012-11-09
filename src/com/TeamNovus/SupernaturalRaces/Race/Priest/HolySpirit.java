@@ -18,8 +18,6 @@ public class HolySpirit implements Spell {
 		return "HolySpirit";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.SUGAR;

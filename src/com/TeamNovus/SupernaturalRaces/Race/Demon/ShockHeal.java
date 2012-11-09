@@ -16,8 +16,6 @@ public class ShockHeal implements Spell {
 		return "ShockHeal";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.GLOWSTONE_DUST;

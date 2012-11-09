@@ -71,6 +71,7 @@ public class DefaultCommands {
 		sender.sendMessage(ChatColor.AQUA + "/sn race <Race> " + ChatColor.GOLD + "- View generated info about a race.");
 		sender.sendMessage(ChatColor.AQUA + "/sn spell <Spell> " + ChatColor.GOLD + "- View generated info about a spell.");
 		sender.sendMessage(ChatColor.AQUA + "/sn power " + ChatColor.GOLD + "- View your power.");
+		sender.sendMessage(ChatColor.AQUA + "/sn tutorial [Chapter] " + ChatColor.GOLD + "- View the tutorial.");
 	}
 
 }

@@ -19,8 +19,6 @@ public class Explode implements Spell {
 		return "Explode";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.SULPHUR;

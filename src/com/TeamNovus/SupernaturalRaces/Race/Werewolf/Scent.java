@@ -19,8 +19,6 @@ public class Scent implements Spell {
 		return "Scent";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.COMPASS;

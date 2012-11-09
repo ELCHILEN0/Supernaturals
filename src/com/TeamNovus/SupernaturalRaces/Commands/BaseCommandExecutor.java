@@ -12,7 +12,7 @@ public class BaseCommandExecutor implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(ChatColor.RED + "The specified command was not found!");
+			sender.sendMessage(ChatColor.RED + "The specified command was not found!  Type /sn help to view all commands!");
 			return false;
 		}
 		

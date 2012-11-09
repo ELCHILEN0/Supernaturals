@@ -19,8 +19,6 @@ public class IceWalk implements Spell {
 		return "IceWalk";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.SUGAR;

@@ -74,7 +74,6 @@ public class RaceManager {
 	public Spell getBestSpell(String s) {
 		for(Race race : races) {
 			for(Spell spell : race.spells()) {
-				System.out.println(spell.name());
 				if(spell.name().toLowerCase().startsWith(s.toLowerCase())) {
 					return spell;
 				}

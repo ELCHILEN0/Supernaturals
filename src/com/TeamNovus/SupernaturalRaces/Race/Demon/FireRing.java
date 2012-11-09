@@ -22,8 +22,6 @@ public class FireRing implements Spell {
 		return "FireRing";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.REDSTONE;

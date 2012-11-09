@@ -20,8 +20,6 @@ public class Blind implements Spell {
 		return "Blind";
 	}
 
-
-
 	@Override
 	public Material binding() {
 		return Material.SUGAR;

@@ -73,7 +73,6 @@ public class CommandManager {
 			// Invoke the command by initializing a new class and sending the arguments to the method
 			commands.get(command).invoke(commands.get(command).getDeclaringClass().newInstance(), object);
 		} catch (Exception e) {
-			e.printStackTrace();
 			LogUtil.warning(e.toString());
 		}
 	}
