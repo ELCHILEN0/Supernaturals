@@ -18,6 +18,8 @@ public class Vanish implements Spell {
 		return "Vanish";
 	}
 
+
+
 	@Override
 	public Material binding() {
 		return Material.SUGAR;

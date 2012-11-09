@@ -13,7 +13,13 @@ public class ShockHeal implements Spell {
 
 	@Override
 	public String name() {
-		return "ShockHeal"
+		return "ShockHeal";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.GLOWSTONE_DUST;
 	}
 

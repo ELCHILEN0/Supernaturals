@@ -16,7 +16,13 @@ public class IceWalk implements Spell {
 
 	@Override
 	public String name() {
-		return "IceWalk"
+		return "IceWalk";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.SUGAR;
 	}
 

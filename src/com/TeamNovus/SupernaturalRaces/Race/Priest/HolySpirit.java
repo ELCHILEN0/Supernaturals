@@ -18,6 +18,13 @@ public class HolySpirit implements Spell {
 		return "HolySpirit";
 	}
 
+
+
+	@Override
+	public Material binding() {
+		return Material.SUGAR;
+	}
+
 	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 400, new ItemBag(new ItemStack(Material.SUGAR, 10)));

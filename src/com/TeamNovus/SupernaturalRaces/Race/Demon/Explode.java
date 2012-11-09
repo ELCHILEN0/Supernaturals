@@ -16,7 +16,13 @@ public class Explode implements Spell {
 
 	@Override
 	public String name() {
-		return "Explode"
+		return "Explode";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.SULPHUR;
 	}
 

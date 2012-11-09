@@ -17,7 +17,13 @@ public class Blind implements Spell {
 
 	@Override
 	public String name() {
-		return "Blind"
+		return "Blind";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.SUGAR;
 	}
 

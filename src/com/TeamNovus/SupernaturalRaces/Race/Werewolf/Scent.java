@@ -16,7 +16,13 @@ public class Scent implements Spell {
 
 	@Override
 	public String name() {
-		return "Scent"
+		return "Scent";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.COMPASS;
 	}
 

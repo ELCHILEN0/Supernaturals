@@ -17,7 +17,13 @@ public class Renew implements Spell {
 
 	@Override
 	public String name() {
-		return "Renew"
+		return "Renew";
+	}
+
+
+
+	@Override
+	public Material binding() {
 		return Material.GLOWSTONE_DUST;
 	}
 
