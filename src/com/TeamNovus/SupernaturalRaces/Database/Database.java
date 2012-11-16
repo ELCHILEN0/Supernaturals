@@ -19,17 +19,18 @@ public class Database {
 
 	public void connect() {
 		String type = SupernaturalRaces.getPlugin().getConfig().getString("storage.type");
-		String host = SupernaturalRaces.getPlugin().getConfig().getString("storage.host");
-		String port = SupernaturalRaces.getPlugin().getConfig().getString("storage.port");
-		String database = SupernaturalRaces.getPlugin().getConfig().getString("storage.database");
-		String username = SupernaturalRaces.getPlugin().getConfig().getString("storage.username");
-		String password = SupernaturalRaces.getPlugin().getConfig().getString("storage.password");
+		String host = SupernaturalRaces.getPlugin().getConfig().getString("storage.mysql.host");
+		String port = SupernaturalRaces.getPlugin().getConfig().getString("storage.mysql.port");
+		String database = SupernaturalRaces.getPlugin().getConfig().getString("storage.mysql.database");
+		String username = SupernaturalRaces.getPlugin().getConfig().getString("storage.mysql.username");
+		String password = SupernaturalRaces.getPlugin().getConfig().getString("storage.mysql.password");
+		String file = SupernaturalRaces.getPlugin().getConfig().getString("storage.sqlite.file");
 		
 		// Determine which database driver to use
 		if(type.equalsIgnoreCase("mysql")) {	
 			driver = new MySQL(host, port, username, password, database);
 		} else {
-			driver = new SQLite(new File(SupernaturalRaces.getPlugin().getDataFolder() + File.separator + "data.dat").getAbsolutePath());
+			driver = new SQLite(new File(SupernaturalRaces.getPlugin().getDataFolder() + File.separator + file).getAbsolutePath());
 		}
 		
 		// This establishes the connection
