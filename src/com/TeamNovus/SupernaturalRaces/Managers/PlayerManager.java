@@ -45,10 +45,10 @@ public class PlayerManager {
 
 	public SNPlayer getPlayer(String name) {
 		if(!(mappings.containsKey(name))) {
-			mappings.put(name, players.size());
+			mappings.put(name, players.size() + 1);
 		}
 		
-		return getPlayer(mappings.get(name) + 1);
+		return getPlayer(mappings.get(name));
 	}
 	
 	public SNPlayer getPlayer(Integer id) {

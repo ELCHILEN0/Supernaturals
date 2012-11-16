@@ -17,6 +17,7 @@ import com.TeamNovus.SupernaturalRaces.Managers.RaceManager;
 import com.TeamNovus.SupernaturalRaces.Managers.EventManager;
 import com.TeamNovus.SupernaturalRaces.Tasks.PowerRegenTask;
 import com.TeamNovus.SupernaturalRaces.Tasks.SaveTask;
+import com.TeamNovus.SupernaturalRaces.Tasks.ServerTickTask;
 
 public class SupernaturalRaces extends JavaPlugin {
 	private static SupernaturalRaces plugin;
@@ -53,14 +54,9 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DefaultEntityListener(), this);
 		getServer().getPluginManager().registerEvents(new DefaultServerListener(), this);
 		
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 60 * 5, 20L * 60 * 5);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			@Override
-			public void run() {
-				new DefaultServerListener().onServerTick();
-			}
-		}, 1, 1);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20 * 10, 20 * 10);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20 * 60 * 5, 20 * 60 * 5);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new ServerTickTask(), 1, 1);
 	}
 	
 	@Override
