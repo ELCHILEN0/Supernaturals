@@ -1,5 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Database;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class Database {
 		if(type.equalsIgnoreCase("mysql")) {	
 			driver = new MySQL(host, port, username, password, database);
 		} else {
-			driver = null;
+			driver = new SQLite(new File(SupernaturalRaces.getPlugin().getDataFolder() + File.separator + "data.dat").getAbsolutePath());
 		}
 		
 		// This establishes the connection
@@ -50,13 +51,12 @@ public class Database {
 		try {
 			PreparedStatement statement = connection.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS `sn_players` (" +
-				    "`id` int(11) NOT NULL AUTO_INCREMENT," +
+				    "`id` int(11) NOT NULL," +
 					"`player` VARCHAR(16) NOT NULL," +
 					"`race` VARCHAR(255) NOT NULL," +
-					"`power` INT NOT NULL DEFAULT 0," +
-					"PRIMARY KEY (`id`)," +
-					"UNIQUE KEY `id_UNIQUE` (`id`)" +
+					"`power` INT NOT NULL DEFAULT 0" +
 					")");
+			
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {
