@@ -29,7 +29,10 @@ public class SupernaturalRaces extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		
-		reloadConfiguration();
+		if(!(new File(getDataFolder() + File.separator + "config.yml").exists())) {
+			saveDefaultConfig();
+		}
+		reloadConfig();
 
 		commandManager = new CommandManager();
 		playerManager = new PlayerManager();
@@ -51,7 +54,7 @@ public class SupernaturalRaces extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DefaultServerListener(), this);
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new PowerRegenTask(), 20L * 10, 20L * 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 60, 20L * 60);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 20L * 60 * 5, 20L * 60 * 5);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
@@ -76,13 +79,6 @@ public class SupernaturalRaces extends JavaPlugin {
 		commandManager = null;
 		playerManager = null;
 		raceManager = null;
-	}
-	
-	public void reloadConfiguration() {
-		if(!(new File(getDataFolder() + File.separator + "config.yml").exists())) {
-			saveDefaultConfig();
-		}
-		reloadConfig();
 	}
 
 	public static SupernaturalRaces getPlugin() {

@@ -15,11 +15,9 @@ public class Combust implements Spell {
 
 	@Override
 	public String name() {
-		return "Freeze";
+		return "Combust";
 	}
-
-
-
+	
 	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.BLAZE_ROD, 1)));
