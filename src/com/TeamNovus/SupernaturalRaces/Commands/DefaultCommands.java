@@ -55,8 +55,8 @@ public class DefaultCommands {
 			sender.sendMessage(ChatColor.GOLD + "Some spells are healing, others damage and others are buff spells!");
 			sender.sendMessage(ChatColor.GOLD + "To view all the spells available for your race type " + ChatColor.AQUA + "/sn race <YourRace>" + ChatColor.GOLD + "!");
 			sender.sendMessage(ChatColor.GOLD + "To view a spells info simply type " + ChatColor.AQUA + "/sn spell <Spell>" + ChatColor.GOLD + "!");
-			sender.sendMessage(ChatColor.GOLD + "To use a spell simply LEFT_CLICK with the bound item!");
-			sender.sendMessage(ChatColor.GOLD + "Casting a spell will require that you have the required reagents!");
+			sender.sendMessage(ChatColor.GOLD + "To switch through your spells right click with a BLAZE_ROD.");
+			sender.sendMessage(ChatColor.GOLD + "To cast a spell left click with a BLAZE_ROD!");
 			sender.sendMessage(ChatColor.GOLD + "Once cast the spell will consume the consumable reagents!");
 			sender.sendMessage(ChatColor.GREEN + "You have completed the tutorial!  Thanks for reading!");
 		} else {

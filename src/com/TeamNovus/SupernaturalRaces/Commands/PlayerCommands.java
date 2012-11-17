@@ -1,5 +1,9 @@
 package com.TeamNovus.SupernaturalRaces.Commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,6 +15,7 @@ import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
+import com.TeamNovus.SupernaturalRaces.Util.Util;
 
 public class PlayerCommands {
 
@@ -73,7 +78,29 @@ public class PlayerCommands {
 			SupernaturalRaces.getPlugin().getServer().getPlayer(args[2]).sendMessage(ChatColor.GREEN + "You are now a(n) " + ChatColor.YELLOW + race.name() + ChatColor.GREEN + "!");
 			sender.sendMessage(ChatColor.YELLOW + Bukkit.getPlayer(args[2]).getDisplayName() + ChatColor.GREEN + " is now a(n) " + ChatColor.YELLOW + race.name() + ChatColor.GREEN + "!");
 		}
-
+	}
+	
+	@BaseCommand(aliases = "online", description = "View online players races!", usage = "", min = 1, max = 1)
+	public void onOnlineCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(sender.hasPermission("supernaturalraces.online"))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return;
+		}
+		
+		for(Race race : SupernaturalRaces.getRaceManager().getRaces()) {
+			List<String> players = new ArrayList<String>();
+			for(Player p : SupernaturalRaces.getPlugin().getServer().getOnlinePlayers()) {
+				SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
+				if(race.name().equalsIgnoreCase(player.getRace())) {
+					players.add(p.getDisplayName());
+				}
+				
+			}
+			
+			if(players.size() > 0) {
+				sender.sendMessage(ChatColor.GOLD + race.name() + ": " + StringUtils.join(players, ", "));
+			}
+		}
 	}
 
 	@BaseCommand(aliases = "races", description = "View all the availiable races!", usage = "")
@@ -145,7 +172,6 @@ public class PlayerCommands {
 		
 	}
 
-
 	@BaseCommand(aliases = "power", description = "View your total power!", usage = "")
 	public void onPowerCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(sender instanceof Player)) {
@@ -162,5 +188,28 @@ public class PlayerCommands {
 		Race race = SupernaturalRaces.getRaceManager().getRace(player);
 		sender.sendMessage(ChatColor.YELLOW + "Your Power: " + ChatColor.GREEN + player.getPower() + "/" + race.maxPower());
 
+	}
+	
+	@BaseCommand(aliases = "powerboost", description = "Boost a players power!", usage = "<Player> <Ammount>", min = 3, max = 3)
+	public void onPowerBoostCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(sender.hasPermission("supernaturalraces.powerboost"))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return;
+		}
+		
+		if(SupernaturalRaces.getPlugin().getServer().getPlayer(args[1]) == null) {
+			sender.sendMessage(ChatColor.RED + "The specified player is not online!");
+			return;
+		}
+
+		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(args[1]);
+
+		if(!(Util.isInt(args[2]))) {
+			sender.sendMessage(ChatColor.RED + "Power must be an Integer");
+			return;
+		}
+		
+		player.setPower(player.getPower() + Integer.valueOf(args[2]));
+		sender.sendMessage(ChatColor.YELLOW + "Added Power: " + ChatColor.GREEN + Integer.valueOf(args[2]));
 	}
 }

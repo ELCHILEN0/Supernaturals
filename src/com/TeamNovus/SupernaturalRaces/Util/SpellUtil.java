@@ -7,7 +7,6 @@ import net.minecraft.server.EntityWolf;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
@@ -42,10 +41,6 @@ public class SpellUtil {
 			bx = b.getX();
 			by = b.getY();
 			bz = b.getZ();
-			
-			if(b.getType() != Material.AIR) {
-				break;
-			}
 
 			// Check each entity in the range to see if its near the line of sight
 			for (LivingEntity e : entities) {

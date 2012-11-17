@@ -36,7 +36,6 @@ public class MageRace implements Race {
 	@Override
 	public List<Class<? extends SNEventListener>> events() {
 		List<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
-		events.add(MageEvents.class);
 		return events;
 	}
 

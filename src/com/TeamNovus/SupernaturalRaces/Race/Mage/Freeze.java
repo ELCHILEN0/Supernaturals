@@ -43,7 +43,7 @@ public class Freeze implements Spell {
 		}
 		
 		List<Block> changed = new ArrayList<Block>();
-		int radius = 3;
+		int radius = 2;
 		for (int x = -(radius); x <= radius; x++) {
 			for (int y = -(radius); y <= radius; y++) {
 				for (int z = -(radius); z <= radius; z++) {
