@@ -55,7 +55,8 @@ public class Database {
 				    "`id` int(11) NOT NULL," +
 					"`player` VARCHAR(16) NOT NULL," +
 					"`race` VARCHAR(255) NOT NULL," +
-					"`power` INT NOT NULL DEFAULT 0" +
+					"`power` INT NOT NULL DEFAULT 0," +
+					"`bound_spell_id` INT NOT NULL DEFAULT 0" +
 					")");
 			
 			statement.executeUpdate();
@@ -84,6 +85,7 @@ public class Database {
 				SNPlayer player = new SNPlayer();
 				player.setRace(result.getString(3));
 				player.setPower(result.getInt(4));
+				player.setBoundSpellId(result.getInt(5));
 				
 				// Add the ID and the SNPlayer
 				players.put(result.getInt(1), player);
@@ -101,8 +103,8 @@ public class Database {
 				SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(id);
 				
 				PreparedStatement count = connection.prepareStatement("SELECT COUNT(*) FROM `sn_players` WHERE `player` = ?");
-				PreparedStatement insert = connection.prepareStatement("INSERT INTO `sn_players` (`id`, `player`, `race`, `power`) VALUES (?, ?, ?, ?)");
-				PreparedStatement update = connection.prepareStatement("UPDATE `sn_players` SET `id` = ?, `race` = ?, `power` = ? WHERE `player` = ?");
+				PreparedStatement insert = connection.prepareStatement("INSERT INTO `sn_players` (`id`, `player`, `race`, `power`, `bound_spell_id`) VALUES (?, ?, ?, ?, ?)");
+				PreparedStatement update = connection.prepareStatement("UPDATE `sn_players` SET `id` = ?, `race` = ?, `power` = ?, `bound_spell_id` = ? WHERE `player` = ?");
 			
 				count.setString(1, name);
 				
@@ -114,12 +116,14 @@ public class Database {
 					insert.setString(2, name);
 					insert.setString(3, player.getRace());
 					insert.setInt(4, player.getPower());
+					insert.setInt(5, player.getBoundSpellId());
 					insert.executeUpdate();
 				} else {
 					update.setInt(1, id);
-					update.setString(4, name);
+					update.setString(5, name);
 					update.setString(2, player.getRace());
 					update.setInt(3, player.getPower());
+					update.setInt(4, player.getBoundSpellId());
 					update.executeUpdate();
 				}
 				

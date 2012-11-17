@@ -25,17 +25,12 @@ public class Freeze implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.STICK, 1)));
+		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.SUGAR, 5)));
 	}
 
 	@Override
 	public Reagent consume() {
 		return required();
-	}
-
-	@Override
-	public Material binding() {
-		return Material.STICK;
 	}
 
 	@Override

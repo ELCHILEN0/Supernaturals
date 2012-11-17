@@ -21,11 +21,6 @@ public class Soar implements Spell {
 
 	
 	@Override
-	public Material binding() {
-		return Material.FEATHER;
-	}
-
-	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 100, new ItemBag(new ItemStack(Material.FEATHER, 2)));
 	}

@@ -85,18 +85,20 @@ public class CustomListener implements Listener {
 			return;
 
 		// Bind/Switch:
-		if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+		if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
+				event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer());
 			Race race = SupernaturalRaces.getRaceManager().getRace(player);
 
-			if(player.getSpellId() + 1 >= race.spells().size()) {
-				player.setSpellId(0);
+			if(player.getBoundSpellId() + 1 >= race.spells().size()) {
+				player.setBoundSpellId(0);
 			} else {
-				player.setSpellId(player.getSpellId() + 1);
+				player.setBoundSpellId(player.getBoundSpellId() + 1);
 			}				
 
-			if(race.spells().size() != 0)
-				event.getPlayer().sendMessage(ChatColor.GREEN + "Wand bound to " + ChatColor.YELLOW + race.spells().get(player.getSpellId()).name() + ChatColor.GREEN + "!");
+			if(race.spells().size() != 0) {
+				event.getPlayer().sendMessage(ChatColor.GREEN + "Wand bound to " + ChatColor.YELLOW + race.spells().get(player.getBoundSpellId()).name() + ChatColor.GREEN + "!");
+			}
 		}
 
 
@@ -105,8 +107,8 @@ public class CustomListener implements Listener {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(event.getPlayer());
 			Race race = SupernaturalRaces.getRaceManager().getRace(player);
 
-			if(race.spells().size() != 0) {
-				Spell spell = race.spells().get(player.getSpellId());
+			if(race.spells().size() != 0 && player.getBoundSpellId() < race.spells().size()) {
+				Spell spell = race.spells().get(player.getBoundSpellId());
 
 				if(spell.required().has(event.getPlayer())) {
 					if(spell.execute(event.getPlayer())) {
@@ -127,6 +129,8 @@ public class CustomListener implements Listener {
 					if(spell.required().getItemBagCost() != new ItemBag())
 						event.getPlayer().sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + spell.required().getItemBagCost().toString());
 				}
+			} else {
+				event.getPlayer().sendMessage(ChatColor.RED + "Your wand is not bound to a spell!");
 			}
 		}
 	}

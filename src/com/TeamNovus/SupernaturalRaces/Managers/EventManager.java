@@ -15,8 +15,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerJoinRaceEvent;
-import com.TeamNovus.SupernaturalRaces.Events.PlayerLeaveRaceEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
@@ -51,16 +49,6 @@ public class EventManager implements Listener {
 	
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		invokeEvents(event.getPlayer(), event);
-	}
-	
-	@EventHandler
-	public void onPlayerJoinRace(PlayerJoinRaceEvent event) {
-		invokeEvents(event.getPlayer(), event);
-	}
-	
-	@EventHandler
-	public void onPlayerLeaveRace(PlayerLeaveRaceEvent event) {
 		invokeEvents(event.getPlayer(), event);
 	}
 	

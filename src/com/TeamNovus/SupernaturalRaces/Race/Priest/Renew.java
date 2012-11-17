@@ -21,13 +21,8 @@ public class Renew implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.GLOWSTONE_DUST;
-	}
-
-	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 1)));
+		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 3)));
 	}
 
 	@Override

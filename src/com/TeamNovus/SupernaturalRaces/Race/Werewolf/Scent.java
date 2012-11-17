@@ -20,18 +20,13 @@ public class Scent implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.COMPASS;
-	}
-
-	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 500, new ItemBag(new ItemStack(Material.COMPASS, 1)));
+		return new Reagent(0.0, 0, 0, 0, 500, new ItemBag(new ItemStack(Material.COMPASS, 1), new ItemStack(Material.SULPHUR, 5)));
 	}
 
 	@Override
 	public Reagent consume() {
-		return new Reagent(0.0, 0, 0, 0, 500, new ItemBag());
+		return new Reagent(0.0, 0, 0, 0, 500, new ItemBag(new ItemStack(Material.SULPHUR, 5)));
 	}
 
 	@Override

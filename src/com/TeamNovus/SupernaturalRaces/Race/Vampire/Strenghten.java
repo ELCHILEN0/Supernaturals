@@ -20,17 +20,12 @@ public class Strenghten implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 1)));
+		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 2)));
 	}
 
 	@Override
 	public Reagent consume() {
 		return required();
-	}
-
-	@Override
-	public Material binding() {
-		return Material.GLOWSTONE_DUST;
 	}
 
 	@Override

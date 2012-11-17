@@ -23,11 +23,6 @@ public class FireRing implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.REDSTONE;
-	}
-
-	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.REDSTONE, 5)));
 	}

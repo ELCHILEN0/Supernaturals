@@ -22,17 +22,12 @@ public class Haste implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 1)));
+		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.SUGAR, 4)));
 	}
 
 	@Override
 	public Reagent consume() {
 		return required();
-	}
-
-	@Override
-	public Material binding() {
-		return Material.GLOWSTONE_DUST;
 	}
 
 	@Override

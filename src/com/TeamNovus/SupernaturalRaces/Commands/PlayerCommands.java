@@ -39,10 +39,10 @@ public class PlayerCommands {
 				sender.sendMessage(ChatColor.RED + "You are already in this race!");
 				return;
 			}
-
+			
 			player.setRace(race.name());
 			player.setPower(0);
-			player.setSpellId(0);
+			player.setBoundSpellId(0);
 			sender.sendMessage(ChatColor.YELLOW + "You are now a(n) " + ChatColor.GREEN + race.name() + ChatColor.YELLOW + "!");
 		} else {	
 			if(!(sender.hasPermission("supernaturalraces.convert.others."+args[1].toLowerCase()))) {
@@ -116,7 +116,6 @@ public class PlayerCommands {
 		}
 		
 		sender.sendMessage(ChatColor.GOLD + "" + spell.name());
-		sender.sendMessage(ChatColor.BLUE + "   Bound to: " + ChatColor.YELLOW + spell.binding().name());
 		sender.sendMessage(ChatColor.BLUE + "   Requires:");
 		if(spell.required().getMoneyCost() != 0)
 			sender.sendMessage(ChatColor.BLUE + "      Money: " + ChatColor.YELLOW + spell.required().getMoneyCost());

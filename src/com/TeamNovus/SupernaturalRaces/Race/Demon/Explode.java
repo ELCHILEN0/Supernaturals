@@ -20,13 +20,8 @@ public class Explode implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.SULPHUR;
-	}
-
-	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.SULPHUR, 1)));
+		return new Reagent(0.0, 0, 0, 0, 200, new ItemBag(new ItemStack(Material.SULPHUR, 3)));
 	}
 
 	@Override

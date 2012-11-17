@@ -20,17 +20,12 @@ public class Combust implements Spell {
 	
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.BLAZE_ROD, 1)));
+		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.REDSTONE, 7)));
 	}
 
 	@Override
 	public Reagent consume() {
 		return required();
-	}
-
-	@Override
-	public Material binding() {
-		return Material.BLAZE_ROD;
 	}
 
 	@Override

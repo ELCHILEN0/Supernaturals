@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Models;
 public class SNPlayer extends SNAttributes {
 	private String race = "Human";
 	private Integer power = 0;
-	private Integer spellId = 0;
+	private Integer boundSpellId = 0;
 	
 	public String getRace() {
 		return race;
@@ -21,11 +21,11 @@ public class SNPlayer extends SNAttributes {
 		this.power = power;
 	}
 	
-	public void setSpellId(Integer id) {
-		spellId = id;
+	public void setBoundSpellId(Integer boundSpellId) {
+		this.boundSpellId = boundSpellId;
 	}
 	
-	public Integer getSpellId() {
-		return spellId;
+	public Integer getBoundSpellId() {
+		return boundSpellId;
 	}
 }

@@ -20,11 +20,6 @@ public class Train implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.BONE;
-	}
-
-	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 50, new ItemBag(new ItemStack(Material.BONE, 4)));
 	}

@@ -19,13 +19,8 @@ public class Vanish implements Spell {
 	}
 
 	@Override
-	public Material binding() {
-		return Material.SUGAR;
-	}
-
-	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.SUGAR, 1)));
+		return new Reagent(0.0, 0, 0, 0, 300, new ItemBag(new ItemStack(Material.SUGAR, 4)));
 	}
 
 	@Override

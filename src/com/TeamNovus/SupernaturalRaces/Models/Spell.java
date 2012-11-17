@@ -1,6 +1,5 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
@@ -21,11 +20,6 @@ public interface Spell {
 	 * By default you should use reagent()
 	 */
 	Reagent consume();
-	
-	/**
-	 * The item that the spell is bound to.
-	 */
-	Material binding();
 	
 	/**
 	 * Handle spell execution.
