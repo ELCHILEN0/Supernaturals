@@ -1,6 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
-public class SNAttributes {
+public class SNAttributes {	
 	private int remainingPhaseWalk = -1;
 	private int remainingBleeding = -1;
 	private int remainingIceWalk = -1;

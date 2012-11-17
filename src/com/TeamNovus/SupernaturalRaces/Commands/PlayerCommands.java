@@ -42,6 +42,7 @@ public class PlayerCommands {
 
 			player.setRace(race.name());
 			player.setPower(0);
+			player.setSpellId(0);
 			sender.sendMessage(ChatColor.YELLOW + "You are now a(n) " + ChatColor.GREEN + race.name() + ChatColor.YELLOW + "!");
 		} else {	
 			if(!(sender.hasPermission("supernaturalraces.convert.others."+args[1].toLowerCase()))) {

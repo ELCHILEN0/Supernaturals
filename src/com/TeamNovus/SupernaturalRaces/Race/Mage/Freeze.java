@@ -23,8 +23,6 @@ public class Freeze implements Spell {
 		return "Freeze";
 	}
 
-
-
 	@Override
 	public Reagent required() {
 		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.STICK, 1)));

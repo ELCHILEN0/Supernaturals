@@ -4,6 +4,7 @@ SupernaturalRaces
 TODO:
 * [User] Add some cool new races + spells!!! [Adaro, Lich, Ghost, Brute, Knight, Mage]
 * [User] Work on shrines to convert.  Block Formations.
+* [User] Make spells be cast by a WAND (BLAZE_ROD/STICK).
 
 SupernaturalRaces is a plugin developed for NovusCraft (MC-NC.CO).
 It features Races, Spells and Event classes.  Each race is highly configurable and can have multiple skills and events
@@ -69,3 +70,10 @@ Players then have the option of converting to another type of class with the /co
    - Spells:
      - Scent: Track a player for 5 MINUTES. Requires 500 Power + 1 COMPASS.
      - Train: Summon a wolf.  Requires 50 Power + 4 BONE.
+* Mage
+   - Power: 500
+     - 200% at all times.
+   - Spells:
+     - Freeze: Freeze a player in ICE for 20 seconds in ice.  Requires 150 Power + 1 COMPASS.
+     - Combust: Track a player for 5 MINUTES. Requires 500 Power + 1 COMPASS.
+     - IceWalk: Summon a wolf.  Requires 50 Power + 4 BONE.
