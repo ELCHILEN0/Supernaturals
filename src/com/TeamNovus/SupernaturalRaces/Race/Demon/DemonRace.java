@@ -3,6 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Race.Demon;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
@@ -12,6 +14,11 @@ public class DemonRace implements Race {
 	@Override
 	public String name() {
 		return "Demon";
+	}
+	
+	@Override
+	public ChatColor color() {
+		return ChatColor.DARK_RED;
 	}
 
 	@Override

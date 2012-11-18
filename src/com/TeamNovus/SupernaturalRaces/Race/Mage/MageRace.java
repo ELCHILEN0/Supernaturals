@@ -3,6 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Race.Mage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
@@ -12,6 +14,11 @@ public class MageRace implements Race {
 	@Override
 	public String name() {
 		return "Mage";
+	}
+	
+	@Override
+	public ChatColor color() {
+		return ChatColor.DARK_GREEN;
 	}
 
 	@Override

@@ -92,13 +92,13 @@ public class PlayerCommands {
 			for(Player p : SupernaturalRaces.getPlugin().getServer().getOnlinePlayers()) {
 				SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
 				if(race.name().equalsIgnoreCase(player.getRace())) {
-					players.add(p.getDisplayName());
+					players.add(race.color() + p.getName());
 				}
 				
 			}
 			
 			if(players.size() > 0) {
-				sender.sendMessage(ChatColor.GOLD + race.name() + ": " + StringUtils.join(players, ", "));
+				sender.sendMessage(race.color() + race.name() + ChatColor.RESET + ": " + StringUtils.join(players, ", "));
 			}
 		}
 	}
@@ -112,7 +112,7 @@ public class PlayerCommands {
 
 		sender.sendMessage(ChatColor.BLUE + "Availiable Races:");
 		for(Race race : SupernaturalRaces.getRaceManager().getRaces()) {
-			sender.sendMessage("   " + ChatColor.GOLD + race.name());
+			sender.sendMessage("  " + race.color() + race.name());
 		}
 	}
 

@@ -3,6 +3,8 @@ package com.TeamNovus.SupernaturalRaces.Race.Human;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
@@ -14,6 +16,11 @@ public class HumanRace implements Race {
 		return "Human";
 	}
 
+	@Override
+	public ChatColor color() {
+		return ChatColor.GREEN;
+	}
+	
 	@Override
 	public Integer maxPower() {
 		return 0;

@@ -2,6 +2,8 @@ package com.TeamNovus.SupernaturalRaces.Models;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 
 
 public interface Race {
@@ -9,6 +11,11 @@ public interface Race {
 	 * The name of the race
 	 */
 	String name();
+	
+	/**
+	 * The color of the race
+	 */
+	ChatColor color();
 	
 	/**
 	 * The max power of the race
