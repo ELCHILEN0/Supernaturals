@@ -1,5 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Race.Vampire;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -22,7 +23,8 @@ public class VampireEvents implements SNEventListener {
 			if((Math.random()*100) < 5) {
 				Player player = (Player) event.getEntity();
 				SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
-				snp.setRemainingBleeding(snp.getRemainingBleeding() + 20*30);
+				snp.setRemainingBleeding(snp.getRemainingBleeding() + 20*15);
+				event.getPlayer().sendMessage(ChatColor.GOLD + "You have made your enemy bleed!");
 			}
 		}
 		

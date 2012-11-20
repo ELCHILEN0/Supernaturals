@@ -27,9 +27,9 @@ public class DefaultServerListener implements Listener {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
 			SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
 			if(snp.getRemainingBleeding() > 0) {
-				snp.setRemainingBleeding(snp.getRemainingBleeding() - 1);
-				if((snp.getRemainingBleeding()/20)%5 == 0) {
-					player.damage(2);
+				snp.setRemainingBleeding(snp.getRemainingBleeding() - 1);				
+				if((snp.getRemainingBleeding()/20.0) % 5.0 == 0) {
+					player.damage(1);
 					player.sendMessage(ChatColor.RED + "Bleeding...");
 				}
 			} else if(snp.getRemainingBleeding() == 0) {
