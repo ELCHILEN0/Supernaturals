@@ -8,12 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerKillEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
@@ -75,6 +77,21 @@ public class CustomListener implements Listener {
 			if(newEvent.isCancelled()) {
 				event.setCancelled(true);
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerKillEntity(EntityDeathEvent event) {
+		if(event.getEntity().getKiller() instanceof Player) {
+			PlayerKillEntityEvent newEvent = new PlayerKillEntityEvent(
+					event.getEntity().getKiller(), 
+					event.getEntity(), 
+					event.getDroppedExp(), 
+					event.getDrops());
+			
+			SupernaturalRaces.getPlugin().getServer().getPluginManager().callEvent(newEvent);
+
+			event.setDroppedExp(event.getDroppedExp());
 		}
 	}
 

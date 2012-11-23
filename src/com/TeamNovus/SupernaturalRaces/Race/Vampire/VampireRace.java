@@ -25,12 +25,7 @@ public class VampireRace implements Race {
 	public Integer maxPower() {
 		return 750;
 	}
-
-	@Override
-	public Integer powerIncrement() {
-		return 10;
-	}
-
+	
 	@Override
 	public List<Spell> spells() {
 		List<Spell> spells = new ArrayList<Spell>();

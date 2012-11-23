@@ -83,16 +83,16 @@ public class SupernaturalRaces extends JavaPlugin {
 		return plugin;
 	}
 	
+	public static Database getDb() {
+		return database;
+	}
+	
 	public static PlayerManager getPlayerManager() {
 		return playerManager;
 	}
 	
 	public static RaceManager getRaceManager() {
 		return raceManager;
-	}
-	
-	public static Database getDb() {
-		return database;
 	}
 
 	public static CommandManager getCommandManager() {

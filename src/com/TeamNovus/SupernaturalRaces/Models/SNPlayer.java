@@ -1,5 +1,7 @@
 package com.TeamNovus.SupernaturalRaces.Models;
 
+import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+
 public class SNPlayer extends SNAttributes {
 	private String race = "Human";
 	private Integer power = 0;
@@ -9,8 +11,16 @@ public class SNPlayer extends SNAttributes {
 		return race;
 	}
 	
+	public Race getPlayerRace() {
+		return SupernaturalRaces.getRaceManager().getBestRace(race);
+	}
+	
 	public void setRace(String race) {
 		this.race = race;
+	}
+	
+	public void setRace(Race race) {
+		this.race = race.name();
 	}
 
 	public Integer getPower() {

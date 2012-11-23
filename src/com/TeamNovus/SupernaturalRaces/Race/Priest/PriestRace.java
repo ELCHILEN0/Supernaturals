@@ -25,17 +25,12 @@ public class PriestRace implements Race {
 	public Integer maxPower() {
 		return 800;
 	}
-	
-	@Override
-	public Integer powerIncrement() {
-		return 10;
-	}
 
 	@Override
 	public List<Spell> spells() {
 		List<Spell> spells = new ArrayList<Spell>();
 		spells.add(new Renew());
-		spells.add(new Cure());
+		spells.add(new Heal());
 		spells.add(new HolySpirit());
 		return spells;
 	}

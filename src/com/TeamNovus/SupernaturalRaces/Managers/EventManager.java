@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -50,6 +51,11 @@ public class EventManager implements Listener {
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		invokeEvents(event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onPlayerKillEntity(EntityDeathEvent event) {
+		invokeEvents(event.getEntity().getKiller(), event);
 	}
 	
 	/**

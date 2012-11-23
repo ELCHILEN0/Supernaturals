@@ -44,5 +44,4 @@ public class Renew implements Spell {
 		sender.sendMessage(ChatColor.GOLD + "You have renewed your teamates!");
 		return true;
 	}
-
 }

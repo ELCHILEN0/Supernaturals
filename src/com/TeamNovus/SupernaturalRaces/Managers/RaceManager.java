@@ -1,6 +1,6 @@
 package com.TeamNovus.SupernaturalRaces.Managers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.TeamNovus.SupernaturalRaces.Models.Race;
@@ -10,12 +10,13 @@ import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
+import com.TeamNovus.SupernaturalRaces.Race.Necromancer.NecromancerRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
 
 public class RaceManager {
-	private List<Race> races = new ArrayList<Race>();
+	private LinkedList<Race> races = new LinkedList<Race>();
 	
 	public RaceManager() {
 		registerRaces();
@@ -27,13 +28,14 @@ public class RaceManager {
 	 * by default.
 	 */
 	public void registerRaces() {
+		races.add(new HumanRace());
 		races.add(new AngelRace());
-		races.add(new DemonRace());
 		races.add(new PriestRace());
+		races.add(new MageRace());
+		races.add(new DemonRace());
+		races.add(new NecromancerRace());
 		races.add(new VampireRace());
 		races.add(new WerewolfRace());
-		races.add(new MageRace());
-		races.add(new HumanRace());
 	}
 
 	public List<Race> getRaces() {

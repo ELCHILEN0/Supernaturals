@@ -1,6 +1,5 @@
-package com.TeamNovus.SupernaturalRaces.Race.Mage;
+package com.TeamNovus.SupernaturalRaces.Race.Necromancer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -9,36 +8,33 @@ import com.TeamNovus.SupernaturalRaces.Models.Race;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
-public class MageRace implements Race {
+public class NecromancerRace implements Race {
 
 	@Override
 	public String name() {
-		return "Mage";
+		return "Necromancer";
 	}
-	
+
 	@Override
 	public ChatColor color() {
-		return ChatColor.DARK_GREEN;
+		return ChatColor.BLACK;
 	}
 
 	@Override
 	public Integer maxPower() {
-		return 500;
+		return 1500;
 	}
 
 	@Override
 	public List<Spell> spells() {
-		List<Spell> spells = new ArrayList<Spell>();
-		spells.add(new IceWalk());
-		spells.add(new Freeze());
-		spells.add(new Combust());
-		return spells;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Class<? extends SNEventListener>> events() {
-		List<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
-		return events;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

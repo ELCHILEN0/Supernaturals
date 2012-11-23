@@ -25,11 +25,6 @@ public class AngelRace implements Race {
 	public Integer maxPower() {
 		return 1000;
 	}
-	
-	@Override
-	public Integer powerIncrement() {
-		return 10;
-	}
 
 	@Override
 	public List<Spell> spells() {

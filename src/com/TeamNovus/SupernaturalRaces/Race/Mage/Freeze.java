@@ -25,7 +25,7 @@ public class Freeze implements Spell {
 
 	@Override
 	public Reagent required() {
-		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.SUGAR, 5)));
+		return new Reagent(0.0, 0, 0, 0, 150, new ItemBag(new ItemStack(Material.SUGAR, 5), new ItemStack(Material.WATER_BUCKET, 1)));
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Freeze implements Spell {
 
 	@Override
 	public Boolean execute(Player sender) {
-		LivingEntity entity = SpellUtil.getTargetedEntity(sender, 20);
+		LivingEntity entity = SpellUtil.getTargetedEntity(sender, 35);
 		
 		if(entity == null) {
 			sender.sendMessage(ChatColor.RED + "No entity was found!");
@@ -48,7 +48,7 @@ public class Freeze implements Spell {
 			for (int y = -(radius); y <= radius; y++) {
 				for (int z = -(radius); z <= radius; z++) {
 					Block block = entity.getLocation().getBlock().getRelative(x, y, z);
-					if(block.getType().equals(Material.AIR)) {
+					if(block.getType().equals(Material.AIR) || block.getType().equals(Material.WATER)) {
 						changed.add(block);
 						block.setType(Material.ICE);
 					}

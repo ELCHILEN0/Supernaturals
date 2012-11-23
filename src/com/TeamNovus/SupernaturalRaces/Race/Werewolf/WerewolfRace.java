@@ -25,11 +25,6 @@ public class WerewolfRace implements Race {
 	public Integer maxPower() {
 		return 750;
 	}
-	
-	@Override
-	public Integer powerIncrement() {
-		return 10;
-	}
 
 	@Override
 	public List<Spell> spells() {

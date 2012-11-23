@@ -7,6 +7,7 @@ import net.minecraft.server.EntityWolf;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
@@ -30,17 +31,31 @@ public class SpellUtil {
 		// Find the target
 		LivingEntity target = null;		
 		BlockIterator iterator = new BlockIterator(player, range);
+		
+		List<Material> transparent = new ArrayList<Material>();
+		transparent.add(Material.AIR);
+		transparent.add(Material.GLASS);
+		transparent.add(Material.ICE);
+		transparent.add(Material.WATER);
+		transparent.add(Material.LAVA);
+		transparent.add(Material.IRON_FENCE);
+		transparent.add(Material.REDSTONE_WIRE);
+		transparent.add(Material.SNOW);
+		transparent.add(Material.FENCE);
+		transparent.add(Material.FENCE_GATE);
 
 		Block b;
 		Location l;
 		int bx, by, bz;
 		double ex, ey, ez;
 		// Loop through the players line of sight
-		while (iterator.hasNext()) {
+		while (iterator.hasNext()) {			
 			b = iterator.next();
 			bx = b.getX();
 			by = b.getY();
 			bz = b.getZ();
+			
+			if(!(transparent.contains(b.getType()))) break;
 
 			// Check each entity in the range to see if its near the line of sight
 			for (LivingEntity e : entities) {

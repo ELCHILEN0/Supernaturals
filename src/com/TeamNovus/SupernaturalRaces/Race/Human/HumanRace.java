@@ -25,11 +25,6 @@ public class HumanRace implements Race {
 	public Integer maxPower() {
 		return 0;
 	}
-
-	@Override
-	public Integer powerIncrement() {
-		return 0;
-	}
 	
 	@Override
 	public List<Spell> spells() {
