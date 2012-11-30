@@ -3,6 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Listeners;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -12,13 +13,14 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.Spell;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityByProjectileEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerKillEntityEvent;
-import com.TeamNovus.SupernaturalRaces.Models.Race;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.Spell;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 
 /**
@@ -53,6 +55,20 @@ public class CustomListener implements Listener {
 					event.getEntity(),
 					event.getCause(),
 					event.getDamage());
+
+			SupernaturalRaces.getPlugin().getServer().getPluginManager().callEvent(newEvent);
+
+			event.setDamage(newEvent.getDamage());
+
+			if(newEvent.isCancelled()) {
+				event.setCancelled(true);
+			}
+		} else if(event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
+			PlayerDamageEntityByProjectileEvent newEvent = new PlayerDamageEntityByProjectileEvent(
+					(Player) ((Projectile) event.getDamager()).getShooter(),
+					event.getEntity(),
+					event.getDamage(),
+					((Projectile) event.getDamager()));
 
 			SupernaturalRaces.getPlugin().getServer().getPluginManager().callEvent(newEvent);
 

@@ -17,7 +17,7 @@ import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 
 /**
  * This class is used for overriding behavior that is not dependent on a player or a race.

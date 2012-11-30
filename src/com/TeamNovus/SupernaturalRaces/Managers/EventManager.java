@@ -14,12 +14,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityByProjectileEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.Race;
 
 public class EventManager implements Listener {
 	
@@ -30,6 +31,11 @@ public class EventManager implements Listener {
 	
 	@EventHandler
 	public void onPlayerDamageEntity(PlayerDamageEntityEvent event) {
+		invokeEvents(event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onPlayerDamageEntityByProjectileEvent(PlayerDamageEntityByProjectileEvent event) {
 		invokeEvents(event.getPlayer(), event);
 	}
 	

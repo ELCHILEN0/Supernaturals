@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 
-import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.Spell;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.Spell;
 
 public class NecromancerRace implements Race {
 

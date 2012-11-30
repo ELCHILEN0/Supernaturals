@@ -3,7 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Util;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 
 public class Reagent {
 	// TODO: Money

@@ -9,7 +9,8 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 
 public class DefaultServerListener implements Listener {
 
@@ -26,6 +27,9 @@ public class DefaultServerListener implements Listener {
 	public void onServerTick() {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
 			SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
+			for(SNEffect effect : snp.getEffects()) {
+				
+			}
 			if(snp.getRemainingBleeding() > 0) {
 				snp.setRemainingBleeding(snp.getRemainingBleeding() - 1);				
 				if((snp.getRemainingBleeding()/20.0) % 5.0 == 0) {

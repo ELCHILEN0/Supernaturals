@@ -1,11 +1,15 @@
-package com.TeamNovus.SupernaturalRaces.Models;
+package com.TeamNovus.SupernaturalRaces.Character;
+
+import java.util.ArrayList;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Models.SNAttributes;
 
 public class SNPlayer extends SNAttributes {
 	private String race = "Human";
 	private Integer power = 0;
 	private Integer boundSpellId = 0;
+	private ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
 	
 	public String getRace() {
 		return race;
@@ -37,5 +41,19 @@ public class SNPlayer extends SNAttributes {
 	
 	public Integer getBoundSpellId() {
 		return boundSpellId;
+	}
+	
+	public void addEffect(SNEffect effect) {
+		effects.add(effect);
+	}
+	
+	public void removeEffects(SNEffect effect) {
+		for(SNEffect e : effects) {
+
+		}
+	}
+	
+	public ArrayList<SNEffect> getEffects() {
+		return effects;
 	}
 }

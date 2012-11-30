@@ -1,8 +1,11 @@
-package com.TeamNovus.SupernaturalRaces.Models;
+package com.TeamNovus.SupernaturalRaces.Character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
 public interface Race {
 	/**
@@ -28,6 +31,11 @@ public interface Race {
 	/**
 	 * The events registered to the race
 	 */
+	@Deprecated
 	List<Class<? extends SNEventListener>> events();
 	
+	/**
+	 * The effects registered to the race
+	 */
+	List<ArrayList<SNEffect>> effects();
 }

@@ -6,12 +6,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerKillEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;

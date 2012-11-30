@@ -1,4 +1,4 @@
-package com.TeamNovus.SupernaturalRaces.Models;
+package com.TeamNovus.SupernaturalRaces.Character;
 
 import org.bukkit.entity.Player;
 

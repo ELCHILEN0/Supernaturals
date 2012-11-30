@@ -9,12 +9,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageByEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerKillEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
@@ -53,7 +53,7 @@ public class VampireEvents implements SNEventListener {
 		Player player = event.getPlayer();
 
 		if(player.getWorld().getTime() > 12000) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 3, 0));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 8, 0));
 		}
 
 		if(player.getWorld().getTime() < 12000 && player.isSprinting()) {

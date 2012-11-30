@@ -6,8 +6,9 @@ import java.util.Map.Entry;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.Race;
+import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 
 public class PlayerManager {
 	private HashMap<String, Integer> mappings = new HashMap<String, Integer>();
@@ -66,6 +67,10 @@ public class PlayerManager {
 	        }
 	    }
 	    return null;
+	}
+	
+	public void addEffect(SNEffect effect) {
+		
 	}
 
 	/**

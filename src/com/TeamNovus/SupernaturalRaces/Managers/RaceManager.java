@@ -3,15 +3,16 @@ package com.TeamNovus.SupernaturalRaces.Managers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Models.Race;
-import com.TeamNovus.SupernaturalRaces.Models.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Models.Spell;
+import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.Spell;
 import com.TeamNovus.SupernaturalRaces.Race.Angel.AngelRace;
 import com.TeamNovus.SupernaturalRaces.Race.Demon.DemonRace;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 import com.TeamNovus.SupernaturalRaces.Race.Mage.MageRace;
 import com.TeamNovus.SupernaturalRaces.Race.Necromancer.NecromancerRace;
 import com.TeamNovus.SupernaturalRaces.Race.Priest.PriestRace;
+import com.TeamNovus.SupernaturalRaces.Race.Ranger.RangerRace;
 import com.TeamNovus.SupernaturalRaces.Race.Vampire.VampireRace;
 import com.TeamNovus.SupernaturalRaces.Race.Werewolf.WerewolfRace;
 
@@ -36,6 +37,7 @@ public class RaceManager {
 		races.add(new NecromancerRace());
 		races.add(new VampireRace());
 		races.add(new WerewolfRace());
+		races.add(new RangerRace());
 	}
 
 	public List<Race> getRaces() {
