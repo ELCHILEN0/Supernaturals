@@ -1,7 +1,8 @@
 package com.TeamNovus.SupernaturalRaces.Listeners;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +12,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Events.EffectEvent;
 
 public class DefaultServerListener implements Listener {
 
@@ -26,33 +28,23 @@ public class DefaultServerListener implements Listener {
 	
 	public void onServerTick() {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
-			SNPlayer snp = SupernaturalRaces.getPlayerManager().getPlayer(player);
-			for(SNEffect effect : snp.getEffects()) {
-				
-			}
-			if(snp.getRemainingBleeding() > 0) {
-				snp.setRemainingBleeding(snp.getRemainingBleeding() - 1);				
-				if((snp.getRemainingBleeding()/20.0) % 5.0 == 0) {
-					player.damage(1);
-					player.sendMessage(ChatColor.RED + "Bleeding...");
+			SNPlayer p = SupernaturalRaces.getPlayerManager().getPlayer(player);
+			ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
+			effects.addAll(p.getEffects());
+			effects.addAll(p.getPlayerRace().effects());
+			
+			for(SNEffect effect : effects) {
+				if(effect.getDuration() > 0 || effect.getDuration() == -1) {
+					if(effect.getDuration() % effect.getPeriod() == 0) {
+						Bukkit.getPluginManager().callEvent(new EffectEvent(player, effect));
+					}
+					
+					if(effect.getDuration() != -1) {
+						SupernaturalRaces.getPlayerManager().updateEffect(player, new SNEffect(0, effect.getDuration() - 1, effect.getPeriod(), effect.getModifiers(), effect.getType()));
+					}
+				} else if(effect.getDuration() == 0) {
+					SupernaturalRaces.getPlayerManager().removeEffect(player, effect);
 				}
-			} else if(snp.getRemainingBleeding() == 0) {
-				snp.setRemainingBleeding(snp.getRemainingBleeding() - 1);
-				player.sendMessage(ChatColor.GOLD + "You have stopped bleeding!");
-			}
-			
-			if(snp.getRemainingPhaseWalk() > 0) {
-				snp.setRemainingPhaseWalk(snp.getRemainingPhaseWalk() - 1);
-			} if(snp.getRemainingPhaseWalk() == 0) {
-				snp.setRemainingPhaseWalk(snp.getRemainingPhaseWalk() - 1);
-				player.sendMessage(ChatColor.GOLD + "You have returned to your body!");
-			}	
-			
-			if(snp.getRemainingIceWalk() > 0) {
-				snp.setRemainingIceWalk(snp.getRemainingIceWalk() - 1);
-			} if(snp.getRemainingIceWalk() == 0) {
-				snp.setRemainingIceWalk(snp.getRemainingIceWalk() - 1);
-				player.sendMessage(ChatColor.GOLD + "You no longer can walk on water!");
 			}
 		}
 	}

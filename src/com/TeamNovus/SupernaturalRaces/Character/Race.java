@@ -37,5 +37,5 @@ public interface Race {
 	/**
 	 * The effects registered to the race
 	 */
-	List<ArrayList<SNEffect>> effects();
+	ArrayList<SNEffect> effects();
 }

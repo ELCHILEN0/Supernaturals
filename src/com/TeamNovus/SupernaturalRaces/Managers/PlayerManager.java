@@ -3,12 +3,15 @@ package com.TeamNovus.SupernaturalRaces.Managers;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Character.Race;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 
 public class PlayerManager {
 	private HashMap<String, Integer> mappings = new HashMap<String, Integer>();
@@ -69,8 +72,20 @@ public class PlayerManager {
 	    return null;
 	}
 	
-	public void addEffect(SNEffect effect) {
-		
+	public void addEffect(Player player, SNEffect effect) {
+		Bukkit.getPluginManager().callEvent(new EffectBeginEvent(player, effect));
+		getPlayer(player).removeEffect(effect.getType());
+		getPlayer(player).addEffect(effect);
+	}
+	
+	public void updateEffect(Player player, SNEffect effect) {
+		getPlayer(player).removeEffect(effect.getType());
+		getPlayer(player).addEffect(effect);
+	}
+	
+	public void removeEffect(Player player, SNEffect effect) {
+		Bukkit.getPluginManager().callEvent(new EffectExpireEvent(player, effect));
+		getPlayer(player).removeEffect(effect.getType());
 	}
 
 	/**

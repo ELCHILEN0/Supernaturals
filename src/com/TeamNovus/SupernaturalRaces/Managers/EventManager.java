@@ -3,6 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Managers;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -15,10 +16,15 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EffectEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityByProjectileEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEntityEvent;
 import com.TeamNovus.SupernaturalRaces.Events.PlayerDamageEvent;
+import com.TeamNovus.SupernaturalRaces.Events.PlayerTickEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
@@ -64,6 +70,26 @@ public class EventManager implements Listener {
 		invokeEvents(event.getEntity().getKiller(), event);
 	}
 	
+	@EventHandler
+	public void onPlayerTick(PlayerTickEvent event) {
+		invokeEvents(event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onEffectBeginEvent(EffectBeginEvent event) {
+		invokeEvents(event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onEffectEvent(EffectEvent event) {
+		invokeEvents(event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onEffectExpireEvent(EffectExpireEvent event) {
+		invokeEvents(event.getPlayer(), event);
+	}
+	
 	/**
 	 * Invoke an event for a player depending on the race!
 	 * @param sender - The MAIN player to determine the race
@@ -73,7 +99,12 @@ public class EventManager implements Listener {
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(sender);
 		Race race = SupernaturalRaces.getRaceManager().getRace(player);
 		
-		for(Class<? extends SNEventListener> c : race.events()) {
+		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
+		effects.addAll(player.getEffects());
+		effects.addAll(race.effects());
+		
+		for(SNEffect effect : effects) {
+			Class<? extends SNEventListener> c = effect.getModifiers();
 			for(Method method : c.getMethods()) {
 				if(method.isAnnotationPresent(SNEventHandler.class)) {
 					for(Type type : method.getParameterTypes()) {
@@ -95,7 +126,7 @@ public class EventManager implements Listener {
 						}
 					}
 				}
-			}	
+			}
 		}
 	}
 

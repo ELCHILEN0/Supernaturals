@@ -3,6 +3,7 @@ package com.TeamNovus.SupernaturalRaces.Character;
 import java.util.ArrayList;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Models.SNAttributes;
 
 public class SNPlayer extends SNAttributes {
@@ -47,9 +48,11 @@ public class SNPlayer extends SNAttributes {
 		effects.add(effect);
 	}
 	
-	public void removeEffects(SNEffect effect) {
+	public void removeEffect(SNEffectType effect) {
 		for(SNEffect e : effects) {
-
+			if(e.getType().equals(effect)) {
+				effects.remove(e);
+			}
 		}
 	}
 	
