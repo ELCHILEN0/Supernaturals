@@ -42,7 +42,7 @@ public class HumanRace implements SNRace {
 	@Override
 	public ArrayList<SNEffect> effects() {
 		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
-		effects.add(new SNEffect(20 * 20, 5 * 20, 0, BleedEffect.class, SNEffectType.BLEED));
+		effects.add(new SNEffect(5 * 20, 0, BleedEffect.class, SNEffectType.BLEED));
 		return effects;
 	}
 }

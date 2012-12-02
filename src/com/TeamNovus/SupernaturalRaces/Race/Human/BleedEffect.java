@@ -3,7 +3,11 @@ package com.TeamNovus.SupernaturalRaces.Race.Human;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
+import com.TeamNovus.SupernaturalRaces.Character.SNEntity;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTriggerEvent;
@@ -35,6 +39,13 @@ public class BleedEffect implements SNEventListener {
 		if(event.getEntity() instanceof Player) {
 			((Player) event.getEntity()).sendMessage(ChatColor.GREEN + "You are no longer bleeding!");
 		}
+	}
+	
+	@SNEventHandler
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+		System.out.print("effected entity damaged by entitY!");
+		SNEntity entity = new SNEntity(event.getDamager());
+		entity.putEffect(new SNEffect(1, 0, BleedEffect.class, SNEffectType.BLEED));
 	}
 	
 }
