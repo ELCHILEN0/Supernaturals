@@ -6,6 +6,6 @@ public class SaveTask implements Runnable {
 	
 	@Override
 	public void run() {
-		SupernaturalRaces.getDb().save();
+		SupernaturalRaces.getDatabaseManager().savePlayers();
 	}
 }

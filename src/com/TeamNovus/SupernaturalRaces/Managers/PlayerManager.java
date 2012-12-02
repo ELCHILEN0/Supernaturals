@@ -1,43 +1,26 @@
 package com.TeamNovus.SupernaturalRaces.Managers;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Iterator;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Character.Race;
-import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
-import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
+import com.TeamNovus.SupernaturalRaces.Character.SNPlayers;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 
 public class PlayerManager {
-	private HashMap<String, Integer> mappings = new HashMap<String, Integer>();
-	private HashMap<Integer, SNPlayer> players = new HashMap<Integer, SNPlayer>();
+	private SNPlayers players = new SNPlayers();
 	
-	public HashMap<String, Integer> getMappings() {
-		return mappings;
-	}
-	
-	public HashMap<Integer, SNPlayer> getPlayers() {
+	public SNPlayers getPlayers() {
 		return players;
 	}
 	
-	public void setMappings(HashMap<String, Integer> mappings) {
-		this.mappings.clear();
-		this.mappings.putAll(mappings);
-	}
-
-	public void setPlayers(HashMap<Integer, SNPlayer> players) {
-		this.players.clear();
-		this.players.putAll(players);
+	public void putPlayer(SNPlayer player) {
+		players.set(player);
 	}
 	
-	public void setPlayers(HashMap<String, Integer> mappings, HashMap<Integer, SNPlayer> players) {
-		setMappings(mappings);
-		setPlayers(players);
+	public void removePlayer(SNPlayer player) {
+		players.remove(player);
 	}
 	
 	/**
@@ -48,56 +31,23 @@ public class PlayerManager {
 	}
 
 	public SNPlayer getPlayer(String name) {
-		if(!(mappings.containsKey(name))) {
-			mappings.put(name, players.size() + 1);
-		}
-		
-		return getPlayer(mappings.get(name));
+		return players.get(name);
 	}
 	
-	public SNPlayer getPlayer(Integer id) {
-		if(!(players.containsKey(id))) {
-			players.put(id, new SNPlayer());
-		}
-		
-		return players.get(id);
-	}
-	
-	public String getName(Integer id) {
-	    for (Entry<String, Integer> entry : SupernaturalRaces.getPlayerManager().getMappings().entrySet()) {
-	        if (id.equals(entry.getValue())) {
-	            return entry.getKey();
-	        }
-	    }
-	    return null;
-	}
-	
-	public void addEffect(Player player, SNEffect effect) {
-		Bukkit.getPluginManager().callEvent(new EffectBeginEvent(player, effect));
-		getPlayer(player).removeEffect(effect.getType());
-		getPlayer(player).addEffect(effect);
-	}
-	
-	public void updateEffect(Player player, SNEffect effect) {
-		getPlayer(player).removeEffect(effect.getType());
-		getPlayer(player).addEffect(effect);
-	}
-	
-	public void removeEffect(Player player, SNEffect effect) {
-		Bukkit.getPluginManager().callEvent(new EffectExpireEvent(player, effect));
-		getPlayer(player).removeEffect(effect.getType());
-	}
-
 	/**
 	 * Get all the players in a race
 	 */
-	public HashMap<Integer, SNPlayer> getPlayersInRace(Race race) {
-		HashMap<Integer, SNPlayer> racePlayers = new HashMap<Integer, SNPlayer>();
-		for(Integer id : players.keySet()) {
-			if(players.get(id).getRace().equalsIgnoreCase(race.name())) {
-				racePlayers.put(id, players.get(id));
+	public SNPlayers getPlayersInRace(SNRace race) {
+		SNPlayers racePlayers = new SNPlayers();
+		
+		Iterator<SNPlayer> iterator = players.iterator();
+		while(iterator.hasNext()) {
+			SNPlayer player = iterator.next();
+			if(player.getRace().equals(race.name())) {
+				racePlayers.add(player);
 			}
 		}
+		
 		return racePlayers;
 	}
 }

@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
 
 public class PowerRegenTask implements Runnable {
@@ -13,7 +13,7 @@ public class PowerRegenTask implements Runnable {
 	public void run() {
 		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
-			Race race = SupernaturalRaces.getRaceManager().getRace(player);
+			SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
 						
 			if(player.getPower() < race.maxPower() && race.maxPower() != 0) {
 //				if(race instanceof AngelRace) {
@@ -71,7 +71,7 @@ public class PowerRegenTask implements Runnable {
 	
 	public void regenPower(Player p, Integer amount) {
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
-		Race race = SupernaturalRaces.getRaceManager().getRace(player);
+		SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
 		
 		if(player.getPower() < race.maxPower()) {
 			if(player.getPower() + amount > race.maxPower()) {

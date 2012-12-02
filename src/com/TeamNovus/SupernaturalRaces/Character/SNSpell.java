@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.Util.Reagent;
 
-public interface Spell {	
+public interface SNSpell {	
 	/**
 	 * The name of the spell.
 	 */

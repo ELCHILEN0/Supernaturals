@@ -1,18 +1,28 @@
 package com.TeamNovus.SupernaturalRaces.Events;
 
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.entity.EntityEvent;
 
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 
-public class EffectBeginEvent extends PlayerEvent {
-	private static final HandlerList handlers = new HandlerList();
+public class EffectBeginEvent extends EntityEvent {
+    private static final HandlerList handlers = new HandlerList();
+    private SNEffect effect;
     
-    public EffectBeginEvent(Player player, SNEffect effect) {
-    	super(player);
+    public EffectBeginEvent(Entity entity, SNEffect effect) {
+    	super(entity);
+    	this.effect = effect;
     }
     
+	public SNEffect getEffect() {
+		return effect;
+	}
+
+	public void setEffect(SNEffect effect) {
+		this.effect = effect;
+	}
+
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;

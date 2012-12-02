@@ -3,13 +3,13 @@ package com.TeamNovus.SupernaturalRaces.Managers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Character.Spell;
+import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Race.Human.HumanRace;
 
 public class RaceManager {
-	private LinkedList<Race> races = new LinkedList<Race>();
+	private LinkedList<SNRace> races = new LinkedList<SNRace>();
 	
 	public RaceManager() {
 		registerRaces();
@@ -32,22 +32,22 @@ public class RaceManager {
 //		races.add(new RangerRace());
 	}
 
-	public List<Race> getRaces() {
+	public List<SNRace> getRaces() {
 		return races;
 	}
 
 	/**
 	 * Set a players race
 	 */
-	public void setRace(SNPlayer player, Race race) {
+	public void setRace(SNPlayer player, SNRace race) {
 		player.setRace(race.name());
 	}
 
 	/**
 	 * Get the race a player is currently in
 	 */
-	public Race getRace(SNPlayer player) {
-		for(Race race : races) {
+	public SNRace getRace(SNPlayer player) {
+		for(SNRace race : races) {
 			if(race.name().equalsIgnoreCase(player.getRace())) {
 				return race;
 			}
@@ -58,8 +58,8 @@ public class RaceManager {
 	/**
 	 * Gets the best matching race by its name
 	 */
-	public Race getBestRace(String s) {
-		for(Race race : races) {
+	public SNRace getBestRace(String s) {
+		for(SNRace race : races) {
 			if(race.name().toLowerCase().startsWith(s.toLowerCase())) {
 				return race;
 			}
@@ -67,9 +67,9 @@ public class RaceManager {
 		return null;
 	}
 	
-	public Spell getBestSpell(String s) {
-		for(Race race : races) {
-			for(Spell spell : race.spells()) {
+	public SNSpell getBestSpell(String s) {
+		for(SNRace race : races) {
+			for(SNSpell spell : race.spells()) {
 				if(spell.name().toLowerCase().startsWith(s.toLowerCase())) {
 					return spell;
 				}

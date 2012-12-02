@@ -11,9 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Character.Race;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
-import com.TeamNovus.SupernaturalRaces.Character.Spell;
+import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 import com.TeamNovus.SupernaturalRaces.Util.Util;
 
@@ -38,7 +38,7 @@ public class PlayerCommands {
 			}
 
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer((Player) sender);
-			Race race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
+			SNRace race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
 
 			if(player.getRace().equalsIgnoreCase(race.name())) {
 				sender.sendMessage(ChatColor.RED + "You are already in this race!");
@@ -66,7 +66,7 @@ public class PlayerCommands {
 			}
 
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(args[2]);
-			Race race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
+			SNRace race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
 
 			if(player.getRace().equalsIgnoreCase(race.name())) {
 				sender.sendMessage(ChatColor.RED + "The specified player is already in this race!");
@@ -87,7 +87,7 @@ public class PlayerCommands {
 			return;
 		}
 		
-		for(Race race : SupernaturalRaces.getRaceManager().getRaces()) {
+		for(SNRace race : SupernaturalRaces.getRaceManager().getRaces()) {
 			List<String> players = new ArrayList<String>();
 			for(Player p : SupernaturalRaces.getPlugin().getServer().getOnlinePlayers()) {
 				SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
@@ -111,7 +111,7 @@ public class PlayerCommands {
 		}
 
 		sender.sendMessage(ChatColor.BLUE + "Availiable Races:");
-		for(Race race : SupernaturalRaces.getRaceManager().getRaces()) {
+		for(SNRace race : SupernaturalRaces.getRaceManager().getRaces()) {
 			sender.sendMessage("  " + race.color() + race.name());
 		}
 	}
@@ -123,19 +123,19 @@ public class PlayerCommands {
 			return;
 		}
 
-		Race race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
+		SNRace race = SupernaturalRaces.getRaceManager().getBestRace(args[1]);
 
 		sender.sendMessage(ChatColor.GOLD + race.name() + ":");
 		sender.sendMessage(ChatColor.BLUE + "   Max Power: " + ChatColor.YELLOW + race.maxPower());
 		sender.sendMessage(ChatColor.BLUE + "   Spells:");
-		for(Spell spell : race.spells()) {
+		for(SNSpell spell : race.spells()) {
 			sender.sendMessage(ChatColor.GOLD + "      - " + spell.name());
 		}
 	}
 	
 	@BaseCommand(aliases = "spell", description = "View information about a spell!", usage = "<Spell>", min = 2, max = 2)
 	public void onSpellInfoCmd(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Spell spell = SupernaturalRaces.getRaceManager().getBestSpell(args[1].toLowerCase());
+		SNSpell spell = SupernaturalRaces.getRaceManager().getBestSpell(args[1].toLowerCase());
 
 		if(spell == null) {
 			sender.sendMessage(ChatColor.RED + "The specified spell was not found!");
@@ -185,7 +185,7 @@ public class PlayerCommands {
 		}
 
 		SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer((Player) sender);
-		Race race = SupernaturalRaces.getRaceManager().getRace(player);
+		SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
 		sender.sendMessage(ChatColor.YELLOW + "Your Power: " + ChatColor.GREEN + player.getPower() + "/" + race.maxPower());
 
 	}

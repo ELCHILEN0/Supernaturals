@@ -6,11 +6,11 @@ import org.bukkit.event.entity.EntityEvent;
 
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 
-public class EffectExpireEvent extends EntityEvent {
+public class EffectTriggerEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
     private SNEffect effect;
     
-    public EffectExpireEvent(Entity entity, SNEffect effect) {
+    public EffectTriggerEvent(Entity entity, SNEffect effect) {
     	super(entity);
     	this.effect = effect;
     }

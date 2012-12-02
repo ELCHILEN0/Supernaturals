@@ -1,22 +1,29 @@
 package com.TeamNovus.SupernaturalRaces.Character;
 
-import java.util.ArrayList;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
-import com.TeamNovus.SupernaturalRaces.Models.SNAttributes;
 
-public class SNPlayer extends SNAttributes {
-	private String race = "Human";
-	private Integer power = 0;
-	private Integer boundSpellId = 0;
-	private ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
+public class SNPlayer {
+	private String name;
+	private String race;
+	private Integer power;
+	private Integer boundSpellId;
 	
 	public String getRace() {
 		return race;
 	}
 	
-	public Race getPlayerRace() {
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+		
+	public SNRace getPlayerRace() {
 		return SupernaturalRaces.getRaceManager().getBestRace(race);
 	}
 	
@@ -24,8 +31,8 @@ public class SNPlayer extends SNAttributes {
 		this.race = race;
 	}
 	
-	public void setRace(Race race) {
-		this.race = race.name();
+	public void setRace(SNRace race) {
+		setRace(race.name());
 	}
 
 	public Integer getPower() {
@@ -44,19 +51,43 @@ public class SNPlayer extends SNAttributes {
 		return boundSpellId;
 	}
 	
-	public void addEffect(SNEffect effect) {
-		effects.add(effect);
+	// Bukkit Stuff:
+	public Player getPlayer() {
+		return Bukkit.getServer().getPlayerExact(name);
 	}
 	
-	public void removeEffect(SNEffectType effect) {
-		for(SNEffect e : effects) {
-			if(e.getType().equals(effect)) {
-				effects.remove(e);
-			}
-		}
+	public Boolean isOnline() {
+		return Bukkit.getServer().getPlayerExact(name).isOnline();
 	}
 	
-	public ArrayList<SNEffect> getEffects() {
-		return effects;
+	@Override
+	public String toString() {
+		return "SNPlayer [name=" + name + ", race=" + race + ", power=" + power
+				+ ", boundSpellId=" + boundSpellId + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SNPlayer other = (SNPlayer) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 }

@@ -1,15 +1,10 @@
 package com.TeamNovus.SupernaturalRaces.Events;
 
-import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 
-public class PlayerTickEvent extends PlayerEvent {
+public class ServerTickEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-    
-    public PlayerTickEvent(Player player) {
-    	super(player);
-    }
     
 	@Override
 	public HandlerList getHandlers() {

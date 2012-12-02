@@ -1,18 +1,16 @@
 package com.TeamNovus.SupernaturalRaces.Race.Human;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.bukkit.ChatColor;
 
-import com.TeamNovus.SupernaturalRaces.Character.Race;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
-import com.TeamNovus.SupernaturalRaces.Character.Spell;
-import com.TeamNovus.SupernaturalRaces.Effects.IceWalk;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
+import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
-public class HumanRace implements Race {
+public class HumanRace implements SNRace {
 
 	@Override
 	public String name() {
@@ -30,20 +28,21 @@ public class HumanRace implements Race {
 	}
 	
 	@Override
-	public List<Spell> spells() {
-		return new ArrayList<Spell>();
+	public ArrayList<SNSpell> spells() {
+		ArrayList<SNSpell> spells = new ArrayList<SNSpell>();
+		return spells;
 	}
 	
 	@Override
-	public List<Class<? extends SNEventListener>> events() {
-		List<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
+	public ArrayList<Class<? extends SNEventListener>> events() {
+		ArrayList<Class<? extends SNEventListener>> events = new ArrayList<Class<? extends SNEventListener>>();
 		return events;
 	}
 
 	@Override
 	public ArrayList<SNEffect> effects() {
 		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
-		effects.add(new SNEffect(0, -1, 1, IceWalk.class, SNEffectType.NORMAL));
+		effects.add(new SNEffect(20 * 20, 5 * 20, 0, BleedEffect.class, SNEffectType.BLEED));
 		return effects;
 	}
 }
