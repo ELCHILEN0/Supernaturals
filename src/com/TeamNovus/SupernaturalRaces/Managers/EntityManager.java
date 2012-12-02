@@ -10,6 +10,8 @@ import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNEntites;
 import com.TeamNovus.SupernaturalRaces.Character.SNEntity;
+import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTickEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTriggerEvent;
 
@@ -37,17 +39,21 @@ public class EntityManager {
 				Iterator<SNEffect> effectIterator = entity.getEffects().iterator();
 				while(effectIterator.hasNext()) {
 					SNEffect effect = effectIterator.next();
+					if(effect.getElapsed() == 0) {
+						Bukkit.getPluginManager().callEvent(new EffectBeginEvent(entity.getEntity(), effect));					
+					}
+					
 					effect.setElapsed(effect.getElapsed() + 1);
 					Bukkit.getPluginManager().callEvent(new EffectTickEvent(entity.getEntity(), effect));					
 										
 					if(effect.getElapsed() % effect.getPeriod() == 0) {
-						System.out.print(effect.toString());
 						Bukkit.getPluginManager().callEvent(new EffectTriggerEvent(entity.getEntity(), effect));
 					}
 					
 					if(effect.getDuration() != -1) {
 						if(effect.getElapsed() >= effect.getDuration()) {
-							entity.removeEffect(effect.getType());
+							Bukkit.getPluginManager().callEvent(new EffectExpireEvent(entity.getEntity(), effect));
+							iterator.remove();
 						}
 					}
 				}

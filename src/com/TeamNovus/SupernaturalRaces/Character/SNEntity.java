@@ -10,8 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
-import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
-import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 
 public class SNEntity {
 	private UUID uniqueId;
@@ -33,27 +31,14 @@ public class SNEntity {
 		return effects;
 	}
 	
-	public void addEffect(SNEffect effect) {
-		boolean call = true;
-		for(SNEffect e : effects) {
-			if(e.equals(effect)) {
-				if(e.getDuration() != -1) {
-					effect.setDuration(effect.getDuration() + e.getDuration());
-				}
-				call = false;
-			}
-		}	
-		
+	public void putEffect(SNEffect effect) {
+		removeEffect(effect.getType());
 		effects.add(effect);
-		
-		if(call) {
-			Bukkit.getPluginManager().callEvent(new EffectBeginEvent(getEntity(), effect));
-		}
 	}
 	
 	public void addEffects(ArrayList<SNEffect> effects) {
 		for(SNEffect effect : effects) {
-			addEffect(effect);
+			putEffect(effect);
 		}
 	}
 	
@@ -63,7 +48,6 @@ public class SNEntity {
 			SNEffect effect = iterator.next();
 			if(effect.getType().equals(type)) {
 				iterator.remove();
-				Bukkit.getPluginManager().callEvent(new EffectExpireEvent(getEntity(), effect));
 			}
 		}
 	}
