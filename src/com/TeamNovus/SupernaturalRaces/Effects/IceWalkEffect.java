@@ -1,7 +1,5 @@
 package com.TeamNovus.SupernaturalRaces.Effects;
 
-import java.util.ArrayList;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,7 +15,6 @@ import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Util.EffectUtil;
 
 public class IceWalkEffect implements SNEventListener {
-	ArrayList<Block> changed = new ArrayList<Block>();
 
 	@SNEventHandler
 	public void onEffectBegin(EffectBeginEvent event) {
@@ -34,7 +31,6 @@ public class IceWalkEffect implements SNEventListener {
 				Block block = event.getPlayer().getLocation().getBlock().getRelative(x, -1, z);
 				if(block.getType().equals(Material.WATER) || block.getType().equals(Material.STATIONARY_WATER)) {
 					block.setType(Material.ICE);
-					changed.add(block);
 				}
 			}
 		}

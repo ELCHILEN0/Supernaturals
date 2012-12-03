@@ -85,23 +85,72 @@ public class EventManager implements Listener {
 			Class<? extends SNEventListener> c = effect.getModifiers();
 			for(Method method : c.getMethods()) {
 				if(method.isAnnotationPresent(SNEventHandler.class)) {
-					for(Type type : method.getParameterTypes()) {
-						if(type.equals(event.getClass())) {
+					// TODO: Event, Effect
+					Type[] types = method.getParameterTypes();
+							
+					if(types.length == 1) {
+						if(types[0].equals(event.getClass())) {
 							try {
-								try {
-									method.invoke(method.getDeclaringClass().newInstance(), event);
-								} catch (InstantiationException e) {
-									e.printStackTrace();
-								}
+								method.invoke(method.getDeclaringClass().newInstance(), event);
 							} catch (IllegalArgumentException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
 								e.printStackTrace();
 							} catch (InvocationTargetException e) {
 								e.printStackTrace();
+							} catch (InstantiationException e) {
+								e.printStackTrace();
 							}
-							break;
 						}
+					} else if(types.length == 2) {
+						if(types[0].equals(event.getClass()) && types[1].equals(effect.getClass())) {
+							System.out.println("Types: " + types[0].toString() + " " + types[1].toString());
+							System.out.println("Args: " + event.getClass().toString() + " " + effect.getClass().toString());
+							try {
+								method.invoke(method.getDeclaringClass().newInstance(), event, effect);
+							} catch (IllegalArgumentException e) {
+								e.printStackTrace();
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							} catch (InvocationTargetException e) {
+								e.printStackTrace();
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					
+					if(types.length >= 1 && types[0].getClass().equals(event.getClass())) {
+
+						if(types.length == 1) {
+							try {
+								method.invoke(method.getDeclaringClass().newInstance(), event);
+							} catch (IllegalArgumentException e) {
+								e.printStackTrace();
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							} catch (InvocationTargetException e) {
+								e.printStackTrace();
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+							}
+						} else if(types.length == 2) {
+
+							if(types[1].getClass().equals(effect.getClass())) {
+								try {
+									method.invoke(method.getDeclaringClass().newInstance(), event, effect);
+								} catch (IllegalArgumentException e) {
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									e.printStackTrace();
+								} catch (InvocationTargetException e) {
+									e.printStackTrace();
+								} catch (InstantiationException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						
 					}
 				}
 			}
