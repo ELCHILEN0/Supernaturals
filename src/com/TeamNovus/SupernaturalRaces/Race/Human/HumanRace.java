@@ -8,6 +8,7 @@ import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Effects.BleedEffect;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
 public class HumanRace implements SNRace {
