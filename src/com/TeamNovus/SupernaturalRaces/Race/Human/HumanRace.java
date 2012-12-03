@@ -9,6 +9,7 @@ import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Effects.BleedEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.IceWalkEffect;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
 public class HumanRace implements SNRace {
@@ -44,6 +45,7 @@ public class HumanRace implements SNRace {
 	public ArrayList<SNEffect> effects() {
 		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
 		effects.add(new SNEffect(5 * 20, 0, BleedEffect.class, SNEffectType.BLEED));
+		effects.add(new SNEffect(5 * 20, 0, 0, IceWalkEffect.class, SNEffectType.BLEED));
 		return effects;
 	}
 }

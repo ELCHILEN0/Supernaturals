@@ -46,7 +46,7 @@ public class EntityManager {
 					effect.setElapsed(effect.getElapsed() + 1);
 					Bukkit.getPluginManager().callEvent(new EffectTickEvent(entity.getEntity(), effect));					
 										
-					if(effect.getElapsed() % effect.getPeriod() == 0) {
+					if(effect.getPeriod() != 0 && effect.getElapsed() % effect.getPeriod() == 0) {
 						Bukkit.getPluginManager().callEvent(new EffectTriggerEvent(entity.getEntity(), effect));
 					}
 					

@@ -75,9 +75,8 @@ public class SpellUtil {
 		return null;
 	}
 	
-	
     public static Wolf setCollarColor(Wolf wolf, DyeColor color){
-        EntityWolf ent = (EntityWolf) ((CraftLivingEntity)wolf).getHandle();
+        EntityWolf ent = (EntityWolf) ((CraftLivingEntity) wolf).getHandle();
         ent.setCollarColor(color.getData());
         return wolf;
     }
