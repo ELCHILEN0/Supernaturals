@@ -8,6 +8,7 @@ import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Effects.ConfuseEffect;
 import com.TeamNovus.SupernaturalRaces.Effects.PhaseWalkEffect;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
@@ -45,7 +46,8 @@ public class HumanRace implements SNRace {
 		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
 //		effects.add(new SNEffect(5 * 20, 0, BleedEffect.class, SNEffectType.BLEED));
 //		effects.add(new SNEffect(5 * 20, 0, IceWalkEffect.class, SNEffectType.NORMAL));
-		effects.add(new SNEffect(5 * 20, 5, PhaseWalkEffect.class, SNEffectType.PHASE_WALK));
+//		effects.add(new SNEffect(5 * 20, 4, PhaseWalkEffect.class, SNEffectType.PHASE_WALK));
+		effects.add(new SNEffect(5 * 20, 4, ConfuseEffect.class, SNEffectType.PHASE_WALK));
 		return effects;
 	}
 }
