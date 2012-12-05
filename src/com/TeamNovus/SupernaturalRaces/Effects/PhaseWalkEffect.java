@@ -52,7 +52,7 @@ public class PhaseWalkEffect implements SNEventListener {
 	@SNEventHandler
 	public void onEffectExpire(EffectExpireEvent event) {
 		if(event.getEntity() instanceof Player) {
-			((Player) event.getEntity()).sendMessage(ChatColor.RED + "You can no longer walk on water!");
+			((Player) event.getEntity()).sendMessage(ChatColor.RED + "You return to your body.");
 		}
 	}
 	

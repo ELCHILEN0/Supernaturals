@@ -1,14 +1,15 @@
 package com.TeamNovus.SupernaturalRaces.Effects;
 
 import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EffectTickEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTriggerEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
+import com.TeamNovus.SupernaturalRaces.Util.EffectUtil;
 
 public class BleedEffect implements SNEventListener {
 
@@ -20,6 +21,13 @@ public class BleedEffect implements SNEventListener {
 	}
 	
 	@SNEventHandler
+	public void onEffectTick(EffectTickEvent event) {
+		if(event.getEntity() instanceof LivingEntity) {
+			EffectUtil.addPotionGraphicalEffect((LivingEntity) event.getEntity(), 0x990000, 40);
+		}
+	}
+	
+	@SNEventHandler
 	public void onEffectTrigger(EffectTriggerEvent event) {
 		if(event.getEntity() instanceof Player) {
 			((Player) event.getEntity()).sendMessage(ChatColor.RED + "Bleeding...");
@@ -27,7 +35,6 @@ public class BleedEffect implements SNEventListener {
 		
 		if(event.getEntity() instanceof LivingEntity) {
 			((LivingEntity) event.getEntity()).damage(1 * (event.getEffect().getAmplifier() + 1));
-			event.getEntity().playEffect(EntityEffect.WOLF_HEARTS);
 		}
 	}
 	

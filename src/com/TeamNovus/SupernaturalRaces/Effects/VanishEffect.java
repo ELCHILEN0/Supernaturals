@@ -12,9 +12,10 @@ import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTickEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
+import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 import com.TeamNovus.SupernaturalRaces.Util.EffectUtil;
 
-public class VanishEffect {
+public class VanishEffect implements SNEventListener {
 
 	@SNEventHandler
 	public void onEffectBegin(EffectBeginEvent event) {
