@@ -55,7 +55,7 @@ public class CustomListener implements Listener {
 																event.getEntity(),
 																event.getDamage(),
 																event.getCause(),
-																(Projectile) event.getEntity());
+																(Projectile) event.getDamager());
 				
 				// Call the Event
 				Bukkit.getServer().getPluginManager().callEvent(e);
@@ -84,7 +84,7 @@ public class CustomListener implements Listener {
 				
 				// Cancel if necessary
 				if(e.isCancelled())
-				event.setCancelled(e.isCancelled());
+					event.setCancelled(e.isCancelled());
 			}
 		}
 	}

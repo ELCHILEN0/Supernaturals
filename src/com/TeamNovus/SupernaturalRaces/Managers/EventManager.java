@@ -21,6 +21,8 @@ import com.TeamNovus.SupernaturalRaces.Events.EffectBeginEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectExpireEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTickEvent;
 import com.TeamNovus.SupernaturalRaces.Events.EffectTriggerEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EntityDamageEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventHandler;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
@@ -49,6 +51,21 @@ public class EventManager implements Listener {
 	
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+		invokeEvents(event.getEntity(), event);
+	}
+	
+	@EventHandler
+	public void onEntityDamageByEntityProjectile(EntityDamageEntityByProjectileEvent event) {
+		invokeEvents(event.getEntity(), event);
+	}
+	
+	@EventHandler
+	public void onEntityDamageEntity(EntityDamageEntityEvent event) {
+		invokeEvents(event.getEntity(), event);
+	}
+	
+	@EventHandler
+	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event) {
 		invokeEvents(event.getEntity(), event);
 	}
 	

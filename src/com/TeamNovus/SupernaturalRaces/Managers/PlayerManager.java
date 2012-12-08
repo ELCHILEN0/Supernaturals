@@ -31,6 +31,10 @@ public class PlayerManager {
 	}
 
 	public SNPlayer getPlayer(String name) {
+		if(players.get(name) == null) {
+			putPlayer(new SNPlayer(name));
+		}
+		
 		return players.get(name);
 	}
 	

@@ -13,9 +13,10 @@ public class PowerRegenTask implements Runnable {
 	public void run() {
 		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 			SNPlayer player = SupernaturalRaces.getPlayerManager().getPlayer(p);
-			SNRace race = SupernaturalRaces.getRaceManager().getRace(player);
+			SNRace race = player.getPlayerRace();
 						
 			if(player.getPower() < race.maxPower() && race.maxPower() != 0) {
+				player.getPlayer().sendMessage("Regening power!");
 //				if(race instanceof AngelRace) {
 //					if(p.getWorld().getTime() < 12000) {
 //						regenPower(p, 20);

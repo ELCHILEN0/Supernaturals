@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 
 import com.TeamNovus.SupernaturalRaces.Character.SNEffect;
+import com.TeamNovus.SupernaturalRaces.Character.SNEffect.SNEffectType;
 import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;

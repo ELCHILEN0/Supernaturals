@@ -11,6 +11,16 @@ public class SNPlayer {
 	private Integer power;
 	private Integer boundSpellId;
 	
+	public SNPlayer() { }
+	
+	public SNPlayer(Player player) {
+		this.name = player.getName();
+	}
+	
+	public SNPlayer(String name) {
+		this.name = name;
+	}
+	
 	public String getRace() {
 		return race;
 	}

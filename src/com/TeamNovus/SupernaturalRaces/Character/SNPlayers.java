@@ -54,9 +54,7 @@ public class SNPlayers {
 			}
 		}
 		
-		SNPlayer player = new SNPlayer();
-		player.setName(name);
-		return player;
+		return null;
 	}
 	
 	public SNPlayer get(Player p) {
@@ -68,10 +66,8 @@ public class SNPlayers {
 				return player;
 			}
 		}
-		
-		SNPlayer player = new SNPlayer();
-		player.setName(p.getName());
-		return player;
+
+		return null;
 	}
 
 	public boolean containsAll(Collection<?> c) {
