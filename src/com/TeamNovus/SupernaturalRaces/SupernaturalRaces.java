@@ -2,7 +2,6 @@ package com.TeamNovus.SupernaturalRaces;
 
 import java.io.File;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.SupernaturalRaces.Commands.BaseCommandExecutor;
@@ -67,13 +66,6 @@ public class SupernaturalRaces extends JavaPlugin {
 	public void onDisable() {
 		// Cancel all tasks
 		getServer().getScheduler().cancelTasks(this);
-		
-		getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
-			public void run() {
-				Bukkit.getScheduler().cancelTasks(SupernaturalRaces.getPlugin());
-			}
-		}, 1);
 		
 		// Save to database and close the connection
 		databaseManager.savePlayers();
