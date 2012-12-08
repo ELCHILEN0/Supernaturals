@@ -1,10 +1,37 @@
 package com.TeamNovus.SupernaturalRaces.Character;
 
+import com.TeamNovus.SupernaturalRaces.Effects.BleedEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.CombustEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.FireResistanceEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.HealEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.IceWalkEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.PhaseWalkEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.SneakEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.StunEffect;
+import com.TeamNovus.SupernaturalRaces.Effects.VanishEffect;
 import com.TeamNovus.SupernaturalRaces.Models.SNEventListener;
 
 public class SNEffect {
 	public enum SNEffectType {
-		NORMAL, DAMAGE, HEAL, FIRE, BLEED, PHASE_WALK;
+		BLEED(BleedEffect.class),
+		COMBUST(CombustEffect.class),
+		FIRE_RESISTANCE(FireResistanceEffect.class),
+		HEAL(HealEffect.class),
+		ICE_WALK(IceWalkEffect.class),
+		PHASE_WALK(PhaseWalkEffect.class),
+		SNEAK(SneakEffect.class),
+		STUN(StunEffect.class),
+		VANISH(VanishEffect.class);
+		
+		private Class<? extends SNEventListener> modifier;
+		
+		private SNEffectType(Class<? extends SNEventListener> modifier) {
+			this.modifier = modifier;
+		}
+		
+		public Class<? extends SNEventListener> getModifers() {
+			return this.modifier;
+		}
 	}
 	
 	private Integer elapsed = 0;
@@ -18,48 +45,48 @@ public class SNEffect {
 	
 	private SNEffectType type;
 
-	public SNEffect(Integer delay, Integer duration, Integer period, Integer amplifier, Class<? extends SNEventListener> modifiers, SNEffectType type) {
+	public SNEffect(Integer delay, Integer duration, Integer period, Integer amplifier, SNEffectType type) {
 		this.delay = delay;
 		this.duration = duration;
 		this.period = period;
 		this.amplifier = amplifier;
-		this.modifiers = modifiers;
+		this.modifiers = type.getModifers();
 		this.type = type;
 	}
 	
-	public SNEffect(Integer duration, Integer period, Integer amplifier, Class<? extends SNEventListener> modifiers, SNEffectType type) {
+	public SNEffect(Integer duration, Integer period, Integer amplifier, SNEffectType type) {
 		this.delay = 0;
 		this.duration = duration;
 		this.period = period;
 		this.amplifier = amplifier;
-		this.modifiers = modifiers;
+		this.modifiers = type.getModifers();
 		this.type = type;
 	}
 	
-	public SNEffect(Integer period, Integer amplifier, Class<? extends SNEventListener> modifiers, SNEffectType type) {
+	public SNEffect(Integer period, Integer amplifier, SNEffectType type) {
 		this.delay = 0;
 		this.duration = -1;
 		this.period = period;
 		this.amplifier = amplifier;
-		this.modifiers = modifiers;
+		this.modifiers = type.getModifers();
 		this.type = type;
 	}
 	
-	public SNEffect(Integer amplifier, Class<? extends SNEventListener> modifiers, SNEffectType type) {
+	public SNEffect(Integer amplifier, SNEffectType type) {
 		this.delay = 0;
 		this.duration = -1;
 		this.period = 1;
 		this.amplifier = amplifier;
-		this.modifiers = modifiers;
+		this.modifiers = type.getModifers();
 		this.type = type;
 	}
 	
-	public SNEffect(Class<? extends SNEventListener> modifiers, SNEffectType type) {
+	public SNEffect(SNEffectType type) {
 		this.delay = 0;
 		this.duration = -1;
 		this.period = 1;
 		this.amplifier = 1;
-		this.modifiers = modifiers;
+		this.modifiers = type.getModifers();
 		this.type = type;
 	}
 	

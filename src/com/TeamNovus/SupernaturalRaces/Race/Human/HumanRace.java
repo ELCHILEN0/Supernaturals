@@ -42,6 +42,7 @@ public class HumanRace implements SNRace {
 	@Override
 	public ArrayList<SNEffect> effects() {
 		ArrayList<SNEffect> effects = new ArrayList<SNEffect>();
+		effects.add(new SNEffect(5, SNEffectType.ICE_WALK));
 		return effects;
 	}
 }
