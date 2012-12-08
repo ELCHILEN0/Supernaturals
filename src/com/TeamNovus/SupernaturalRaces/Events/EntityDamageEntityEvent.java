@@ -1,30 +1,27 @@
 package com.TeamNovus.SupernaturalRaces.Events;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-public class EntityDamageByEntityProjectileEvent extends EntityEvent implements Cancellable {
+public class EntityDamageEntityEvent extends EntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
     private boolean cancelled ;
-    private Entity damager;
+    private Entity damaged;
     private Integer damage;
     private DamageCause cause;
-    private Projectile projectile;
     
-    public EntityDamageByEntityProjectileEvent(Entity damager, Entity damaged, Integer damage, DamageCause cause, Projectile projectile) {
-		super(damaged);
-		this.damager = damager;
+    public EntityDamageEntityEvent(Entity damager, Entity damaged, Integer damage, DamageCause cause) {
+		super(damager);
+		this.damaged = damaged;
 		this.damage = damage;
 		this.cause = cause;
-		this.projectile = projectile;
 	}
     
 	public Entity getDamaged() {
-		return damager;
+		return damaged;
 	}
 	
 	public Integer getDamage() {
@@ -37,10 +34,6 @@ public class EntityDamageByEntityProjectileEvent extends EntityEvent implements 
 	
 	public DamageCause getCause() {
 		return cause;
-	}
-	
-	public Projectile getProjectile() {
-		return projectile;
 	}
 
 	@Override

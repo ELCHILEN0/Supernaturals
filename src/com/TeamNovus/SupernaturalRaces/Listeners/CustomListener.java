@@ -1,16 +1,22 @@
 package com.TeamNovus.SupernaturalRaces.Listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.TeamNovus.SupernaturalRaces.SupernaturalRaces;
-import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNPlayer;
+import com.TeamNovus.SupernaturalRaces.Character.SNRace;
 import com.TeamNovus.SupernaturalRaces.Character.SNSpell;
+import com.TeamNovus.SupernaturalRaces.Events.EntityDamageByEntityProjectileEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EntityDamageEntityEvent;
+import com.TeamNovus.SupernaturalRaces.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.SupernaturalRaces.Events.ServerTickEvent;
 import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
 
@@ -19,6 +25,69 @@ import com.TeamNovus.SupernaturalRaces.Util.ItemBag;
  *
  */
 public class CustomListener implements Listener {
+	
+	@EventHandler
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {		
+		if(true) {
+			EntityDamageEntityEvent e = new EntityDamageEntityEvent(
+											event.getDamager(), 
+											event.getEntity(), 
+											event.getDamage(), 
+											event.getCause());
+			
+			// Call the Event
+			Bukkit.getServer().getPluginManager().callEvent(e);
+						
+			// Set EntityDamageByEntity Event Values
+			event.setDamage(e.getDamage());
+
+			// Cancel if necessary
+			if(e.isCancelled())
+				event.setCancelled(e.isCancelled());
+		}
+		
+		if(event.getDamager() instanceof Projectile) {
+			
+			if(true) {
+				// Build the Event
+				EntityDamageByEntityProjectileEvent e = new EntityDamageByEntityProjectileEvent(
+																((Projectile) event.getDamager()).getShooter(),
+																event.getEntity(),
+																event.getDamage(),
+																event.getCause(),
+																(Projectile) event.getEntity());
+				
+				// Call the Event
+				Bukkit.getServer().getPluginManager().callEvent(e);
+				
+				// Set EntityDamageByEntity Event Values
+				event.setDamage(e.getDamage());
+				
+				// Cancel if necessary
+				if(e.isCancelled())
+					event.setCancelled(e.isCancelled());
+			}
+			
+			if(true) {
+				EntityDamageEntityByProjectileEvent e = new EntityDamageEntityByProjectileEvent(
+																((Projectile) event.getDamager()).getShooter(), 
+																event.getEntity(),
+																event.getDamage(),
+																event.getCause(),
+																(Projectile) event.getDamager());
+
+				// Call the Event
+				Bukkit.getServer().getPluginManager().callEvent(e);
+				
+				// Set EntityDamageByEntity Event Values
+				event.setDamage(e.getDamage());
+				
+				// Cancel if necessary
+				if(e.isCancelled())
+				event.setCancelled(e.isCancelled());
+			}
+		}
+	}
 	
 	@EventHandler
 	public void onServerTick(ServerTickEvent event) {
