@@ -18,9 +18,7 @@ import com.TeamNovus.SupernaturalRaces.Database.SQLite;
 import com.TeamNovus.SupernaturalRaces.Util.LogUtil;
 
 public class DatabaseManager {
-
 	private Driver driver;
-	
 	private Connection connection;
 
 	public void connect() {
