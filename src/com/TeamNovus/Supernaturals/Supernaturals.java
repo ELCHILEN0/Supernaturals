@@ -9,12 +9,14 @@ import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.SpeedListener;
-import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class Supernaturals extends JavaPlugin {
+	private static Supernaturals plugin = null;
 
 	@Override
 	public void onEnable() {		
+		plugin = this;
+		
 		Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SupernaturalListener(), this);
@@ -29,6 +31,10 @@ public class Supernaturals extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		
+	}
+	
+	public static Supernaturals getPlugin() {
+		return plugin;
 	}
 	
 }

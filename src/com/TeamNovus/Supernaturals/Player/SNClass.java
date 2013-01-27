@@ -29,6 +29,12 @@ public abstract class SNClass {
 		this.name = name;
 		this.color = color;
 		this.maxLevel = maxLevel;
+		
+		// Defaults:
+		maxMana.put(0, 0);
+		maxHealth.put(0, 20);
+		maxFoodLevel.put(0, 20);
+		speed.put(0, 0.2f);
 	}
 	
 	/**

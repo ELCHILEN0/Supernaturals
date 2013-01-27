@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Collections.Entity;
+import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
@@ -39,15 +40,15 @@ public class SNPlayer extends Entity {
 	public SNPlayer() {
 		// Data Values:
 		this.mana = 0;
-		this.health = 40;
+		this.health = 20;
 		this.foodLevel = 20;
-		this.speed = 0.5f;
+		this.speed = 0.2f;
 
 		this.maxMana = 0;
-		this.maxHealth = 40;
+		this.maxHealth = 20;
 		this.maxFoodLevel = 20;
 
-		// Race
+		// Class:
 		this.playerClass = new Human();
 		this.binding = 0;
 
@@ -59,7 +60,7 @@ public class SNPlayer extends Entity {
 		this.strengthStat = 0;
 		this.resistanceStat = 0;
 		this.dexterityStat = 0;
-		this.magicStat = 0;
+		this.magicStat = 0;		
 	}
 
 	public SNPlayer(Player p) { 
@@ -175,12 +176,8 @@ public class SNPlayer extends Entity {
 		if(health < 0)
 			health = 0;
 
-		System.out.print(getPlayer().getHealth()+ "/" +getPlayer().getMaxHealth());
-		System.out.print(getHealth()+ "/" +getMaxHealth());
 		// This synchronizes the players health to their health bar.
 		getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
-		System.out.print(getPlayer().getHealth()+ "/" +getPlayer().getMaxHealth());
-		System.out.print(getHealth()+ "/" +getMaxHealth());
 	}
 
 	/**
@@ -309,7 +306,13 @@ public class SNPlayer extends Entity {
 	 * @param playerClass - The new player class.
 	 */
 	public void setPlayerClass(SNClass playerClass) {
-		this.playerClass = playerClass;
+		PlayerChangeClassEvent event = new PlayerChangeClassEvent(getPlayer(), this.playerClass, playerClass);
+		
+		// Change the target class if modified.
+		playerClass = event.getTo();
+		
+		if(!(event.isCancelled()))
+			this.playerClass = playerClass;
 	}
 
 	/**

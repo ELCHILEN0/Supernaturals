@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
+import com.TeamNovus.Supernaturals.Supernaturals;
+import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
@@ -16,8 +19,30 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 public class PlayerListener implements Listener {
 	
 	@EventHandler
-	public void onPlayerLogin(PlayerLoginEvent event) {
+	public void onPlayerLogin(final PlayerLoginEvent event) {
 		SNPlayers.i.get(event.getPlayer());
+		
+		Bukkit.getServer().getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
+			
+			@Override
+			public void run() {
+				SNPlayer player = SNPlayers.i.get(event.getPlayer());
+				
+				
+				if(player.isOnline()) {
+					player.syncFields();
+				}
+			}
+		});
+	}
+	
+	@EventHandler
+	public void onPlayerChangeClass(PlayerChangeClassEvent event) {
+		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		
+		if(player.isOnline()) {
+			player.syncFields();
+		}
 	}
 	
 	@EventHandler
@@ -37,7 +62,6 @@ public class PlayerListener implements Listener {
 				player.sendMessage(ChatColor.GREEN + "Wand bound to " + ChatColor.YELLOW + player.getSelectedPower().getName() + ChatColor.GREEN + "!");
 			}
 		}
-
 
 		// Cast:
 		if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
