@@ -67,16 +67,24 @@ public class SNPlayer extends Entity {
 		this.name = p.getName();
 	}
 	
+	/**
+	 * Gets the players name.
+	 * 
+	 * @return The players name.
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Sets the players name.
+	 * 
+	 * @param name - The players new name. 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	
-	// Custom:
 	/**
 	 * Gets the players current mana.
 	 * 
@@ -457,34 +465,74 @@ public class SNPlayer extends Entity {
 		this.attributePoints = attributePoints;
 	}
 	
+	/**
+	 * Gets the players strength statistic.
+	 * 
+	 * @return The players strength statistic.
+	 */
 	public Integer getStrengthStat() {
 		return strengthStat;
 	}
 	
+	/**
+	 * Sets the players strength statistic.
+	 * 
+	 * @param strengthStat - The players new strength statistic.
+	 */
 	public void setStrengthStat(Integer strengthStat) {
 		this.strengthStat = strengthStat;
 	}
 	
+	/**
+	 * Gets the players resistance statistic.
+	 * 
+	 * @return The players resistance statistic.
+	 */
 	public Integer getResistanceStat() {
 		return resistanceStat;
 	}
 	
+	/**
+	 * Sets the players resistance statistic.
+	 * 
+	 * @param strengthStat - The players new resistance statistic.
+	 */
 	public void setResistanceStat(Integer resistanceStat) {
 		this.resistanceStat = resistanceStat;
 	}
 	
+	/**
+	 * Gets the players dexterity statistic.
+	 * 
+	 * @return The players dexterity statistic.
+	 */
 	public Integer getDexterityStat() {
 		return dexterityStat;
 	}
 	
+	/**
+	 * Sets the players dexterity statistic.
+	 * 
+	 * @param strengthStat - The players new dexterity statistic.
+	 */
 	public void setDexterityStat(Integer dexterityStat) {
 		this.dexterityStat = dexterityStat;
 	}
 	
+	/**
+	 * Gets the players magic statistic.
+	 * 
+	 * @return The players magic statistic.
+	 */
 	public Integer getMagicStat() {
 		return magicStat;
 	}
 	
+	/**
+	 * Sets the players magic statistic.
+	 * 
+	 * @param strengthStat - The players new magic statistic.
+	 */
 	public void setMagicStat(Integer magicStat) {
 		this.magicStat = magicStat;
 	}
