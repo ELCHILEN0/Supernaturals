@@ -17,7 +17,7 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		SNPlayers.i.get(event.getPlayer()).setSpeed(0.03f);
+		SNPlayers.i.get(event.getPlayer());
 	}
 	
 	@EventHandler

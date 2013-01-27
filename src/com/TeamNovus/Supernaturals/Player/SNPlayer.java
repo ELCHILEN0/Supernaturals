@@ -176,7 +176,7 @@ public class SNPlayer extends Entity {
 			health = 0;
 
 		// This synchronizes the players health to their health bar.
-		getPlayer().setHealth((health * 20)/maxHealth);
+		getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class SNPlayer extends Entity {
 			foodLevel = 0;
 
 		// This synchronizes the players food level to their hunger bar.
-		getPlayer().setFoodLevel((foodLevel * 20)/maxFoodLevel);
+		getPlayer().setFoodLevel((int) Math.ceil((foodLevel * 20)/maxFoodLevel));
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class SNPlayer extends Entity {
 	 * Updates the players speed.
 	 */
 	public void updateSpeed() {
-		getPlayer().setWalkSpeed(speed/10.0f);
+		getPlayer().setWalkSpeed(speed);
 
 		// Hack to ensure that the speed gets applied to the client.
 		getPlayer().saveData();
@@ -277,6 +277,12 @@ public class SNPlayer extends Entity {
 		updateHealth();
 		updateFoodLevel();
 		updateSpeed();
+	}
+	
+	public void resync() {
+		setHealth((getPlayer().getHealth() * getMaxHealth())/20);
+		setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
+		setSpeed(getPlayer().getWalkSpeed());
 	}
 
 	/**

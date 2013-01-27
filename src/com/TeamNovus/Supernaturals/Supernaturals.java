@@ -21,16 +21,6 @@ public class Supernaturals extends JavaPlugin {
 		// Custom Field Listeners:
 		Bukkit.getPluginManager().registerEvents(new HealthListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
-		
-		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-			
-			@Override
-			public void run() {
-				for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
-					p.update();
-				}
-			}
-		}, 20, 20);
 	}
 
 	
