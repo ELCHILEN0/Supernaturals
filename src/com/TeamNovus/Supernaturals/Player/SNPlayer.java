@@ -12,7 +12,7 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class SNPlayer extends Entity {
 	private String name;
-	
+
 	// Data Values:
 	private Integer mana;
 	private Integer maxMana;
@@ -21,21 +21,21 @@ public class SNPlayer extends Entity {
 	private Integer foodLevel;
 	private Integer maxFoodLevel;
 	private Float speed;
-	
+
 	// Class:
 	private SNClass playerClass;
 	private Integer binding;
-	
+
 	// Leveling:
 	private Integer experience;
 	private Integer attributePoints;
-	
+
 	// Statistics:
 	private Integer strengthStat;
 	private Integer resistanceStat;
 	private Integer dexterityStat;
 	private Integer magicStat;
-	
+
 	public SNPlayer() {
 		// Data Values:
 		this.mana = 0;
@@ -46,27 +46,27 @@ public class SNPlayer extends Entity {
 		this.maxMana = 0;
 		this.maxHealth = 20;
 		this.maxFoodLevel = 20;
-		
+
 		// Race
 		this.playerClass = new Human();
 		this.binding = 0;
-		
+
 		// Leveling:
 		this.experience = 0;
 		this.attributePoints = 0;
-		
+
 		// Statistics:
 		this.strengthStat = 0;
 		this.resistanceStat = 0;
 		this.dexterityStat = 0;
 		this.magicStat = 0;
 	}
-	
+
 	public SNPlayer(Player p) { 
 		this();
 		this.name = p.getName();
 	}
-	
+
 	/**
 	 * Gets the players name.
 	 * 
@@ -75,7 +75,7 @@ public class SNPlayer extends Entity {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Sets the players name.
 	 * 
@@ -84,7 +84,7 @@ public class SNPlayer extends Entity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * Gets the players current mana.
 	 * 
@@ -93,7 +93,7 @@ public class SNPlayer extends Entity {
 	public Integer getMana() {
 		return mana;
 	}
-	
+
 	/**
 	 * Sets the players current mana.
 	 * 
@@ -102,7 +102,7 @@ public class SNPlayer extends Entity {
 	public void setMana(Integer mana) {
 		this.mana = mana;
 	}
-	
+
 	/**
 	 * Gets the players maximum mana.
 	 * 
@@ -111,7 +111,7 @@ public class SNPlayer extends Entity {
 	public Integer getMaxMana() {
 		return maxMana;
 	}
-	
+
 	/**
 	 * Sets the players maximum mana.
 	 * 
@@ -120,7 +120,7 @@ public class SNPlayer extends Entity {
 	public void setMaxMana(Integer maxMana) {
 		this.maxMana = maxMana;
 	}
-	
+
 	/**
 	 * Gets the players health.
 	 * 
@@ -129,7 +129,7 @@ public class SNPlayer extends Entity {
 	public Integer getHealth() {
 		return health;
 	}
-	
+
 	/**
 	 * Sets the players health.
 	 * 
@@ -137,10 +137,10 @@ public class SNPlayer extends Entity {
 	 */
 	public void setHealth(Integer health) {
 		this.health = health;
-		
+
 		updateHealth();
 	}
-	
+
 	/**
 	 * Gets the players maximum health.
 	 * 
@@ -149,7 +149,7 @@ public class SNPlayer extends Entity {
 	public Integer getMaxHealth() {
 		return maxHealth;
 	}
-	
+
 	/**
 	 * Sets the players maximum health.
 	 * 
@@ -157,7 +157,7 @@ public class SNPlayer extends Entity {
 	 */
 	public void setMaxHealth(Integer maxHealth) {
 		this.maxHealth = maxHealth;
-		
+
 		updateHealth();
 	}
 
@@ -171,14 +171,14 @@ public class SNPlayer extends Entity {
 
 		if(health > maxHealth)
 			health = maxHealth;
-		
+
 		if(health < 0)
 			health = 0;
-				
+
 		// This synchronizes the players health to their health bar.
 		getPlayer().setHealth((health * 20)/maxHealth);
 	}
-	
+
 	/**
 	 * Gets the players food level.
 	 * 
@@ -187,7 +187,7 @@ public class SNPlayer extends Entity {
 	public Integer getFoodLevel() {
 		return foodLevel;
 	}
-	
+
 	/**
 	 * Sets the players food level.
 	 * 
@@ -195,10 +195,10 @@ public class SNPlayer extends Entity {
 	 */
 	public void setFoodLevel(Integer foodLevel) {
 		this.foodLevel = foodLevel;
-		
+
 		updateFoodLevel();
 	}
-	
+
 	/**
 	 * Gets the players maximum food level.
 	 * 
@@ -207,7 +207,7 @@ public class SNPlayer extends Entity {
 	public Integer getMaxFoodLevel() {
 		return maxFoodLevel;
 	}
-	
+
 	/**
 	 * Sets the players maximum food level.
 	 * 
@@ -215,10 +215,10 @@ public class SNPlayer extends Entity {
 	 */
 	public void setMaxFoodLevel(Integer maxFoodLevel) {
 		this.maxFoodLevel = maxFoodLevel;
-		
+
 		updateFoodLevel();
 	}
-	
+
 	/**
 	 * Updates the players hunger bar to @foodLevel.
 	 * 
@@ -226,17 +226,17 @@ public class SNPlayer extends Entity {
 	public void updateFoodLevel() {
 		if(maxFoodLevel == 0)
 			maxFoodLevel = 20;
-		
+
 		if(foodLevel > maxFoodLevel)
 			foodLevel = maxFoodLevel;
-		
+
 		if(foodLevel < 0)
 			foodLevel = 0;
-		
+
 		// This synchronizes the players food level to their hunger bar.
 		getPlayer().setFoodLevel((foodLevel * 20)/maxFoodLevel);
 	}
-	
+
 	/**
 	 * Gets the players walking speed.
 	 * 
@@ -245,7 +245,7 @@ public class SNPlayer extends Entity {
 	public Float getSpeed() {
 		return speed;
 	}
-		
+
 	/**
 	 * Sets the players walking speed.
 	 * 
@@ -253,21 +253,21 @@ public class SNPlayer extends Entity {
 	 */
 	public void setSpeed(Float speed) {
 		this.speed = speed;
-		
+
 		updateSpeed();
 	}
-	
+
 	/**
 	 * Updates the players speed.
 	 */
 	public void updateSpeed() {
 		getPlayer().setWalkSpeed(speed/10.0f);
-		
+
 		// Hack to ensure that the speed gets applied to the client.
 		getPlayer().saveData();
 		getPlayer().loadData();
 	}
-	
+
 	/**
 	 * Updates the players client to the acutal data values.
 	 * Updates: @health, @foodLevel, @speed
@@ -278,7 +278,7 @@ public class SNPlayer extends Entity {
 		updateFoodLevel();
 		updateSpeed();
 	}
-		
+
 	/**
 	 * Gets the players class.
 	 * 
@@ -287,7 +287,7 @@ public class SNPlayer extends Entity {
 	public SNClass getPlayerClass() {
 		return playerClass;
 	}
-	
+
 	/**
 	 * Sets the players class.
 	 * 
@@ -296,7 +296,7 @@ public class SNPlayer extends Entity {
 	public void setPlayerClass(SNClass playerClass) {
 		this.playerClass = playerClass;
 	}
-	
+
 	/**
 	 * Sets the players class from a String.
 	 * 
@@ -309,7 +309,7 @@ public class SNPlayer extends Entity {
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets the players available powers for their current level.
 	 * 
@@ -318,7 +318,7 @@ public class SNPlayer extends Entity {
 	public List<Power> getPowers() {
 		return getPlayerClass().getPowers(getLevel());
 	}
-	
+
 	/**
 	 * Gets the players available abilities for their current level.
 	 * 
@@ -327,7 +327,7 @@ public class SNPlayer extends Entity {
 	public List<Ability> getAbilities() {
 		return getPlayerClass().getAbilities(getLevel());
 	}
-	
+
 	/**
 	 * Synchronizes the players maximum values with the maximum race values for their level.
 	 * 
@@ -338,7 +338,7 @@ public class SNPlayer extends Entity {
 		setMaxFoodLevel(getPlayerClass().getMaxFoodLevel(getLevel()));
 		setSpeed(getPlayerClass().getSpeed(getLevel()));
 	}
-	
+
 	/**
 	 * Gets the players power binding.
 	 * 
@@ -347,7 +347,7 @@ public class SNPlayer extends Entity {
 	public Integer getBinding() {
 		return binding;
 	}
-	
+
 	/**
 	 * Sets the players power binding.
 	 * 
@@ -356,7 +356,7 @@ public class SNPlayer extends Entity {
 	public void setBinding(Integer binding) {
 		this.binding = binding;
 	}
-	
+
 	/**
 	 * Sets players binding to the id of the next available power.
 	 * 
@@ -368,7 +368,7 @@ public class SNPlayer extends Entity {
 			binding++;
 		}
 	}
-	
+
 	/**
 	 * Gets the players selected power.
 	 * 
@@ -381,7 +381,7 @@ public class SNPlayer extends Entity {
 			return null;
 		}
 	}
-	
+
 	// Leveling:
 	/**
 	 * Gets the players experience.
@@ -391,7 +391,7 @@ public class SNPlayer extends Entity {
 	public Integer getExperience() {
 		return experience;
 	}
-	
+
 	/**
 	 * Sets the players experience.
 	 * 
@@ -400,7 +400,7 @@ public class SNPlayer extends Entity {
 	public void setExperience(Integer experience) {
 		this.experience = experience;
 	}
-	
+
 	/**
 	 * Gets the required experience till the next level.
 	 * 
@@ -410,7 +410,7 @@ public class SNPlayer extends Entity {
 	public Integer getExperienceTill(Integer level) {
 		return 25 * level * level - 25 * level;
 	}
-	
+
 	/**
 	 * Gets the players current level based on their experience.
 	 * 
@@ -419,7 +419,7 @@ public class SNPlayer extends Entity {
 	public Integer getLevel() {		
 		return new Double((Math.floor(25 + Math.sqrt(625 + 100 * experience)) / 50)).intValue();
 	}
-	
+
 	/**
 	 * Set the players level.
 	 * 
@@ -428,7 +428,7 @@ public class SNPlayer extends Entity {
 	public void setLevel(Integer level) {
 		setExperience(getExperienceTill(level));
 	}
-	
+
 	/**
 	 * Get the players total attributes points.
 	 * 
@@ -437,7 +437,7 @@ public class SNPlayer extends Entity {
 	public Integer getAttributePoints() {
 		return attributePoints;
 	}
-	
+
 	/**
 	 * Gets the players remaining attribute points
 	 * 
@@ -446,7 +446,7 @@ public class SNPlayer extends Entity {
 	public Integer getRemainingAttributePoints() {
 		return getAttributePoints() - strengthStat - resistanceStat - dexterityStat - magicStat;
 	}
-	
+
 	/**
 	 * Gets the players invested attribute points.
 	 * 
@@ -455,7 +455,7 @@ public class SNPlayer extends Entity {
 	public Integer getInvestedAttributePoints() {
 		return getAttributePoints() - getRemainingAttributePoints();
 	}
-	
+
 	/**
 	 * Sets the players attribute points
 	 * 
@@ -464,7 +464,7 @@ public class SNPlayer extends Entity {
 	public void setAttributePoints(Integer attributePoints) {
 		this.attributePoints = attributePoints;
 	}
-	
+
 	/**
 	 * Gets the players strength statistic.
 	 * 
@@ -473,7 +473,7 @@ public class SNPlayer extends Entity {
 	public Integer getStrengthStat() {
 		return strengthStat;
 	}
-	
+
 	/**
 	 * Sets the players strength statistic.
 	 * 
@@ -482,7 +482,7 @@ public class SNPlayer extends Entity {
 	public void setStrengthStat(Integer strengthStat) {
 		this.strengthStat = strengthStat;
 	}
-	
+
 	/**
 	 * Gets the players resistance statistic.
 	 * 
@@ -491,7 +491,7 @@ public class SNPlayer extends Entity {
 	public Integer getResistanceStat() {
 		return resistanceStat;
 	}
-	
+
 	/**
 	 * Sets the players resistance statistic.
 	 * 
@@ -500,7 +500,7 @@ public class SNPlayer extends Entity {
 	public void setResistanceStat(Integer resistanceStat) {
 		this.resistanceStat = resistanceStat;
 	}
-	
+
 	/**
 	 * Gets the players dexterity statistic.
 	 * 
@@ -509,7 +509,7 @@ public class SNPlayer extends Entity {
 	public Integer getDexterityStat() {
 		return dexterityStat;
 	}
-	
+
 	/**
 	 * Sets the players dexterity statistic.
 	 * 
@@ -518,7 +518,7 @@ public class SNPlayer extends Entity {
 	public void setDexterityStat(Integer dexterityStat) {
 		this.dexterityStat = dexterityStat;
 	}
-	
+
 	/**
 	 * Gets the players magic statistic.
 	 * 
@@ -527,7 +527,7 @@ public class SNPlayer extends Entity {
 	public Integer getMagicStat() {
 		return magicStat;
 	}
-	
+
 	/**
 	 * Sets the players magic statistic.
 	 * 
@@ -536,32 +536,32 @@ public class SNPlayer extends Entity {
 	public void setMagicStat(Integer magicStat) {
 		this.magicStat = magicStat;
 	}
-	
+
 	// Bukkit:
 	public Player getPlayer() {
 		return Bukkit.getPlayerExact(name);
 	}
-	
+
 	public Boolean isOnline() {
 		return getPlayer() != null;
 	}	
-	
+
 	public Boolean isOffline() {
 		return !(isOnline());
 	}
-	
+
 	public void sendMessage(String message) {
 		if (isOnline()) {
 			getPlayer().sendMessage(message);
 		}
 	}
-	
+
 	public void sendMessage(String[] messages) {
 		for (String message : messages) {
 			sendMessage(message);
 		}
 	}
-	
+
 	// Java:
 	@Override
 	public int hashCode() {
