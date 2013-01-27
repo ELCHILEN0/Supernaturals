@@ -31,14 +31,29 @@ public abstract class SNClass {
 		this.maxLevel = maxLevel;
 	}
 	
+	/**
+	 * Gets the name of the class.
+	 * 
+	 * @return The name of the class.
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Gets the color for the class.
+	 * 
+	 * @return The color for the class.
+	 */
 	public ChatColor getColor() {
 		return color;
 	}
 	
+	/**
+	 * Gets the max level for the class.
+	 * 
+	 * @return The max level for the class.
+	 */
 	public Integer getMaxLevel() {
 		return maxLevel;
 	}

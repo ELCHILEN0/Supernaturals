@@ -269,7 +269,7 @@ public class SNPlayer extends Entity {
 	}
 
 	/**
-	 * Updates the players client to the acutal data values.
+	 * Updates the players client to the actual data values.
 	 * Updates: @health, @foodLevel, @speed
 	 * 
 	 */
