@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Util.DamageUtil;
 
 public class HealthListener implements Listener {
 
@@ -19,7 +20,7 @@ public class HealthListener implements Listener {
 			// ReSync any client values.
 			player.reSync();
 			
-			int newHealth = player.getHealth() - event.getDamage();
+			int newHealth = player.getHealth() - DamageUtil.getDamage(player.getPlayer(), event.getDamage(), event.getCause());
 			
 			// Check if the blow is a killing blow and if so process the damage as normally.
 			if(newHealth > 0) {
