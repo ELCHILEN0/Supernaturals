@@ -8,6 +8,7 @@ import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
+import com.TeamNovus.Supernaturals.Listeners.Custom.SpeedListener;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class Supernaturals extends JavaPlugin {
@@ -21,6 +22,7 @@ public class Supernaturals extends JavaPlugin {
 		// Custom Field Listeners:
 		Bukkit.getPluginManager().registerEvents(new HealthListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
+		Bukkit.getPluginManager().registerEvents(new SpeedListener(), this);
 	}
 
 	

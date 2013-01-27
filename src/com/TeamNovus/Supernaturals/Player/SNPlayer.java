@@ -39,12 +39,12 @@ public class SNPlayer extends Entity {
 	public SNPlayer() {
 		// Data Values:
 		this.mana = 0;
-		this.health = 20;
+		this.health = 40;
 		this.foodLevel = 20;
-		this.speed = 0.1f;
+		this.speed = 0.5f;
 
 		this.maxMana = 0;
-		this.maxHealth = 20;
+		this.maxHealth = 40;
 		this.maxFoodLevel = 20;
 
 		// Race
@@ -166,7 +166,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 */
 	public void updateHealth() {		
-		if(maxHealth == 0)
+		if(maxHealth <= 0)
 			maxHealth = 20;
 
 		if(health > maxHealth)
@@ -175,8 +175,12 @@ public class SNPlayer extends Entity {
 		if(health < 0)
 			health = 0;
 
+		System.out.print(getPlayer().getHealth()+ "/" +getPlayer().getMaxHealth());
+		System.out.print(getHealth()+ "/" +getMaxHealth());
 		// This synchronizes the players health to their health bar.
 		getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
+		System.out.print(getPlayer().getHealth()+ "/" +getPlayer().getMaxHealth());
+		System.out.print(getHealth()+ "/" +getMaxHealth());
 	}
 
 	/**
@@ -224,7 +228,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 */
 	public void updateFoodLevel() {
-		if(maxFoodLevel == 0)
+		if(maxFoodLevel <= 0)
 			maxFoodLevel = 20;
 
 		if(foodLevel > maxFoodLevel)
@@ -279,7 +283,12 @@ public class SNPlayer extends Entity {
 		updateSpeed();
 	}
 	
-	public void resync() {
+	/**
+	 * Updates the players data with their client values.
+	 * Updates: @health, @foodLevel, @speed
+	 * 
+	 */
+	public void reSync() {
 		setHealth((getPlayer().getHealth() * getMaxHealth())/20);
 		setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
 		setSpeed(getPlayer().getWalkSpeed());

@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
@@ -16,11 +15,13 @@ public class HealthListener implements Listener {
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
-					
-			player.resync();
+				
+			// ReSync any client values.
+			player.reSync();
 			
 			int newHealth = player.getHealth() - event.getDamage();
 			
+			// Check if the blow is a killing blow and if so process the damage as normally.
 			if(newHealth > 0) {
 				player.setHealth(newHealth);
 				event.setDamage(0);
@@ -35,17 +36,11 @@ public class HealthListener implements Listener {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 			
-			player.setHealth(player.getHealth() + event.getAmount());
-									
+			// Resync any client values.
+			player.reSync();
+			
+			player.setHealth(player.getHealth() + event.getAmount());					
 			event.setAmount(0);
 		}
-	}
-	
-	@EventHandler
-	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
-		
-		event.getPlayer().setHealth(player.getMaxHealth());
-	}
-	
+	}	
 }
