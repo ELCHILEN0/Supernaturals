@@ -1,36 +1,4 @@
-name: SupernaturalRaces
-author: ELCHILEN0
-description: PVP taken to its limits with supernatural races!
-version: 1.3.1
-main: com.TeamNovus.SupernaturalRaces.SupernaturalRaces
-commands:
-  supernatural:
-    description: Default command for all SupernaturalRaces commands!
-    aliases: sn
-permissions:
-  supernaturalraces.player:
-    description: Grants players permission to player commands.
-    default: true
-    children:
-      supernaturalraces.convert.angel: true
-      supernaturalraces.convert.demon: true
-      supernaturalraces.convert.priest: true
-      supernaturalraces.convert.werewolf: true
-      supernaturalraces.convert.vampire: true
-      supernaturalraces.convert.human: true
-      supernaturalraces.races: true
-      supernaturalraces.race: true
-      supernaturalraces.spell: true
-      supernaturalraces.power: true
-  supernaturalraces.convert:
-    description: Allows access to /sn convert <Race>
-  supernaturalraces.convert.others:
-    description: Allows access to /sn convert <Race> <Player>
-  supernaturalraces.races:
-    description: Allows access to /sn races
-  supernaturalraces.race:
-    description: Allows access to /sn race <Race>
-  supernaturalraces.spell:
-    description: Allows access to /sn spell <Spell>
-  supernaturalraces.power:
-    description: Allows access to /sn power
+name: Supernaturals
+description: Bring a RPG experience to Minecraft!
+version: 2.0.0
+main: com.TeamNovus.Supernaturals.Supernaturals
