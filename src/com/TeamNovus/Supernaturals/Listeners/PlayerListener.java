@@ -70,23 +70,21 @@ public class PlayerListener implements Listener {
 				
 				if(player.getRemainingCooldown(power) >= 0) {
 					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldown(power) / 1000 + ChatColor.RED + " seconds to cast this spell!");
-				} else if (power.getRequired().has(player.getPlayer())) {
-					if (power.cast(event.getPlayer())) {
-						power.getConsume().consume(player.getPlayer());
+				} else if (power.getRequired().has(player)) {
+					if (power.cast(player)) {
+						power.getConsume().consume(player);
 						player.setCooldown(power, System.currentTimeMillis());
 					}
 				} else {
 					player.sendMessage(ChatColor.BLUE + "Requires:");
-					if (power.getRequired().getMoneyCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Money: " + ChatColor.YELLOW + power.getRequired().getMoneyCost());
 					if (power.getRequired().getExpCost() != 0)
 						player.sendMessage(ChatColor.BLUE + "   Experience: " + ChatColor.YELLOW + power.getRequired().getExpCost());
 					if (power.getRequired().getHealthCost() != 0)
 						player.sendMessage(ChatColor.BLUE + "   Health: " + ChatColor.YELLOW + power.getRequired().getHealthCost());
 					if (power.getRequired().getHungerCost() != 0)
 						player.sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + power.getRequired().getHungerCost());
-					if (power.getRequired().getPowerCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Power: " + ChatColor.YELLOW + power.getRequired().getPowerCost());
+					if (power.getRequired().getManaCost() != 0)
+						player.sendMessage(ChatColor.BLUE + "   Mana: " + ChatColor.YELLOW + power.getRequired().getManaCost());
 					if (power.getRequired().getItemBagCost() != new ItemBag())
 						player.sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + power.getRequired().getItemBagCost().toString());
 				}

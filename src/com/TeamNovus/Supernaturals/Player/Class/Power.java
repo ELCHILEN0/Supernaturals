@@ -1,18 +1,17 @@
 package com.TeamNovus.Supernaturals.Player.Class;
 
-import org.bukkit.entity.Player;
-
 import com.TeamNovus.Supernaturals.Models.Reagent;
+import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public abstract class Power {
 	private String name;
 	private String desc;
+	private Integer amplifier;
 	private Integer cooldown;
 	private Reagent required;
 	private Reagent consume;
-	private Double amplifier;
 	
-	public Power(String name, String desc, Double amplifier, Integer cooldown, Reagent required, Reagent consume) {
+	public Power(String name, String desc, Integer amplifier, Integer cooldown, Reagent required, Reagent consume) {
 		this.name = name;
 		this.desc = desc;
 		this.amplifier = amplifier;
@@ -41,9 +40,9 @@ public abstract class Power {
 		return consume;
 	}
 	
-	public Double getAmplifier() {
+	public Integer getAmplifier() {
 		return amplifier;
 	}
 	
-	public abstract Boolean cast(Player sender);
+	public abstract Boolean cast(SNPlayer player);
 }
