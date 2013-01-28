@@ -2,7 +2,9 @@ package com.TeamNovus.Supernaturals.Commands;
 
 public class PluginCommands {
 	/* Commands:
-	 *  /sn info
+	 * 	Default:
+	 *  /sn online
+	 *  /sn info [Player]
 	 *  /sn mana
 	 *  /sn speed
 	 *  /sn health
@@ -13,6 +15,11 @@ public class PluginCommands {
 	 *  /sn evolve <Class>
 	 *  /sn devolve
 	 *  /sn reset
+	 *  
+	 *  Admin:
+	 *  /sn mana <Give/Take/Reset> <Player> <Mana>
+	 *  /sn exp <Give/Take/Reset> <Player> <Exp>
+	 *  /sn set <Player> <Class>
 	 *  
 	 */
 	

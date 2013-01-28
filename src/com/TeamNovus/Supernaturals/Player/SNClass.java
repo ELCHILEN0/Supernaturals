@@ -23,12 +23,14 @@ public abstract class SNClass {
 	private LinkedListMultimap<Integer, Power> powers = LinkedListMultimap.create();
 	private LinkedListMultimap<Integer, Ability> abilities = LinkedListMultimap.create();
 	
+	private SNClass parentClass;
 	private LinkedListMultimap<Integer, SNClass> joinableClasses = LinkedListMultimap.create();
 	
-	public SNClass(String name, ChatColor color, Integer maxLevel) {
+	public SNClass(String name, ChatColor color, Integer maxLevel, SNClass parentClass) {
 		this.name = name;
 		this.color = color;
 		this.maxLevel = maxLevel;
+		this.parentClass = parentClass;
 		
 		// Defaults:
 		maxMana.put(0, 0);
@@ -62,6 +64,15 @@ public abstract class SNClass {
 	 */
 	public Integer getMaxLevel() {
 		return maxLevel;
+	}
+	
+	/**
+	 * Gets the parent class for the class.
+	 * 
+	 * @return The parent class for the class.
+	 */
+	public SNClass getParentClass() {
+		return parentClass;
 	}
 		
 	public Integer getMaxMana(Integer level) {
