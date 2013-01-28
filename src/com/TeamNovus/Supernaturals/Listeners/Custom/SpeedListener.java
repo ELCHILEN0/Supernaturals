@@ -1,6 +1,7 @@
 package com.TeamNovus.Supernaturals.Listeners.Custom;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -9,7 +10,7 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class SpeedListener implements Listener {
 
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerMove(PlayerMoveEvent event) {
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		

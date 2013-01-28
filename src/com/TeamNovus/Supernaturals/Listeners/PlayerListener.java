@@ -28,7 +28,6 @@ public class PlayerListener implements Listener {
 			public void run() {
 				SNPlayer player = SNPlayers.i.get(event.getPlayer());
 				
-				
 				if(player.isOnline()) {
 					player.syncFields();
 				}
