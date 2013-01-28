@@ -91,7 +91,7 @@ public class SNEntity extends Entity {
 				}
 
 				if (lastingEffect.getElapsed() >= lastingEffect.getDuration()) {
-					removeEffect(lastingEffect);
+					effectIterator.remove();
 					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), lastingEffect));
 				}				
 			}

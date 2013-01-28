@@ -9,7 +9,7 @@ import com.TeamNovus.Supernaturals.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
 
 public class EntityListener implements Listener {
-
+	
 	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 		if (event.getDamager() instanceof Projectile) {

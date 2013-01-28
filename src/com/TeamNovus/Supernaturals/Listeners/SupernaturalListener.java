@@ -18,6 +18,10 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Entity.Effects.BaseEffect;
+import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
 public class SupernaturalListener implements Listener {
 
@@ -29,6 +33,26 @@ public class SupernaturalListener implements Listener {
 	@EventHandler
 	public void onPlayerLoginEvent(PlayerLoginEvent event) {
 		invokeEvent(event, PlayerLoginEvent.class);
+	}
+
+	@EventHandler
+	public void onEntityEffectBeginEvent(EntityEffectBeginEvent event) {
+		invokeEvent(event, EntityEffectBeginEvent.class);
+	}
+	
+	@EventHandler
+	public void onEntityEffectTickEvent(EntityEffectTickEvent event) {
+		invokeEvent(event, EntityEffectTickEvent.class);
+	}
+	
+	@EventHandler
+	public void onEntityEffectTriggerEvent(EntityEffectTriggerEvent event) {
+		invokeEvent(event, EntityEffectTriggerEvent.class);
+	}
+	
+	@EventHandler
+	public void onEntityEffectExpireEvent(EntityEffectExpireEvent event) {
+		invokeEvent(event, EntityEffectExpireEvent.class);
 	}
 	
 	public void invokeEvent(Event event,  Class<? extends Event> type) {
@@ -43,12 +67,20 @@ public class SupernaturalListener implements Listener {
 			
 			if(e instanceof LivingEntity) {
 				effects.addAll(SNEntities.i.get((LivingEntity) e).getEffects());
+				
+				for(BaseEffect effect : SNEntities.i.get((LivingEntity) e).getEffects()) {
+					for (Method method : effect.getClass().getMethods()) {
+						System.out.println(method.getName());
+					}
+				}
 			}
 		}
 		
 		for (BaseEffect effect : effects) {
 			for (Method method : effect.getClass().getMethods()) {
 				Type[] types = method.getParameterTypes();
+				
+				System.out.println(method.getName());
 				
 				if (types.length >= 1 && types[0].equals(type)) {
 					try {
