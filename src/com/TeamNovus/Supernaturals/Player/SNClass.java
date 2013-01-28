@@ -39,6 +39,10 @@ public abstract class SNClass {
 		speed.put(0, 0.2f);
 	}
 	
+	public SNClass(String name, ChatColor color, Integer maxLevel) {
+		this(name, color, maxLevel, null);
+	}
+	
 	/**
 	 * Gets the name of the class.
 	 * 
