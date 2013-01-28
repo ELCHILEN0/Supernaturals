@@ -27,6 +27,7 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SpeedListener(), this);
 		
+		// Tick all Entities:
 		getServer().getScheduler().runTaskTimer(this, new Runnable() {
 			
 			@Override

@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Player;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -29,6 +30,9 @@ public class SNPlayer extends Entity {
 	private SNClass playerClass;
 	private Integer binding;
 
+	// Powers:
+	private HashMap<Class<? extends Power>, Long> cooldowns = new HashMap<Class<? extends Power>, Long>();
+	
 	// Leveling:
 	private Integer experience;
 	private Integer attributePoints;
@@ -335,7 +339,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The available powers for their level.
 	 */
-	public List<Power> getPowers() {
+	public List<Power> getPowers() {		
 		return getPlayerClass().getPowers(getLevel());
 	}
 
@@ -346,6 +350,37 @@ public class SNPlayer extends Entity {
 	 */
 	public List<Ability> getAbilities() {
 		return getPlayerClass().getAbilities(getLevel());
+	}
+	
+	/**
+	 * Gets the players power cooldowns.
+	 * 
+	 * @return The players power cooldowns.
+	 */
+	public HashMap<Class<? extends Power>, Long> getCooldowns() {
+		return cooldowns;
+	}
+	
+	public void setCooldown(Power power, Long castTime) {
+		cooldowns.put(power.getClass(), castTime);
+	}
+	
+	/**
+	 * Gets the remaining cooldown for a power.
+	 * 
+	 * @param power - The power to check.
+	 * @return The players remaining cooldown.
+	 */
+	public Long getRemainingCooldown(Power power) {
+		for(Class<? extends Power> c : cooldowns.keySet()) {
+			if(c.equals(power.getClass())) {				
+				Long remaining = (long) (power.getCooldown() * 1000 + cooldowns.get(c) - System.currentTimeMillis());
+				
+				return remaining > (long) 0 ? remaining : (long) 0;
+			}
+		}
+		
+		return (long) 0;
 	}
 
 	/**

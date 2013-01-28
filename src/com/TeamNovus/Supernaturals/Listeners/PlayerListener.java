@@ -50,10 +50,11 @@ public class PlayerListener implements Listener {
 		if (!(event.getPlayer().getItemInHand().getData().getItemType().equals(Material.BLAZE_ROD)))
 			return;
 
+		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		
 		// Bind/Switch:
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
 				event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-			SNPlayer player = SNPlayers.i.get(event.getPlayer());
 
 			player.setNextBinding();
 
@@ -64,32 +65,33 @@ public class PlayerListener implements Listener {
 
 		// Cast:
 		if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-			SNPlayer player = SNPlayers.i.get(event.getPlayer());
-
 			if (player.getSelectedPower() != null) {
 				Power power = player.getSelectedPower();
 				
-				if (power.getRequired().has(event.getPlayer())) {
+				if(player.getRemainingCooldown(power) >= 0) {
+					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldown(power) / 1000 + ChatColor.RED + " seconds to cast this spell!");
+				} else if (power.getRequired().has(player.getPlayer())) {
 					if (power.cast(event.getPlayer())) {
-						power.getConsume().consume(event.getPlayer());
+						power.getConsume().consume(player.getPlayer());
+						player.setCooldown(power, System.currentTimeMillis());
 					}
 				} else {
-					event.getPlayer().sendMessage(ChatColor.BLUE + "Requires:");
+					player.sendMessage(ChatColor.BLUE + "Requires:");
 					if (power.getRequired().getMoneyCost() != 0)
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Money: " + ChatColor.YELLOW + power.getRequired().getMoneyCost());
+						player.sendMessage(ChatColor.BLUE + "   Money: " + ChatColor.YELLOW + power.getRequired().getMoneyCost());
 					if (power.getRequired().getExpCost() != 0)
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Experience: " + ChatColor.YELLOW + power.getRequired().getExpCost());
+						player.sendMessage(ChatColor.BLUE + "   Experience: " + ChatColor.YELLOW + power.getRequired().getExpCost());
 					if (power.getRequired().getHealthCost() != 0)
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Health: " + ChatColor.YELLOW + power.getRequired().getHealthCost());
+						player.sendMessage(ChatColor.BLUE + "   Health: " + ChatColor.YELLOW + power.getRequired().getHealthCost());
 					if (power.getRequired().getHungerCost() != 0)
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + power.getRequired().getHungerCost());
+						player.sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + power.getRequired().getHungerCost());
 					if (power.getRequired().getPowerCost() != 0)
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Power: " + ChatColor.YELLOW + power.getRequired().getPowerCost());
+						player.sendMessage(ChatColor.BLUE + "   Power: " + ChatColor.YELLOW + power.getRequired().getPowerCost());
 					if (power.getRequired().getItemBagCost() != new ItemBag())
-						event.getPlayer().sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + power.getRequired().getItemBagCost().toString());
+						player.sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + power.getRequired().getItemBagCost().toString());
 				}
 			} else {
-				event.getPlayer().sendMessage(ChatColor.RED + "Your wand is not bound to a power!");
+				player.sendMessage(ChatColor.RED + "Your wand is not bound to a power!");
 			}
 		}
 	}

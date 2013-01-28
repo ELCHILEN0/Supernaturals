@@ -132,7 +132,7 @@ public abstract class SNClass {
 		List<Power> data = new ArrayList<Power>();
 		
 		// Iterate through all the registered powers and levels.
-		for (Integer i : abilities.keySet()) {
+		for (Integer i : powers.keySet()) {
 			if (i > level) break;
 			
 			// Setup the iterators
