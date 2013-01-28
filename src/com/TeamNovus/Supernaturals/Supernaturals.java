@@ -3,6 +3,7 @@ package com.TeamNovus.Supernaturals;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
@@ -25,6 +26,16 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new HealthListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SpeedListener(), this);
+		
+		getServer().getScheduler().runTaskTimer(this, new Runnable() {
+			
+			@Override
+			public void run() {
+				for(SNEntity e : SNEntities.i.getEntites()) {
+					e.tick();
+				}				
+			}
+		}, 1, 1);
 	}
 
 	

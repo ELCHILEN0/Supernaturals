@@ -5,8 +5,10 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Collections.Entity;
+import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
@@ -555,6 +557,16 @@ public class SNPlayer extends Entity {
 		this.magicStat = magicStat;
 	}
 
+	/**
+	 * Gets the SNEntity representation of the player. This is 
+	 * used to add or remove entity effects for the player.
+	 * 
+	 * @return The SNEntity of the player.
+	 */
+	public SNEntity getEntity() {
+		return SNEntities.i.get(getPlayer());
+	}
+	
 	// Bukkit:
 	public Player getPlayer() {
 		return Bukkit.getPlayerExact(name);

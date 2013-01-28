@@ -13,6 +13,9 @@ import com.TeamNovus.Supernaturals.Entity.Effects.Effect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingEffect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingPeriodicEffect;
 import com.TeamNovus.Supernaturals.Entity.Effects.PeriodicEffect;
+import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
 public class SNEntity extends Entity {
 	private UUID uuid;
@@ -74,6 +77,8 @@ public class SNEntity extends Entity {
 	}
 
 	public void tick() {
+		if(!(isAlive())) return;
+		
 		Iterator<Effect> effectIterator = effects.iterator();
 		while (effectIterator.hasNext()) {
 			Effect effect = effectIterator.next();
@@ -82,11 +87,12 @@ public class SNEntity extends Entity {
 				LastingEffect lastingEffect = (LastingEffect) effect;
 				
 				if (lastingEffect.getElapsed() == 0) {
-
+					Bukkit.getPluginManager().callEvent(new EntityEffectBeginEvent(getEntity(), lastingEffect));
 				}
 
 				if (lastingEffect.getElapsed() >= lastingEffect.getDuration()) {
 					removeEffect(lastingEffect);
+					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), lastingEffect));
 				}				
 			}
 			
@@ -94,7 +100,7 @@ public class SNEntity extends Entity {
 				PeriodicEffect periodicEffect = (PeriodicEffect) effect;
 				
 				if (periodicEffect.getElapsed() % periodicEffect.getPeriod() == 0) {
-					
+					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), periodicEffect));
 				}
 			}
 			
@@ -102,7 +108,7 @@ public class SNEntity extends Entity {
 				LastingPeriodicEffect lastingPeriodicEffect = (LastingPeriodicEffect) effect;
 				
 				if (lastingPeriodicEffect.getElapsed() % lastingPeriodicEffect.getPeriod() == 0) {
-					
+					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), lastingPeriodicEffect));
 				}
 			}
 
