@@ -20,11 +20,11 @@ public class SNPlayerCollection extends EntityCollection<SNPlayer> {
 		return players;
 	}
 	
-	public ArrayList<SNPlayer> getPlayersInClass(SNClass race) {
+	public ArrayList<SNPlayer> getPlayersInClass(SNClass playerClass) {
 		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
 		
 		for (SNPlayer p : entities) {
-			if (p.getPlayerClass().equals(race.getName())) {
+			if (p.getPlayerClass().getName().equals(playerClass.getName())) {
 				players.add(p);
 			}
 		}

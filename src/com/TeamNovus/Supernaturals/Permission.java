@@ -1,9 +1,9 @@
 package com.TeamNovus.Supernaturals;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 public enum Permission {
-	CONVERT("convert");
+	COMMAND_ONLINE("online"), COMMAND_INFO("info"), COMMAND_INFO_OTHERS("info.others"), COMMAND_CONVERT("convert");
 	
 	private String node;
 	
@@ -15,11 +15,11 @@ public enum Permission {
 		return node;
 	}
 	
-	public String getPermission(Permission permission) {
+	private static String getPermission(Permission permission) {
 		return "supernaturals." + permission.getNode();
 	}
 	
-	public Boolean has(Permission permission, Player player) {
-		return player.hasPermission(getPermission(permission));
+	public static Boolean has(Permission permission, CommandSender target) {
+		return target.hasPermission(getPermission(permission));
 	}
 }

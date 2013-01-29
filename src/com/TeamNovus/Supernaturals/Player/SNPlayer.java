@@ -134,6 +134,8 @@ public class SNPlayer extends Entity {
 	 * @return The players current health.
 	 */
 	public Integer getHealth() {
+		reSync();
+		
 		return health;
 	}
 
@@ -183,7 +185,8 @@ public class SNPlayer extends Entity {
 			health = 0;
 
 		// This synchronizes the players health to their health bar.
-		getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
+		if(isOnline())
+			getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
 	}
 
 	/**
@@ -192,6 +195,8 @@ public class SNPlayer extends Entity {
 	 * @return The players food level.
 	 */
 	public Integer getFoodLevel() {
+		reSync();
+
 		return foodLevel;
 	}
 
@@ -241,7 +246,8 @@ public class SNPlayer extends Entity {
 			foodLevel = 0;
 
 		// This synchronizes the players food level to their hunger bar.
-		getPlayer().setFoodLevel((int) Math.ceil((foodLevel * 20)/maxFoodLevel));
+		if(isOnline())
+			getPlayer().setFoodLevel((int) Math.ceil((foodLevel * 20)/maxFoodLevel));
 	}
 
 	/**
@@ -250,6 +256,8 @@ public class SNPlayer extends Entity {
 	 * @return The players speed.
 	 */
 	public Float getSpeed() {
+		reSync();
+		
 		return speed;
 	}
 
@@ -268,11 +276,13 @@ public class SNPlayer extends Entity {
 	 * Updates the players speed.
 	 */
 	public void updateSpeed() {
-		getPlayer().setWalkSpeed(speed);
+		if(isOnline()) {
+			getPlayer().setWalkSpeed(speed);
 
-		// Hack to ensure that the speed gets applied to the client.
-		getPlayer().saveData();
-		getPlayer().loadData();
+			// Hack to ensure that the speed gets applied to the client.
+			getPlayer().saveData();
+			getPlayer().loadData();
+		}
 	}
 
 	/**
@@ -292,9 +302,11 @@ public class SNPlayer extends Entity {
 	 * 
 	 */
 	public void reSync() {
-		setHealth((getPlayer().getHealth() * getMaxHealth())/20);
-		setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
-		setSpeed(getPlayer().getWalkSpeed());
+		if(isOnline()) {
+			setHealth((getPlayer().getHealth() * getMaxHealth())/20);
+			setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
+			setSpeed(getPlayer().getWalkSpeed());
+		}
 	}
 
 	/**
@@ -332,6 +344,15 @@ public class SNPlayer extends Entity {
 				setPlayerClass(joinableClass);
 			}
 		}
+	}
+	
+	/**
+	 * Gets the available classes for the player to join.
+	 * 
+	 * @return The joinable classes for the players current level.
+	 */
+	public List<SNClass> getJoinableClasses() {
+		return getPlayerClass().getJoinableClasses(getLevel());
 	}
 
 	/**

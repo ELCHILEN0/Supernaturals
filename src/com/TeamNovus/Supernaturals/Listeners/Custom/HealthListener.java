@@ -17,9 +17,6 @@ public class HealthListener implements Listener {
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
-				
-			// ReSync any client values.
-			player.reSync();
 			
 			int newHealth = player.getHealth() - DamageUtil.getDamage(player.getPlayer(), event.getDamage(), event.getCause());
 			
@@ -37,9 +34,6 @@ public class HealthListener implements Listener {
 	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
-			
-			// Resync any client values.
-			player.reSync();
 			
 			player.setHealth(player.getHealth() + event.getAmount());					
 			event.setAmount(0);
