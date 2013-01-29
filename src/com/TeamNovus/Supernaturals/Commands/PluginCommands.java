@@ -10,8 +10,11 @@ import org.bukkit.entity.Player;
 
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNPlayers;
+import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
+import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 
 public class PluginCommands {
 	/* Commands:
@@ -101,8 +104,8 @@ public class PluginCommands {
 				}
 			}
 
-			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 			sender.sendMessage(ChatColor.GOLD + "  Speed: " + ChatColor.RESET + player.getSpeed());
+			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 			sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
 			sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
 
@@ -135,9 +138,9 @@ public class PluginCommands {
 							sender.sendMessage(ChatColor.GOLD + "  Sub-Classes: " + ChatColor.RESET + StringUtils.join(classes, ", "));
 						}
 					}
-
-					sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
+					
 					sender.sendMessage(ChatColor.GOLD + "  Speed: " + ChatColor.RESET + player.getSpeed());
+					sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 					sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
 					sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
 					sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
@@ -150,22 +153,6 @@ public class PluginCommands {
 		} else {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 		}
-	}
-
-	@BaseCommand(aliases = { "mana" }, description = "View your current mana.", usage = "")
-	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-		
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-		}
-
-		SNPlayer player = SNPlayers.i.get((Player) sender);
-
-		sender.sendMessage(ChatColor.GOLD + "Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 	}
 
 	@BaseCommand(aliases = { "speed" }, description = "View your current speed.", usage = "")
@@ -182,6 +169,22 @@ public class PluginCommands {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		sender.sendMessage(ChatColor.GOLD + "Speed: " + ChatColor.RESET + player.getSpeed());
+	}
+	
+	@BaseCommand(aliases = { "mana" }, description = "View your current mana.", usage = "")
+	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return;
+		}
+		
+		if(!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+		}
+
+		SNPlayer player = SNPlayers.i.get((Player) sender);
+
+		sender.sendMessage(ChatColor.GOLD + "Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 	}
 	
 	@BaseCommand(aliases = { "health" }, description = "View your current health.", usage = "")
@@ -262,6 +265,64 @@ public class PluginCommands {
 				sender.sendMessage(ChatColor.GOLD + "Sub-Classes: " + ChatColor.RESET + StringUtils.join(classes, ", "));
 			}
 		}
+	}
+	
+	@BaseCommand(aliases = { "inspect" }, description = "View information about a specific class.", usage = "<Class>", min = 2, max = 2)
+	public void onInspectCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return;
+		}
+		
+		SNClass targetClass = SNClassUtil.getBestClass(args[1], new Human());
+				
+		if(targetClass == null) {
+			sender.sendMessage(ChatColor.RED + "The specified class was not found!");
+			return;
+		}
+		
+		sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
+
+		sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + targetClass.getName());
+
+		if(targetClass.getParentClass() != null)
+			sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + targetClass.getParentClass().getColor() + targetClass.getParentClass().getName());
+
+		for (int i = 0; i < targetClass.getMaxLevel() + 1; i++) {
+			if(!(targetClass.hasChangedFrom(i - 1, i)) && i != 0) {
+				continue;
+			}
+			
+			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + i);
+			
+			ArrayList<String> classes = new ArrayList<String>();
+
+			for(SNClass c : targetClass.getAllJoinableClasses()) {
+				classes.add(c.getColor() + c.getName());
+			}
+
+			if(classes.size() > 0) {
+				if(classes.size() == 1) {
+					sender.sendMessage(ChatColor.GOLD + "    Sub-Class: " + ChatColor.RESET + StringUtils.join(classes, ", "));
+				} else {
+					sender.sendMessage(ChatColor.GOLD + "    Sub-Classes: " + ChatColor.RESET + StringUtils.join(classes, ", "));
+				}
+			}
+			
+			sender.sendMessage(ChatColor.GOLD + "    Speed: " + ChatColor.RESET + targetClass.getSpeed(i));
+			sender.sendMessage(ChatColor.GOLD + "    Max Mana: " + ChatColor.RESET + targetClass.getMaxMana(i));
+			sender.sendMessage(ChatColor.GOLD + "    Max Health: " + ChatColor.RESET + targetClass.getMaxHealth(i));
+			sender.sendMessage(ChatColor.GOLD + "    Max Food Level: " + ChatColor.RESET + targetClass.getMaxFoodLevel(i));
+			
+			if(targetClass.getUniqueAbilities(i).size() > 0) {
+				sender.sendMessage(ChatColor.GOLD + "    Abilities: " + ChatColor.RESET);
+				for(Ability a : targetClass.getUniqueAbilities(i)) {
+					sender.sendMessage(ChatColor.GOLD + "      " + a.getName() + ": " + ChatColor.RESET + a.getDesc());
+				}
+			}
+		}
+
+		sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 	}
 
 }

@@ -174,6 +174,10 @@ public abstract class SNClass {
 		return data;
 	}
 	
+	public List<Power> getUniquePowers(Integer level) {
+		return powers.get(level);
+	}
+	
 	public void addPower(Integer level, Power power) {
 		powers.put(level, power);
 	}
@@ -208,6 +212,10 @@ public abstract class SNClass {
 		}
 		
 		return data;
+	}
+	
+	public List<Ability> getUniqueAbilities(Integer level) {
+		return abilities.get(level);
 	}
 	
 	public void addAbility(Integer level, Ability ability) {
@@ -246,8 +254,21 @@ public abstract class SNClass {
 		return data;
 	}
 	
+	public List<SNClass> getAllJoinableClasses() {
+		return joinableClasses.values();
+	}
+	
 	public void addJoinableClass(Integer level, SNClass joinableClass) {
 		joinableClasses.put(level, joinableClass);
+	}
+	
+	public Boolean hasChangedFrom(Integer last, Integer current) {
+		return getSpeed(last) != getSpeed(current) && getMaxMana(last) != getMaxMana(current) && 
+														getMaxHealth(last) != getMaxHealth(current) && 
+														getMaxFoodLevel(last) != getMaxFoodLevel(current) &&
+														getPowers(last) != getPowers(current) &&
+														getAbilities(last) != getAbilities(current) &&
+														getJoinableClasses(last) != getJoinableClasses(current);
 	}
 	
 }
