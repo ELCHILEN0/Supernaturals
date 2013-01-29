@@ -19,13 +19,13 @@ public class Rogue extends SNClass {
 		addJoinableClass(25, new Ranger(this));
 		addJoinableClass(25, new Assassin(this));
 		
-		setSpeed(0, 0.23f);
+		setSpeed(1, 0.23f);
 		setSpeed(25, 0.25f);
 		
-		setMaxHealth(0, 25);
+		setMaxHealth(1, 25);
 		setMaxHealth(30, 30);
 		
-		setMaxFoodLevel(0, 40);
+		setMaxFoodLevel(1, 40);
 		setMaxFoodLevel(30, 60);
 		
 		addPower(5, new Sneak("Sneak", "Hide yourself from your enemies!", 3, 300, 

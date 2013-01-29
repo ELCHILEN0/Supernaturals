@@ -338,7 +338,7 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + targetClass.getParentClass().getColor() + targetClass.getParentClass().getName());
 
 		for (int i = 0; i < targetClass.getMaxLevel() + 1; i++) {
-			if(!(targetClass.hasChangedFrom(i - 1, i)) && i != 0) {
+			if(!(targetClass.hasChangedFrom(i - 1, i)) || i == 0) {
 				continue;
 			}
 
