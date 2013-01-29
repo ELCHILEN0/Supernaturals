@@ -329,8 +329,10 @@ public class SNPlayer extends Entity {
 		// Change the target class if modified.
 		playerClass = event.getTo();
 		
-		if(!(event.isCancelled()))
+		if(!(event.isCancelled())) {
 			this.playerClass = playerClass;
+			syncFields(true);
+		}
 	}
 
 	/**
@@ -407,12 +409,20 @@ public class SNPlayer extends Entity {
 	/**
 	 * Synchronizes the players maximum values with the maximum race values for their level.
 	 * 
+	 * @param values - Determines whether to update the values as well as the max values.
 	 */
-	public void syncFields() {
+	public void syncFields(boolean values) {
+		setSpeed(getPlayerClass().getSpeed(getLevel()));
 		setMaxMana(getPlayerClass().getMaxMana(getLevel()));
 		setMaxHealth(getPlayerClass().getMaxHealth(getLevel()));
 		setMaxFoodLevel(getPlayerClass().getMaxFoodLevel(getLevel()));
-		setSpeed(getPlayerClass().getSpeed(getLevel()));
+		
+		if(values) {
+			setMana(0);
+			setHealth(getMaxHealth());
+			setFoodLevel(getMaxFoodLevel());
+		}
+			
 	}
 
 	/**

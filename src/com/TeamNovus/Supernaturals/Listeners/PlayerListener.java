@@ -29,7 +29,7 @@ public class PlayerListener implements Listener {
 				SNPlayer player = SNPlayers.i.get(event.getPlayer());
 				
 				if(player.isOnline()) {
-					player.syncFields();
+					player.syncFields(false);
 				}
 			}
 		});
@@ -40,7 +40,7 @@ public class PlayerListener implements Listener {
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
 		if(player.isOnline()) {
-			player.syncFields();
+			player.syncFields(true);
 		}
 	}
 	

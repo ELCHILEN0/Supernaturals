@@ -6,9 +6,7 @@ public class SNClassUtil {
 	
 	public static SNClass getBestClass(String s, SNClass startClass) {
 		SNClass target = null;
-		
-		System.out.println(startClass.getName() + startClass.getMaxHealth(0));
-		
+				
 		if(startClass.getName().toLowerCase().startsWith(s.toLowerCase())) {
 			target = startClass;
 		}

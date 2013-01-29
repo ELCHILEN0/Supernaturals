@@ -8,6 +8,16 @@ import org.apache.commons.lang.StringUtils;
 
 public class StringUtil {
 
+	public static boolean startsWithVowel(String s) {
+		return s.toLowerCase().startsWith("a".toLowerCase()) || s.toLowerCase().startsWith("e".toLowerCase()) ||
+				s.toLowerCase().startsWith("i".toLowerCase()) || s.toLowerCase().startsWith("a".toLowerCase()) ||
+				s.toLowerCase().startsWith("o".toLowerCase()) || s.toLowerCase().startsWith("u".toLowerCase());
+	}
+	
+	public static boolean startsWithConsonant(String s) {
+		return !(startsWithVowel(s));
+	}
+	
 	public static boolean isInteger(String s) {
 		try {
 			Integer.valueOf(s);
