@@ -85,7 +85,7 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 
 			sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
-			sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getName());
+			sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
 
 			if(player.getPlayerClass().getParentClass() != null)
 				sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
@@ -120,7 +120,7 @@ public class PluginCommands {
 					sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 
 					sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
-					sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getName());
+					sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
 
 					if(player.getPlayerClass().getParentClass() != null)
 						sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
@@ -283,7 +283,8 @@ public class PluginCommands {
 		
 		sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 
-		sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + targetClass.getName());
+		sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + targetClass.getColor() + targetClass.getName());
+		sender.sendMessage(ChatColor.GOLD + "  Max Level: " + ChatColor.RESET + targetClass.getMaxLevel());
 
 		if(targetClass.getParentClass() != null)
 			sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + targetClass.getParentClass().getColor() + targetClass.getParentClass().getName());

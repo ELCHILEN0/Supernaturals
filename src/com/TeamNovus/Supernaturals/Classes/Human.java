@@ -8,7 +8,7 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 public class Human extends SNClass {
 
 	public Human() {
- 		super("Human", ChatColor.WHITE, 0);
+ 		super("Human", ChatColor.GREEN, 0);
 		
 		addJoinableClass(0, new Rogue(this));
 	}
