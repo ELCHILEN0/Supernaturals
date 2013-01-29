@@ -1,5 +1,11 @@
 package com.TeamNovus.Supernaturals.Commands;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+
+import com.TeamNovus.Supernaturals.SNPlayers;
+import com.TeamNovus.Supernaturals.Player.SNPlayer;
+
 public class PluginCommands {
 	/* Commands:
 	 * 	Default:
@@ -22,6 +28,17 @@ public class PluginCommands {
 	 *  /sn set <Player> <Class>
 	 *  
 	 */
+	
+	@BaseCommand(aliases = { "online" }, description = "View information on online players.", usage = "")
+	public void onOnlineCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		String message = "";
+		
+		for(SNPlayer player : SNPlayers.i.getOnlinePlayers()) {
+			message += player.getName() + player.getPlayerClass().getName() + " ";
+		}
+		
+		sender.sendMessage(message);
+	}
 	
 	
 	

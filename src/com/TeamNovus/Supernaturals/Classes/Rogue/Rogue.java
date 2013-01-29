@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Assassin.Assassin;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Ranger.Ranger;
 import com.TeamNovus.Supernaturals.Classes.Rogue.RogueCommon.Powers.Sneak;
@@ -14,11 +13,11 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 
 public class Rogue extends SNClass {
 
-	public Rogue() {
-		super("Rogue", ChatColor.DARK_GRAY, 30, new Human());
+	public Rogue(SNClass parentClass) {
+		super("Rogue", ChatColor.DARK_GRAY, 30, parentClass);
 		
-		addJoinableClass(25, new Ranger());
-		addJoinableClass(25, new Assassin());
+		addJoinableClass(25, new Ranger(this));
+		addJoinableClass(25, new Assassin(this));
 		
 		setSpeed(0, 0.23f);
 		setSpeed(25, 0.25f);

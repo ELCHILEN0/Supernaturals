@@ -9,7 +9,7 @@ public class Human extends SNClass {
 
 	public Human() {
 		super("Human", ChatColor.WHITE, 0);
-		addJoinableClass(0, new Rogue());
+		addJoinableClass(0, new Rogue(this));
 	}
 
 }

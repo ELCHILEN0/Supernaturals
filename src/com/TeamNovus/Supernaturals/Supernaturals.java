@@ -3,6 +3,10 @@ package com.TeamNovus.Supernaturals;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.TeamNovus.Supernaturals.Commands.BaseCommandExecutor;
+import com.TeamNovus.Supernaturals.Commands.CommandManager;
+import com.TeamNovus.Supernaturals.Commands.DefaultCommands;
+import com.TeamNovus.Supernaturals.Commands.PluginCommands;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
@@ -37,6 +41,11 @@ public class Supernaturals extends JavaPlugin {
 				}				
 			}
 		}, 1, 1);
+		
+		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
+		
+		CommandManager.registerClass(DefaultCommands.class);
+		CommandManager.registerClass(PluginCommands.class);
 	}
 
 	
