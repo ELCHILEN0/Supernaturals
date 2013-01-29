@@ -5,8 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.Supernaturals.Commands.BaseCommandExecutor;
 import com.TeamNovus.Supernaturals.Commands.CommandManager;
-import com.TeamNovus.Supernaturals.Commands.DefaultCommands;
-import com.TeamNovus.Supernaturals.Commands.PluginCommands;
+import com.TeamNovus.Supernaturals.Commands.Common.DefaultCommands;
+import com.TeamNovus.Supernaturals.Commands.Common.PluginCommands;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;

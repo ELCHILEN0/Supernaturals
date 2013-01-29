@@ -1,4 +1,4 @@
-package com.TeamNovus.Supernaturals.Commands;
+package com.TeamNovus.Supernaturals.Commands.Common;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Classes.Human;
+import com.TeamNovus.Supernaturals.Commands.BaseCommand;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
@@ -19,7 +20,7 @@ import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class PluginCommands {
-	/* Commands:
+	/* Player Commands:
 	 * 	Default:
 	 *  /sn online
 	 *  /sn info [Player]
@@ -33,11 +34,6 @@ public class PluginCommands {
 	 *  /sn evolve <Class>
 	 *  /sn devolve
 	 *  /sn reset
-	 *  
-	 *  Admin:
-	 *  /sn mana <Give/Take/Reset> <Player> <Mana>
-	 *  /sn exp <Give/Take/Reset> <Player> <Exp>
-	 *  /sn set <Player> <Class>
 	 *  
 	 */
 
@@ -409,7 +405,7 @@ public class PluginCommands {
 			return;
 		}
 
-		player.setPlayerClass(targetClass);
+		player.setPlayerClass(targetClass, true);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());
@@ -438,7 +434,8 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.RED + "You cannot devolve any further!");
 		}
 		
-		player.setPlayerClass(targetClass);
+		player.setPlayerClass(targetClass, true);
+
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());
@@ -463,7 +460,7 @@ public class PluginCommands {
 
 		SNClass targetClass = new Human();
 		
-		player.setPlayerClass(targetClass);
+		player.setPlayerClass(targetClass, true);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());

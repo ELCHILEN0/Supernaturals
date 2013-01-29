@@ -13,6 +13,7 @@ import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
+import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 
 public class SNPlayer extends Entity {
 	private String name;
@@ -323,7 +324,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @param playerClass - The new player class.
 	 */
-	public void setPlayerClass(SNClass playerClass) {
+	public void setPlayerClass(SNClass playerClass, boolean force) {
 		PlayerChangeClassEvent event = new PlayerChangeClassEvent(getPlayer(), this.playerClass, playerClass);
 		
 		// Change the target class if modified.
@@ -331,20 +332,7 @@ public class SNPlayer extends Entity {
 		
 		if(!(event.isCancelled())) {
 			this.playerClass = playerClass;
-			syncFields(true);
-		}
-	}
-
-	/**
-	 * Sets the players class from a String.
-	 * 
-	 * @param playerClass - The name of the new player class.
-	 */
-	public void setPlayerClass(String className, Boolean exact) {
-		for(SNClass joinableClass : getPlayerClass().getJoinableClasses(getLevel())) {
-			if(exact ? joinableClass.getName().equals(className) : joinableClass.getName().startsWith(className)) {
-				setPlayerClass(joinableClass);
-			}
+			syncFields(force);
 		}
 	}
 	
@@ -421,8 +409,7 @@ public class SNPlayer extends Entity {
 			setMana(0);
 			setHealth(getMaxHealth());
 			setFoodLevel(getMaxFoodLevel());
-		}
-			
+		}	
 	}
 
 	/**

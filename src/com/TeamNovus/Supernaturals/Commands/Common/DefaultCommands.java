@@ -1,10 +1,12 @@
-package com.TeamNovus.Supernaturals.Commands;
+package com.TeamNovus.Supernaturals.Commands.Common;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.TeamNovus.Supernaturals.Supernaturals;
+import com.TeamNovus.Supernaturals.Commands.BaseCommand;
+import com.TeamNovus.Supernaturals.Commands.CommandManager;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class DefaultCommands {
