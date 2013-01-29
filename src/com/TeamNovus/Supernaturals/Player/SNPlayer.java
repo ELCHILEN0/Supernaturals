@@ -13,7 +13,6 @@ import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
-import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 
 public class SNPlayer extends Entity {
 	private String name;

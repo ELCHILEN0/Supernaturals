@@ -101,9 +101,9 @@ public class PluginCommands {
 					sender.sendMessage(ChatColor.GOLD + "  Unlocked Classes: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
 				}
 			}
-			
+
 			ArrayList<String> unjoinableClasses = new ArrayList<String>();
-			
+
 			for(SNClass c : player.getPlayerClass().getAllJoinableClasses()) {
 				if(!(player.getJoinableClasses().contains(c)))
 					unjoinableClasses.add(c.getColor() + c.getName());
@@ -121,63 +121,63 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 			sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
 			sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Experience to Level Up: " + ChatColor.RESET + player.getExperienceTill(player.getLevel() + 1));
 
 			player.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 		} else if(args.length == 2 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
-			boolean found = false;
+			SNPlayer player = SNPlayers.i.getPlayer(args[1]);
 
-			for(SNPlayer player : SNPlayers.i.getOnlinePlayers()) {
-				if(player.getName().startsWith(args[1]) && !(found)) {
-					found = true;
+			if(player == null) {
+				sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
+				return;
+			}
 
-					sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
+			sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 
-					sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
-					sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
+			sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
+			sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
 
-					if(player.getPlayerClass().getParentClass() != null)
-						sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
+			if(player.getPlayerClass().getParentClass() != null)
+				sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
 
-					ArrayList<String> joinableClasses = new ArrayList<String>();
+			ArrayList<String> joinableClasses = new ArrayList<String>();
 
-					for(SNClass c : player.getJoinableClasses()) {
-						joinableClasses.add(c.getColor() + c.getName());
-					}
+			for(SNClass c : player.getJoinableClasses()) {
+				joinableClasses.add(c.getColor() + c.getName());
+			}
 
-					if(joinableClasses.size() > 0) {
-						if(joinableClasses.size() == 1) {
-							sender.sendMessage(ChatColor.GOLD + "  Unlocked Class: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
-						} else {
-							sender.sendMessage(ChatColor.GOLD + "  Unlocked Classes: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
-						}
-					}
-					
-					ArrayList<String> unjoinableClasses = new ArrayList<String>();
-					
-					for(SNClass c : player.getPlayerClass().getAllJoinableClasses()) {
-						if(!(player.getJoinableClasses().contains(c)))
-							unjoinableClasses.add(c.getColor() + c.getName());
-					}
-
-					if(unjoinableClasses.size() > 0) {
-						if(unjoinableClasses.size() == 1) {
-							sender.sendMessage(ChatColor.GOLD + "  Locked Class: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
-						} else {
-							sender.sendMessage(ChatColor.GOLD + "  Locked Classes: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
-						}
-					}
-
-					sender.sendMessage(ChatColor.GOLD + "  Speed: " + ChatColor.RESET + player.getSpeed());
-					sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
-					sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
-					sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
-					sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
-				}
-
-				if(!(found)) {
-					sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
+			if(joinableClasses.size() > 0) {
+				if(joinableClasses.size() == 1) {
+					sender.sendMessage(ChatColor.GOLD + "  Unlocked Class: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
+				} else {
+					sender.sendMessage(ChatColor.GOLD + "  Unlocked Classes: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
 				}
 			}
+
+			ArrayList<String> unjoinableClasses = new ArrayList<String>();
+
+			for(SNClass c : player.getPlayerClass().getAllJoinableClasses()) {
+				if(!(player.getJoinableClasses().contains(c)))
+					unjoinableClasses.add(c.getColor() + c.getName());
+			}
+
+			if(unjoinableClasses.size() > 0) {
+				if(unjoinableClasses.size() == 1) {
+					sender.sendMessage(ChatColor.GOLD + "  Locked Class: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
+				} else {
+					sender.sendMessage(ChatColor.GOLD + "  Locked Classes: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
+				}
+			}
+
+			sender.sendMessage(ChatColor.GOLD + "  Speed: " + ChatColor.RESET + player.getSpeed());
+			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
+			sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
+			sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Experience to Level Up: " + ChatColor.RESET + player.getExperienceTill(player.getLevel() + 1));
+
+			sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 		} else {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 		}
@@ -294,9 +294,9 @@ public class PluginCommands {
 			}
 		}
 
-		
+
 		ArrayList<String> unjoinableClasses = new ArrayList<String>();
-		
+
 		for(SNClass c : player.getPlayerClass().getAllJoinableClasses()) {
 			if(!(player.getJoinableClasses().contains(c)))
 				unjoinableClasses.add(c.getColor() + c.getName());
@@ -429,11 +429,11 @@ public class PluginCommands {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		SNClass targetClass = player.getPlayerClass().getParentClass();
-		
+
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "You cannot devolve any further!");
 		}
-		
+
 		player.setPlayerClass(targetClass, true);
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
@@ -444,7 +444,7 @@ public class PluginCommands {
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now a " + targetClass.getColor() + targetClass.getName());
 		}
 	}
-	
+
 	@BaseCommand(aliases = { "reset" }, description = "Reset all your data. DANGEROUS!", usage = "")
 	public void onResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
@@ -459,7 +459,7 @@ public class PluginCommands {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		SNClass targetClass = new Human();
-		
+
 		player.setPlayerClass(targetClass, true);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
@@ -469,5 +469,5 @@ public class PluginCommands {
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now a " + targetClass.getColor() + targetClass.getName());
 		}
 	}
-	
+
 }

@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.Supernaturals.Commands.BaseCommandExecutor;
 import com.TeamNovus.Supernaturals.Commands.CommandManager;
+import com.TeamNovus.Supernaturals.Commands.Common.AdminCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.DefaultCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.PluginCommands;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
@@ -46,6 +47,7 @@ public class Supernaturals extends JavaPlugin {
 		
 		CommandManager.registerClass(DefaultCommands.class);
 		CommandManager.registerClass(PluginCommands.class);
+		CommandManager.registerClass(AdminCommands.class);
 	}
 
 	

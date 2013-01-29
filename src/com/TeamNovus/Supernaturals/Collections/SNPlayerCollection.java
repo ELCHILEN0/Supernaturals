@@ -44,6 +44,26 @@ public class SNPlayerCollection extends EntityCollection<SNPlayer> {
 		return players;
 	}
 	
+	public SNPlayer getPlayer(String s) {
+		for(SNPlayer p : getOnlinePlayers()) {
+			if(s.toLowerCase().startsWith(p.getName().toLowerCase())) {
+				return p;
+			}
+		}
+		
+		return null;
+	}
+	
+	public SNPlayer getPlayerExact(String s) {
+		for(SNPlayer p : getOnlinePlayers()) {
+			if(s.equals(p.getName())) {
+				return p;
+			}
+		}
+		
+		return null;
+	}
+	
 	public SNPlayer get(Player p) {
 		for (SNPlayer e : entities) {			
 			if (e.getName().equals(p.getName())) {
