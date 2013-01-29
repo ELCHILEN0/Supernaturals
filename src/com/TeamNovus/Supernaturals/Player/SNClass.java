@@ -33,10 +33,10 @@ public abstract class SNClass {
 		this.parentClass = parentClass;
 		
 		// Defaults:
-		maxMana.put(0, 0);
-		maxHealth.put(0, 20);
-		maxFoodLevel.put(0, 20);
-		speed.put(0, 0.2f);
+		maxMana.put(1, 0);
+		maxHealth.put(1, 20);
+		maxFoodLevel.put(1, 20);
+		speed.put(1, 0.2f);
 	}
 	
 	public SNClass(String name, ChatColor color, Integer maxLevel) {
