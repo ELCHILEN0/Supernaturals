@@ -13,6 +13,7 @@ import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
+import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
@@ -84,7 +85,9 @@ public class PluginCommands {
 
 			sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
 			sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-
+			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Experience: " + ChatColor.RESET + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1));
+			
 			if(player.getPlayerClass().getParentClass() != null)
 				sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
 
@@ -121,8 +124,6 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 			sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
 			sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
-			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
-			sender.sendMessage(ChatColor.GOLD + "  Experience to Level Up: " + ChatColor.RESET + player.getExperienceTill(player.getLevel() + 1));
 
 			player.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 		} else if(args.length == 2 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
@@ -137,7 +138,9 @@ public class PluginCommands {
 
 			sender.sendMessage(ChatColor.GOLD + "  Name: " + ChatColor.RESET + player.getName());
 			sender.sendMessage(ChatColor.GOLD + "  Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-
+			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(ChatColor.GOLD + "  Experience: " + ChatColor.RESET + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1));
+			
 			if(player.getPlayerClass().getParentClass() != null)
 				sender.sendMessage(ChatColor.GOLD + "  Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
 
@@ -174,8 +177,6 @@ public class PluginCommands {
 			sender.sendMessage(ChatColor.GOLD + "  Mana: " + ChatColor.RESET + player.getMana() + "/" + player.getMaxMana());
 			sender.sendMessage(ChatColor.GOLD + "  Health: " + ChatColor.RESET + player.getHealth() + "/" + player.getMaxHealth());
 			sender.sendMessage(ChatColor.GOLD + "  Food Level: " + ChatColor.RESET + player.getFoodLevel() + "/" + player.getMaxFoodLevel());
-			sender.sendMessage(ChatColor.GOLD + "  Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
-			sender.sendMessage(ChatColor.GOLD + "  Experience to Level Up: " + ChatColor.RESET + player.getExperienceTill(player.getLevel() + 1));
 
 			sender.sendMessage(ChatColor.DARK_RED + "<>-------------------------<>");
 		} else {
@@ -261,7 +262,7 @@ public class PluginCommands {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		sender.sendMessage(ChatColor.GOLD + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
-		sender.sendMessage(ChatColor.GOLD + "Experience to Level Up: " + ChatColor.RESET + player.getExperienceTill(player.getLevel() + 1));
+		sender.sendMessage(ChatColor.GOLD + "Experience: " + ChatColor.RESET + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1));
 	}
 
 	@BaseCommand(aliases = { "classes" }, description = "View available classes.", usage = "")
@@ -405,13 +406,13 @@ public class PluginCommands {
 			return;
 		}
 
-		player.setPlayerClass(targetClass, true);
+		player.setPlayerClass(targetClass, ChangeClassCause.COMMAND);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
 		} else {
 			player.sendMessage(ChatColor.GREEN + "You are now a " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now a " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now a " + targetClass.getColor() + targetClass.getName());
 		}
 	}
 
@@ -424,6 +425,7 @@ public class PluginCommands {
 
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+			return;
 		}
 
 		SNPlayer player = SNPlayers.i.get((Player) sender);
@@ -432,16 +434,17 @@ public class PluginCommands {
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "You cannot devolve any further!");
+			return;
 		}
 
-		player.setPlayerClass(targetClass, true);
+		player.setPlayerClass(targetClass, ChangeClassCause.COMMAND);
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
 		} else {
 			player.sendMessage(ChatColor.GREEN + "You are now a " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now a " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now a " + targetClass.getColor() + targetClass.getName());
 		}
 	}
 
@@ -454,19 +457,20 @@ public class PluginCommands {
 
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+			return;
 		}
 
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		SNClass targetClass = new Human();
 
-		player.setPlayerClass(targetClass, true);
+		player.setPlayerClass(targetClass, ChangeClassCause.COMMAND);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now an " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
 		} else {
 			player.sendMessage(ChatColor.GREEN + "You are now a " + targetClass.getColor() + targetClass.getName());
-			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " has is now a " + targetClass.getColor() + targetClass.getName());
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now a " + targetClass.getColor() + targetClass.getName());
 		}
 	}
 

@@ -11,6 +11,8 @@ import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Collections.Entity;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
@@ -323,15 +325,16 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @param playerClass - The new player class.
 	 */
-	public void setPlayerClass(SNClass playerClass, boolean force) {
-		PlayerChangeClassEvent event = new PlayerChangeClassEvent(getPlayer(), this.playerClass, playerClass);
+	public void setPlayerClass(SNClass playerClass, ChangeClassCause cause) {
+		PlayerChangeClassEvent event = new PlayerChangeClassEvent(getPlayer(), cause, this.playerClass, playerClass);
+		
+		Bukkit.getPluginManager().callEvent(event);
 		
 		// Change the target class if modified.
 		playerClass = event.getTo();
 		
 		if(!(event.isCancelled())) {
 			this.playerClass = playerClass;
-			syncFields(force);
 		}
 	}
 	
@@ -470,16 +473,24 @@ public class SNPlayer extends Entity {
 	 * @param experience - The players new experience.
 	 */
 	public void setExperience(Integer experience) {
+		int lastLevel = getLevel();
+		
 		this.experience = experience;
+		
+		if(getLevel() > lastLevel && isOnline()) {
+			PlayerLevelUpEvent event = new PlayerLevelUpEvent(getPlayer());
+			
+			Bukkit.getPluginManager().callEvent(event);
+		}		
 	}
-
+	
 	/**
-	 * Gets the required experience till the next level.
+	 * Gets the required experience for @level.
 	 * 
-	 * @param level - The level.
-	 * @return The required experience till the next level.
+	 * @param level - The level to get the required experience for.
+	 * @return The required experience for @level.
 	 */
-	public Integer getExperienceTill(Integer level) {
+	public Integer getExperienceFor(Integer level) {
 		return 25 * level * level - 25 * level;
 	}
 
@@ -488,7 +499,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players current level.
 	 */
-	public Integer getLevel() {		
+	public Integer getLevel() {				
 		return new Double((Math.floor(25 + Math.sqrt(625 + 100 * experience)) / 50)).intValue();
 	}
 
@@ -498,7 +509,7 @@ public class SNPlayer extends Entity {
 	 * @param level - The new level.
 	 */
 	public void setLevel(Integer level) {
-		setExperience(getExperienceTill(level));
+		setExperience(getExperienceFor(level));
 	}
 
 	/**

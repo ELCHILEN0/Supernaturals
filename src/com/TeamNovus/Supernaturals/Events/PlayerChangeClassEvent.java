@@ -8,16 +8,26 @@ import org.bukkit.event.player.PlayerEvent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 
 public class PlayerChangeClassEvent extends PlayerEvent implements Cancellable {
+	public enum ChangeClassCause {
+		CODE, COMMAND;
+	}
+	
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
+	private ChangeClassCause cause;
     private SNClass from;
     private SNClass to;
     
-    public PlayerChangeClassEvent(Player player, SNClass from, SNClass to) {
+    public PlayerChangeClassEvent(Player player, ChangeClassCause cause, SNClass from, SNClass to) {
     	super(player);
+    	this.cause = cause;
     	this.from = from;
     	this.to = to;
     }
+    
+    public ChangeClassCause getCause() {
+		return cause;
+	}
     
     /**
      * The SNClass that the player is converting from.

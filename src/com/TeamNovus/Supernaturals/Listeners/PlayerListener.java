@@ -12,11 +12,25 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class PlayerListener implements Listener {
+	
+	@EventHandler
+	public void onPlayerChangeClass(PlayerChangeClassEvent event) {
+		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		
+		
+		if(!(event.getCause().equals(ChangeClassCause.CODE))) {
+			player.setExperience(0);
+			player.syncFields(true);
+		} else {
+			player.syncFields(false);
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerLogin(final PlayerLoginEvent event) {
@@ -33,15 +47,6 @@ public class PlayerListener implements Listener {
 				}
 			}
 		});
-	}
-	
-	@EventHandler
-	public void onPlayerChangeClass(PlayerChangeClassEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
-		
-		if(player.isOnline()) {
-			player.syncFields(true);
-		}
 	}
 	
 	@EventHandler

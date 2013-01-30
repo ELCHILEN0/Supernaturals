@@ -11,7 +11,7 @@ import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.google.common.collect.LinkedListMultimap;
 
-public abstract class SNClass {
+public abstract class SNClass {	
 	private String name;
 	private ChatColor color;
 	private Integer maxLevel;
