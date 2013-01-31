@@ -1,46 +1,10 @@
 package com.TeamNovus.Supernaturals.Database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-public class MySQL implements Driver {
-	// Connection variables
-	private Connection connection;
-	// Constructor variables
-	private String host;
-	private String port;
-	private String username;
-	private String password;
-	private String database;
+public class MySQL extends Driver {
 	
 	public MySQL(String host, String port, String username, String password, String database) {
-		this.host = host;
-		this.port = port;
-		this.username = username;
-		this.password = password;
-		this.database = database;
+		super(("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + username + "&password" + password), "com.mysql.jdbc.Driver");
 	}
 	
-	@Override
-	public String driver() {
-		return "com.mysql.jdbc.Driver";
-	}
-
-	@Override
-	public void connect() throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-	}
-
-	@Override
-	public void disconnect() throws SQLException {
-		connection.close();
-	}
-
-	@Override
-	public Connection getConnection() {
-		return connection;
-	}
-
 }

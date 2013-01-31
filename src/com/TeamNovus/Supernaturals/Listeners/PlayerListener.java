@@ -11,8 +11,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
-import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
-import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
+import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
@@ -20,15 +19,15 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 public class PlayerListener implements Listener {
 	
 	@EventHandler
-	public void onPlayerChangeClass(PlayerChangeClassEvent event) {
+	public void onPlayerManaChange(PlayerManaChangeEvent event) {			
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
-		
-		if(!(event.getCause().equals(ChangeClassCause.CODE))) {
-			player.setExperience(0);
-			player.syncFields(true);
-		} else {
-			player.syncFields(false);
+		if(player.getMana() < player.getMaxMana()) {
+			if(player.getMana() + event.getAmount() >  player.getMaxMana()) {
+				event.setAmount(player.getMaxMana() - player.getMana());
+			}
+			
+			player.sendMessage(ChatColor.GREEN + "+ " + event.getAmount() + " mana!");
 		}
 	}
 	

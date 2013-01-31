@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerEvent;
 
 import com.TeamNovus.Supernaturals.Player.SNClass;
 
-public class PlayerChangeClassEvent extends PlayerEvent implements Cancellable {
+public class PlayerClassChangeEvent extends PlayerEvent implements Cancellable {
 	public enum ChangeClassCause {
 		CODE, COMMAND;
 	}
@@ -18,7 +18,7 @@ public class PlayerChangeClassEvent extends PlayerEvent implements Cancellable {
     private SNClass from;
     private SNClass to;
     
-    public PlayerChangeClassEvent(Player player, ChangeClassCause cause, SNClass from, SNClass to) {
+    public PlayerClassChangeEvent(Player player, ChangeClassCause cause, SNClass from, SNClass to) {
     	super(player);
     	this.cause = cause;
     	this.from = from;

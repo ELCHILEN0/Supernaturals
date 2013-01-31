@@ -16,10 +16,10 @@ public abstract class SNClass {
 	private ChatColor color;
 	private Integer maxLevel;
 	
+	private HashMap<Integer, Float> speed = new HashMap<Integer, Float>(); 
 	private HashMap<Integer, Integer> maxMana = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> maxHealth = new HashMap<Integer, Integer>(); 
 	private HashMap<Integer, Integer> maxFoodLevel = new HashMap<Integer, Integer>(); 
-	private HashMap<Integer, Float> speed = new HashMap<Integer, Float>();  
 	private LinkedListMultimap<Integer, Power> powers = LinkedListMultimap.create();
 	private LinkedListMultimap<Integer, Ability> abilities = LinkedListMultimap.create();
 	

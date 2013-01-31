@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.TeamNovus.Supernaturals.SNEntities;
@@ -22,6 +23,7 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 
 public class SupernaturalListener implements Listener {
 
@@ -55,6 +57,11 @@ public class SupernaturalListener implements Listener {
 		invokeEvent(event, EntityEffectExpireEvent.class);
 	}
 	
+	@EventHandler
+	public void onPlayerManaChangeEvent(PlayerManaChangeEvent event) {
+		invokeEvent(event, PlayerManaChangeEvent.class);
+	}
+	
 	public void invokeEvent(Event event,  Class<? extends Event> type) {
 		ArrayList<BaseEffect> effects = new ArrayList<BaseEffect>();
 		
@@ -67,20 +74,16 @@ public class SupernaturalListener implements Listener {
 			
 			if(e instanceof LivingEntity) {
 				effects.addAll(SNEntities.i.get((LivingEntity) e).getEffects());
-				
-				for(BaseEffect effect : SNEntities.i.get((LivingEntity) e).getEffects()) {
-					for (Method method : effect.getClass().getMethods()) {
-						System.out.println(method.getName());
-					}
-				}
 			}
 		}
 		
-		for (BaseEffect effect : effects) {
+		if (event instanceof PlayerEvent) {
+			effects.addAll(SNPlayers.i.get(((PlayerEvent) event).getPlayer()).getAbilities());
+		}
+				
+		for (BaseEffect effect : effects) {			
 			for (Method method : effect.getClass().getMethods()) {
 				Type[] types = method.getParameterTypes();
-				
-				System.out.println(method.getName());
 				
 				if (types.length >= 1 && types[0].equals(type)) {
 					try {

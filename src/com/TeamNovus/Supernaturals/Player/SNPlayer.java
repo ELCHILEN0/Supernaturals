@@ -10,9 +10,10 @@ import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Collections.Entity;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
-import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
-import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
+import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
@@ -108,7 +109,18 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @param mana - The players new mana.
 	 */
-	public void setMana(Integer mana) {
+	public void setMana(Integer mana, boolean fire) {	
+		if(fire) {
+			PlayerManaChangeEvent event = new PlayerManaChangeEvent(getPlayer(), mana - getMana());
+			
+			Bukkit.getPluginManager().callEvent(event);
+			
+			mana = getMana() + event.getAmount();
+			
+			if(event.isCancelled())
+				return;
+		}
+		
 		this.mana = mana;
 	}
 
@@ -324,18 +336,24 @@ public class SNPlayer extends Entity {
 	 * Sets the players class.
 	 * 
 	 * @param playerClass - The new player class.
+	 * @param fire - Call the PlayerClassChangeEvent.
 	 */
-	public void setPlayerClass(SNClass playerClass, ChangeClassCause cause) {
-		PlayerChangeClassEvent event = new PlayerChangeClassEvent(getPlayer(), cause, this.playerClass, playerClass);
-		
-		Bukkit.getPluginManager().callEvent(event);
-		
-		// Change the target class if modified.
-		playerClass = event.getTo();
-		
-		if(!(event.isCancelled())) {
-			this.playerClass = playerClass;
+	public void setPlayerClass(SNClass playerClass, boolean fire) {
+		if(fire) {
+			PlayerClassChangeEvent event = new PlayerClassChangeEvent(getPlayer(), ChangeClassCause.CODE, this.playerClass, playerClass);
+			
+			Bukkit.getPluginManager().callEvent(event);
+			
+			// Change the target class if modified.
+			playerClass = event.getTo();
+			
+			if(event.isCancelled())
+				return;
 		}
+
+		this.playerClass = playerClass;
+		
+		syncFields(fire);
 	}
 	
 	/**
@@ -399,16 +417,16 @@ public class SNPlayer extends Entity {
 	/**
 	 * Synchronizes the players maximum values with the maximum race values for their level.
 	 * 
-	 * @param values - Determines whether to update the values as well as the max values.
+	 * @param heal - Determins whether to set the players values to their max values.
 	 */
-	public void syncFields(boolean values) {
+	public void syncFields(boolean heal) {
 		setSpeed(getPlayerClass().getSpeed(getLevel()));
 		setMaxMana(getPlayerClass().getMaxMana(getLevel()));
 		setMaxHealth(getPlayerClass().getMaxHealth(getLevel()));
 		setMaxFoodLevel(getPlayerClass().getMaxFoodLevel(getLevel()));
 		
-		if(values) {
-			setMana(0);
+		if(heal) {
+			setMana(getMaxMana(), false);
 			setHealth(getMaxHealth());
 			setFoodLevel(getMaxFoodLevel());
 		}	

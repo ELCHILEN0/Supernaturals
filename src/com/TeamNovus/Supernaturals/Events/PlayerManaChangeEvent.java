@@ -5,22 +5,22 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class PlayerRegainManaEvent extends PlayerEvent implements Cancellable {
+public class PlayerManaChangeEvent extends PlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
-    private Integer mana;
+    private Integer amount;
     
-    public PlayerRegainManaEvent(Player player, Integer mana) {
+    public PlayerManaChangeEvent(Player player, Integer amount) {
     	super(player);
-    	this.mana = mana;
+    	this.amount = amount;
     }
     
-	public Integer getMana() {
-		return mana;
+	public Integer getAmount() {
+		return amount;
 	}
 	
-	public void setMana(Integer mana) {
-		this.mana = mana;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 	
 	@Override

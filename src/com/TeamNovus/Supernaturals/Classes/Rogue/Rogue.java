@@ -19,6 +19,8 @@ public class Rogue extends SNClass {
 		addJoinableClass(25, new Ranger(this));
 		addJoinableClass(25, new Assassin(this));
 		
+		setMaxMana(1, 1000);
+		
 		setSpeed(1, 0.23f);
 		setSpeed(25, 0.25f);
 		

@@ -16,6 +16,7 @@ import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.SpeedListener;
+import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class Supernaturals extends JavaPlugin {
 	private static Supernaturals plugin = null;
@@ -45,6 +46,17 @@ public class Supernaturals extends JavaPlugin {
 				}				
 			}
 		}, 1, 1);
+		
+		// Regain Mana
+		getServer().getScheduler().runTaskTimer(this, new Runnable() {
+			
+			@Override
+			public void run() {
+				for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
+					p.setMana(p.getMana() + 10, true);
+				}
+			}
+		}, 10 * 20, 10 * 20);
 		
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
 		

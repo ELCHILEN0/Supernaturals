@@ -54,7 +54,7 @@ public class Reagent {
 		// Works with @health and @foodLevel.
 		player.setHealth(player.getHealth() - health);
 		player.setFoodLevel(player.getFoodLevel() - hunger);
-		player.setMana(player.getMana() - mana);
+		player.setMana(player.getMana() - mana, false);
 		
 		items.consume(player.getPlayer());
 	}

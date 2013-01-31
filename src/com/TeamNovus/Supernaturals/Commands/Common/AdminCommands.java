@@ -9,7 +9,6 @@ import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
-import com.TeamNovus.Supernaturals.Events.PlayerChangeClassEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Util.SNClassUtil;
@@ -51,17 +50,17 @@ public class AdminCommands {
 		int mana = Integer.valueOf(args[3]);
 		
 		if(args[1].equalsIgnoreCase("give")) {
-			player.setMana(player.getMana() + mana);
+			player.setMana(player.getMana() + mana, false);
 			
 			player.sendMessage(ChatColor.YELLOW + "" + mana + ChatColor.GREEN + " mana has been given to your player.");
 			sender.sendMessage(ChatColor.YELLOW + "" + mana + ChatColor.GREEN + " mana has been given to " + ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " sucessfully!"); 
 		} else if(args[1].equalsIgnoreCase("take")) {
-			player.setMana(player.getMana() - mana);
+			player.setMana(player.getMana() - mana, false);
 			
 			player.sendMessage(ChatColor.YELLOW + "" + mana + ChatColor.RED + " mana has been removed from your player.");
 			sender.sendMessage(ChatColor.YELLOW + "" + mana + ChatColor.GREEN + " mana has been taken from " + ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " sucessfully!"); 
 		} else if(args[1].equalsIgnoreCase("reset")) {
-			player.setMana(mana);
+			player.setMana(mana, false);
 			
 			player.sendMessage(ChatColor.GREEN + "Your mana has been set to " + ChatColor.YELLOW + "" + mana + ChatColor.GREEN + " mana.");
 			sender.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + "'s mana has been reset to " + ChatColor.YELLOW + mana + ChatColor.GREEN +" mana!"); 
@@ -133,7 +132,7 @@ public class AdminCommands {
 			return;
 		}
 		
-		player.setPlayerClass(targetClass, ChangeClassCause.COMMAND);
+		player.setPlayerClass(targetClass, true);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
@@ -159,7 +158,7 @@ public class AdminCommands {
 
 		SNClass targetClass = new Human();
 		
-		player.setPlayerClass(targetClass, ChangeClassCause.COMMAND);
+		player.setPlayerClass(targetClass, true);
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
