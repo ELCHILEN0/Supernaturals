@@ -6,8 +6,8 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNEntities;
-import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Collections.Entity;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
@@ -58,7 +58,7 @@ public class SNPlayer extends Entity {
 		this.maxFoodLevel = 20;
 
 		// Class:
-		this.playerClass = new Human();
+		this.playerClass = SNClasses.i.getBaseClass();
 		this.binding = 0;
 
 		// Leveling:
@@ -672,7 +672,7 @@ public class SNPlayer extends Entity {
 			sendMessage(message);
 		}
 	}
-
+	
 	// Java:
 	@Override
 	public int hashCode() {

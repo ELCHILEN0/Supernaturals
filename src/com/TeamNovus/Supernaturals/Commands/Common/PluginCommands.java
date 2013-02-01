@@ -10,13 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.Supernaturals.Permission;
+import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
-import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class PluginCommands {
@@ -318,7 +318,7 @@ public class PluginCommands {
 			return;
 		}
 
-		SNClass targetClass = SNClassUtil.getBestClass(args[1], new Human());
+		SNClass targetClass = SNClasses.i.getBestClass(args[1]);
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class was not found!");
@@ -384,7 +384,7 @@ public class PluginCommands {
 		}
 
 		SNPlayer player = SNPlayers.i.get((Player) sender);
-		SNClass targetClass = SNClassUtil.getBestClass(args[1], new Human());
+		SNClass targetClass = SNClasses.i.getBestClass(args[1]);
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class was not found!");

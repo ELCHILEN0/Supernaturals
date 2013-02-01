@@ -4,13 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.Bukkit;
-
+import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNPlayers;
-import com.TeamNovus.Supernaturals.Supernaturals;
-import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
-import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 
 public class StorageManager {
 	public enum DatabaseType {
@@ -20,22 +16,22 @@ public class StorageManager {
 	private Driver driver;
 	
 	public StorageManager(DatabaseType type) {
-		if(type.equals(DatabaseType.MySQL)) {
-			driver = new MySQL(Supernaturals.getPlugin().getConfig().getString(host), 
-										Supernaturals.getPlugin().getConfig().getString(port), 
-										Supernaturals.getPlugin().getConfig().getString(username), 
-										Supernaturals.getPlugin().getConfig().getString(password), 
-										Supernaturals.getPlugin().getConfig().getString(database));
-		} else if(type.equals(DatabaseType.SQLite)) {
-			driver = new SQLite(Supernaturals.getPlugin().getConfig().getString(path));
-		}
+//		if(type.equals(DatabaseType.MySQL)) {
+//			driver = new MySQL(Supernaturals.getPlugin().getConfig().getString(host), 
+//										Supernaturals.getPlugin().getConfig().getString(port), 
+//										Supernaturals.getPlugin().getConfig().getString(username), 
+//										Supernaturals.getPlugin().getConfig().getString(password), 
+//										Supernaturals.getPlugin().getConfig().getString(database));
+//		} else if(type.equals(DatabaseType.SQLite)) {
+//			driver = new SQLite(Supernaturals.getPlugin().getConfig().getString(path));
+//		}
 		
-		if(driver != null) {
-			driver.connect();
-		} else {
-			Supernaturals.getPlugin().getLogger().warning("The specified driver was not found.  Disabling plugin...");
-			Bukkit.getServer().getPluginManager().disablePlugin(Supernaturals.getPlugin());
-		}
+//		if(driver != null) {
+//			driver.connect();
+//		} else {
+//			Supernaturals.getPlugin().getLogger().warning("The specified driver was not found.  Disabling plugin...");
+//			Bukkit.getServer().getPluginManager().disablePlugin(Supernaturals.getPlugin());
+//		}
 	}
 	
 	
@@ -56,7 +52,7 @@ public class StorageManager {
 	
 				player.setId(result.getInt(1));
 				player.setName(result.getString(2));
-				player.setPlayerClass(SNClassUtil.getExactClass(result.getString(3), new Human()), false);
+				player.setPlayerClass(SNClasses.i.getExactClass(result.getString(3)), false);
 				player.setExperience(result.getInt(4));
 				player.setSpeed(result.getFloat(5));
 				player.setMana(result.getInt(6), false);

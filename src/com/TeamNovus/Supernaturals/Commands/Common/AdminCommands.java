@@ -6,12 +6,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import com.TeamNovus.Supernaturals.Permission;
+import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
-import com.TeamNovus.Supernaturals.Util.SNClassUtil;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class AdminCommands {
@@ -125,7 +125,7 @@ public class AdminCommands {
 			return;
 		}
 
-		SNClass targetClass = SNClassUtil.getBestClass(args[2], new Human());
+		SNClass targetClass = SNClasses.i.getBestClass(args[2]);
 		
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class does not exist!");
