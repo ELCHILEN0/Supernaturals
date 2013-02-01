@@ -16,7 +16,6 @@ public class SizeOf {
 		for (int i = -1; i < count; ++i) {
 			Object object;
 
-			// // INSTANTIATE YOUR DATA HERE AND ASSIGN IT TO 'object':
 
 			object = null;
 			// //end your code here
@@ -67,7 +66,8 @@ public class SizeOf {
 		for (int i = 0; (usedMem1 < usedMem2) && (i < 1000); ++i) {
 			s_runtime.runFinalization();
 			s_runtime.gc();
-			Thread.currentThread().yield();
+			Thread.currentThread();
+			Thread.yield();
 
 			usedMem2 = usedMem1;
 			usedMem1 = usedMemory();
