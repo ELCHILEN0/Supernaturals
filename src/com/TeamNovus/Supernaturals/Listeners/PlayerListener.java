@@ -28,6 +28,8 @@ public class PlayerListener implements Listener {
 			}
 			
 			player.sendMessage(ChatColor.GREEN + "+ " + event.getAmount() + " mana!");
+		} else {
+			event.setAmount(0);
 		}
 	}
 	

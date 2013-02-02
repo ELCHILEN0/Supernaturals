@@ -5,9 +5,10 @@ settings:
 database:
   type: mysql
   mysql:
+    host: localhost
+    port: 3306
     username: root
     password: root
-    port: 3601
-    database: minecraft
+    database: elchilen0
   sqlite:
     file: data.dat

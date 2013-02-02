@@ -189,7 +189,7 @@ public class SNPlayer extends Entity {
 	 * 
 	 */
 	public void updateHealth() {		
-		if(maxHealth <= 0)
+		if(maxHealth >= 20)
 			maxHealth = 20;
 
 		if(health > maxHealth)

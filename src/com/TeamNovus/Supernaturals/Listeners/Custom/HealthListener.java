@@ -34,8 +34,9 @@ public class HealthListener implements Listener {
 	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+						
+			player.setHealth(player.getHealth() + event.getAmount());
 			
-			player.setHealth(player.getHealth() + event.getAmount());					
 			event.setAmount(0);
 		}
 	}	
