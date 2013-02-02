@@ -1,6 +1,7 @@
 package com.TeamNovus.Supernaturals.Collections;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,6 +10,10 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class SNPlayerCollection extends EntityCollection<SNPlayer> {
+	
+	public LinkedHashSet<SNPlayer> getAllPlayers() {
+		return entities;
+	}
 	
 	public ArrayList<SNPlayer> getOnlinePlayers() {
 		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
