@@ -33,8 +33,10 @@ public class Rogue extends SNClass {
 		setMaxFoodLevel(1, 30);
 		setMaxFoodLevel(30, 40);
 		
-		addAbility(1, new BlindArrows("BlindArrows", "Blind your foes!", 0, 20 * 20, 100));
+		// Abilities:
+		addAbility(20, new BlindArrows("BlindArrows", "Blind your foes!", 0, 20 * 20, 100));
 		
+		// Powers:
 		addPower(5, new Sneak("Sneak", "Hide yourself from your enemies!", 3, 300, 
 										new Reagent(50, new ItemBag(new ItemStack(Material.SULPHUR, 5))),
 										new Reagent(50, new ItemBag(new ItemStack(Material.SULPHUR, 5)))));
