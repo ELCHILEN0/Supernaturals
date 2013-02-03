@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Classes.Rogue.Ranger.RangerCommon.Powers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.util.Vector;
 
@@ -21,6 +22,8 @@ public class Barrage extends Power {
 			Arrow arrow = player.getPlayer().getWorld().spawnArrow(player.getPlayer().getLocation(), vel, 5F, 2F);
 			arrow.setShooter(player.getPlayer());
 		}
+		
+		player.sendMessage(ChatColor.DARK_GRAY + "A barrage of arrows falls from the skies!");
 		
 		return true;
 	}

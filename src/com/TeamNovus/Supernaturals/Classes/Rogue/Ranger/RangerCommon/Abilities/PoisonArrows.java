@@ -2,7 +2,9 @@ package com.TeamNovus.Supernaturals.Classes.Rogue.Ranger.RangerCommon.Abilities;
 
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -23,6 +25,10 @@ public class PoisonArrows extends Ability {
 		if(new Random().nextInt(101) <= chance) {
 			if(event.getDamaged() instanceof LivingEntity) {
 				((LivingEntity) event.getDamaged()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, duration, amplifier));
+
+				if(event.getEntity() instanceof Player) {
+					((Player) event.getEntity()).sendMessage(ChatColor.ITALIC + "" + ChatColor.GREEN + "Enemy Poisioned!");
+				}
 			}
 		}
 	}

@@ -1,10 +1,15 @@
 package com.TeamNovus.Supernaturals.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BlockIterator;
 
 import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNEntities;
@@ -646,6 +651,51 @@ public class SNPlayer extends Entity {
 	 */
 	public SNEntity getEntity() {
 		return SNEntities.i.get(getPlayer());
+	}
+	
+	public LivingEntity getTargetEntity(Integer range) {
+		if(isOffline()) return null;
+		
+		// Get the nearby entities
+		List<org.bukkit.entity.Entity> near = getPlayer().getNearbyEntities(range, range, range);
+		List<LivingEntity> entities = new ArrayList<LivingEntity>(); 
+		for (org.bukkit.entity.Entity e : near) {
+			if (e instanceof LivingEntity) {
+				entities.add((LivingEntity) e);
+			}
+		}
+
+		// Find the target
+		LivingEntity target = null;		
+		BlockIterator iterator = new BlockIterator(getPlayer(), range);
+
+		Block b;
+		Location l;
+		int bx, by, bz;
+		double ex, ey, ez;
+		// Loop through the players line of sight
+		while (iterator.hasNext()) {
+			b = iterator.next();
+			bx = b.getX();
+			by = b.getY();
+			bz = b.getZ();
+
+			// Check each entity in the range to see if its near the line of sight
+			for (LivingEntity e : entities) {
+				l = e.getLocation();
+				ex = l.getX();
+				ey = l.getY();
+				ez = l.getZ();
+
+				// Check if the entity is near the line of sight
+				if ((bx-.75 <= ex && ex <= bx+1.75) && (bz-.75 <= ez && ez <= bz+1.75) && (by-1 <= ey && ey <= by+2.5)) {
+					target = e;
+					return target;
+				}
+			}
+		}
+
+		return null;
 	}
 	
 	// Bukkit:

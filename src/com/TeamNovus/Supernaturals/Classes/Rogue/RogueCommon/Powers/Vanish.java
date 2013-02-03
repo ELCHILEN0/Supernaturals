@@ -22,7 +22,7 @@ public class Vanish extends Power {
 		ArrayList<Player> players = new ArrayList<Player>();
 		
 		for(Player p : Bukkit.getOnlinePlayers()) {
-			player.getPlayer().hidePlayer(p);
+			p.getPlayer().hidePlayer(player.getPlayer());
 			players.add(p);
 		}
 		player.sendMessage(ChatColor.DARK_GRAY + "You have vanished!");

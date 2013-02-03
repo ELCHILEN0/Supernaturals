@@ -38,7 +38,7 @@ public class Ranger extends SNClass {
 		
 		addAbility(20, new SlowArrows("Slow Arrows v2", "4% chance to slow your enemies for 10 seconds!", 0, 10 * 20, 4));
 		
-		addAbility(25, new BlindArrows("Blind Arrows", "3% chance to blind your enemies for 15 seconds!", 0, 15 * 20, 3));
+		addAbility(25, new BlindArrows("Blind Arrows v2", "3% chance to blind your enemies for 15 seconds!", 0, 15 * 20, 3));
 
 		// Powers:
 		addPower(5, new Sneak("Sneak", "Hide yourself from your enemies!", 3, 45, 

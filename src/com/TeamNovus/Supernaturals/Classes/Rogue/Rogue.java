@@ -7,7 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Assassin.Assassin;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Ranger.Ranger;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Ranger.RangerCommon.Abilities.BlindArrows;
+import com.TeamNovus.Supernaturals.Classes.Rogue.RogueCommon.Powers.Leap;
 import com.TeamNovus.Supernaturals.Classes.Rogue.RogueCommon.Powers.Sneak;
+import com.TeamNovus.Supernaturals.Classes.Rogue.RogueCommon.Powers.Vanish;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
@@ -37,9 +39,13 @@ public class Rogue extends SNClass {
 										new Reagent(50, new ItemBag(new ItemStack(Material.SULPHUR, 5))),
 										new Reagent(50, new ItemBag(new ItemStack(Material.SULPHUR, 5)))));
 		
-		addPower(10, new Sneak("Vanish", "Dissapear from your enemies!", 3, 300, 
+		addPower(10, new Vanish("Vanish", "Dissapear from your enemies!", 3, 300, 
 										new Reagent(150, new ItemBag(new ItemStack(Material.SULPHUR, 15))),
 										new Reagent(150, new ItemBag(new ItemStack(Material.SULPHUR, 15)))));
+		
+		addPower(1, new Leap("Leap", "Leap over immense gaps!", 0, 30,
+				new Reagent(75, new ItemBag(new ItemStack(Material.FEATHER, 2))),
+				new Reagent(75, new ItemBag(new ItemStack(Material.FEATHER, 2)))));
 	}
 
 }
