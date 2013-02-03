@@ -151,12 +151,13 @@ public abstract class SNClass {
 			if (i > level) break;
 			
 			// Setup the iterators
-			Iterator<Power> dataIterator = data.iterator();
 			Iterator<Power> toAddIterator = powers.get(i).iterator();
 			
 			// Loop through the powers of a level.
 			while (toAddIterator.hasNext()) {
 				Power t = toAddIterator.next();
+				
+				Iterator<Power> dataIterator = data.iterator();
 				
 				// Make sure there isn't an existing power with the same level.
 				while (dataIterator.hasNext()) {

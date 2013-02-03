@@ -5,9 +5,9 @@ import com.TeamNovus.Supernaturals.Entity.Effects.BaseEffect;
 public class Ability extends BaseEffect {
 	private String name;
 	private String desc;
-	private Double amplifier;
+	protected Integer amplifier;
 	
-	public Ability(String name, String desc, Double amplifier) {
+	public Ability(String name, String desc, Integer amplifier) {
 		this.name = name;
 		this.desc = desc;
 		this.amplifier = amplifier;
@@ -21,7 +21,7 @@ public class Ability extends BaseEffect {
 		return desc;
 	}
 	
-	public Double getAmplifier() {
+	public Integer getAmplifier() {
 		return amplifier;
 	}
 }
