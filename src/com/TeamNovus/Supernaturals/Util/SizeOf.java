@@ -1,83 +1,111 @@
 package com.TeamNovus.Supernaturals.Util;
 
-public class SizeOf {
-	public static void main(String[] args) throws Exception {
-		// "warm up" all classes/methods that we are going to use:
-		runGC();
-		usedMemory();
+import java.lang.reflect.Field;
 
-		// array to keep strong references to allocated objects:
-		final int count = 10000; // 10000 or so is enough for small ojects
+import sun.misc.Unsafe;
+
+public class SizeOf {
+	private static Runtime runtime = Runtime.getRuntime();
+
+	/**
+	 * Estimate the size of an object.
+	 * 
+	 * @param o - The object to estimate the size of.
+	 */
+	public static long sizeOf(Object o) {
+		// The count of the number of objects to allocate.
+		final int count = 10000;
+		
+		// The array of the allocated objects.
 		Object[] objects = new Object[count];
 
-		long heap1 = 0;
+		long before = getUsedMemory();
 
-		// allocate count+1 objects, discard the first one:
-		for (int i = -1; i < count; ++i) {
-			Object object;
-
-
-			object = null;
-			// //end your code here
-			if (i >= 0) {
-				objects[i] = object;
-			} else {
-				object = null; // discard the "warmup" object
-				runGC();
-				heap1 = usedMemory(); // take a "before" heap snapshot
-			}
+		for (int i = 0; i < objects.length; i++) {
+			// Clone the object.
+			objects[i] = clone(o);
 		}
 
-		runGC();
-		long heap2 = usedMemory(); // take an "after" heap snapshot:
+		long after = getUsedMemory();
 
-		final int size = Math.round(((float) (heap2 - heap1)) / count);
-		System.out.println("'before' heap: " + heap1 + ", 'after' heap: "
-				+ heap2);
-		System.out.println("heap delta: " + (heap2 - heap1) + ", {"
-				+ objects[0].getClass() + "} size = " + size + " bytes");
+		return Math.round((after - before)/count);
+	}
+	
+	public static void printSizeOf(Object o) {
+		System.out.println("_____________________.[ SizeOf ]._____________________");
+		System.out.println("Object: " + o.getClass().getName());
+		System.out.println("Object Size: " + sizeOf(o));
+		System.out.println("------------------------------------------------------");
 	}
 
-	// a helper method for creating Strings of desired length
-	// and avoiding getting tricked by String interning:
-	public static String createString(final int length) {
-		final char[] result = new char[length];
-		for (int i = 0; i < length; ++i) {
-			result[i] = (char) i;
-		}
+	private static void runGC() {
+		int times = 4;
 
-		return new String(result);
-	}
+		for (int i = 0; i < times; i++) {
+			runtime.runFinalization();
+			runtime.gc();
 
-	// this is our way of requesting garbage collection to be run:
-	// [how aggressive it is depends on the JVM to a large degree, but
-	// it is almost always better than a single Runtime.gc() call]
-	private static void runGC() throws Exception {
-		// for whatever reason it helps to call Runtime.gc()
-		// using several method calls:
-		for (int r = 0; r < 4; ++r) {
-			_runGC();
-		}
-	}
-
-	private static void _runGC() throws Exception {
-		long usedMem1 = usedMemory(), usedMem2 = Long.MAX_VALUE;
-
-		for (int i = 0; (usedMem1 < usedMem2) && (i < 1000); ++i) {
-			s_runtime.runFinalization();
-			s_runtime.gc();
 			Thread.currentThread();
 			Thread.yield();
-
-			usedMem2 = usedMem1;
-			usedMem1 = usedMemory();
 		}
 	}
 
-	private static long usedMemory() {
-		return s_runtime.totalMemory() - s_runtime.freeMemory();
+	private static long getUsedMemory() {
+		// Force the GC to run to ensure more precise memory statistics;
+		runGC();
+
+		return runtime.totalMemory() - runtime.freeMemory();
+	}
+	
+	private static Object clone(Object o) {
+		Object clone = null;
+		
+		try {
+			clone = o.getClass().newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		
+		// Experimental: (Doesnt reflect the actual size for some reason)
+//		Field[] fromFields = o.getClass().getDeclaredFields();
+//		Field[] toFields = o.getClass().getDeclaredFields();
+//		
+//		for (int i = 0; i < fromFields.length; i++) {
+//			for (int j = 0; j < toFields.length; j++) {
+//				fromFields[i].setAccessible(true);
+//				toFields[i].setAccessible(true);
+//				
+//				if(fromFields[i].getName().equals(toFields[i].getName()) && fromFields[i].getType().equals(toFields[i].getType())) {
+//					try {
+//						toFields[i].set(clone, fromFields[i].get(o));
+//					} catch (IllegalArgumentException e) {
+//						e.printStackTrace();
+//					} catch (IllegalAccessException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}
+		
+		return clone;
 	}
 
-	private static final Runtime s_runtime = Runtime.getRuntime();
+	// Experimental: getUnsafe().allocateInstance(o.getClass());
+	@SuppressWarnings("unused")
+	private static Unsafe getUnsafe() {
+	    try {
+	        Class<?> unsafeClass = Class.forName("sun.misc.Unsafe");
+	        Field unsafeField = unsafeClass.getDeclaredField("theUnsafe");
+	        unsafeField.setAccessible(true);
+	        Object unsafeObj = unsafeField.get(unsafeClass);
+	 
+	        return (Unsafe) unsafeObj;
+	    }
+	    catch (Exception e) {
+	        return null;
+	    }
+	}
 
-} // End of class
+}

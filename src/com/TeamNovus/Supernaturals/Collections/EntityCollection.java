@@ -16,7 +16,7 @@ public abstract class EntityCollection<E extends Entity> {
 		return !(ids.contains(id));
 	}
 	
-	protected Integer getNextId() {
+	public Integer getNextId() {
 		while (!(isIdFree(nextId))) {
 			nextId++;
 		}

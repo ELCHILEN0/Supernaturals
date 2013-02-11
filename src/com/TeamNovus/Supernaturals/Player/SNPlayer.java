@@ -74,7 +74,7 @@ public class SNPlayer extends Entity {
 		this.strengthStat = 0;
 		this.resistanceStat = 0;
 		this.dexterityStat = 0;
-		this.magicStat = 0;		
+		this.magicStat = 0;			
 	}
 
 	public SNPlayer(Player p) { 
@@ -722,8 +722,21 @@ public class SNPlayer extends Entity {
 			sendMessage(message);
 		}
 	}
-	
+
 	// Java:
+	@Override
+	public String toString() {
+		return "SNPlayer [name=" + name + ", mana=" + mana + ", maxMana="
+				+ maxMana + ", health=" + health + ", maxHealth=" + maxHealth
+				+ ", foodLevel=" + foodLevel + ", maxFoodLevel=" + maxFoodLevel
+				+ ", speed=" + speed + ", playerClass=" + playerClass
+				+ ", binding=" + binding + ", cooldowns=" + cooldowns
+				+ ", experience=" + experience + ", attributePoints="
+				+ attributePoints + ", strengthStat=" + strengthStat
+				+ ", resistanceStat=" + resistanceStat + ", dexterityStat="
+				+ dexterityStat + ", magicStat=" + magicStat + "]";
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

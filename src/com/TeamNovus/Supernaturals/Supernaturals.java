@@ -3,6 +3,7 @@ package com.TeamNovus.Supernaturals;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.Supernaturals.Commands.BaseCommandExecutor;
@@ -19,6 +20,7 @@ import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Util.SizeOf;
 
 public class Supernaturals extends JavaPlugin {
 	private static Supernaturals plugin = null;
@@ -31,7 +33,7 @@ public class Supernaturals extends JavaPlugin {
 		if(!(new File(getDataFolder(), "config.yml").exists())) {
 			saveDefaultConfig();
 		}
-
+		
 		// Primary Listeners:
 		Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -80,7 +82,11 @@ public class Supernaturals extends JavaPlugin {
 		CommandManager.registerClass(AdminCommands.class);
 
 		// Load all the players from the database.
-		StorageManager.getInstance().loadPlayers();
+		StorageManager.getInstance().loadPlayers();	
+		
+		for(Plugin p : getServer().getPluginManager().getPlugins()) {
+			SizeOf.sizeOf(p);
+		}
 	}
 
 
