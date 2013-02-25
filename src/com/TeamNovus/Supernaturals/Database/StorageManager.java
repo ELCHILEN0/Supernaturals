@@ -12,8 +12,10 @@ import com.TeamNovus.Persistence.Databases.MySQL.MySQLConfiguration;
 import com.TeamNovus.Persistence.Databases.MySQL.MySQLDatabase;
 import com.TeamNovus.Persistence.Databases.SQLite.SQLiteConfiguration;
 import com.TeamNovus.Persistence.Databases.SQLite.SQLiteDatabase;
+import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
+import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class StorageManager {
@@ -68,6 +70,7 @@ public class StorageManager {
 			database.setCheckTableOnRegistration(true);
 
 			database.registerTable(SNPlayer.class);
+			database.registerTable(SNEntity.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,6 +87,20 @@ public class StorageManager {
 	public void savePlayers() {	
 		for(SNPlayer p : SNPlayers.i.getAllPlayers()) {
 			database.save(SNPlayer.class, p);
+		}
+	}
+	
+	public void loadEntities() {
+		List<SNEntity> players = database.findAll(SNEntity.class);
+		
+		for(SNEntity e : players) {
+			SNEntities.i.attach(e);
+		}
+	}
+
+	public void saveEntities() {	
+		for(SNEntity e : SNEntities.i.getEntites()) {
+			database.save(SNEntity.class, e);
 		}
 	}
 }

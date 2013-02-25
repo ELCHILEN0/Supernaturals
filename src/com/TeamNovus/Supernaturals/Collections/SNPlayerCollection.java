@@ -11,9 +11,8 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class SNPlayerCollection {
-	private LinkedHashSet<SNPlayer> entities = new LinkedHashSet<SNPlayer>();
-	
 	private Integer currentId = 0;
+	private LinkedHashSet<SNPlayer> entities = new LinkedHashSet<SNPlayer>();
 
 	private Boolean isIdFree(Integer id) {
 		HashSet<Integer> ids = new HashSet<Integer>();

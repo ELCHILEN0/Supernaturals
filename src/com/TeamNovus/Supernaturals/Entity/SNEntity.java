@@ -8,6 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
+import com.TeamNovus.Persistence.Annotations.Column;
+import com.TeamNovus.Persistence.Annotations.Key;
+import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Supernaturals.Entity.Effects.Effect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingEffect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingPeriodicEffect;
@@ -16,14 +19,23 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
+@Table(name = "sn_entities")
 public class SNEntity {
+	@Key
+	@Column(name = "id")
 	private int id;
-	private UUID uuid;
+	
+	@Column(name = "uuid")
+	private String uuid;
 	
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 	public SNEntity(LivingEntity e) {
-		uuid = e.getUniqueId();
+		uuid = e.getUniqueId().toString();
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getId() {
@@ -31,13 +43,13 @@ public class SNEntity {
 	}
 	
 	public UUID getUUID() {
-		return uuid;
+		return UUID.fromString(uuid);
 	}
 
 	public LivingEntity getEntity() {
 		for (World w : Bukkit.getWorlds()) {
 			for (LivingEntity e : w.getLivingEntities()) {
-				if (e.getUniqueId().equals(uuid)) {
+				if (e.getUniqueId().toString().equals(uuid)) {
 					return e;
 				}
 			}

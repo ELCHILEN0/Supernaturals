@@ -103,16 +103,18 @@ public class Supernaturals extends JavaPlugin {
 		CommandManager.registerClass(PluginCommands.class);
 		CommandManager.registerClass(AdminCommands.class);
 
-		// Load all the players from the database.
+		// Load all the data from the database.
 		StorageManager.getInstance().loadPlayers();			
+		StorageManager.getInstance().loadEntities();			
 	}
 
 
 	@Override
 	public void onDisable() {
 
-		// Save all the players to the database.
+		// Save all the data to the database.
 		StorageManager.getInstance().savePlayers();
+		StorageManager.getInstance().saveEntities();
 	}
 
 	public static Supernaturals getPlugin() {
