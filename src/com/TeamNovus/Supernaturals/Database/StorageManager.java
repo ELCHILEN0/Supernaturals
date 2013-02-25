@@ -1,22 +1,23 @@
 package com.TeamNovus.Supernaturals.Database;
 
 import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 
-import com.TeamNovus.Supernaturals.SNClasses;
+import com.TeamNovus.Persistence.Database;
+import com.TeamNovus.Persistence.Databases.H2.H2Configuration;
+import com.TeamNovus.Persistence.Databases.H2.H2Database;
+import com.TeamNovus.Persistence.Databases.MySQL.MySQLConfiguration;
+import com.TeamNovus.Persistence.Databases.MySQL.MySQLDatabase;
+import com.TeamNovus.Persistence.Databases.SQLite.SQLiteConfiguration;
+import com.TeamNovus.Persistence.Databases.SQLite.SQLiteDatabase;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class StorageManager {
-	public enum DatabaseType {
-		MySQL, SQLite;
-	}
-
+	private Database database;
 	private static StorageManager instance = null;
 
 	public static StorageManager getInstance() {
@@ -26,130 +27,63 @@ public class StorageManager {
 		return instance;
 	}
 
-	private Driver driver;
-
 	public StorageManager() {
-		if(driver != null) return;
+		FileConfiguration cfg = Supernaturals.getPlugin().getConfig();
+		
+		if(cfg.getString("database.type").equalsIgnoreCase("mysql")) {
+			MySQLConfiguration configuration = new MySQLConfiguration();
+			
+			// Load the MySQL details:
+			configuration.setHost(cfg.getString("database.mysql.host"));
+			configuration.setPort(cfg.getString("database.mysql.port"));
+			configuration.setDatabase(cfg.getString("database.mysql.database"));
+			configuration.setUsername(cfg.getString("database.mysql.username"));
+			configuration.setPassword(cfg.getString("database.mysql.password"));
+			
+			database = new MySQLDatabase(configuration);
+		} else if(cfg.getString("database.type").equalsIgnoreCase("sqlite")) {
+			SQLiteConfiguration configuration = new SQLiteConfiguration();
+			
+			// Load the SQLite details:
+			configuration.setPath(Supernaturals.getPlugin().getDataFolder() + File.separator + cfg.getString("database.sqlite.path"));
+			
+			database = new SQLiteDatabase(configuration);
+		} else if(cfg.getString("database.type").equalsIgnoreCase("h2")) {
+			H2Configuration configuration = new H2Configuration();
+			
+			// Load the H2 details:
+			configuration.setPath(cfg.getString("database.h2.database"));
+			
+			database = new H2Database(configuration);
+		}
 
-		String type = Supernaturals.getPlugin().getConfig().getString("database.type");
-
-		if(type.equalsIgnoreCase(DatabaseType.MySQL.name())) {
-			String host = Supernaturals.getPlugin().getConfig().getString("database.mysql.host");
-			String port = Supernaturals.getPlugin().getConfig().getString("database.mysql.port");
-			String username = Supernaturals.getPlugin().getConfig().getString("database.mysql.username");
-			String password = Supernaturals.getPlugin().getConfig().getString("database.mysql.password");
-			String database = Supernaturals.getPlugin().getConfig().getString("database.mysql.database");
-
-			driver = new MySQL(host, port, username, password, database);
-		} else {
-			String fileName = Supernaturals.getPlugin().getConfig().getString("database.sqlite.file");
-
-			driver = new SQLite(Supernaturals.getPlugin().getDataFolder() + File.separator + fileName);
+		if(database == null) {
+			// Fail
+			return;
 		}
 
 		try {
-			driver.connect();
+			database.connect();
+			
+			database.setCheckTableOnRegistration(true);
 
-			setup();
+			database.registerTable(SNPlayer.class);
 		} catch (Exception e) {
-			e.printStackTrace();
-			Supernaturals.getPlugin().getLogger().warning("The specified driver was not found.  Disabling plugin...");
-			Bukkit.getServer().getPluginManager().disablePlugin(Supernaturals.getPlugin());
-		}
-	}
-
-	public void setup() {	
-		try {
-			PreparedStatement statement = driver.getConnection().prepareStatement("CREATE  TABLE IF NOT EXISTS `sn_players` (" +
-					"`id` INT NOT NULL ," +
-					"`name` VARCHAR(16) NOT NULL ," +
-					"`class` TEXT NULL ," +
-					"`experience` INT NULL ," +
-					"`speed` FLOAT NULL ," +
-					"`mana` INT NULL ," +
-					"`health` INT NULL ," +
-					"`food_level` INT NULL ," +
-					"`bound_id` INT NULL ," +
-					"PRIMARY KEY (`id`) )" +
-					"ENGINE = InnoDB");
-
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void loadPlayers() {
-		try {
-			PreparedStatement statement = driver.getConnection().prepareStatement("SELECT * FROM `sn_players`");
-
-			ResultSet result = statement.executeQuery();
-
-			while (result.next()) {
-				SNPlayer player = new SNPlayer();
-
-				player.setId(result.getInt(1));
-				player.setName(result.getString(2));
-				player.setPlayerClass(SNClasses.i.getExactClass(result.getString(3)), false);
-				player.setExperience(result.getInt(4));
-				player.setSpeed(result.getFloat(5));
-				player.setMana(result.getInt(6), false);
-				player.setHealth(result.getInt(7));
-				player.setFoodLevel(result.getInt(8));
-				player.setBinding(result.getInt(9));
-
-				SNPlayers.i.attach(player);
-			}
-
-			result.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		List<SNPlayer> players = database.findAll(SNPlayer.class);
+		
+		for(SNPlayer p : players) {
+			SNPlayers.i.attach(p);
 		}
-
 	}
 
 	public void savePlayers() {	
-		try {
-			PreparedStatement count = driver.getConnection().prepareStatement("SELECT COUNT(*) FROM `sn_players` WHERE `name` = ?");
-
-			PreparedStatement insert = driver.getConnection().prepareStatement("INSERT INTO `sn_players` (`id`, `name`, `class`, `experience`, `speed`, `mana`, `health`, `food_level`, `bound_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			PreparedStatement update = driver.getConnection().prepareStatement("UPDATE `sn_players` SET `id` = ?, `class` = ?, `experience` = ?, `speed` = ?, `mana` = ?, `health` = ?, `food_level` = ?, `bound_id` = ? WHERE `name` = ?");
-
-			for(SNPlayer player : SNPlayers.i.getAllPlayers()) {
-				count.setString(1, player.getName());
-
-				ResultSet result = count.executeQuery();
-
-				if(result.next() && result.getInt(1) == 0) {
-					insert.setInt(1, player.getId());
-					insert.setString(2, player.getName());
-					insert.setString(3, player.getPlayerClass().getName());
-					insert.setInt(4, player.getExperience());
-					insert.setFloat(5, player.getSpeed());
-					insert.setInt(6, player.getMana());
-					insert.setInt(7, player.getHealth());
-					insert.setInt(8, player.getFoodLevel());
-					insert.setInt(9, player.getBinding());
-
-					insert.executeUpdate();
-				} else {
-					update.setInt(1, player.getId());
-					update.setString(2, player.getPlayerClass().getName());
-					update.setInt(3, player.getExperience());
-					update.setFloat(4, player.getSpeed());
-					update.setInt(5, player.getMana());
-					update.setInt(6, player.getHealth());
-					update.setInt(7, player.getFoodLevel());
-					update.setInt(8, player.getBinding());
-					update.setString(9, player.getName());
-
-					update.executeUpdate();
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for(SNPlayer p : SNPlayers.i.getAllPlayers()) {
+			database.save(SNPlayer.class, p);
 		}
 	}
 }

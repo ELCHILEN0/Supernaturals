@@ -1,7 +1,7 @@
 package com.TeamNovus.Supernaturals.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -11,9 +11,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 
+import com.TeamNovus.Persistence.Annotations.Column;
+import com.TeamNovus.Persistence.Annotations.Key;
+import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNEntities;
-import com.TeamNovus.Supernaturals.Collections.Entity;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
@@ -21,37 +23,63 @@ import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
+import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 
-public class SNPlayer extends Entity {
+@Table(name = "sn_players")
+public class SNPlayer implements Serializable {
+	private static final long serialVersionUID = 1L;
+			
+	@Key
+	@Column(name = "id")
+	private Integer id;
+	
+	@Column(name = "name")
 	private String name;
 
 	// Data Values:
+	@Column(name = "mana")
 	private Integer mana;
+	
+	@Column(name = "maxMana")
 	private Integer maxMana;
+	
+	@Column(name = "health")
 	private Integer health;
+	
+	@Column(name = "maxHealth")
 	private Integer maxHealth;
+	
+	@Column(name = "foodLevel")
 	private Integer foodLevel;
+	
+	@Column(name = "maxFoodLevel")
 	private Integer maxFoodLevel;
+	
+	@Column(name = "speed")
 	private Float speed;
 
 	// Class:
-	private SNClass playerClass;
+	@Column(name = "class")
+	private String playerClass;
+	
+	@Column(name = "binding")
 	private Integer binding;
 
 	// Powers:
-	private HashMap<Class<? extends Power>, Long> cooldowns = new HashMap<Class<? extends Power>, Long>();
+	private ArrayList<Cooldown> cooldowns = new ArrayList<Cooldown>();
 	
 	// Leveling:
+	@Column(name = "experience")
 	private Integer experience;
 	private Integer attributePoints;
 
 	// Statistics:
-	private Integer strengthStat;
-	private Integer resistanceStat;
-	private Integer dexterityStat;
-	private Integer magicStat;
-
-	public SNPlayer() {
+	private Integer strengthStatistic;
+	private Integer resistanceStatistic;
+	private Integer dexterityStatistic;
+	private Integer magicStatistic;
+	
+	public SNPlayer() {		
 		// Data Values:
 		this.mana = 0;
 		this.health = 20;
@@ -63,7 +91,7 @@ public class SNPlayer extends Entity {
 		this.maxFoodLevel = 20;
 
 		// Class:
-		this.playerClass = SNClasses.i.getBaseClass();
+		this.playerClass = SNClasses.i.getBaseClass().getName();
 		this.binding = 0;
 
 		// Leveling:
@@ -71,17 +99,37 @@ public class SNPlayer extends Entity {
 		this.attributePoints = 0;
 
 		// Statistics:
-		this.strengthStat = 0;
-		this.resistanceStat = 0;
-		this.dexterityStat = 0;
-		this.magicStat = 0;			
+		this.strengthStatistic = 0;
+		this.resistanceStatistic = 0;
+		this.dexterityStatistic = 0;
+		this.magicStatistic = 0;			
 	}
 
+	public SNPlayer(String name) {
+		this();
+		this.name = name;
+	}
+	
 	public SNPlayer(Player p) { 
 		this();
 		this.name = p.getName();
 	}
+	
+	/**
+	 * Get the players id
+	 * 
+	 */
+	public Integer getId() {
+		return id;
+	}
 
+	/**
+	 * Set the players id
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	/**
 	 * Gets the players name.
 	 * 
@@ -153,7 +201,7 @@ public class SNPlayer extends Entity {
 	 * @return The players current health.
 	 */
 	public Integer getHealth() {
-		reSync();
+		updateServer();
 		
 		return health;
 	}
@@ -214,7 +262,7 @@ public class SNPlayer extends Entity {
 	 * @return The players food level.
 	 */
 	public Integer getFoodLevel() {
-		reSync();
+		updateServer();
 
 		return foodLevel;
 	}
@@ -275,7 +323,7 @@ public class SNPlayer extends Entity {
 	 * @return The players speed.
 	 */
 	public Float getSpeed() {
-		reSync();
+		updateServer();
 		
 		return speed;
 	}
@@ -309,7 +357,7 @@ public class SNPlayer extends Entity {
 	 * Updates: @health, @foodLevel, @speed
 	 * 
 	 */
-	public void update() {
+	public void updateClient() {
 		updateHealth();
 		updateFoodLevel();
 		updateSpeed();
@@ -320,7 +368,7 @@ public class SNPlayer extends Entity {
 	 * Updates: @health, @foodLevel, @speed
 	 * 
 	 */
-	public void reSync() {
+	public void updateServer() {
 		if(isOnline()) {
 			setHealth((getPlayer().getHealth() * getMaxHealth())/20);
 			setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
@@ -334,7 +382,7 @@ public class SNPlayer extends Entity {
 	 * @return The players class.
 	 */
 	public SNClass getPlayerClass() {
-		return playerClass;
+		return SNClasses.i.getExactClass(playerClass);
 	}
 
 	/**
@@ -345,7 +393,7 @@ public class SNPlayer extends Entity {
 	 */
 	public void setPlayerClass(SNClass playerClass, boolean fire) {
 		if(fire) {
-			PlayerClassChangeEvent event = new PlayerClassChangeEvent(getPlayer(), ChangeClassCause.CODE, this.playerClass, playerClass);
+			PlayerClassChangeEvent event = new PlayerClassChangeEvent(getPlayer(), ChangeClassCause.CODE, getPlayerClass(), playerClass);
 			
 			Bukkit.getPluginManager().callEvent(event);
 			
@@ -356,7 +404,7 @@ public class SNPlayer extends Entity {
 				return;
 		}
 
-		this.playerClass = playerClass;
+		this.playerClass = playerClass.getName();
 		
 		syncFields(fire);
 	}
@@ -393,12 +441,12 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players power cooldowns.
 	 */
-	public HashMap<Class<? extends Power>, Long> getCooldowns() {
+	public ArrayList<Cooldown> getCooldowns() {
 		return cooldowns;
 	}
 	
-	public void setCooldown(Power power, Long castTime) {
-		cooldowns.put(power.getClass(), castTime);
+	public void setCooldown(Cooldown cooldown) {		
+		cooldowns.add(cooldown);
 	}
 	
 	/**
@@ -407,22 +455,20 @@ public class SNPlayer extends Entity {
 	 * @param power - The power to check.
 	 * @return The players remaining cooldown.
 	 */
-	public Long getRemainingCooldown(Power power) {
-		for(Class<? extends Power> c : cooldowns.keySet()) {
-			if(c.equals(power.getClass())) {				
-				Long remaining = (long) (power.getCooldown() * 1000 + cooldowns.get(c) - System.currentTimeMillis());
-				
-				return remaining > (long) 0 ? remaining : (long) 0;
+	public int getRemainingCooldownTicks(Power power) {
+		for(Cooldown cooldown : cooldowns) {
+			if(cooldown.getPower().equals(power.getName())) {	
+				return cooldown.getRemainingTicks();
 			}
 		}
 		
-		return (long) 0;
+		return 0;
 	}
 
 	/**
 	 * Synchronizes the players maximum values with the maximum race values for their level.
 	 * 
-	 * @param heal - Determins whether to set the players values to their max values.
+	 * @param heal - Determines whether to set the players values to their max values.
 	 */
 	public void syncFields(boolean heal) {
 		setSpeed(getPlayerClass().getSpeed(getLevel()));
@@ -550,7 +596,7 @@ public class SNPlayer extends Entity {
 	 * @return The players remaining attribute points.
 	 */
 	public Integer getRemainingAttributePoints() {
-		return getAttributePoints() - strengthStat - resistanceStat - dexterityStat - magicStat;
+		return getAttributePoints() - strengthStatistic - resistanceStatistic - dexterityStatistic - magicStatistic;
 	}
 
 	/**
@@ -576,17 +622,17 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players strength statistic.
 	 */
-	public Integer getStrengthStat() {
-		return strengthStat;
+	public Integer getStrengthStatistic() {
+		return strengthStatistic;
 	}
 
 	/**
 	 * Sets the players strength statistic.
 	 * 
-	 * @param strengthStat - The players new strength statistic.
+	 * @param strengthStatistic - The players new strength statistic.
 	 */
-	public void setStrengthStat(Integer strengthStat) {
-		this.strengthStat = strengthStat;
+	public void setStrengthStatistic(Integer strengthStatistic) {
+		this.strengthStatistic = strengthStatistic;
 	}
 
 	/**
@@ -594,17 +640,17 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players resistance statistic.
 	 */
-	public Integer getResistanceStat() {
-		return resistanceStat;
+	public Integer getResistanceStatistic() {
+		return resistanceStatistic;
 	}
 
 	/**
 	 * Sets the players resistance statistic.
 	 * 
-	 * @param strengthStat - The players new resistance statistic.
+	 * @param strengthStatistic - The players new resistance statistic.
 	 */
-	public void setResistanceStat(Integer resistanceStat) {
-		this.resistanceStat = resistanceStat;
+	public void setResistanceStatistic(Integer resistanceStatistic) {
+		this.resistanceStatistic = resistanceStatistic;
 	}
 
 	/**
@@ -612,17 +658,17 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players dexterity statistic.
 	 */
-	public Integer getDexterityStat() {
-		return dexterityStat;
+	public Integer getDexterityStatistic() {
+		return dexterityStatistic;
 	}
 
 	/**
 	 * Sets the players dexterity statistic.
 	 * 
-	 * @param strengthStat - The players new dexterity statistic.
+	 * @param strengthStatistic - The players new dexterity statistic.
 	 */
-	public void setDexterityStat(Integer dexterityStat) {
-		this.dexterityStat = dexterityStat;
+	public void setDexterityStatistic(Integer dexterityStatistic) {
+		this.dexterityStatistic = dexterityStatistic;
 	}
 
 	/**
@@ -630,17 +676,17 @@ public class SNPlayer extends Entity {
 	 * 
 	 * @return The players magic statistic.
 	 */
-	public Integer getMagicStat() {
-		return magicStat;
+	public Integer getMagicStatistic() {
+		return magicStatistic;
 	}
 
 	/**
 	 * Sets the players magic statistic.
 	 * 
-	 * @param strengthStat - The players new magic statistic.
+	 * @param strengthStatistic - The players new magic statistic.
 	 */
-	public void setMagicStat(Integer magicStat) {
-		this.magicStat = magicStat;
+	public void setMagicStatistic(Integer magicStatistic) {
+		this.magicStatistic = magicStatistic;
 	}
 
 	/**
@@ -732,9 +778,9 @@ public class SNPlayer extends Entity {
 				+ ", speed=" + speed + ", playerClass=" + playerClass
 				+ ", binding=" + binding + ", cooldowns=" + cooldowns
 				+ ", experience=" + experience + ", attributePoints="
-				+ attributePoints + ", strengthStat=" + strengthStat
-				+ ", resistanceStat=" + resistanceStat + ", dexterityStat="
-				+ dexterityStat + ", magicStat=" + magicStat + "]";
+				+ attributePoints + ", strengthStatistic=" + strengthStatistic
+				+ ", resistanceStatistic=" + resistanceStatistic + ", dexterityStatistic="
+				+ dexterityStatistic + ", magicStatistic=" + magicStatistic + "]";
 	}
 	
 	@Override

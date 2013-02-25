@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
-import com.TeamNovus.Supernaturals.Collections.Entity;
 import com.TeamNovus.Supernaturals.Entity.Effects.Effect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingEffect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingPeriodicEffect;
@@ -17,14 +16,20 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
-public class SNEntity extends Entity {
+public class SNEntity {
+	private int id;
 	private UUID uuid;
+	
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 	public SNEntity(LivingEntity e) {
 		uuid = e.getUniqueId();
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public UUID getUUID() {
 		return uuid;
 	}

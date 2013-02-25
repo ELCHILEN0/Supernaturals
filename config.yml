@@ -11,4 +11,6 @@ database:
     password: root
     database: elchilen0
   sqlite:
-    file: data.dat
+    file: data.sqlite
+  h2:
+    database: elchilen0

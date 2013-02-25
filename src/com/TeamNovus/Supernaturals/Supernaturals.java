@@ -1,9 +1,9 @@
 package com.TeamNovus.Supernaturals;
 
 import java.io.File;
+import java.util.Iterator;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.TeamNovus.Supernaturals.Commands.BaseCommandExecutor;
@@ -20,15 +20,15 @@ import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
-import com.TeamNovus.Supernaturals.Util.SizeOf;
+import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 
 public class Supernaturals extends JavaPlugin {
 	private static Supernaturals plugin = null;
-
+	
 	@Override
 	public void onEnable() {		
 		plugin = this;
-
+				
 		// Load Config:
 		if(!(new File(getDataFolder(), "config.yml").exists())) {
 			saveDefaultConfig();
@@ -66,12 +66,34 @@ public class Supernaturals extends JavaPlugin {
 			}
 		}, 10 * 20, 10 * 20);
 
-		// Regain Mana:
+		// Save Data:
 		getServer().getScheduler().runTaskTimer(this, new Runnable() {
 
 			@Override
 			public void run() {
 				StorageManager.getInstance().savePlayers();
+			}
+		}, 60 * 20, 60 * 20);
+		
+		// Lower Cooldowns:
+		getServer().getScheduler().runTaskTimer(this, new Runnable() {
+
+			@Override
+			public void run() {
+				for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
+					Iterator<Cooldown> iterator = p.getCooldowns().iterator();
+					while(iterator.hasNext()) {
+						Cooldown cooldown = iterator.next();
+						
+						cooldown.setRemainingTicks(cooldown.getRemainingTicks() - 1);
+						
+						if(cooldown.getRemainingTicks() <= 0) {
+							iterator.remove();
+							
+							// TODO: Power Refresh Event
+						}
+					}
+				}
 			}
 		}, 60 * 20, 60 * 20);
 
@@ -82,11 +104,7 @@ public class Supernaturals extends JavaPlugin {
 		CommandManager.registerClass(AdminCommands.class);
 
 		// Load all the players from the database.
-		StorageManager.getInstance().loadPlayers();	
-		
-		for(Plugin p : getServer().getPluginManager().getPlugins()) {
-			SizeOf.sizeOf(p);
-		}
+		StorageManager.getInstance().loadPlayers();			
 	}
 
 

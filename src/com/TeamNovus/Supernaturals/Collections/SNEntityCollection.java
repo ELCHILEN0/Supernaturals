@@ -6,7 +6,8 @@ import org.bukkit.entity.LivingEntity;
 
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 
-public class SNEntityCollection extends EntityCollection<SNEntity> {
+public class SNEntityCollection {
+	private LinkedHashSet<SNEntity> entities = new LinkedHashSet<SNEntity>();
 	
 	public SNEntity get(LivingEntity entity) {
 		for (SNEntity e : entities) {			
@@ -16,7 +17,6 @@ public class SNEntityCollection extends EntityCollection<SNEntity> {
 		}
 		
 		SNEntity e = new SNEntity(entity);
-		e.setId(getNextId());
 		entities.add(e);
 		return e;
 	}
@@ -26,7 +26,7 @@ public class SNEntityCollection extends EntityCollection<SNEntity> {
 	}
 	
 	public Boolean attached(SNEntity e) {
-		if (e.getId() == null || e.getUUID() == null)
+		if (e.getUUID() == null)
 			return false;
 		
 		return entities.contains(e);

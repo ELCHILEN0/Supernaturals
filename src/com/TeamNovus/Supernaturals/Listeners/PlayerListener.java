@@ -15,6 +15,7 @@ import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
+import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 
 public class PlayerListener implements Listener {
 	
@@ -74,12 +75,12 @@ public class PlayerListener implements Listener {
 			if (player.getSelectedPower() != null) {
 				Power power = player.getSelectedPower();
 				
-				if(player.getRemainingCooldown(power) > 0) {
-					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldown(power) / 1000 + ChatColor.RED + " seconds to cast this spell!");
+				if(player.getRemainingCooldownTicks(power) > 0) {
+					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTicks(power) * 20 + ChatColor.RED + " seconds to cast this spell!");
 				} else if (power.getRequired().has(player)) {
 					if (power.cast(player)) {
 						power.getConsume().consume(player);
-						player.setCooldown(power, System.currentTimeMillis());
+						player.setCooldown(new Cooldown(power, power.getCooldown()));
 					}
 				} else {
 					player.sendMessage(ChatColor.BLUE + "Requires:");
