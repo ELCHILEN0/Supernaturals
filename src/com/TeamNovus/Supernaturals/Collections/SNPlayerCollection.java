@@ -1,7 +1,6 @@
 package com.TeamNovus.Supernaturals.Collections;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 import org.bukkit.Bukkit;
@@ -11,25 +10,7 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class SNPlayerCollection {
-	private Integer currentId = 0;
 	private LinkedHashSet<SNPlayer> entities = new LinkedHashSet<SNPlayer>();
-
-	private Boolean isIdFree(Integer id) {
-		HashSet<Integer> ids = new HashSet<Integer>();
-		for (SNPlayer e : entities) {
-			ids.add(e.getId());
-		}
-
-		return !(ids.contains(id));
-	}
-
-	public Integer getNextId() {
-		while (!(isIdFree(currentId))) {
-			currentId++;
-		}
-
-		return currentId;
-	}
 	
 	public LinkedHashSet<SNPlayer> getAllPlayers() {
 		return entities;
@@ -97,7 +78,7 @@ public class SNPlayerCollection {
 		}
 		
 		SNPlayer e = new SNPlayer(p);
-		e.setId(getNextId());
+//		e.setId(getNextId());
 		entities.add(e);
 		return e;
 	}

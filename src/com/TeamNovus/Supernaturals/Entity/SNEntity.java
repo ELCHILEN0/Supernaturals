@@ -8,9 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
-import com.TeamNovus.Persistence.Annotations.Column;
-import com.TeamNovus.Persistence.Annotations.Key;
 import com.TeamNovus.Persistence.Annotations.Table;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
 import com.TeamNovus.Supernaturals.Entity.Effects.Effect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingEffect;
 import com.TeamNovus.Supernaturals.Entity.Effects.LastingPeriodicEffect;
@@ -21,7 +21,7 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
 @Table(name = "sn_entities")
 public class SNEntity {
-	@Key
+	@Id
 	@Column(name = "id")
 	private int id;
 	

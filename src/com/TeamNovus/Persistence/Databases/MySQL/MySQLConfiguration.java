@@ -1,6 +1,6 @@
 package com.TeamNovus.Persistence.Databases.MySQL;
 
-import com.TeamNovus.Persistence.Configuration;
+import com.TeamNovus.Persistence.Databases.Configuration;
 
 public class MySQLConfiguration extends Configuration {
 
@@ -8,9 +8,9 @@ public class MySQLConfiguration extends Configuration {
 		super("mysql");
 		setProperty("host", "localhost");
 		setProperty("port", "3306");
-		setProperty("database", "elchilen0");
-		setProperty("username", "root");
-		setProperty("password", "root");
+		setProperty("database", "database");
+		setProperty("username", "username");
+		setProperty("password", "password");
 	}
 	
 	public MySQLConfiguration setHost(String host) {

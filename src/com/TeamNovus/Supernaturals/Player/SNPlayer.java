@@ -11,16 +11,17 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 
-import com.TeamNovus.Persistence.Annotations.Column;
-import com.TeamNovus.Persistence.Annotations.Key;
 import com.TeamNovus.Persistence.Annotations.Table;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
+import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
+import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
-import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
@@ -29,7 +30,7 @@ import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 public class SNPlayer implements Serializable {
 	private static final long serialVersionUID = 1L;
 			
-	@Key
+	@Id
 	@Column(name = "id")
 	private Integer id;
 	
@@ -40,37 +41,40 @@ public class SNPlayer implements Serializable {
 	@Column(name = "mana")
 	private Integer mana;
 	
-	@Column(name = "maxMana")
+	@Column(name = "max_mana")
 	private Integer maxMana;
 	
 	@Column(name = "health")
 	private Integer health;
 	
-	@Column(name = "maxHealth")
+	@Column(name = "max_health")
 	private Integer maxHealth;
 	
-	@Column(name = "foodLevel")
+	@Column(name = "food_level")
 	private Integer foodLevel;
 	
-	@Column(name = "maxFoodLevel")
+	@Column(name = "max_food_level")
 	private Integer maxFoodLevel;
 	
 	@Column(name = "speed")
 	private Float speed;
 
 	// Class:
-	@Column(name = "class")
-	private String playerClass;
+	@Column(name = "player_class_name")
+	private String playerClassName;
 	
 	@Column(name = "binding")
 	private Integer binding;
 
 	// Powers:
-	private ArrayList<Cooldown> cooldowns = new ArrayList<Cooldown>();
+	@OneToMany
+	private List<Cooldown> cooldowns = new ArrayList<Cooldown>();
 	
 	// Leveling:
 	@Column(name = "experience")
 	private Integer experience;
+	
+	@Column(name = "attribute_points")
 	private Integer attributePoints;
 
 	// Statistics:
@@ -91,7 +95,7 @@ public class SNPlayer implements Serializable {
 		this.maxFoodLevel = 20;
 
 		// Class:
-		this.playerClass = SNClasses.i.getBaseClass().getName();
+		this.playerClassName = SNClasses.i.getBaseClass().getName();
 		this.binding = 0;
 
 		// Leveling:
@@ -103,11 +107,6 @@ public class SNPlayer implements Serializable {
 		this.resistanceStatistic = 0;
 		this.dexterityStatistic = 0;
 		this.magicStatistic = 0;			
-	}
-
-	public SNPlayer(String name) {
-		this();
-		this.name = name;
 	}
 	
 	public SNPlayer(Player p) { 
@@ -156,6 +155,10 @@ public class SNPlayer implements Serializable {
 	public Integer getMana() {
 		return mana;
 	}
+	
+	public void setMana(Integer mana) {
+		setMana(mana, false);
+	}
 
 	/**
 	 * Sets the players current mana.
@@ -201,8 +204,6 @@ public class SNPlayer implements Serializable {
 	 * @return The players current health.
 	 */
 	public Integer getHealth() {
-		updateServer();
-		
 		return health;
 	}
 
@@ -213,8 +214,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setHealth(Integer health) {
 		this.health = health;
-
-		updateHealth();
 	}
 
 	/**
@@ -233,8 +232,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setMaxHealth(Integer maxHealth) {
 		this.maxHealth = maxHealth;
-
-		updateHealth();
 	}
 
 	/**
@@ -242,7 +239,7 @@ public class SNPlayer implements Serializable {
 	 * 
 	 */
 	public void updateHealth() {		
-		if(maxHealth >= 20)
+		if(maxHealth <= 0)
 			maxHealth = 20;
 
 		if(health > maxHealth)
@@ -252,8 +249,10 @@ public class SNPlayer implements Serializable {
 			health = 0;
 
 		// This synchronizes the players health to their health bar.
-		if(isOnline())
-			getPlayer().setHealth((int) Math.ceil((health * 20)/maxHealth));
+		if(isOnline()) {
+			getPlayer().setMaxHealth(maxHealth);
+			getPlayer().setHealth(health);
+		}
 	}
 
 	/**
@@ -262,8 +261,6 @@ public class SNPlayer implements Serializable {
 	 * @return The players food level.
 	 */
 	public Integer getFoodLevel() {
-		updateServer();
-
 		return foodLevel;
 	}
 
@@ -274,8 +271,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setFoodLevel(Integer foodLevel) {
 		this.foodLevel = foodLevel;
-
-		updateFoodLevel();
 	}
 
 	/**
@@ -294,8 +289,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setMaxFoodLevel(Integer maxFoodLevel) {
 		this.maxFoodLevel = maxFoodLevel;
-
-		updateFoodLevel();
 	}
 
 	/**
@@ -322,9 +315,7 @@ public class SNPlayer implements Serializable {
 	 * 
 	 * @return The players speed.
 	 */
-	public Float getSpeed() {
-		updateServer();
-		
+	public Float getSpeed() {		
 		return speed;
 	}
 
@@ -335,8 +326,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setSpeed(Float speed) {
 		this.speed = speed;
-
-		updateSpeed();
 	}
 
 	/**
@@ -382,13 +371,21 @@ public class SNPlayer implements Serializable {
 	 * @return The players class.
 	 */
 	public SNClass getPlayerClass() {
-		return SNClasses.i.getExactClass(playerClass);
+		return SNClasses.i.getExactClass(playerClassName);
+	}
+	
+	public String getPlayerClassName() {
+		return playerClassName;
 	}
 
+	public void setPlayerClassName(String playerClassName) {
+		this.playerClassName = playerClassName;
+	}
+	
 	/**
 	 * Sets the players class.
 	 * 
-	 * @param playerClass - The new player class.
+	 * @param playerClassName - The new player class.
 	 * @param fire - Call the PlayerClassChangeEvent.
 	 */
 	public void setPlayerClass(SNClass playerClass, boolean fire) {
@@ -398,13 +395,13 @@ public class SNPlayer implements Serializable {
 			Bukkit.getPluginManager().callEvent(event);
 			
 			// Change the target class if modified.
-			playerClass = event.getTo();
+			playerClassName = event.getTo().getName();
 			
 			if(event.isCancelled())
 				return;
 		}
 
-		this.playerClass = playerClass.getName();
+		this.playerClassName = playerClass.getName();
 		
 		syncFields(fire);
 	}
@@ -441,8 +438,12 @@ public class SNPlayer implements Serializable {
 	 * 
 	 * @return The players power cooldowns.
 	 */
-	public ArrayList<Cooldown> getCooldowns() {
+	public List<Cooldown> getCooldowns() {		
 		return cooldowns;
+	}
+	
+	public void setCooldowns(ArrayList<Cooldown> cooldowns) {
+		this.cooldowns = cooldowns;
 	}
 	
 	public void setCooldown(Cooldown cooldown) {		
@@ -775,7 +776,7 @@ public class SNPlayer implements Serializable {
 		return "SNPlayer [name=" + name + ", mana=" + mana + ", maxMana="
 				+ maxMana + ", health=" + health + ", maxHealth=" + maxHealth
 				+ ", foodLevel=" + foodLevel + ", maxFoodLevel=" + maxFoodLevel
-				+ ", speed=" + speed + ", playerClass=" + playerClass
+				+ ", speed=" + speed + ", playerClassName=" + playerClassName
 				+ ", binding=" + binding + ", cooldowns=" + cooldowns
 				+ ", experience=" + experience + ", attributePoints="
 				+ attributePoints + ", strengthStatistic=" + strengthStatistic

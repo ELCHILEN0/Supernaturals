@@ -2,51 +2,51 @@ package com.TeamNovus.Persistence.Internal;
 
 import java.lang.reflect.Field;
 
-import com.TeamNovus.Persistence.Annotations.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
 
-public class ColumnRegistration {
-	private Column annotation;
-	private Field field;
+public class ColumnRegistration {	
+	private Field field = null;
+	private Column annotation = null;
 	
-	public ColumnRegistration(Column annotation, Field field) {
-		this.annotation = annotation;
+	public ColumnRegistration(Field field, Column annotation) {
 		this.field = field;
-	}
-	
-	public Column getAnnotation() {
-		return annotation;
+		this.annotation = annotation;
 	}
 	
 	public Field getField() {
 		return field;
 	}
 	
+	public Column getAnnotation() {
+		return annotation;
+	}
+	
 	public String getName() {
 		return annotation.name();
 	}
 	
-	public String getType() {
-		Class<?> type = field.getType();
-
-		if(type.equals(Integer.class) || type.equals(int.class)) {
-			return "INT";
-		} else if (type.equals(Long.class) || type.equals(long.class)) {
-			return "BIGINT";
-		} else if (type.equals(Double.class) || type.equals(double.class)) {
-			return "DOUBLE";
-		} else if (type.equals(String.class)) {
-			return "TEXT";
-		} else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
-			return "TINYINT";
-		} else if (type.equals(Short.class) || type.equals(short.class)) {
-			return "SMALLINT";
-		} else if (type.equals(Float.class) || type.equals(float.class)) {
-			return "FLOAT";
-		} else if (type.equals(Byte.class) || type.equals(byte.class)) {
-			return "TINYINT";
-		}
+	public boolean isUnique() {
+		return annotation.unique();
+	}
+	
+	public boolean isNotNull() {
+		return annotation.notNull();
+	}
+	
+	public Object getValue(Object o) throws IllegalArgumentException, IllegalAccessException {
+		field.setAccessible(true);
 		
-		return null;
+		return field.get(o);
+	}
+	
+	public void setValue(Object o, Object value) throws IllegalArgumentException, IllegalAccessException {
+		field.setAccessible(true);
+		
+		field.set(o, value);
+	}
+	
+	public Class<?> getType()  {
+		return field.getType();
 	}
 
 }

@@ -1,23 +1,21 @@
 package com.TeamNovus.Persistence.Databases.SQLite;
 
-import com.TeamNovus.Persistence.Configuration;
+import com.TeamNovus.Persistence.Databases.Configuration;
 
 public class SQLiteConfiguration extends Configuration {
 
 	public SQLiteConfiguration() {
-		super("mysql");
-		setProperty("path", "sqlite.db");
+		super("sqlite");
+		setProperty("file", "data.db");
 	}
 	
-	public SQLiteConfiguration setPath(String path) {
-		setProperty("path", path);
+	public SQLiteConfiguration setFilePath(String filePath) {
+		setProperty("file", filePath);
 		
 		return this;
 	}
 	
-	public String getPath() {
-		return getProperty("path");
+	public String getFilePath() {
+		return getProperty("file");
 	}
-
-	
 }

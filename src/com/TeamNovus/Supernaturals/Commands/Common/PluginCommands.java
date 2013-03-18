@@ -76,6 +76,7 @@ public class PluginCommands {
 		if(args.length == 1 && Permission.has(Permission.COMMAND_INFO, sender)) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+				return;
 			}
 
 			SNPlayer player = SNPlayers.i.get((Player) sender);
@@ -192,6 +193,7 @@ public class PluginCommands {
 
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+			return;
 		}
 
 		SNPlayer player = SNPlayers.i.get((Player) sender);
@@ -208,6 +210,7 @@ public class PluginCommands {
 
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+			return;
 		}
 
 		SNPlayer player = SNPlayers.i.get((Player) sender);

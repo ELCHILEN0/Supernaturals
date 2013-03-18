@@ -1,7 +1,6 @@
 package com.TeamNovus.Supernaturals;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,15 +11,16 @@ import com.TeamNovus.Supernaturals.Commands.Common.AdminCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.DefaultCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.PluginCommands;
 import com.TeamNovus.Supernaturals.Database.StorageManager;
-import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
-import com.TeamNovus.Supernaturals.Player.SNPlayer;
-import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
+import com.TeamNovus.Supernaturals.Tasks.CooldownTask;
+import com.TeamNovus.Supernaturals.Tasks.EntityTickTask;
+import com.TeamNovus.Supernaturals.Tasks.ManaRegainTask;
+import com.TeamNovus.Supernaturals.Tasks.SaveTask;
 
 public class Supernaturals extends JavaPlugin {
 	private static Supernaturals plugin = null;
@@ -44,59 +44,13 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ExperienceListener(), this);
 
-		// Tick all Entities:
-		getServer().getScheduler().runTaskTimer(this, new Runnable() {
+		// Schedule Tasks:
+		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);
+		Bukkit.getScheduler().runTaskTimer(this, new CooldownTask(), 1, 1);
+		Bukkit.getScheduler().runTaskTimer(this, new ManaRegainTask(), 20 * 10, 20 * 10);
+		Bukkit.getScheduler().runTaskTimer(this, new SaveTask(), 20 * 10, 20 * 10);
 
-			@Override
-			public void run() {
-				for(SNEntity e : SNEntities.i.getEntites()) {
-					e.tick();
-				}				
-			}
-		}, 1, 1);
-
-		// Regain Mana:
-		getServer().getScheduler().runTaskTimer(this, new Runnable() {
-
-			@Override
-			public void run() {
-				for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
-					p.setMana(p.getMana() + 10, true);
-				}
-			}
-		}, 10 * 20, 10 * 20);
-
-		// Save Data:
-		getServer().getScheduler().runTaskTimer(this, new Runnable() {
-
-			@Override
-			public void run() {
-				StorageManager.getInstance().savePlayers();
-			}
-		}, 60 * 20, 60 * 20);
-		
-		// Lower Cooldowns:
-		getServer().getScheduler().runTaskTimer(this, new Runnable() {
-
-			@Override
-			public void run() {
-				for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
-					Iterator<Cooldown> iterator = p.getCooldowns().iterator();
-					while(iterator.hasNext()) {
-						Cooldown cooldown = iterator.next();
-						
-						cooldown.setRemainingTicks(cooldown.getRemainingTicks() - 1);
-						
-						if(cooldown.getRemainingTicks() <= 0) {
-							iterator.remove();
-							
-							// TODO: Power Refresh Event
-						}
-					}
-				}
-			}
-		}, 60 * 20, 60 * 20);
-
+		// Commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
 
 		CommandManager.registerClass(DefaultCommands.class);
@@ -108,13 +62,14 @@ public class Supernaturals extends JavaPlugin {
 		StorageManager.getInstance().loadEntities();			
 	}
 
-
 	@Override
 	public void onDisable() {
 
 		// Save all the data to the database.
 		StorageManager.getInstance().savePlayers();
 		StorageManager.getInstance().saveEntities();
+		
+		plugin = null;
 	}
 
 	public static Supernaturals getPlugin() {

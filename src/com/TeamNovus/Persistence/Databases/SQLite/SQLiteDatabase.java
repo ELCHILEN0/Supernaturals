@@ -1,378 +1,690 @@
 package com.TeamNovus.Persistence.Databases.SQLite;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 
-import com.TeamNovus.Persistence.Database;
+import com.TeamNovus.Persistence.Annotations.Relationships.CascadeType;
+import com.TeamNovus.Persistence.Databases.Database;
 import com.TeamNovus.Persistence.Internal.ColumnRegistration;
+import com.TeamNovus.Persistence.Internal.SubTableRegistration;
 import com.TeamNovus.Persistence.Internal.TableRegistration;
 
 public class SQLiteDatabase extends Database {
 	private SQLiteConfiguration configuration;
-	
-	// The connection object.
 	private Connection connection;
-	
+
 	public SQLiteDatabase(SQLiteConfiguration configuration) {
 		this.configuration = configuration;
 	}
-	
+
 	@Override
 	public void connect() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-			
-			String url = String.format("jdbc:sqlite:%s", 
-											configuration.getPath());
+		super.connect();
 
-			connection = DriverManager.getConnection(url);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		try {
+			String url = String.format("jdbc:sqlite:%s", configuration.getFilePath());
+
+			connection = DriverManager.getConnection(url);				
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-	
 	}
-	
+
 	@Override
 	public void disconnect() {
+		super.disconnect();
+
 		try {
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public String convertToType(ColumnRegistration column) {
+		if(column.getType().equals(Integer.class) || column.getType().equals(int.class)) {
+			return "INTEGER";
+		} else if(column.getType().equals(String.class)) {
+			return "LONG VARCHAR";
+		} else if(column.getType().equals(Long.class) || column.getType().equals(long.class)) {
+			return "BIGINT";
+		} else if(column.getType().equals(Double.class) || column.getType().equals(double.class)) {
+			return "DOUBLE";
+		} else if(column.getType().equals(Float.class) || column.getType().equals(float.class)) {
+			return "FLOAT";
+		} else if(column.getType().equals(Boolean.class) || column.getType().equals(boolean.class)) {
+			return "BOOLEAN";
+		} else if(column.getType().equals(Date.class)) {
+			return "DATE";
+		}
+
+		return "";
+	}
+
 	@Override
-	public <T> boolean exists(Class<T> objectClass, Object key) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
+	public void createStructure(Class<?> objectClass) {
+		if(isDisconnected()) {
+			connect();
+		}
+
 		try {
-			// Build the query.
-			String query = String.format("SELECT COUNT(*) FROM %s WHERE %s = ?", 
-											table.getName(), 
-											table.getKey().getName());
-			
-			// Prepare and execute.
-			PreparedStatement statement = connection.prepareStatement(query);
-			
-			statement.setObject(1, key);
-						
-			ResultSet result = statement.executeQuery();
-			
-			while(result.next()) {
-				return result.getInt(1) >= 1;
+			TableRegistration table = getTableRegistration(objectClass);
+
+			String query = String.format("CREATE TABLE IF NOT EXISTS %s (", table.getName());
+
+			for (int i = 0; i < table.getColumns().size(); i++) {
+				ColumnRegistration column = table.getColumns().get(i);
+
+				// Build the column parameters:
+				String type = " " + convertToType(column);
+				String notNull = column.isNotNull() ? " NOT NULL" : "";
+				String unique =  column.isUnique() ? " UNIQUE" : "";
+				String autoIncrement = (table.getId().getName().equals(column.getName()) ? " PRIMARY KEY AUTOINCREMENT" : "");
+
+				if(i == 0) {
+					query += column.getName() + type + notNull + unique + autoIncrement;
+				} else {
+					query += ", " + column.getName() + type + notNull + unique + autoIncrement;
+				}				
 			}
-			
-			result.close();
+
+			query += ")";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			statement.execute();
 			statement.close();
-		} catch (SQLException e) {
+
+			for(SubTableRegistration subTable : table.getSubTables()) {
+				createStructure(subTable.getTableClass());
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return false;
 	}
-	
+
 	@Override
-	public <T> void save(Class<T> objectClass, T object) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
-		LinkedList<Object> arguments = new LinkedList<Object>();
-		
+	public void updateStructure(Class<?> objectClass) {
+		if(isDisconnected()) {
+			connect();
+		}
+
 		try {
-			table.getKey().getField().setAccessible(true);
-			if(exists(objectClass, table.getKey().getField().get(object).toString())) {				
-				// Build the query.
-				String query = String.format("UPDATE %s SET ", table.getName());
-				
-				for (int i = 0; i < table.getColumns().size(); i++) {	
-					ColumnRegistration column = table.getColumns().get(i);
-					
-					if(i == 0) {
-						query += String.format(" %s = ?", column.getName());
-					} else {
-						query += String.format(", %s = ?", column.getName());
-					}
-								
-					column.getField().setAccessible(true);
-					arguments.add(column.getField().get(object));
-				}
-				
-				query += String.format(" WHERE %s = ?", table.getKey().getName());
-				
-				table.getKey().getField().setAccessible(true);
-				arguments.add(table.getKey().getField().get(object));
+			TableRegistration table = getTableRegistration(objectClass);
+
+			String query = String.format("SELECT * FROM %s LIMIT 1", table.getName());
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSetMetaData meta = statement.executeQuery().getMetaData();
 			
-				// Prepare and execute.
-				PreparedStatement statement = connection.prepareStatement(query);
-				
-				for (int i = 0; i < arguments.size(); i++) {
-					statement.setObject(i + 1, arguments.get(i));
+			LinkedList<ColumnRegistration> toChange = new LinkedList<ColumnRegistration>();
+			LinkedList<ColumnRegistration> toAdd = new LinkedList<ColumnRegistration>();
+
+			for(ColumnRegistration column : table.getColumns()) {
+				boolean found = false;
+
+				for (int i = 1; i <= meta.getColumnCount(); i++) {
+					if(column.getName().equals(meta.getColumnName(i))) {
+						found = true;
+
+						if(!(convertToType(column).equals(meta.getColumnTypeName(i)))) {
+							toChange.add(column);
+
+							break;
+						}						
+					}
 				}
-				
-				statement.execute();
+
+				if(!(found)) {
+					toAdd.add(column);
+				}
+			}
+			
+			statement.close();
+
+//			for(ColumnRegistration column : toChange) {
+//				String type = " " + convertToType(column);
+//				String notNull = column.isNotNull() ? " NOT NULL" : "";
+//				String unique =  column.isUnique() ? " UNIQUE" : "";
+//				String autoIncrement = (table.getId().equals(column) ? " AUTO_INCREMENT" : "");
+//
+//				String modify = String.format("ALTER TABLE %s MODIFY COLUMN %s" + type + notNull + unique + autoIncrement, table.getName(), column.getName());
+//				
+//				System.out.println(modify);
+//
+//				PreparedStatement modifyStatement = connection.prepareStatement(modify);
+//				
+//				modifyStatement.execute();
+//				modifyStatement.close();
+//			}
+
+			for(ColumnRegistration column : toAdd) {
+				String type = " " + convertToType(column);
+				String notNull = column.isNotNull() ? " NOT NULL" : "";
+				String unique =  column.isUnique() ? " UNIQUE" : "";
+				String autoIncrement = (table.getId().equals(column) ? " AUTO_INCREMENT" : "");
+
+				String add = String.format("ALTER TABLE %s ADD COLUMN %s" + type + notNull + unique + autoIncrement, table.getName(), column.getName());
+
+				PreparedStatement addStatement = connection.prepareStatement(add);
+
+				addStatement.execute();
+				addStatement.close();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public <T> T find(Class<T> objectClass, Integer id) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(objectClass);
+
+			String query = String.format("SELECT * FROM %s WHERE %s = ?", table.getName(), table.getId().getName());
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+
+			ResultSet result = statement.executeQuery();
+
+			while(result.next()) {
+				T object = objectClass.newInstance(); 
+
+				for(ColumnRegistration column : table.getColumns()) {
+					column.setValue(object, result.getObject(column.getName()));
+				}
+
+				result.close();
 				statement.close();
-			} else {
-				// Build the query.
+
+				loadRelationshipObjects(object);
+
+				return object;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public <T> List<T> findBy(Class<T> objectClass, String condition, Object... params) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		LinkedList<T> entries = new LinkedList<T>();
+
+		try {
+			TableRegistration table = getTableRegistration(objectClass);
+
+			String query = String.format("SELECT * FROM %s", table.getName(), table.getId().getName());
+
+			// Append the condition:
+			if(condition != "" || condition != null) {
+				query += " WHERE " + condition;
+			}
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			for (int i = 0; i < params.length; i++) {
+				statement.setObject(i + 1, params[i]);
+			}
+
+			ResultSet result = statement.executeQuery();
+
+			// Build the objects:
+			while(result.next()) {
+				T object = objectClass.newInstance(); 
+
+				for(ColumnRegistration column : table.getColumns()) {
+					column.setValue(object, result.getObject(column.getName()));
+				}
+
+				loadRelationshipObjects(object);
+
+				entries.add(object);
+			}
+
+			result.close();
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return entries;
+	}
+
+	@Override
+	public void save(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			if(table.getId().getValue(object) == null) {
+				LinkedList<Object> arguments = new LinkedList<Object>();
 				String query = String.format("INSERT INTO %s (", table.getName());
-				
+
 				for (int i = 0; i < table.getColumns().size(); i++) {		
 					ColumnRegistration column = table.getColumns().get(i);
-					
+
 					if(i == 0) {
 						query += String.format("%s", column.getName());
 					} else {
 						query += String.format(", %s", column.getName());
 					}					
 				}
-				
-				query += String.format(")");
-				
-				query += String.format(" VALUES (");
-				
+
+				query += ") VALUES (";
+
 				for (int i = 0; i < table.getColumns().size(); i++) {		
 					ColumnRegistration column = table.getColumns().get(i);
-					
+
 					if(i == 0) {
-						query += String.format("?");
+						query += "?";
 					} else {
-						query += String.format(", ?");
+						query += ", ?";
 					}
-					
-					column.getField().setAccessible(true);
-					arguments.add(column.getField().get(object).toString());
+
+					arguments.add(column.getValue(object));
 				}
-				
+
 				query += String.format(")");
-				
+
 				// Prepare and execute.
-				PreparedStatement statement = connection.prepareStatement(query);
-				
+				PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
 				for (int i = 0; i < arguments.size(); i++) {
 					statement.setObject(i + 1, arguments.get(i));
 				}
-								
+
 				statement.execute();
+
+				ResultSet result = statement.getGeneratedKeys();
+
+				if (result.next()){
+					table.getId().setValue(object, result.getInt(1));
+				}
+
+				result.close();
+				statement.close();
+			} else {
+				LinkedList<Object> arguments = new LinkedList<Object>();
+				String query = String.format("UPDATE %s SET ", table.getName());
+
+				for (int i = 0; i < table.getColumns().size(); i++) {	
+					ColumnRegistration column = table.getColumns().get(i);
+
+					if(i == 0) {
+						query += String.format(" %s = ?", column.getName());
+					} else {
+						query += String.format(", %s = ?", column.getName());
+					}
+
+					arguments.add(column.getValue(object));
+				}
+
+				query += String.format(" WHERE %s = ?", table.getId().getName());
+
+				arguments.add(table.getId().getValue(object));
+
+				// Prepare and execute.
+				PreparedStatement statement = connection.prepareStatement(query);
+
+				for (int i = 0; i < arguments.size(); i++) {
+					statement.setObject(i + 1, arguments.get(i));
+				}
+
+				statement.execute();
+
 				statement.close();
 			}
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
-	@Override
-	public <T> void saveAll(Class<T> objectClass, Iterable<T> objects) {
-		Iterator<T> iterator = objects.iterator();
-		
-		while(iterator.hasNext()) {
-			save(objectClass, iterator.next());
+			saveRelationshipObjects(object);
+			dropRemovedObjects(object);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public <T> T findOne(Class<T> objectClass, Object key) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
+	public void drop(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
 		try {
-			String query = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1", table.getName(), table.getKey().getName());
-			
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			String query = String.format("DELETE FROM %s WHERE %s = ?", table.getName(), table.getId().getName());
+
 			PreparedStatement statement = connection.prepareStatement(query);
-			
-			statement.setObject(1, key);
-			
+
+			statement.setObject(1, table.getId().getValue(object));
+
+			statement.execute();
+			statement.close();
+
+			dropRelationshipObjects(object);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public <T> List<T> findAll(Class<T> objectClass) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(objectClass);
+
+			LinkedList<T> entries = new LinkedList<T>();
+			String query = String.format("SELECT * FROM %s", table.getName());
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
 			ResultSet result = statement.executeQuery();
-			
+
+			// Iterate through the results and build the objects.
 			while(result.next()) {
 				T object = objectClass.newInstance();
-				
+
 				for(ColumnRegistration column : table.getColumns()) {
-					column.getField().setAccessible(true);
-					column.getField().set(object, result.getObject(column.getName()));
+					column.setValue(object, result.getObject(column.getName()));
 				}
-				
-				return object;
+
+				// Cascade Load:
+				loadRelationshipObjects(object);
+
+				entries.add(object);
 			}
-			
+
 			result.close();
 			statement.close();
-		} catch (SQLException e) {
+
+			return entries;
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (InstantiationException e) {
+		}
+
+		return new LinkedList<T>();
+	}
+
+	@Override
+	public void saveAll(List<?> objects) {
+		Iterator<?> iterator = objects.iterator();
+
+		while(iterator.hasNext()) {
+			save(iterator.next());
+		}
+	}
+
+	@Override
+	public void dropAll(List<?> objects) {
+		Iterator<?> iterator = objects.iterator();
+
+		while(iterator.hasNext()) {
+			drop(iterator.next());
+		}
+	}
+
+	@Override
+	public void loadRelationshipObjects(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			for(SubTableRegistration subTable : table.getSubTables()) {
+				if(subTable.getCascadeType().equals(CascadeType.NONE)) {
+					continue;
+				}
+				
+				switch (subTable.getRelationshipType()) {
+				case ONE_TO_ONE:
+					subTable.getParentField().setAccessible(true);
+
+					Object data = null;
+
+					try {
+						data = findBy(subTable.getTableClass(), subTable.getForeignKey().getName() + " = ?", (Integer) table.getId().getValue(object)).get(0);
+					} catch(IndexOutOfBoundsException ignored) { }
+
+					if(data != null)
+						subTable.getParentField().set(object, data);
+					break;
+
+				case ONE_TO_MANY:
+					subTable.getParentField().setAccessible(true);
+
+					List<?> children = findBy(subTable.getTableClass(), subTable.getForeignKey().getName() + " = ?", table.getId().getValue(object));
+
+					if(!(children.equals(null)))
+						subTable.getParentField().set(object, children);
+					break;
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		}
+	}
+
+	@Override
+	public void saveRelationshipObjects(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			for(SubTableRegistration subTable : table.getSubTables()) {
+				if(subTable.getCascadeType().equals(CascadeType.NONE)) {
+					continue;
+				}
+				
+				// Prepare the child for saving.
+				Object child = null;
+
+				// Prepare the field.
+				subTable.getParentField().setAccessible(true);
+
+				// Determine what type of relationship to save.
+				switch (subTable.getRelationshipType()) {
+				case ONE_TO_ONE:
+					child = subTable.getParentField().get(object);
+
+					// Update the child's foreign key
+					subTable.getForeignKey().setValue(child, table.getId().getValue(object));
+
+					save(child);
+					break;
+
+				case ONE_TO_MANY:
+					List<?> children = (List<?>) subTable.getParentField().get(object);
+
+					Iterator<?> iterator = children.iterator();
+
+					while(iterator.hasNext()) {
+						child = iterator.next();
+
+						// Update the child's foreign key
+						subTable.getForeignKey().setValue(child, table.getId().getValue(object));
+
+						save(child);
+					}
+					break;
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-		
+		}
+	}
+
+	@Override
+	public void dropRelationshipObjects(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			for(SubTableRegistration subTable : table.getSubTables()) {
+				if(subTable.getCascadeType().equals(CascadeType.NONE)) {
+					continue;
+				}
+				
+				// Prepare the child for saving.
+				Object child = null;
+
+				// Prepare the field.
+				subTable.getParentField().setAccessible(true);
+
+				// Determine what type of relationship to save.
+				switch (subTable.getRelationshipType()) {
+				case ONE_TO_ONE:
+					child = subTable.getParentField().get(object);
+
+					// Update the child's foreign key
+					subTable.getForeignKey().setValue(child, table.getId().getValue(object));
+
+					drop(child);				
+					break;
+
+				case ONE_TO_MANY:
+					List<?> children = (List<?>) subTable.getParentField().get(object);
+
+					Iterator<?> iterator = children.iterator();
+
+					while(iterator.hasNext()) {
+						child = iterator.next();
+
+						// Update the child's foreign key
+						subTable.getForeignKey().setValue(child, table.getId().getValue(object));
+
+						drop(child);
+					}
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void dropRemovedObjects(Object object) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			TableRegistration table = getTableRegistration(object.getClass());
+
+			for(SubTableRegistration subTable : table.getSubTables()) {
+				if(subTable.getCascadeType().equals(CascadeType.NONE)) {
+					continue;
+				}
+				
+				switch (subTable.getRelationshipType()) {
+				case ONE_TO_ONE:
+					subTable.getParentField().setAccessible(true);
+
+					// Load the stored data:
+					Object storedData = null;
+
+					try {
+						storedData = findBy(subTable.getTableClass(), subTable.getForeignKey().getName() + " = ?", (Integer) table.getId().getValue(object)).get(0);
+					} catch(IndexOutOfBoundsException ignored) { }
+
+					// Load the current object data:
+					Object currentData = null;
+
+					try {
+						currentData = subTable.getParentField().get(object);
+					} catch (Exception e) { }
+
+					// Check if the insertion id's are the same:
+					if(storedData != null && currentData != null && !(subTable.getId().getValue(currentData).equals(subTable.getId().getValue(storedData)))) {
+						drop(storedData);
+					}
+					break;
+
+				case ONE_TO_MANY:
+					subTable.getParentField().setAccessible(true);
+
+					List<?> storedChildren = findBy(subTable.getTableClass(), subTable.getForeignKey().getName() + " = ?", table.getId().getValue(object));
+					List<?> currentChildren = (List<?>) subTable.getParentField().get(object);
+
+					List<Object> toRemove = new ArrayList<Object>();
+
+					for(Object storedObject : storedChildren) {
+						boolean remove = true;
+
+						for(Object currentObject : currentChildren) {
+							if(subTable.getId().getValue(currentObject).equals(subTable.getId().getValue(storedObject))) {
+								remove = false;
+								break;
+							}
+						}
+
+						if(remove)
+							toRemove.add(storedObject);
+					}
+
+					for(Object o : toRemove) {
+						drop(o);
+					}
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+
+	@Override
+	public ResultSet execute(String query, Object... params) {
+		if(isDisconnected()) {
+			connect();
+		}
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			for (int i = 0; i < params.length; i++) {
+				statement.setObject(i + 1, params[i]);
+			}
+			
+			return statement.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
-
-	@Override
-	public <T> LinkedList<T> findAll(Class<T> objectClass) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
-		LinkedList<T> objects = new LinkedList<T>();
-		
-		try {
-			String query = String.format("SELECT * FROM %s", table.getName());
-			
-			PreparedStatement statement = connection.prepareStatement(query);
-						
-			ResultSet result = statement.executeQuery();
-			
-			while(result.next()) {
-				T object = objectClass.newInstance();
-				
-				for(ColumnRegistration column : table.getColumns()) {
-					column.getField().setAccessible(true);
-					column.getField().set(object, result.getObject(column.getName()));
-				}
-				
-				objects.add(object);
-			}
-			
-			result.close();
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}		
-		
-		return objects;
-	}
-
-	@Override
-	public <T> void drop(Class<T> objectClass, Object key) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
-		try {
-			if(exists(objectClass, key)) {
-				String query = String.format("DELETE FROM %s WHERE %s = ?", table.getName(), table.getKey().getName());
-				
-				PreparedStatement statement = connection.prepareStatement(query);
-				
-				statement.setObject(1, key);
-							
-				statement.execute();
-				statement.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public <T> void dropAll(Class<T> objectClass, Iterable<T> objects) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
-		Iterator<T> iterator = objects.iterator();
-		
-		while(iterator.hasNext()) {
-			try {
-				table.getKey().getField().setAccessible(true);
-				drop(objectClass, table.getKey().getField().get(iterator.next()));
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public <T> void updateStructure(Class<T> objectClass) {
-		TableRegistration table = getTableRegistration(objectClass);
-		
-		try {
-			// Create the table if it does not exist.
-			String createStructureQuery = String.format("CREATE TABLE IF NOT EXISTS %s (", table.getName());
-			
-			for (int i = 0; i < table.getColumns().size(); i++) {	
-				ColumnRegistration column = table.getColumns().get(i);
-				
-				if(i == 0) {
-					createStructureQuery += String.format("%s %s", column.getName(), column.getType());
-				} else {
-					createStructureQuery += String.format(", %s %s", column.getName(), column.getType());
-				}									
-			}
-			
-			createStructureQuery += String.format(")");
-			
-			// Prepare and Execute.
-			PreparedStatement createStructureStatement = connection.prepareStatement(createStructureQuery);
-						
-			createStructureStatement.executeUpdate();
-			createStructureStatement.close();
-			
-			// Check the structure of the table and alter as necessary.
-			String checkStructureQuery = String.format("SELECT * FROM %s LIMIT 1", table.getName());
-			
-			PreparedStatement checkStructureStatement = connection.prepareStatement(checkStructureQuery);
-			ResultSetMetaData meta = checkStructureStatement.executeQuery().getMetaData();
-			checkStructureStatement.close();
-			
-			LinkedHashMap<String, String> toAdd = new LinkedHashMap<String, String>();
-			LinkedHashMap<String, String> toModify = new LinkedHashMap<String, String>();
-			for(ColumnRegistration column : table.getColumns()) {
-				boolean found = false;
-				for (int i = 1; i <= meta.getColumnCount(); i++) {
-					if(column.getName().equals(meta.getColumnName(i))) {
-						found = true;
-						
-						String type = meta.getColumnTypeName(i);
-						
-						if (!(column.getType().equals(type))){
-							toModify.put(column.getName(), column.getType());
-						}
-						
-						break;
-					}
-				}
-				
-				if(!(found)) {
-					toAdd.put(column.getName(), column.getType());
-				}
-			}
-			
-			String alterStructureQuery = String.format("ALTER TABLE %s ", table.getName());
-			
-			for(String columnName : toAdd.keySet()) {
-				alterStructureQuery += String.format("ADD COLUMN %s %s, ", columnName, toAdd.get(columnName));
-			}
-			
-			for(String columnName : toModify.keySet()) {
-				alterStructureQuery += String.format("MODIFY COLUMN %s %s, ", columnName, toModify.get(columnName));
-			}
-			
-			if(toAdd.size() > 0 || toModify.size() > 0) {
-				alterStructureQuery = alterStructureQuery.substring(0, alterStructureQuery.length() - 2);
-			}
-			
-			PreparedStatement alterStructureStatement = connection.prepareStatement(alterStructureQuery);
-						
-			alterStructureStatement.executeUpdate();
-			alterStructureStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-			
-	}
-
 }

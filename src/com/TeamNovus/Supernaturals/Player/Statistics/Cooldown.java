@@ -2,23 +2,48 @@ package com.TeamNovus.Supernaturals.Player.Statistics;
 
 import java.io.Serializable;
 
+import com.TeamNovus.Persistence.Annotations.Table;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.ForeignKey;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
+@Table(name = "sn_player_cooldowns")
 public class Cooldown implements Serializable {
 	private static final long serialVersionUID = 1L;
-		
+	
+	@Id
+	@Column(name = "id")
+	private Integer id;
+	
+	@ForeignKey
+	@Column(name = "player_id")
+	private Integer playerId;
+	
+	@Column(name = "power")
 	private String power;
 	
-	private int remainingTicks;
+	@Column(name = "remaining_ticks")
+	private Integer remainingTicks;
 	
-	public Cooldown(String power, int remainingTicks) {
+	public Cooldown() { }
+	
+	public Cooldown(String power, Integer remainingTicks) {
 		this.power = power;
 		this.remainingTicks = remainingTicks;
 	}
 	
-	public Cooldown(Power power, int remainingTicks) {
+	public Cooldown(Power power, Integer remainingTicks) {
 		this.power = power.getName();
 		this.remainingTicks = remainingTicks;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	public String getPower() {
@@ -29,11 +54,11 @@ public class Cooldown implements Serializable {
 		this.power = power;
 	}
 	
-	public int getRemainingTicks() {
+	public Integer getRemainingTicks() {
 		return remainingTicks;
 	}
 	
-	public void setRemainingTicks(int remainingTicks) {
+	public void setRemainingTicks(Integer remainingTicks) {
 		this.remainingTicks = remainingTicks;
 	}
 

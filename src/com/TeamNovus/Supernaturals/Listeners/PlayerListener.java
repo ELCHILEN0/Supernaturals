@@ -76,7 +76,7 @@ public class PlayerListener implements Listener {
 				Power power = player.getSelectedPower();
 				
 				if(player.getRemainingCooldownTicks(power) > 0) {
-					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTicks(power) * 20 + ChatColor.RED + " seconds to cast this spell!");
+					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTicks(power) / 20.0 + ChatColor.RED + " seconds to cast this spell!");
 				} else if (power.getRequired().has(player)) {
 					if (power.cast(player)) {
 						power.getConsume().consume(player);
