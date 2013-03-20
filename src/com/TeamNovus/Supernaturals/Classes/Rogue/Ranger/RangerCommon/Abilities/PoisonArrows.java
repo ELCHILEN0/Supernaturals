@@ -24,7 +24,7 @@ public class PoisonArrows extends Ability {
 	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event) {
 		if(new Random().nextInt(101) <= chance) {
 			if(event.getDamaged() instanceof LivingEntity) {
-				((LivingEntity) event.getDamaged()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, duration, amplifier));
+				((LivingEntity) event.getDamaged()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, duration, getAmplifier()));
 
 				if(event.getEntity() instanceof Player) {
 					((Player) event.getEntity()).sendMessage(ChatColor.ITALIC + "" + ChatColor.GREEN + "Enemy Poisioned!");

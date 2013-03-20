@@ -89,8 +89,8 @@ public abstract class Database {
 	
 	// Advanced Object Manipulation
 	public abstract <T> List<T> findAll(Class<T> objectClass);
-	public abstract void saveAll(List<?> objects);
-	public abstract void dropAll(List<?> objects);
+	public abstract void saveAll(Iterable<?> objects);
+	public abstract void dropAll(Iterable<?> objects);
 	
 	// Relationship Object Manipulation
 	public abstract void loadRelationshipObjects(Object object);
@@ -101,4 +101,7 @@ public abstract class Database {
 	// Custom Queries:
 	public abstract ResultSet execute(String query, Object... params);
 
+	// Transaction:
+	public abstract void beginTransaction();
+	public abstract void endTransaction();
 }

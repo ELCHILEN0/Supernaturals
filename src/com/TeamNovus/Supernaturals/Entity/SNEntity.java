@@ -11,10 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Persistence.Annotations.Columns.Column;
 import com.TeamNovus.Persistence.Annotations.Columns.Id;
-import com.TeamNovus.Supernaturals.Entity.Effects.Effect;
-import com.TeamNovus.Supernaturals.Entity.Effects.LastingEffect;
-import com.TeamNovus.Supernaturals.Entity.Effects.LastingPeriodicEffect;
-import com.TeamNovus.Supernaturals.Entity.Effects.PeriodicEffect;
+import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
@@ -28,6 +25,7 @@ public class SNEntity {
 	@Column(name = "uuid")
 	private String uuid;
 	
+	@OneToMany
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 	public SNEntity(LivingEntity e) {
@@ -100,32 +98,20 @@ public class SNEntity {
 		while (effectIterator.hasNext()) {
 			Effect effect = effectIterator.next();
 			
-			if (effect instanceof LastingEffect) {
-				LastingEffect lastingEffect = (LastingEffect) effect;
-				
-				if (lastingEffect.getElapsed() == 0) {
-					Bukkit.getPluginManager().callEvent(new EntityEffectBeginEvent(getEntity(), lastingEffect));
+			if (effect.isLasting()) {		
+				if (effect.getElapsed() == 0) {
+					Bukkit.getPluginManager().callEvent(new EntityEffectBeginEvent(getEntity(), effect));
 				}
 
-				if (lastingEffect.getElapsed() >= lastingEffect.getDuration()) {
+				if (effect.isComplete()) {
 					effectIterator.remove();
-					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), lastingEffect));
+					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), effect));
 				}				
 			}
 			
-			if (effect instanceof PeriodicEffect) {
-				PeriodicEffect periodicEffect = (PeriodicEffect) effect;
-				
-				if (periodicEffect.getElapsed() % periodicEffect.getPeriod() == 0) {
-					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), periodicEffect));
-				}
-			}
-			
-			if (effect instanceof LastingPeriodicEffect) {
-				LastingPeriodicEffect lastingPeriodicEffect = (LastingPeriodicEffect) effect;
-				
-				if (lastingPeriodicEffect.getElapsed() % lastingPeriodicEffect.getPeriod() == 0) {
-					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), lastingPeriodicEffect));
+			if (effect.isPeriodic()) {				
+				if (effect.getElapsed() % effect.getPeriod() == 0) {
+					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), effect));
 				}
 			}
 

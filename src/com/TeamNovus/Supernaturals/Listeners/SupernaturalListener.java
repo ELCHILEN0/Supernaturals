@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.SNPlayers;
-import com.TeamNovus.Supernaturals.Entity.Effects.BaseEffect;
+import com.TeamNovus.Supernaturals.Entity.Effect;
 import com.TeamNovus.Supernaturals.Events.EntityDamageByEntityProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
@@ -139,7 +139,7 @@ public class SupernaturalListener implements Listener {
 	 * @param type - The type of the event.
 	 */
 	public void invokeEvent(Event event,  Class<? extends Event> type) {		
-		ArrayList<BaseEffect> effects = new ArrayList<BaseEffect>();
+		ArrayList<Effect> effects = new ArrayList<Effect>();
 		
 		if (event instanceof EntityEvent) {
 			Entity e = ((EntityEvent) event).getEntity();
@@ -157,7 +157,7 @@ public class SupernaturalListener implements Listener {
 			effects.addAll(SNPlayers.i.get(((PlayerEvent) event).getPlayer()).getAbilities());
 		}
 				
-		for (BaseEffect effect : effects) {			
+		for (Effect effect : effects) {			
 			for (Method method : effect.getClass().getMethods()) {
 				Type[] types = method.getParameterTypes();
 				

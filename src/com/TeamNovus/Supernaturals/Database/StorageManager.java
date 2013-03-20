@@ -52,7 +52,6 @@ public class StorageManager {
 			System.out.println("Unable to connect!");
 		}
 		
-		
 	}
 
 	public void loadPlayers() {
@@ -61,13 +60,10 @@ public class StorageManager {
 		for(SNPlayer p : players) {
 			SNPlayers.i.attach(p);
 		}
-		
 	}
 
 	public void savePlayers() {	
-		for(SNPlayer player : SNPlayers.i.getAllPlayers()) {
-			database.save(player);
-		}
+		database.saveAll(SNPlayers.i.getAllPlayers());
 	}
 
 	public void loadEntities() {
@@ -79,8 +75,7 @@ public class StorageManager {
 	}
 
 	public void saveEntities() {	
-		for(SNEntity entity : SNEntities.i.getEntites()) {
-			database.save(entity);
-		}
+		database.saveAll(SNEntities.i.getEntites());
+
 	}
 }

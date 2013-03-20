@@ -352,7 +352,6 @@ public class MySQLDatabase extends Database {
 				}
 
 				statement.execute();
-
 				statement.close();
 			}
 
@@ -429,18 +428,18 @@ public class MySQLDatabase extends Database {
 	}
 
 	@Override
-	public void saveAll(List<?> objects) {
+	public void saveAll(Iterable<?> objects) {
 		Iterator<?> iterator = objects.iterator();
-
+		
 		while(iterator.hasNext()) {
 			save(iterator.next());
 		}
 	}
 
 	@Override
-	public void dropAll(List<?> objects) {
+	public void dropAll(Iterable<?> objects) {
 		Iterator<?> iterator = objects.iterator();
-
+		
 		while(iterator.hasNext()) {
 			drop(iterator.next());
 		}
@@ -455,7 +454,7 @@ public class MySQLDatabase extends Database {
 		try {
 			TableRegistration table = getTableRegistration(object.getClass());
 
-			for(SubTableRegistration subTable : table.getSubTables()) {			
+			for(SubTableRegistration subTable : table.getSubTables()) {
 				if(subTable.getCascadeType().equals(CascadeType.NONE)) {
 					continue;
 				}
@@ -530,9 +529,9 @@ public class MySQLDatabase extends Database {
 
 						// Update the child's foreign key
 						subTable.getForeignKey().setValue(child, table.getId().getValue(object));
-
-						save(child);
 					}
+					
+					saveAll(children);
 					break;
 				}
 			}
@@ -582,9 +581,9 @@ public class MySQLDatabase extends Database {
 
 						// Update the child's foreign key
 						subTable.getForeignKey().setValue(child, table.getId().getValue(object));
-
-						drop(child);
 					}
+					
+					saveAll(children);
 					break;
 				}
 			}
@@ -653,16 +652,14 @@ public class MySQLDatabase extends Database {
 							toRemove.add(storedObject);
 					}
 
-					for(Object o : toRemove) {
-						drop(o);
-					}
+					dropAll(toRemove);
 					break;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 
 	@Override
 	public ResultSet execute(String query, Object... params) {
@@ -683,5 +680,24 @@ public class MySQLDatabase extends Database {
 		}
 
 		return null;
+	}
+	
+	@Override
+	public void beginTransaction() {
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void endTransaction() {
+		try {
+			connection.commit();
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -62,7 +62,7 @@ public class TableRegistrationFactory {
 		
 		Table annotation = tableClass.getAnnotation(Table.class);
 		RelationshipType relationshipType = field.isAnnotationPresent(OneToOne.class) ? RelationshipType.ONE_TO_ONE : RelationshipType.ONE_TO_MANY;
-		CascadeType cascadeType = field.isAnnotationPresent(OneToOne.class) ? field.getAnnotation(OneToOne.class).cascade() : field.isAnnotationPresent(OneToMany.class) ? field.getAnnotation(OneToOne.class).cascade() : CascadeType.ALL;
+		CascadeType cascadeType = field.isAnnotationPresent(OneToOne.class) ? field.getAnnotation(OneToOne.class).cascade() : field.isAnnotationPresent(OneToMany.class) ? field.getAnnotation(OneToMany.class).cascade() : CascadeType.ALL;
 		ColumnRegistration id = ColumnRegistrationFactory.getIdRegistration(tableClass);
 		ColumnRegistration foreignKey = ColumnRegistrationFactory.getForeignKeyRegistration(tableClass);
 		LinkedList<ColumnRegistration> columns = ColumnRegistrationFactory.getColumnRegistrations(tableClass);

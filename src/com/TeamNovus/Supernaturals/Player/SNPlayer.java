@@ -304,7 +304,7 @@ public class SNPlayer implements Serializable {
 
 		if(foodLevel < 0)
 			foodLevel = 0;
-
+		
 		// This synchronizes the players food level to their hunger bar.
 		if(isOnline())
 			getPlayer().setFoodLevel((int) Math.ceil((foodLevel * 20)/maxFoodLevel));
