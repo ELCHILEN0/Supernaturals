@@ -17,7 +17,6 @@ public class Brute extends SNClass {
 		addPower(1, new Explode("Explode", "Trigger explosions around you!", 0, new Reagent(), new Reagent()));
 		addPower(1, new Earthquake("Earthquake", "Cause the ground to shake with fury!", 0, new Reagent(), new Reagent()));
 		
-		
 		setMaxHealth(1, 30);
 		setMaxHealth(5, 33);
 		setMaxHealth(10, 35);
