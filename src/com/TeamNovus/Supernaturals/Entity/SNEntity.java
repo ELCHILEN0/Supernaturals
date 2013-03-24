@@ -8,24 +8,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
-import com.TeamNovus.Persistence.Annotations.Table;
-import com.TeamNovus.Persistence.Annotations.Columns.Column;
-import com.TeamNovus.Persistence.Annotations.Columns.Id;
-import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
-@Table(name = "sn_entities")
 public class SNEntity {
-	@Id
-	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "uuid")
 	private String uuid;
 	
-	@OneToMany
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 	public SNEntity(LivingEntity e) {

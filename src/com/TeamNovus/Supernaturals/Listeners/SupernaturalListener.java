@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -130,6 +131,11 @@ public class SupernaturalListener implements Listener {
 	public void onEntityCombustByBlockEvent(EntityCombustByBlockEvent event) {
 		invokeEvent(event, EntityCombustByBlockEvent.class);
 	}
+	
+	@EventHandler
+	public void onEntityTargetEvent(EntityTargetEvent event) {
+		invokeEvent(event, EntityTargetEvent.class);
+	}
 	// End EntityEvents
 	
 	/**
@@ -160,7 +166,7 @@ public class SupernaturalListener implements Listener {
 		for (Effect effect : effects) {			
 			for (Method method : effect.getClass().getMethods()) {
 				Type[] types = method.getParameterTypes();
-				
+								
 				if (types.length >= 1 && types[0].equals(type)) {
 					try {
 						method.invoke(effect, event);

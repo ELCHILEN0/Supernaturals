@@ -2,6 +2,7 @@ package com.TeamNovus.Supernaturals.Database;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.TeamNovus.Persistence.Databases.Database;
@@ -9,10 +10,8 @@ import com.TeamNovus.Persistence.Databases.MySQL.MySQLConfiguration;
 import com.TeamNovus.Persistence.Databases.MySQL.MySQLDatabase;
 import com.TeamNovus.Persistence.Databases.SQLite.SQLiteConfiguration;
 import com.TeamNovus.Persistence.Databases.SQLite.SQLiteDatabase;
-import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
-import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class StorageManager {
@@ -49,7 +48,8 @@ public class StorageManager {
 		
 		if(database == null) {
 			// Fail
-			System.out.println("Unable to connect!");
+			Bukkit.getLogger().severe("Unable to connect to the database!");
+			Bukkit.getLogger().severe("Verify that your information is correct then try again!");
 		}
 		
 	}
@@ -67,15 +67,19 @@ public class StorageManager {
 	}
 
 	public void loadEntities() {
-		List<SNEntity> players = database.findAll(SNEntity.class);
+		Bukkit.getLogger().info("Entity loading and saving has not yet been implemented!");
 		
-		for(SNEntity e : players) {
-			SNEntities.i.attach(e);
-		}
+//		List<SNEntity> players = database.findAll(SNEntity.class);
+//		
+//		for(SNEntity e : players) {
+//			SNEntities.i.attach(e);
+//		}
 	}
 
 	public void saveEntities() {	
-		database.saveAll(SNEntities.i.getEntites());
+		Bukkit.getLogger().info("Entity loading and saving has not yet been implemented!");
+		
+//		database.saveAll(SNEntities.i.getEntites());
 
 	}
 }

@@ -27,6 +27,7 @@ public class ItemBag {
 			if (total < stack.getAmount())
 				return false;
 		}
+		
 		return true;
 	}
 	

@@ -77,11 +77,14 @@ public class SNPlayer implements Serializable {
 	@Column(name = "attribute_points")
 	private Integer attributePoints;
 
-	// Statistics:
-	private Integer strengthStatistic;
-	private Integer resistanceStatistic;
-	private Integer dexterityStatistic;
-	private Integer magicStatistic;
+	// Attributes:
+	private Integer healthAttribute;
+	private Integer healthRegenAttribute;
+	private Integer manaAttribute;
+	private Integer manaRegenAttribute;
+	private Integer speedAttribute;
+	private Integer attackAttribute;
+	private Integer defenseAttribute;
 	
 	public SNPlayer() {		
 		// Data Values:
@@ -103,10 +106,13 @@ public class SNPlayer implements Serializable {
 		this.attributePoints = 0;
 
 		// Statistics:
-		this.strengthStatistic = 0;
-		this.resistanceStatistic = 0;
-		this.dexterityStatistic = 0;
-		this.magicStatistic = 0;			
+		this.healthAttribute = 0;
+		this.healthRegenAttribute = 0;
+		this.manaAttribute = 0;
+		this.manaRegenAttribute = 0;
+		this.speedAttribute = 0;
+		this.attackAttribute = 0;
+		this.defenseAttribute = 0;			
 	}
 	
 	public SNPlayer(Player p) { 
@@ -583,30 +589,12 @@ public class SNPlayer implements Serializable {
 	}
 
 	/**
-	 * Get the players total attributes points.
+	 * Get the players available attributes points.
 	 * 
-	 * @return The players total attribute points.
+	 * @return The players available attribute points.
 	 */
 	public Integer getAttributePoints() {
 		return attributePoints;
-	}
-
-	/**
-	 * Gets the players remaining attribute points
-	 * 
-	 * @return The players remaining attribute points.
-	 */
-	public Integer getRemainingAttributePoints() {
-		return getAttributePoints() - strengthStatistic - resistanceStatistic - dexterityStatistic - magicStatistic;
-	}
-
-	/**
-	 * Gets the players invested attribute points.
-	 * 
-	 * @return The players invested attribute points.
-	 */
-	public Integer getInvestedAttributePoints() {
-		return getAttributePoints() - getRemainingAttributePoints();
 	}
 
 	/**
@@ -619,75 +607,129 @@ public class SNPlayer implements Serializable {
 	}
 
 	/**
-	 * Gets the players strength statistic.
+	 * Gets the players health attribute.
 	 * 
-	 * @return The players strength statistic.
+	 * @return The players health attribute.
 	 */
-	public Integer getStrengthStatistic() {
-		return strengthStatistic;
+	public Integer getHealthAttribute() {
+		return healthAttribute;
 	}
-
+	
 	/**
-	 * Sets the players strength statistic.
+	 * Sets the players health attribute.
 	 * 
-	 * @param strengthStatistic - The players new strength statistic.
+	 * @param healthAttribute - The new health attribute
 	 */
-	public void setStrengthStatistic(Integer strengthStatistic) {
-		this.strengthStatistic = strengthStatistic;
+	public void setHealthAttribute(Integer healthAttribute) {
+		this.healthAttribute = healthAttribute;
 	}
-
+	
 	/**
-	 * Gets the players resistance statistic.
+	 * Gets the players health regen attribute.
 	 * 
-	 * @return The players resistance statistic.
+	 * @return The players health regen attribute.
 	 */
-	public Integer getResistanceStatistic() {
-		return resistanceStatistic;
+	public Integer getHealthRegenAttribute() {
+		return healthRegenAttribute;
 	}
-
+	
 	/**
-	 * Sets the players resistance statistic.
+	 * Sets the players health regen attribute.
 	 * 
-	 * @param strengthStatistic - The players new resistance statistic.
+	 * @param healthRegenAttribute - The new health regen attribute
 	 */
-	public void setResistanceStatistic(Integer resistanceStatistic) {
-		this.resistanceStatistic = resistanceStatistic;
+	public void setHealthRegenAttribute(Integer healthRegenAttribute) {
+		this.healthRegenAttribute = healthRegenAttribute;
 	}
-
+	
 	/**
-	 * Gets the players dexterity statistic.
+	 * Gets the players mana attribute.
 	 * 
-	 * @return The players dexterity statistic.
+	 * @return The players mana attribute.
 	 */
-	public Integer getDexterityStatistic() {
-		return dexterityStatistic;
+	public Integer getManaAttribute() {
+		return manaAttribute;
 	}
-
+	
 	/**
-	 * Sets the players dexterity statistic.
+	 * Sets the players mana attribute.
 	 * 
-	 * @param strengthStatistic - The players new dexterity statistic.
+	 * @param manaAttribute - The new mana attribute
 	 */
-	public void setDexterityStatistic(Integer dexterityStatistic) {
-		this.dexterityStatistic = dexterityStatistic;
+	public void setManaAttribute(Integer manaAttribute) {
+		this.manaAttribute = manaAttribute;
 	}
-
+	
 	/**
-	 * Gets the players magic statistic.
+	 * Gets the players mana regen attribute.
 	 * 
-	 * @return The players magic statistic.
+	 * @return The players mana regen attribute.
 	 */
-	public Integer getMagicStatistic() {
-		return magicStatistic;
+	public Integer getManaRegenAttribute() {
+		return manaRegenAttribute;
 	}
-
+	
 	/**
-	 * Sets the players magic statistic.
+	 * Sets the players mana regen attribute.
 	 * 
-	 * @param strengthStatistic - The players new magic statistic.
+	 * @param manaRegenAttribute - The new mana regen attribute
 	 */
-	public void setMagicStatistic(Integer magicStatistic) {
-		this.magicStatistic = magicStatistic;
+	public void setManaRegenAttribute(Integer manaRegenAttribute) {
+		this.manaRegenAttribute = manaRegenAttribute;
+	}
+	
+	/**
+	 * Gets the players speed attribute.
+	 * 
+	 * @return The players speed attribute.
+	 */
+	public Integer getSpeedAttribute() {
+		return speedAttribute;
+	}
+	
+	/**
+	 * Sets the players speed attribute.
+	 * 
+	 * @param speedAttribute - The new speed attribute
+	 */
+	public void setSpeedAttribute(Integer speedAttribute) {
+		this.speedAttribute = speedAttribute;
+	}
+	
+	/**
+	 * Gets the players attack attribute.
+	 * 
+	 * @return The players attack attribute.
+	 */
+	public Integer getAttackAttribute() {
+		return attackAttribute;
+	}
+	
+	/**
+	 * Sets the players attack attribute.
+	 * 
+	 * @param attackAttribute - The new attack attribute
+	 */
+	public void setAttackAttribute(Integer attackAttribute) {
+		this.attackAttribute = attackAttribute;
+	}
+	
+	/**
+	 * Gets the players defense attribute.
+	 * 
+	 * @return The players defense attribute.
+	 */
+	public Integer getDefenseAttribute() {
+		return defenseAttribute;
+	}
+	
+	/**
+	 * Sets the players defense attribute.
+	 * 
+	 * @param defenseAttribute - The new defense attribute
+	 */
+	public void setDefenseAttribute(Integer defenseAttribute) {
+		this.defenseAttribute = defenseAttribute;
 	}
 
 	/**
@@ -773,15 +815,19 @@ public class SNPlayer implements Serializable {
 	// Java:
 	@Override
 	public String toString() {
-		return "SNPlayer [name=" + name + ", mana=" + mana + ", maxMana="
-				+ maxMana + ", health=" + health + ", maxHealth=" + maxHealth
-				+ ", foodLevel=" + foodLevel + ", maxFoodLevel=" + maxFoodLevel
-				+ ", speed=" + speed + ", playerClassName=" + playerClassName
-				+ ", binding=" + binding + ", cooldowns=" + cooldowns
-				+ ", experience=" + experience + ", attributePoints="
-				+ attributePoints + ", strengthStatistic=" + strengthStatistic
-				+ ", resistanceStatistic=" + resistanceStatistic + ", dexterityStatistic="
-				+ dexterityStatistic + ", magicStatistic=" + magicStatistic + "]";
+		return "SNPlayer [id=" + id + ", name=" + name + ", mana=" + mana
+				+ ", maxMana=" + maxMana + ", health=" + health
+				+ ", maxHealth=" + maxHealth + ", foodLevel=" + foodLevel
+				+ ", maxFoodLevel=" + maxFoodLevel + ", speed=" + speed
+				+ ", playerClassName=" + playerClassName + ", binding="
+				+ binding + ", cooldowns=" + cooldowns + ", experience="
+				+ experience + ", attributePoints=" + attributePoints
+				+ ", healthAttribute=" + healthAttribute
+				+ ", healthRegenAttribute=" + healthRegenAttribute
+				+ ", manaAttribute=" + manaAttribute + ", manaRegenAttribute="
+				+ manaRegenAttribute + ", speedAttribute=" + speedAttribute
+				+ ", attackAttribute=" + attackAttribute
+				+ ", defenseAttribute=" + defenseAttribute + "]";
 	}
 	
 	@Override
