@@ -13,9 +13,9 @@ public class Rogue extends SNClass {
 	public Rogue(SNClass parentClass) {
 		super("Rogue", ChatColor.DARK_GREEN, 30, parentClass);
 		
-		addPower(1, new Leap("Leap", "Leap away from danger!", 0, 0, new Reagent(), new Reagent()));
-		addPower(1, new Sneak("Sneak", "Hide from your enemies!", 0, 0, new Reagent(), new Reagent()));
-		addPower(1, new Vanish("Vansh", "Completely vanish from everyone!", 0, 0, new Reagent(), new Reagent()));
+		addPower(1, new Leap("Leap", "Leap away from danger!", 15, 0, new Reagent(), new Reagent()));
+		addPower(1, new Sneak("Sneak", "Hide from your enemies!", 60, 0, new Reagent(), new Reagent()));
+		addPower(1, new Vanish("Vansh", "Completely vanish from your enemies!", 60, 0, new Reagent(), new Reagent()));
 		
 		setMaxHealth(1, 15);
 		setMaxHealth(5, 17);

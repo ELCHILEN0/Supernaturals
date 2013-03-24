@@ -8,9 +8,9 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Explode extends Power {
 	
-	public Explode(String name, String desc, Integer amplifier,
+	public Explode(String name, String desc,
 			Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+		super(name, desc, cooldown, required, consume);
 	}
 
 	@Override

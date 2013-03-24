@@ -13,9 +13,9 @@ public class Brute extends SNClass {
 	public Brute(SNClass parentClass) {
 		super("Brute", ChatColor.DARK_RED, 30, parentClass);
 		
-		addPower(1, new Roar("Roar", "", 32, 0, 0, new Reagent(), new Reagent()));
-		addPower(1, new Explode("Explode", "Trigger explosions around you!", 0, 0, new Reagent(), new Reagent()));
-		addPower(1, new Earthquake("Earthquake", "Cause the ground to shake with fury!", 0, 0, new Reagent(), new Reagent()));
+		addPower(1, new Roar("Roar", "", 32, 0, new Reagent(), new Reagent()));
+		addPower(1, new Explode("Explode", "Trigger explosions around you!", 0, new Reagent(), new Reagent()));
+		addPower(1, new Earthquake("Earthquake", "Cause the ground to shake with fury!", 0, new Reagent(), new Reagent()));
 		
 		
 		setMaxHealth(1, 30);

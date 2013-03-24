@@ -9,9 +9,12 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Sneak extends Power {
+	private Integer duration;
 
-	public Sneak(String name, String desc, Integer amplifier, Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+	public Sneak(String name, String desc, Integer duration, Integer cooldown, Reagent required, Reagent consume) {
+		super(name, desc, cooldown, required, consume);
+		
+		this.duration = duration;
 	}
 
 	@Override
@@ -26,7 +29,7 @@ public class Sneak extends Power {
 				player.getPlayer().setSneaking(true);
 				player.sendMessage(ChatColor.DARK_GRAY + "You are no longer sneaking!");
 			}
-		}, 10 * getAmplifier() * 20);
+		}, duration * 20);
 		
 		return true;
 	}

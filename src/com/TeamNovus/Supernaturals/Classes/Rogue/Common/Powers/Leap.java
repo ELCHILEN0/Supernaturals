@@ -10,14 +10,17 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Leap extends Power {
+	private Integer range;
 	
-	public Leap(String name, String desc, Integer amplifier, Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+	public Leap(String name, String desc, Integer range, Integer cooldown, Reagent required, Reagent consume) {
+		super(name, desc, cooldown, required, consume);
+		
+		this.range = range;
 	}
 
 	@Override
 	public Boolean cast(SNPlayer player) {
-		for(Block b : player.getPlayer().getLineOfSight(null, 15)) {
+		for(Block b : player.getPlayer().getLineOfSight(null, range)) {
 			if(!(b.getType().equals(Material.AIR))) {
 				player.getPlayer().teleport(b.getLocation(), TeleportCause.PLUGIN);
 				return true;

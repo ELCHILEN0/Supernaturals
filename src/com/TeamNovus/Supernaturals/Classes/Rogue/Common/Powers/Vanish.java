@@ -12,9 +12,12 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Vanish extends Power {
+	private Integer duration;
 
-	public Vanish(String name, String desc, Integer amplifier, Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+	public Vanish(String name, String desc, Integer duration, Integer cooldown, Reagent required, Reagent consume) {
+		super(name, desc, cooldown, required, consume);
+		
+		this.duration = duration;
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class Vanish extends Power {
 				}
 				player.sendMessage(ChatColor.DARK_GRAY + "You are no longer vanished!");
 			}
-		}, 10 * getAmplifier() * 20);
+		}, duration * 20);
 		
 		return true;
 	}

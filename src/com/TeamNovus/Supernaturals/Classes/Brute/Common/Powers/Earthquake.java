@@ -10,9 +10,8 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Earthquake extends Power {
 
-	public Earthquake(String name, String desc, Integer amplifier,
-			Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+	public Earthquake(String name, String desc, Integer cooldown, Reagent required, Reagent consume) {
+		super(name, desc, cooldown, required, consume);
 	}
 
 	@Override

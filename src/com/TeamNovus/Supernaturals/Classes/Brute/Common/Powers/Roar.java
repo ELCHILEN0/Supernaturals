@@ -22,8 +22,8 @@ import com.TeamNovus.Supernaturals.Player.Class.Power;
 public class Roar extends Power {
 	private Integer range;
 	
-	public Roar(String name, String desc, Integer range, Integer amplifier, Integer cooldown, Reagent required, Reagent consume) {
-		super(name, desc, amplifier, cooldown, required, consume);
+	public Roar(String name, String desc, Integer range, Integer cooldown, Reagent required, Reagent consume) {
+		super(name, desc, cooldown, required, consume);
 		
 		this.range = range;
 	}
