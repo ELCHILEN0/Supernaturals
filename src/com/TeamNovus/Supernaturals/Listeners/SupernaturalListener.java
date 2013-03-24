@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -135,6 +136,11 @@ public class SupernaturalListener implements Listener {
 	@EventHandler
 	public void onEntityTargetEvent(EntityTargetEvent event) {
 		invokeEvent(event, EntityTargetEvent.class);
+	}
+	
+	@EventHandler
+	public void onEntityTargetLivingEntityEvent(EntityTargetLivingEntityEvent event) {
+		invokeEvent(event, EntityTargetLivingEntityEvent.class);
 	}
 	// End EntityEvents
 	
