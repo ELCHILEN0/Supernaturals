@@ -59,7 +59,9 @@ public class PluginCommands {
 			ArrayList<String> names = new ArrayList<String>();
 
 			for(SNPlayer player : SNPlayers.i.getPlayersInClass(playerClass)) {
-				names.add(player.getName());
+				if(player.isOnline()) {
+					names.add(player.getName());
+				}
 			}
 
 			lines.add(playerClass.getColor() + playerClass.getName() + ": " + StringUtils.join(names, ", "));

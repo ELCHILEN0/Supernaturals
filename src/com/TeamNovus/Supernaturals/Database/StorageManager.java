@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Database;
 
+import java.io.File;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -41,17 +42,22 @@ public class StorageManager {
 		} else if(config.getString("storage.type").equalsIgnoreCase("sqlite")) {
 			SQLiteConfiguration configuration = new SQLiteConfiguration();
 			
-			configuration.setFilePath(Supernaturals.getPlugin().getDataFolder() + config.getString("storage.sqlite.file-path"));
+			configuration.setFilePath(Supernaturals.getPlugin().getDataFolder() + File.separator + config.getString("storage.sqlite.file"));
 			
 			database = new SQLiteDatabase(configuration);
 		}
 		
 		if(database == null) {
 			// Fail
+			Bukkit.getLogger().severe("-----------------------------------------------------");
 			Bukkit.getLogger().severe("Unable to connect to the database!");
 			Bukkit.getLogger().severe("Verify that your information is correct then try again!");
+			Bukkit.getLogger().severe("-----------------------------------------------------");
+			Bukkit.getServer().getPluginManager().disablePlugin(Supernaturals.getPlugin());
+			return;
 		}
 		
+		database.connect();
 	}
 
 	public void loadPlayers() {

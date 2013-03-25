@@ -37,7 +37,7 @@ public class MySQLDatabase extends Database {
 					configuration.getPort(), 
 					configuration.getDatabase());
 
-			connection = DriverManager.getConnection(url, configuration.getUsername(), configuration.getPassword());				
+			connection = DriverManager.getConnection(url, configuration.getUsername(), configuration.getPassword());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

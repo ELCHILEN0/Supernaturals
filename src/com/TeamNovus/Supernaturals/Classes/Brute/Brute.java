@@ -1,11 +1,14 @@
 package com.TeamNovus.Supernaturals.Classes.Brute;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Abilities.Block;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Earthquake;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Explode;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Roar;
+import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 
@@ -14,9 +17,15 @@ public class Brute extends SNClass {
 	public Brute(SNClass parentClass) {
 		super("Brute", ChatColor.DARK_RED, 30, parentClass);
 		
-		addPower(1, new Roar("Roar", "Scare nearby mobs!", 60, 32, 0, new Reagent(), new Reagent()));
-		addPower(10, new Explode("Explode", "Trigger all around!", 0, new Reagent(), new Reagent()));
-		addPower(30, new Earthquake("Earthquake", "Cause the ground to shake with fury!", 0, new Reagent(), new Reagent()));
+		addPower(1, new Roar("Roar", "Scare nearby mobs!", 60, 32, 20, 
+						new Reagent(10, new ItemBag(new ItemStack(Material.SULPHUR, 5))), 
+						new Reagent(10, new ItemBag(new ItemStack(Material.SULPHUR, 5)))));
+		addPower(10, new Explode("Explode", "Trigger explosions all around!", 60, 
+						new Reagent(25, new ItemBag(new ItemStack(Material.SULPHUR, 10))), 
+						new Reagent(25, new ItemBag(new ItemStack(Material.SULPHUR, 10)))));
+		addPower(30, new Earthquake("Earthquake", "Cause the ground to shake with fury!", 120, 
+						new Reagent(40, new ItemBag(new ItemStack(Material.TNT, 5), new ItemStack(Material.SULPHUR, 10))), 
+						new Reagent(40, new ItemBag(new ItemStack(Material.TNT, 5), new ItemStack(Material.SULPHUR, 10)))));
 		
 		addAbility(5, new Block("Block", "Small chance to block attacks!", 0, 5));
 		addAbility(5, new Block("Spikes", "Small chance to inflict damage to attackers!", 0, 5));

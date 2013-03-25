@@ -410,6 +410,7 @@ public class SNPlayer implements Serializable {
 		this.playerClassName = playerClass.getName();
 		
 		syncFields(fire);
+		updateClient();
 	}
 	
 	/**

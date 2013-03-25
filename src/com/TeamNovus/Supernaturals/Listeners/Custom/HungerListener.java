@@ -18,7 +18,8 @@ public class HungerListener implements Listener {
 						
 			int newLevel = (player.getFoodLevel() + (event.getFoodLevel() - ((Player) event.getEntity()).getFoodLevel()));
 			
-			event.setFoodLevel(newLevel);			
+			event.setFoodLevel(newLevel);	
+			player.updateClient();
 		}
 	}
 		

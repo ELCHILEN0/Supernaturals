@@ -28,6 +28,7 @@ public class HealthListener implements Listener {
 			} else {
 				event.setDamage(player.getPlayer().getMaxHealth());
 			}
+			player.updateClient();
 		}
 	}
 	
@@ -39,6 +40,7 @@ public class HealthListener implements Listener {
 			player.setHealth(player.getHealth() + event.getAmount());
 			
 			event.setAmount(0);
+			player.updateClient();
 		}
 	}
 	
@@ -46,6 +48,7 @@ public class HealthListener implements Listener {
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
-		player.setHealth(player.getMaxHealth());		
+		player.setHealth(player.getMaxHealth());
+		player.updateClient();
 	}
 }
