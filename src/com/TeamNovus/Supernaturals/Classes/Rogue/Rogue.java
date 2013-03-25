@@ -2,6 +2,8 @@ package com.TeamNovus.Supernaturals.Classes.Rogue;
 
 import org.bukkit.ChatColor;
 
+import com.TeamNovus.Supernaturals.Classes.Rogue.Common.Abilities.Blind;
+import com.TeamNovus.Supernaturals.Classes.Rogue.Common.Abilities.PoisonArrows;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Common.Powers.Leap;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Common.Powers.Sneak;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Common.Powers.Vanish;
@@ -14,8 +16,17 @@ public class Rogue extends SNClass {
 		super("Rogue", ChatColor.DARK_GREEN, 30, parentClass);
 		
 		addPower(1, new Leap("Leap", "Leap away from danger!", 15, 0, new Reagent(), new Reagent()));
-		addPower(1, new Sneak("Sneak", "Hide from your enemies!", 60, 0, new Reagent(), new Reagent()));
-		addPower(1, new Vanish("Vansh", "Completely vanish from your enemies!", 60, 0, new Reagent(), new Reagent()));
+		addPower(10, new Sneak("Sneak", "Hide from your enemies!", 60, 0, new Reagent(), new Reagent()));
+		addPower(30, new Vanish("Vansh", "Completely vanish from your enemies!", 60, 0, new Reagent(), new Reagent()));
+		
+		addAbility(5, new Blind("Blind", "Small chance to blind attackers!", 0, 10, 5));
+		addAbility(25, new PoisonArrows("Poison Arrows", "Your arrows occasionally turn poisonous!", 0, 10, 7));
+		
+		setMaxMana(1, 30);
+		setMaxMana(5, 35);
+		setMaxMana(10, 40);
+		setMaxMana(25, 45);
+		setMaxMana(30, 50);
 		
 		setMaxHealth(1, 15);
 		setMaxHealth(5, 17);

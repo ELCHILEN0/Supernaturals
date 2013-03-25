@@ -8,7 +8,7 @@ public class ManaRegainTask implements Runnable {
 	@Override
 	public void run() {
 		for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
-			p.setMana(p.getMana() + 10, true);
+			p.setMana(p.getMana() + 2, true);
 		}
 	}
 

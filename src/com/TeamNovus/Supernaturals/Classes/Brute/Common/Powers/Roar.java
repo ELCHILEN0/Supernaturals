@@ -20,11 +20,13 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 public class Roar extends Power {
+	private Integer duration;
 	private Integer range;
 	
-	public Roar(String name, String desc, Integer range, Integer cooldown, Reagent required, Reagent consume) {
+	public Roar(String name, String desc, Integer duration, Integer range, Integer cooldown, Reagent required, Reagent consume) {
 		super(name, desc, cooldown, required, consume);
 		
+		this.duration = duration;
 		this.range = range;
 	}
 	
@@ -52,7 +54,7 @@ public class Roar extends Power {
 			ec.setGoalTarget(null);
 			
 			SNEntity e = SNEntities.i.get(entity);
-			e.addEffect(new IgnoreEntity(player.getPlayer()));
+			e.addEffect(new IgnoreEntity(duration, player.getPlayer()));
 		}
 		
 		player.sendMessage(ChatColor.GREEN + "The monsters have second thoughts about chasing you!");
@@ -64,8 +66,10 @@ public class Roar extends Power {
 	public class IgnoreEntity extends Effect {
 		private LivingEntity entity;
 		
-		public IgnoreEntity(LivingEntity entity) {
+		public IgnoreEntity(Integer duration, LivingEntity entity) {
 			this.entity = entity;
+			
+			setDuration(duration);
 		}
 		
 		public void onEntityTargetLivingEntityEvent(EntityTargetLivingEntityEvent event) {
