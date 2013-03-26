@@ -13,6 +13,9 @@ public class HungerListener implements Listener {
 
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onFoodLevelChange(FoodLevelChangeEvent event) {
+		if(event.isCancelled())
+			return;
+		
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 						

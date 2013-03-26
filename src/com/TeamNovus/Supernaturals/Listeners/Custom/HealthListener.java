@@ -50,8 +50,8 @@ public class HealthListener implements Listener {
 		}
 	}
 	
-	@EventHandler
-	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {		
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
 		player.setHealth(player.getMaxHealth());
