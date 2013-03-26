@@ -28,7 +28,7 @@ public class Warrior extends SNClass {
 				new Reagent(30, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 15), new ItemStack(Material.SULPHUR, 15))),
 				new Reagent(30, new ItemBag(new ItemStack(Material.GLOWSTONE_DUST, 15), new ItemStack(Material.SULPHUR, 15)))));
 		
-		addAbility(5, new DoubleStrike("Double Strike", "Your attacks have a small chance to deal double damage!", 5, 0));
+		addAbility(5, new DoubleStrike("Double Strike", "Your attacks have a small chance to deal double damage!", 2, 0));
 		addAbility(10, new PowerStrike("Power Strike", "Your attacks have a small chance to deal tripple damage!", 2, 0));
 		
 		setMaxMana(1, 20);

@@ -27,8 +27,8 @@ public class Brute extends SNClass {
 						new Reagent(40, new ItemBag(new ItemStack(Material.TNT, 5), new ItemStack(Material.SULPHUR, 10))), 
 						new Reagent(40, new ItemBag(new ItemStack(Material.TNT, 5), new ItemStack(Material.SULPHUR, 10)))));
 		
-		addAbility(5, new Block("Block", "Small chance to block attacks!", 0, 5));
-		addAbility(5, new Block("Spikes", "Small chance to inflict damage to attackers!", 0, 5));
+		addAbility(5, new Block("Block", "Small chance to block attacks!", 0, 2));
+		addAbility(5, new Block("Spikes", "Small chance to inflict damage to attackers!", 0, 2));
 		
 		setMaxMana(1, 20);
 		setMaxMana(5, 25);
@@ -48,11 +48,11 @@ public class Brute extends SNClass {
 		setMaxFoodLevel(25, 17);
 		setMaxFoodLevel(30, 16);
 		
-		setSpeed(1, 0.1f);
-		setSpeed(5, 0.09f);
-		setSpeed(10, 0.08f);
-		setSpeed(25, 0.07f);
-		setSpeed(30, 0.06f);
+		setSpeed(1, 0.17f);
+		setSpeed(5, 0.16f);
+		setSpeed(10, 0.15f);
+		setSpeed(25, 0.14f);
+		setSpeed(30, 0.13f);
 	}
 
 }

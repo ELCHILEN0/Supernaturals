@@ -28,8 +28,8 @@ public class Rogue extends SNClass {
 						new Reagent(5, new ItemBag(new ItemStack(Material.SULPHUR, 25))),
 						new Reagent(5, new ItemBag(new ItemStack(Material.SULPHUR, 25)))));
 		
-		addAbility(5, new Blind("Blind", "Small chance to blind attackers!", 0, 10, 5));
-		addAbility(25, new PoisonArrows("Poison Arrows", "Your arrows occasionally turn poisonous!", 0, 10, 7));
+		addAbility(5, new Blind("Blind", "Small chance to blind attackers!", 0, 10, 2));
+		addAbility(25, new PoisonArrows("Poison Arrows", "Your arrows occasionally turn poisonous!", 0, 10, 2));
 		
 		setMaxMana(1, 30);
 		setMaxMana(5, 35);
@@ -49,11 +49,11 @@ public class Rogue extends SNClass {
 		setMaxFoodLevel(25, 23);
 		setMaxFoodLevel(30, 25);
 		
-		setSpeed(1, 0.4f);
-		setSpeed(5, 0.41f);
-		setSpeed(10, 0.42f);
-		setSpeed(25, 0.43f);
-		setSpeed(30, 0.44f);
+		setSpeed(1, 0.3f);
+		setSpeed(5, 0.31f);
+		setSpeed(10, 0.32f);
+		setSpeed(25, 0.33f);
+		setSpeed(30, 0.34f);
 		
 	}
 

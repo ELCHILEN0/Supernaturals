@@ -488,7 +488,7 @@ public class SNPlayer implements Serializable {
 			setMana(getMaxMana(), false);
 			setHealth(getMaxHealth());
 			setFoodLevel(getMaxFoodLevel());
-		}	
+		}
 	}
 
 	/**

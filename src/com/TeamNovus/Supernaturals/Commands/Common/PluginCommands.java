@@ -188,7 +188,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "speed" }, description = "View your current speed.", usage = "")
 	public void onSpeedCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_SPEED, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -205,7 +205,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "mana" }, description = "View your current mana.", usage = "")
 	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_MANA, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -222,7 +222,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "health" }, description = "View your current health.", usage = "")
 	public void onHealthCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_HEALTH, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -238,7 +238,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "hunger", "food" }, description = "View your current health.", usage = "")
 	public void onHungerCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_HUNGER, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -254,7 +254,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "level" }, description = "View your current level.", usage = "")
 	public void onLevelCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_LEVEL, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -271,7 +271,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "classes" }, description = "View available classes.", usage = "")
 	public void onClassesCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_CLASSES, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -318,7 +318,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "inspect" }, description = "View information about a specific class.", usage = "<Class>", min = 2, max = 2)
 	public void onInspectCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_INSPECT, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -383,7 +383,7 @@ public class PluginCommands {
 			return;
 		}
 
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_DEVOLVE, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -411,6 +411,8 @@ public class PluginCommands {
 		}
 
 		player.setPlayerClass(targetClass, true);
+		player.setExperience(0);
+
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
@@ -422,7 +424,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "devolve" }, description = "Devolve to your parent race.", usage = "")
 	public void onDevolveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_DEVOLVE, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -442,6 +444,7 @@ public class PluginCommands {
 		}
 
 		player.setPlayerClass(targetClass, true);
+		player.setExperience(0);
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
@@ -454,7 +457,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "reset" }, description = "Reset all your data. DANGEROUS!", usage = "")
 	public void onResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_RESET, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -469,6 +472,8 @@ public class PluginCommands {
 		SNClass targetClass = new Human();
 
 		player.setPlayerClass(targetClass, true);
+		player.setExperience(0);
+
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());

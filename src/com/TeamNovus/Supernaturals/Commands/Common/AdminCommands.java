@@ -25,7 +25,7 @@ public class AdminCommands {
 	
 	@BaseCommand(aliases = { "modmana" }, description = "Change a players mana.", usage = "<Give/Take/Reset> <Player> <Mana>", min = 4, max = 4)
 	public void onModManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_MODMANA, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -69,7 +69,7 @@ public class AdminCommands {
 	
 	@BaseCommand(aliases = { "modexp" }, description = "Change a players exp.", usage = "<Give/Take/Reset> <Player> <Exp>", min = 4, max = 4)
 	public void onModExpCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_MODEXP, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -113,7 +113,7 @@ public class AdminCommands {
 	
 	@BaseCommand(aliases = { "modclass" }, description = "Change a players exp.", usage = "<Player> <Class>", min = 3, max = 3)
 	public void onModClassCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_MODCLASS, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
@@ -144,7 +144,7 @@ public class AdminCommands {
 	
 	@BaseCommand(aliases = { "modreset" }, description = "Reset a players data! DANGEROUS!", usage = "<Player>", min = 2, max = 2)
 	public void onModResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_INFO, sender))) {
+		if(!(Permission.has(Permission.COMMAND_MODRESET, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 			return;
 		}
