@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Listeners.Custom;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -9,6 +10,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
+import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Util.DamageUtil;
 
@@ -36,7 +38,7 @@ public class HealthListener implements Listener {
 	}
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+	public void onEntityRegainHealthEvent(EntityRegainHealthEvent event) {
 		if(event.isCancelled())
 			return;
 		
@@ -52,9 +54,18 @@ public class HealthListener implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {		
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		final SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
 		player.setHealth(player.getMaxHealth());
 		player.updateClient();
+		
+		Bukkit.getScheduler().runTaskLater(Supernaturals.getPlugin(), new Runnable() {
+			
+			@Override
+			public void run() {
+				player.setHealth(player.getMaxHealth());
+				player.updateClient();
+			}
+		}, 1);
 	}
 }

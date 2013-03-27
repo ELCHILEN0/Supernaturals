@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
+import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
@@ -27,6 +28,10 @@ public class ExperienceListener implements Listener {
 	}
 	
 	public void gainExp(SNPlayer player, Integer exp) {
+		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
+			return;
+		}
+		
 		if(player.getLevel() < player.getPlayerClass().getMaxLevel()) {
 			player.setExperience(player.getExperience() + exp);
 			

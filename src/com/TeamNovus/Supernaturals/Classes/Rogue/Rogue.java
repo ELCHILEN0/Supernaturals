@@ -49,7 +49,7 @@ public class Rogue extends SNClass {
 		setMaxFoodLevel(25, 23);
 		setMaxFoodLevel(30, 25);
 		
-		setSpeed(1, 0.3f);
+		setSpeed(1, 0.5f);
 		setSpeed(5, 0.31f);
 		setSpeed(10, 0.32f);
 		setSpeed(25, 0.33f);
