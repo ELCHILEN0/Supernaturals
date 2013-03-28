@@ -19,6 +19,7 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
+import com.TeamNovus.Supernaturals.Util.ChatUtil;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class PluginCommands {
@@ -38,21 +39,6 @@ public class PluginCommands {
 	 *  /sn reset
 	 *  
 	 */
-	
-	public String fillBar(int bars, ChatColor fullColor, ChatColor emptyColor, int amount, int max) {
-		int fill = (int) (amount * 1.0 * bars/max);
-		String bar = new String();
-		
-		for (int i = 0; i < fill; i++) {
-			bar += fullColor + "|";
-		}
-		
-		for (int i = 0; i < 50 - fill; i++) {
-			bar += emptyColor + "|";
-		}
-		
-		return bar;
-	}
 
 	@BaseCommand(aliases = { "online" }, description = "View information on online players.", usage = "")
 	public void onOnlineCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -108,19 +94,19 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
 								+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
-					 			+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
+					 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 						
 			sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
@@ -140,19 +126,19 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
 								+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
-					 			+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
+					 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 						
 			sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
-								+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
@@ -196,7 +182,7 @@ public class PluginCommands {
 		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Mana" + CommandManager.getDarkColor() + " ]______________");
 		
 		sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
-	 			+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
+	 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 				+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 	}
 
@@ -216,7 +202,7 @@ public class PluginCommands {
 		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Health" + CommandManager.getDarkColor() + " ]______________");
 		
 		sender.sendMessage(CommandManager.getDarkColor() + "Health: "
-				+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
+				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 				+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 	}
 
@@ -236,7 +222,7 @@ public class PluginCommands {
 		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Hunger" + CommandManager.getDarkColor() + " ]______________");
 		
 		sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
-				+ ChatColor.RED + "[" + fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
+				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 				+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 	}
 
@@ -257,7 +243,7 @@ public class PluginCommands {
 		
 		sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 		sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-							+ ChatColor.RED + "[" + fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
+							+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
 							+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
 	}
 

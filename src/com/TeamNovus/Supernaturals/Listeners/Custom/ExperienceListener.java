@@ -14,8 +14,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
+import com.TeamNovus.Supernaturals.Commands.CommandManager;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Util.ChatUtil;
 
 public class ExperienceListener implements Listener {
 	
@@ -35,7 +37,9 @@ public class ExperienceListener implements Listener {
 		if(player.getLevel() < player.getPlayerClass().getMaxLevel()) {
 			player.setExperience(player.getExperience() + exp);
 			
-			player.sendMessage(ChatColor.GOLD + "Experience: " + ChatColor.RESET + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1));
+			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+					+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
+					+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
 		}
 	}
 	
