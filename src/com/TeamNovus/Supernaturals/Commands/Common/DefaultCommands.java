@@ -25,16 +25,17 @@ public class DefaultCommands {
 		
 		int page = args.length == 1 ? 1 : Math.abs(Integer.valueOf(args[1]));
 		int total = 0;
-		sender.sendMessage(ChatColor.GOLD + "<>---------------[ " + ChatColor.DARK_RED + Supernaturals.getPlugin().getName() + ChatColor.GOLD + " ]---------------<>");
+		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + Supernaturals.getPlugin().getName() + CommandManager.getDarkColor() + " ]______________");
+
 		sender.sendMessage(ChatColor.GRAY + "Required: < > Optional: [ ]");
 		for (int i = max * page - max; i < CommandManager.getCommands().size() && total < max - 1; i++) {
 			BaseCommand command = CommandManager.getCommands().get(i);
 			if(!(command.hidden())) {
-				sender.sendMessage(ChatColor.GOLD + "- " + "/" + commandLabel + " " + command.aliases()[0] + (command.usage() != "" ? " " + command.usage() : "") + ChatColor.DARK_RED + " - " + ChatColor.GOLD + command.description());
+				sender.sendMessage(CommandManager.getDarkColor() + "- " + "/" + commandLabel + " " + command.aliases()[0] + (command.usage() != "" ? " " + command.usage() : "") + CommandManager.getLightColor() + " - " + CommandManager.getDarkColor() + command.description());
 				total++;
 			}
 		}
-		sender.sendMessage(ChatColor.DARK_RED + "For help type: " + ChatColor.GOLD + "/" + commandLabel + " help [Page]");
+		sender.sendMessage(CommandManager.getLightColor() + "For help type: " + CommandManager.getDarkColor() + "/" + commandLabel + " help [Page]");
 	}
 	
 }

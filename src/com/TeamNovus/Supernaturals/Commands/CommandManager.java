@@ -4,8 +4,26 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import org.bukkit.ChatColor;
+
 public class CommandManager {
+	private static ChatColor lightColor = ChatColor.AQUA;
+	private static ChatColor darkColor = ChatColor.BLUE;
+	private static ChatColor neutralColor = ChatColor.RED;
+	
 	private static LinkedHashMap<BaseCommand, Method> commands = new LinkedHashMap<BaseCommand, Method>();
+	
+	public static ChatColor getLightColor() {
+		return lightColor;
+	}
+	
+	public static ChatColor getDarkColor() {
+		return darkColor;
+	}
+	
+	public static ChatColor getNeutralColor() {
+		return neutralColor;
+	}
 	
 	/**
 	 * Register all the commands annotated with @BaseCommand.

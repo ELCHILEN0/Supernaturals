@@ -12,12 +12,12 @@ public class BaseCommandExecutor implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(ChatColor.GOLD + "<>---------------[ " + ChatColor.DARK_RED + Supernaturals.getPlugin().getName() + ChatColor.GOLD + " ]---------------<>");
-			sender.sendMessage(ChatColor.GOLD + "Description: " + ChatColor.DARK_RED + Supernaturals.getPlugin().getDescription().getDescription());
-			sender.sendMessage(ChatColor.GOLD + "Author: " + ChatColor.DARK_RED + Supernaturals.getPlugin().getDescription().getAuthors().get(0));
-			sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.DARK_RED + Supernaturals.getPlugin().getDescription().getVersion());
-			sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.DARK_RED + Supernaturals.getPlugin().getDescription().getWebsite());
-			sender.sendMessage(ChatColor.DARK_RED + "For help type: " + ChatColor.GOLD + "/" + commandLabel + " help [Page]");
+			sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + Supernaturals.getPlugin().getName() + CommandManager.getDarkColor() + " ]______________");
+			sender.sendMessage(CommandManager.getDarkColor() + "Description: " + CommandManager.getLightColor() + Supernaturals.getPlugin().getDescription().getDescription());
+			sender.sendMessage(CommandManager.getDarkColor() + "Author: " + CommandManager.getLightColor() + Supernaturals.getPlugin().getDescription().getAuthors().get(0));
+			sender.sendMessage(CommandManager.getDarkColor() + "Version: " + CommandManager.getLightColor() + Supernaturals.getPlugin().getDescription().getVersion());
+			sender.sendMessage(CommandManager.getDarkColor() + "Website: " + CommandManager.getLightColor() + Supernaturals.getPlugin().getDescription().getWebsite());
+			sender.sendMessage(CommandManager.getLightColor() + "For help type: " + CommandManager.getDarkColor() + "/" + commandLabel + " help [Page]");
 			return true;
 		}
 		
