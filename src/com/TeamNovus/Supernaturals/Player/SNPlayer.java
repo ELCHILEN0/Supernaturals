@@ -44,20 +44,11 @@ public class SNPlayer implements Serializable {
 	@Column(name = "max_mana")
 	private Integer maxMana;
 	
-	@Column(name = "health")
-	private Integer health;
-	
-	@Column(name = "max_health")
-	private Integer maxHealth;
-	
 	@Column(name = "food_level")
 	private Integer foodLevel;
 	
 	@Column(name = "max_food_level")
 	private Integer maxFoodLevel;
-	
-	@Column(name = "speed")
-	private Float speed;
 
 	// Class:
 	@Column(name = "player_class_name")
@@ -89,12 +80,9 @@ public class SNPlayer implements Serializable {
 	public SNPlayer() {		
 		// Data Values:
 		this.mana = 0;
-		this.health = 20;
 		this.foodLevel = 20;
-		this.speed = 0.2f;
 
 		this.maxMana = 0;
-		this.maxHealth = 20;
 		this.maxFoodLevel = 20;
 
 		// Class:
@@ -210,7 +198,7 @@ public class SNPlayer implements Serializable {
 	 * @return The players current health.
 	 */
 	public Integer getHealth() {
-		return health;
+		return getPlayer().getHealth() * 20 / getPlayerClass().getMaxHealth(getLevel());
 	}
 
 	/**
@@ -219,7 +207,13 @@ public class SNPlayer implements Serializable {
 	 * @param health - The players new health.
 	 */
 	public void setHealth(Integer health) {
-		this.health = health;
+		if(health > getMaxHealth())
+			health = getMaxHealth();
+
+		if(health < 0)
+			health = 0;
+		
+		setHealth(health);
 	}
 
 	/**
@@ -228,7 +222,7 @@ public class SNPlayer implements Serializable {
 	 * @return The players maximum health.
 	 */
 	public Integer getMaxHealth() {
-		return maxHealth;
+		return getPlayer().getMaxHealth();
 	}
 
 	/**
@@ -237,28 +231,10 @@ public class SNPlayer implements Serializable {
 	 * @param maxHealth - The players new maximum health.
 	 */
 	public void setMaxHealth(Integer maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
-	/**
-	 * Updates the players health bar to @health.
-	 * 
-	 */
-	public void updateHealth() {		
 		if(maxHealth <= 0)
 			maxHealth = 20;
-
-		if(health > maxHealth)
-			health = maxHealth;
-
-		if(health < 0)
-			health = 0;
-
-		// This synchronizes the players health to their health bar.
-		if(isOnline()) {
-			getPlayer().setMaxHealth(maxHealth);
-			getPlayer().setHealth(health);
-		}
+		
+		getPlayer().setMaxHealth(maxHealth);
 	}
 
 	/**
@@ -291,7 +267,7 @@ public class SNPlayer implements Serializable {
 	/**
 	 * Sets the players maximum food level.
 	 * 
-	 * @param maxFoodLevel - The players new maximum food leve.
+	 * @param maxFoodLevel - The players new maximum food level.
 	 */
 	public void setMaxFoodLevel(Integer maxFoodLevel) {
 		this.maxFoodLevel = maxFoodLevel;
@@ -322,7 +298,7 @@ public class SNPlayer implements Serializable {
 	 * @return The players speed.
 	 */
 	public Float getSpeed() {		
-		return speed;
+		return getPlayer().getWalkSpeed();
 	}
 
 	/**
@@ -330,21 +306,8 @@ public class SNPlayer implements Serializable {
 	 * 
 	 * @param speed - The players new walking speed.
 	 */
-	public void setSpeed(Float speed) {
-		this.speed = speed;
-	}
-
-	/**
-	 * Updates the players speed.
-	 */
-	public void updateSpeed() {
-		if(isOnline()) {
-			getPlayer().setWalkSpeed(speed);
-
-			// Hack to ensure that the speed gets applied to the client.
-			getPlayer().saveData();
-			getPlayer().loadData();
-		}
+	public void setSpeed(Float speed) {		
+		getPlayer().setWalkSpeed(speed);
 	}
 
 	/**
@@ -353,9 +316,7 @@ public class SNPlayer implements Serializable {
 	 * 
 	 */
 	public void updateClient() {
-		updateHealth();
 		updateFoodLevel();
-		updateSpeed();
 	}
 	
 	/**
@@ -365,9 +326,7 @@ public class SNPlayer implements Serializable {
 	 */
 	public void updateServer() {
 		if(isOnline()) {
-			setHealth((getPlayer().getHealth() * getMaxHealth())/20);
 			setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
-			setSpeed(getPlayer().getWalkSpeed());
 		}
 	}
 
@@ -817,10 +776,9 @@ public class SNPlayer implements Serializable {
 	@Override
 	public String toString() {
 		return "SNPlayer [id=" + id + ", name=" + name + ", mana=" + mana
-				+ ", maxMana=" + maxMana + ", health=" + health
-				+ ", maxHealth=" + maxHealth + ", foodLevel=" + foodLevel
-				+ ", maxFoodLevel=" + maxFoodLevel + ", speed=" + speed
-				+ ", playerClassName=" + playerClassName + ", binding="
+				+ ", maxMana=" + maxMana + ", foodLevel=" + foodLevel
+				+ ", maxFoodLevel=" + maxFoodLevel + ", playerClassName="
+				+ playerClassName + ", binding="
 				+ binding + ", cooldowns=" + cooldowns + ", experience="
 				+ experience + ", attributePoints=" + attributePoints
 				+ ", healthAttribute=" + healthAttribute

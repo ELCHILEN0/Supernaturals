@@ -15,7 +15,6 @@ import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
-import com.TeamNovus.Supernaturals.Listeners.Custom.HealthListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Tasks.CooldownTask;
 import com.TeamNovus.Supernaturals.Tasks.EntityTickTask;
@@ -40,7 +39,6 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new SupernaturalListener(), this);
 
 		// Custom Field Listeners:
-		Bukkit.getPluginManager().registerEvents(new HealthListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ExperienceListener(), this);
 
