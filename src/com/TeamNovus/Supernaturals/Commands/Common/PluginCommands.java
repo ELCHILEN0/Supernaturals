@@ -93,9 +93,9 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getDarkColor() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
 			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
-								+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
+			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
@@ -125,9 +125,9 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getDarkColor() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
 			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
-								+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
+			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			
 			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
@@ -242,9 +242,9 @@ public class PluginCommands {
 		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Level" + CommandManager.getDarkColor() + " ]______________");
 		
 		sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
-		sender.sendMessage(CommandManager.getDarkColor() + "Experience: "
-							+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, player.getExperience(), player.getExperienceFor(player.getLevel() + 1)) + ChatColor.RED + "]"
-							+ " (" + player.getExperience() + "/" + player.getExperienceFor(player.getLevel() + 1) + ")");
+		player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+							+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+							+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 	}
 
 	@BaseCommand(aliases = { "powers" }, description = "View powers for a class!", usage = "[Class]", min = 1, max = 2)

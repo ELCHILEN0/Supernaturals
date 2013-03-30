@@ -515,14 +515,36 @@ public class SNPlayer implements Serializable {
 	public Integer getExperienceFor(Integer level) {
 		return 25 * level * level - 25 * level;
 	}
+	
+	/**
+	 * Gets the total required experience for @level.
+	 * 
+	 * @param level - The level to get the total required experience for.
+	 * @return The total required experience for @level.
+	 */
+	public Integer getTotalExperienceFor(Integer level) {
+		int exp = 0;
+		
+		for (int i = 0; i <= level; i++) {
+			exp += 25 * i * i - 25 * i;
+		}
+		
+		return exp;
+	}
 
 	/**
 	 * Gets the players current level based on their experience.
 	 * 
 	 * @return The players current level.
 	 */
-	public Integer getLevel() {				
-		return new Double((Math.floor(25 + Math.sqrt(625 + 100 * experience)) / 50)).intValue();
+	public Integer getLevel() {
+		int level = 1;
+		
+		while(experience - getTotalExperienceFor(level) > 0) {
+			level++;
+		}
+		
+		return level;		
 	}
 
 	/**
