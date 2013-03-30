@@ -19,13 +19,12 @@ public class HungerListener implements Listener {
 		
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
-									
+												
 			int newLevel = (player.getFoodLevel() + (event.getFoodLevel() - ((Player) event.getEntity()).getFoodLevel()));
-			
-			event.setFoodLevel(newLevel);
-			
-			player.setFoodLevel(newLevel);
-			player.updateClient();
+						
+			event.setFoodLevel((int) Math.ceil(player.getFoodLevel() * 20 / player.getMaxFoodLevel()));
+		
+			player.setFoodLevel(newLevel);	
 		}
 	}
 	
@@ -34,7 +33,7 @@ public class HungerListener implements Listener {
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 
 		player.setFoodLevel(player.getMaxFoodLevel());
-		player.updateClient();
+		player.updateFoodLevel();
 	}
 		
 }

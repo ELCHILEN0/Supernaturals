@@ -53,6 +53,7 @@ public class SNPlayer implements Serializable {
 	// Class:
 	@Column(name = "player_class_name")
 	private String playerClassName;
+
 	
 	@Column(name = "binding")
 	private Integer binding;
@@ -213,7 +214,7 @@ public class SNPlayer implements Serializable {
 		if(health < 0)
 			health = 0;
 		
-		setHealth(health);
+		getPlayer().setHealth(health);
 	}
 
 	/**
@@ -253,6 +254,8 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setFoodLevel(Integer foodLevel) {
 		this.foodLevel = foodLevel;
+		
+		updateFoodLevel();
 	}
 
 	/**
@@ -271,6 +274,8 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setMaxFoodLevel(Integer maxFoodLevel) {
 		this.maxFoodLevel = maxFoodLevel;
+		
+		updateFoodLevel();
 	}
 
 	/**
@@ -289,7 +294,7 @@ public class SNPlayer implements Serializable {
 		
 		// This synchronizes the players food level to their hunger bar.
 		if(isOnline())
-			getPlayer().setFoodLevel((int) Math.ceil((foodLevel * 20)/maxFoodLevel));
+			getPlayer().setFoodLevel(foodLevel * 20 / maxFoodLevel);
 	}
 
 	/**
@@ -308,26 +313,6 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setSpeed(Float speed) {		
 		getPlayer().setWalkSpeed(speed);
-	}
-
-	/**
-	 * Updates the players client to the actual data values.
-	 * Updates: @health, @foodLevel, @speed
-	 * 
-	 */
-	public void updateClient() {
-		updateFoodLevel();
-	}
-	
-	/**
-	 * Updates the players data with their client values.
-	 * Updates: @health, @foodLevel, @speed
-	 * 
-	 */
-	public void updateServer() {
-		if(isOnline()) {
-			setFoodLevel((getPlayer().getFoodLevel() * getMaxFoodLevel())/20);
-		}
 	}
 
 	/**
@@ -369,7 +354,6 @@ public class SNPlayer implements Serializable {
 		this.playerClassName = playerClass.getName();
 		
 		syncFields(fire);
-		updateClient();
 	}
 	
 	/**
@@ -447,6 +431,8 @@ public class SNPlayer implements Serializable {
 			setMana(getMaxMana(), false);
 			setHealth(getMaxHealth());
 			setFoodLevel(getMaxFoodLevel());
+			
+			updateFoodLevel();
 		}
 	}
 
