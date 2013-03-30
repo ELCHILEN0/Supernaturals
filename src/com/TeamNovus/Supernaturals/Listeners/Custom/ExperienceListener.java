@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -20,6 +20,35 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Util.ChatUtil;
 
 public class ExperienceListener implements Listener {
+	private HashMap<Material, Integer> blockBreakSources = new HashMap<Material, Integer>();
+	private HashMap<EntityType, Integer> entityKillSources = new HashMap<EntityType, Integer>();
+	
+	public ExperienceListener() {
+		// Setup block break sources:
+		blockBreakSources.put(Material.LOG, 2);
+		blockBreakSources.put(Material.COAL_ORE, 2);
+		blockBreakSources.put(Material.IRON_ORE, 4);
+		blockBreakSources.put(Material.GOLD_ORE, 6);
+		blockBreakSources.put(Material.DIAMOND_ORE, 7);
+		blockBreakSources.put(Material.LAPIS_ORE, 3);
+		blockBreakSources.put(Material.REDSTONE_ORE, 3);
+
+		// Setup entity kill sources:
+		entityKillSources.put(EntityType.BLAZE, 7);
+		entityKillSources.put(EntityType.CAVE_SPIDER, 8);
+		entityKillSources.put(EntityType.ENDERMAN, 8);
+		entityKillSources.put(EntityType.ZOMBIE, 5);
+		entityKillSources.put(EntityType.SPIDER, 5);
+		entityKillSources.put(EntityType.SKELETON, 5);
+		entityKillSources.put(EntityType.CREEPER, 5);
+		entityKillSources.put(EntityType.GHAST, 12);
+		entityKillSources.put(EntityType.GIANT, 20);
+		entityKillSources.put(EntityType.PIG_ZOMBIE, 8);
+		entityKillSources.put(EntityType.WITCH, 10);
+		entityKillSources.put(EntityType.ENDER_DRAGON, 1000);
+		entityKillSources.put(EntityType.WITHER, 1500);
+		entityKillSources.put(EntityType.PLAYER, 50);
+	}
 	
 	@EventHandler
 	public void onPlayerLevelUp(PlayerLevelUpEvent event) {
@@ -34,7 +63,7 @@ public class ExperienceListener implements Listener {
 			return;
 		}
 		
-		if(player.getLevel() < player.getPlayerClass().getMaxLevel()) {
+		if(!(player.getPlayer().getGameMode().equals(GameMode.CREATIVE)) && player.getLevel() < player.getPlayerClass().getMaxLevel()) {
 			player.setExperience(player.getExperience() + exp);
 			
 			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
@@ -46,19 +75,9 @@ public class ExperienceListener implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
-
-		HashMap<Material, Integer> values = new HashMap<Material, Integer>();
-		values.put(Material.LOG, 1);
-		values.put(Material.COAL_ORE, 1);
-		values.put(Material.IRON_ORE, 1);
-		values.put(Material.GOLD_ORE, 3);
-		values.put(Material.REDSTONE_ORE, 1);
-		values.put(Material.LAPIS_ORE, 3);
-		values.put(Material.DIAMOND_ORE, 7);
-		values.put(Material.OBSIDIAN, 7);
 		
-		if(values.keySet().contains(event.getBlock().getType())) {
-			gainExp(player, values.get(event.getBlock().getType()));
+		if(blockBreakSources.keySet().contains(event.getBlock().getType())) {
+			gainExp(player, blockBreakSources.get(event.getBlock().getType()));
 		}
 	}
 	
@@ -66,12 +85,10 @@ public class ExperienceListener implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		if(event.getEntity().getKiller() == null) return;
 		
-		SNPlayer killer = SNPlayers.i.get(event.getEntity().getKiller());
+		SNPlayer player = SNPlayers.i.get(event.getEntity().getKiller());
 		
-		if(event.getEntity() instanceof Player) {
-			gainExp(killer, 50);
-		} else if(event.getEntity() instanceof Monster) {
-			gainExp(killer, 5);
+		if(entityKillSources.keySet().contains(event.getEntityType())) {
+			gainExp(player, entityKillSources.get(event.getEntityType()));
 		}
 	}
 
