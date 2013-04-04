@@ -66,9 +66,11 @@ public class ExperienceListener implements Listener {
 		if(!(player.getPlayer().getGameMode().equals(GameMode.CREATIVE)) && player.getLevel() < player.getPlayerClass().getMaxLevel()) {
 			player.setExperience(player.getExperience() + exp);
 						
-			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
-					+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
-					+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
+			if(player.isVerbose()) {
+				player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+						+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+						+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
+			}	
 		}
 	}
 	

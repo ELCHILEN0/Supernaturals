@@ -28,7 +28,9 @@ public class PlayerListener implements Listener {
 				event.setAmount(player.getMaxMana() - player.getMana());
 			}
 			
-			player.sendMessage(ChatColor.GREEN + "+ " + event.getAmount() + " mana!");
+			if(player.isVerbose()) {
+				player.sendMessage(ChatColor.GREEN + "+ " + event.getAmount() + " mana!");
+			}
 		} else {
 			event.setAmount(0);
 		}

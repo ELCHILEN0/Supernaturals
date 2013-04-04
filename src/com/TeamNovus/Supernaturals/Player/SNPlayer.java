@@ -78,6 +78,9 @@ public class SNPlayer implements Serializable {
 	private Integer attackAttribute;
 	private Integer defenseAttribute;
 	
+	@Column(name = "verbose")
+	private Boolean verbose;
+	
 	public SNPlayer() {		
 		// Data Values:
 		this.mana = 0;
@@ -102,6 +105,8 @@ public class SNPlayer implements Serializable {
 		this.speedAttribute = 0;
 		this.attackAttribute = 0;
 		this.defenseAttribute = 0;			
+		
+		this.verbose = true;
 	}
 	
 	public SNPlayer(Player p) { 
@@ -698,6 +703,24 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setDefenseAttribute(Integer defenseAttribute) {
 		this.defenseAttribute = defenseAttribute;
+	}
+	
+	/**
+	 * Returns true if the player has verbose mode enabled.
+	 * 
+	 * @return True if verbose is true, false otherwise.
+	 */
+	public Boolean isVerbose() {
+		return verbose;
+	}
+	
+	/**
+	 * Sets the players verbose mode.
+	 * 
+	 * @param verbose - The players new verbose mode.
+	 */
+	public void setVerbose(Boolean verbose) {
+		this.verbose = verbose;
 	}
 
 	/**

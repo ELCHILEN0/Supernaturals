@@ -557,6 +557,27 @@ public class PluginCommands {
 		}
 	}
 
+	@BaseCommand(aliases = { "verbose" }, description = "Toggle verbose messages.", usage = "")
+	public void onVerboseCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if(!(Permission.has(Permission.COMMAND_VERBOSE, sender))) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+			return;
+		}
+
+		if(!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
+			return;
+		}
+
+		SNPlayer player = SNPlayers.i.get((Player) sender);
+
+		player.setVerbose(!(player.isVerbose()));
+		
+		sender.sendMessage(ChatColor.GREEN + "Verbose messaging is now " + (player.isVerbose() ? ChatColor.GREEN : ChatColor.RED) + (player.isVerbose() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
+		
+	}
+
+	
 	@BaseCommand(aliases = { "reset" }, description = "Reset all your data. DANGEROUS!", usage = "")
 	public void onResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(Permission.has(Permission.COMMAND_RESET, sender))) {
