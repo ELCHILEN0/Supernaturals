@@ -572,7 +572,7 @@ public class PluginCommands {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		player.setVerbose(!(player.isVerbose()));
-		
+
 		sender.sendMessage(ChatColor.GREEN + "Verbose messaging is now " + (player.isVerbose() ? ChatColor.GREEN : ChatColor.RED) + (player.isVerbose() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
 		
 	}
