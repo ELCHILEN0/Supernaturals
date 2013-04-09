@@ -67,7 +67,7 @@ public class ExperienceListener implements Listener {
 			player.setExperience(player.getExperience() + exp);
 						
 			if(player.isVerbose()) {
-				player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+				player.sendMessage(CommandManager.getDark() + "Experience: "
 						+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 						+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			}	

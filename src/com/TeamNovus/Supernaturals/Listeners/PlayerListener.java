@@ -30,7 +30,7 @@ public class PlayerListener implements Listener {
 			
 			if(player.isVerbose()) {
 				player.sendMessage(ChatColor.GREEN + "+ " + event.getAmount() + " mana!");
-			}
+			}			
 		} else {
 			event.setAmount(0);
 		}
@@ -48,6 +48,7 @@ public class PlayerListener implements Listener {
 				
 				if(player.isOnline()) {
 					player.syncFields(false);
+					player.updateGUI();
 				}
 			}
 		});

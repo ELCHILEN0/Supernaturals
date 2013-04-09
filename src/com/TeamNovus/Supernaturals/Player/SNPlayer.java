@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.BlockIterator;
 
 import com.TeamNovus.Persistence.Annotations.Table;
@@ -53,7 +58,6 @@ public class SNPlayer implements Serializable {
 	// Class:
 	@Column(name = "player_class_name")
 	private String playerClassName;
-
 	
 	@Column(name = "binding")
 	private Integer binding;
@@ -81,6 +85,9 @@ public class SNPlayer implements Serializable {
 	@Column(name = "verbose")
 	private Boolean verbose;
 	
+	@Column(name = "gui")
+	private Boolean gui;
+	
 	public SNPlayer() {		
 		// Data Values:
 		this.mana = 0;
@@ -107,6 +114,7 @@ public class SNPlayer implements Serializable {
 		this.defenseAttribute = 0;			
 		
 		this.verbose = true;
+		this.gui = true;
 	}
 	
 	public SNPlayer(Player p) { 
@@ -178,6 +186,8 @@ public class SNPlayer implements Serializable {
 		}
 		
 		this.mana = mana;
+		
+		updateGUI();
 	}
 
 	/**
@@ -508,7 +518,9 @@ public class SNPlayer implements Serializable {
 			PlayerLevelUpEvent event = new PlayerLevelUpEvent(getPlayer());
 			
 			Bukkit.getPluginManager().callEvent(event);
-		}		
+		}	
+		
+		updateGUI();
 	}
 	
 	/**
@@ -723,6 +735,62 @@ public class SNPlayer implements Serializable {
 		this.verbose = verbose;
 	}
 
+	/**
+	 * Returns true if the player has gui enabled.
+	 * 
+	 * @return True if gui is true, false otherwise.
+	 */
+	public Boolean isUsingGUI() {
+		return gui;
+	}
+	
+	/**
+	 * Sets the players gui toggle.
+	 * 
+	 * @param verbose - The players new gui toggle.
+	 */
+	public void setUsingGUI(Boolean gui) {
+		this.gui = gui;
+	}
+	
+	public void updateGUI() {
+		if(isOffline() && !(isUsingGUI()))
+			return;
+		
+		ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+		Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
+		
+//		scoreboard.registerNewObjective("health", "dummy");
+//		
+//		Objective health = scoreboard.getObjective("health");
+//		health.setDisplaySlot(DisplaySlot.BELOW_NAME);
+//		
+//		health.getScore(Bukkit.getOfflinePlayer("Health: ")).setScore(getHealth());
+//		health.setDisplayName("/" + getMaxHealth());
+//		
+//		getPlayer().setScoreboard(scoreboard);
+//
+//		getPlayer().setScoreboard(scoreboard);
+		
+		scoreboard.registerNewObjective("stats", "dummy");
+		
+		Objective stats = scoreboard.getObjective("stats");
+		stats.setDisplaySlot(DisplaySlot.SIDEBAR);	
+		
+		int mana = getMana();
+		int maxMana = getMaxMana();
+		
+		int exp = getExperience() - getTotalExperienceFor(getLevel() - 1);
+		int maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
+		
+		stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
+		
+		stats.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%")).setScore(2);
+		stats.getScore(Bukkit.getOfflinePlayer(ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%")).setScore(1);
+
+		getPlayer().setScoreboard(scoreboard);
+	}
+	
 	/**
 	 * Gets the SNEntity representation of the player. This is 
 	 * used to add or remove entity effects for the player.
