@@ -40,14 +40,58 @@ public class PluginCommands {
 	 *  
 	 */
 
-	@BaseCommand(aliases = { "online" }, description = "View information on online players.", usage = "")
-	public void onOnlineCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_ONLINE, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
+	@BaseCommand(aliases = { "tutorial", "tut" }, desc = "Learn all about Supernaturals!", permission = Permission.COMMAND_TUTORIAL, usage = "[Page]", min = 0, max = 1)
+	public void onTutorialCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		Integer page = 0;
+		
+		try  {
+			if(args.length >= 2) {
+				page = Integer.valueOf(args[1]);
+			}
+		} catch(NumberFormatException ignored) {
+			sender.sendMessage(ChatColor.RED + "The specified page was not found!");
 			return;
 		}
+		
+		switch (Math.abs(page)) {
+		case 0:
+		case 1:
+			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 1" + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getNeutral() + "Welcome to Supernaturals!");
+			sender.sendMessage(CommandManager.getNeutral() + "First, try joining a class! /sn evolve <Class>");
+			sender.sendMessage(CommandManager.getNeutral() + "To see all the classes you can join type /sn path");
+			sender.sendMessage(CommandManager.getNeutral() + "Now that you have joined a class you can devolve by typing /sn devolve!");
+			sender.sendMessage(CommandManager.getNeutral() + "To continue type /sn tut 2");
+			break;
+			
+		case 2:
+			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 2" + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getNeutral() + "When you are in a class you gain Experience from different sources!");
+			sender.sendMessage(CommandManager.getNeutral() + "This experience can be seen in /sn level.  This also tells you how much to level up!");
+			sender.sendMessage(CommandManager.getNeutral() + "Leveling up lets you unlock new powers, abilities and specs!");
+			sender.sendMessage(CommandManager.getNeutral() + "To see the unlockable perks type: /sn powers, /sn abilities and /sn specs");
+			sender.sendMessage(CommandManager.getNeutral() + "To continue type /sn tut 3");		
+			break;
+			
+		case 3:
+			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 2" + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getNeutral() + "When you are in a class you gain Experience from different sources!");
+			sender.sendMessage(CommandManager.getNeutral() + "Different classes have different and unique powers!");
+			sender.sendMessage(CommandManager.getNeutral() + "To cast a power you left-click with a blaze rod!  To switch powers, right-click!");
+			sender.sendMessage(CommandManager.getNeutral() + "Abilities are passive and are active at all times.");
+			sender.sendMessage(CommandManager.getNeutral() + "Thats it!  We hope you enjoy using Supernaturals!");
+			sender.sendMessage(CommandManager.getNeutral() + "To see all available commands type /sn help [Page]");		
+			break;
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Online Players" + CommandManager.getDarkColor() + " ]______________");
+		default:
+			sender.sendMessage(ChatColor.RED + "The specified page was not found!");
+			break;
+		}
+	}
+	
+	@BaseCommand(aliases = { "online" }, desc = "View information on online players.", permission = Permission.COMMAND_ONLINE)
+	public void onOnlineCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Online Players" + CommandManager.getDark() + " ]______________");
 		
 		ArrayList<SNClass> classes = new ArrayList<SNClass>();
 
@@ -77,9 +121,9 @@ public class PluginCommands {
 		}
 	}
 
-	@BaseCommand(aliases = { "info", "stats" }, description = "View information on online players.", usage = "[Player]", min = 1, max = 2)
+	@BaseCommand(aliases = { "info", "stats" }, desc = "View information on online players.", usage = "[Player]", permission = Permission.COMMAND_INFO, max = 1)
 	public void onInfoCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(args.length == 1 && Permission.has(Permission.COMMAND_INFO, sender)) {
+		if(args.length == 0 && Permission.has(Permission.COMMAND_INFO, sender)) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
 				return;
@@ -87,31 +131,31 @@ public class PluginCommands {
 
 			SNPlayer player = SNPlayers.i.get((Player) sender);
 
-			sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Info" + CommandManager.getDarkColor() + " ]______________");
+			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Info" + CommandManager.getDark() + " ]______________");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Name: " + ChatColor.RESET + player.getName());
-			sender.sendMessage(CommandManager.getDarkColor() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
+			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
+			sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
-			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+			player.sendMessage(CommandManager.getDark() + "Experience: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
+			sender.sendMessage(CommandManager.getDark() + "Health: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
+			sender.sendMessage(CommandManager.getDark() + "Mana: " 
 					 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 						
-			sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
+			sender.sendMessage(CommandManager.getDark() + "Hunger: " 
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
 
-		} else if(args.length == 2 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
+		} else if(args.length == 1 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
 			SNPlayer player = SNPlayers.i.getPlayer(args[1]);
 
 			if(player == null) {
@@ -119,141 +163,89 @@ public class PluginCommands {
 				return;
 			}
 
-			sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Info" + CommandManager.getDarkColor() + " ]______________");
+			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Info" + CommandManager.getDark() + " ]______________");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Name: " + ChatColor.RESET + player.getName());
-			sender.sendMessage(CommandManager.getDarkColor() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-			sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
+			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
+			sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
-			player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+			player.sendMessage(CommandManager.getDark() + "Experience: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Health: "
+			sender.sendMessage(CommandManager.getDark() + "Health: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
+			sender.sendMessage(CommandManager.getDark() + "Mana: " 
 					 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 						
-			sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
+			sender.sendMessage(CommandManager.getDark() + "Hunger: " 
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 			
-			sender.sendMessage(CommandManager.getDarkColor() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
 		} else {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 		}
 	}
 
-	@BaseCommand(aliases = { "speed" }, description = "View your current speed.", usage = "")
+	@BaseCommand(aliases = { "speed" }, desc = "View your current speed.", permission = Permission.COMMAND_SPEED, console = false)
 	public void onSpeedCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_SPEED, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Speed" + CommandManager.getDarkColor() + " ]______________");
-		sender.sendMessage(CommandManager.getDarkColor() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Speed" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
 	}
 
-	@BaseCommand(aliases = { "mana" }, description = "View your current mana.", usage = "")
+	@BaseCommand(aliases = { "mana" }, desc = "View your current mana.", permission = Permission.COMMAND_MANA, console = false)
 	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_MANA, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Mana" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Mana" + CommandManager.getDark() + " ]______________");
 		
-		sender.sendMessage(CommandManager.getDarkColor() + "Mana: " 
+		sender.sendMessage(CommandManager.getDark() + "Mana: " 
 	 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 				+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
 	}
 
-	@BaseCommand(aliases = { "health" }, description = "View your current health.", usage = "")
+	@BaseCommand(aliases = { "health" }, desc = "View your current health.", permission = Permission.COMMAND_HEALTH, console = false)
 	public void onHealthCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_HEALTH, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Health" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Health" + CommandManager.getDark() + " ]______________");
 		
-		sender.sendMessage(CommandManager.getDarkColor() + "Health: "
+		sender.sendMessage(CommandManager.getDark() + "Health: "
 				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 				+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
 	}
 
-	@BaseCommand(aliases = { "hunger", "food" }, description = "View your current health.", usage = "")
+	@BaseCommand(aliases = { "hunger", "food" }, desc = "View your current health.", permission = Permission.COMMAND_HUNGER, console = false)
 	public void onHungerCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_HUNGER, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Hunger" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Hunger" + CommandManager.getDark() + " ]______________");
 		
-		sender.sendMessage(CommandManager.getDarkColor() + "Hunger: " 
+		sender.sendMessage(CommandManager.getDark() + "Hunger: " 
 				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 				+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 	}
 
-	@BaseCommand(aliases = { "level" }, description = "View your current level.", usage = "")
+	@BaseCommand(aliases = { "level" }, desc = "View your current level.", permission = Permission.COMMAND_LEVEL, console = false)
 	public void onLevelCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_LEVEL, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Level" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Level" + CommandManager.getDark() + " ]______________");
 		
-		sender.sendMessage(CommandManager.getDarkColor() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
-		player.sendMessage(CommandManager.getDarkColor() + "Experience: "
+		sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+		player.sendMessage(CommandManager.getDark() + "Experience: "
 							+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 							+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 	}
 
-	@BaseCommand(aliases = { "powers" }, description = "View powers for a class!", usage = "[Class]", min = 1, max = 2)
+	@BaseCommand(aliases = { "powers" }, desc = "View powers for a class!", usage = "[Class]", permission = Permission.COMMAND_POWERS, min = 1, max = 2)
 	public void onPowersCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_POWERS, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
 		if(!(sender instanceof Player) && args.length == 1) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
 			return;
@@ -261,7 +253,7 @@ public class PluginCommands {
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Class Powers" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Powers" + CommandManager.getDark() + " ]______________");
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -299,7 +291,7 @@ public class PluginCommands {
 		}
 	}
 	
-	@BaseCommand(aliases = { "abilities" }, description = "View abilities for a class!", usage = "[Class]", min = 1, max = 2)
+	@BaseCommand(aliases = { "abilities" }, desc = "View abilities for a class!", usage = "[Class]", permission = Permission.COMMAND_ABILITIES, min = 0, max = 1)
 	public void onAbilitiesCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!(Permission.has(Permission.COMMAND_ABILITIES, sender))) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
@@ -313,7 +305,7 @@ public class PluginCommands {
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Class Abilities" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Abilities" + CommandManager.getDark() + " ]______________");
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -351,21 +343,11 @@ public class PluginCommands {
 		}
 	}
 	
-	@BaseCommand(aliases = { "specs" }, description = "View specifications for a class!", usage = "[Class]", min = 1, max = 2)
+	@BaseCommand(aliases = { "specs" }, desc = "View specifications for a class!", usage = "[Class]", permission = Permission.COMMAND_SPECS, console = false, min = 0, max = 1)
 	public void onSpecsCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_SPECS, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player) && args.length == 1) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Class Specs" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Specs" + CommandManager.getDark() + " ]______________");
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -429,23 +411,14 @@ public class PluginCommands {
 		}
 	}
 	
-	@BaseCommand(aliases = { "classes" }, description = "View available classes.", usage = "")
+	@BaseCommand(aliases = { "classes" }, desc = "View available classes.", permission = Permission.COMMAND_CLASSES, console = false)
 	public void onClassesCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_CLASSES, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-		}
-
-		sender.sendMessage(CommandManager.getDarkColor() + "______________[ " + CommandManager.getLightColor() + "Player Classes" + CommandManager.getDarkColor() + " ]______________");
+		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Classes" + CommandManager.getDark() + " ]______________");
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		if(player.getPlayerClass().getParentClass() != null)
-			sender.sendMessage(CommandManager.getDarkColor() + "Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
+			sender.sendMessage(CommandManager.getDark() + "Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
 
 		ArrayList<String> joinableClasses = new ArrayList<String>();
 
@@ -455,9 +428,9 @@ public class PluginCommands {
 
 		if(joinableClasses.size() > 0) {
 			if(joinableClasses.size() == 1) {
-				sender.sendMessage(CommandManager.getDarkColor() + "Unlocked Class: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
+				sender.sendMessage(CommandManager.getDark() + "Unlocked Class: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
 			} else {
-				sender.sendMessage(CommandManager.getDarkColor() + "Unlocked Classes: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
+				sender.sendMessage(CommandManager.getDark() + "Unlocked Classes: " + ChatColor.RESET + StringUtils.join(joinableClasses, ", "));
 			}
 		}
 
@@ -471,27 +444,17 @@ public class PluginCommands {
 
 		if(unjoinableClasses.size() > 0) {
 			if(unjoinableClasses.size() == 1) {
-				sender.sendMessage(CommandManager.getDarkColor() + "Locked Class: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
+				sender.sendMessage(CommandManager.getDark() + "Locked Class: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
 			} else {
-				sender.sendMessage(CommandManager.getDarkColor() + "Locked Classes: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
+				sender.sendMessage(CommandManager.getDark() + "Locked Classes: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
 			}
 		}
 	}
 
-	@BaseCommand(aliases = { "evolve", "convert" }, description = "Evolve to another class.", usage = "<Class>", min = 2, max = 2)
+	@BaseCommand(aliases = { "evolve", "convert" }, desc = "Evolve to another class.", usage = "<Class>", permission = Permission.COMMAND_EVOLVE, console = false, min = 1, max = 1)
 	public void onEvoloveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command can only be ran as a player!");
-			return;
-		}
-
-		if(!(Permission.has(Permission.COMMAND_DEVOLVE, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
-		SNClass targetClass = SNClasses.i.getBestClass(args[1]);
+		SNClass targetClass = SNClasses.i.getBestClass(args[0]);
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class was not found!");
@@ -524,18 +487,8 @@ public class PluginCommands {
 		}
 	}
 
-	@BaseCommand(aliases = { "devolve" }, description = "Devolve to your parent race.", usage = "")
+	@BaseCommand(aliases = { "devolve" }, desc = "Devolve to your parent race.", permission = Permission.COMMAND_DEVOLVE, console = false)
 	public void onDevolveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_DEVOLVE, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		SNClass targetClass = player.getPlayerClass().getParentClass();
@@ -557,39 +510,18 @@ public class PluginCommands {
 		}
 	}
 
-	@BaseCommand(aliases = { "verbose" }, description = "Toggle verbose messages.", usage = "")
+	@BaseCommand(aliases = { "verbose" }, desc = "Toggle verbose messages.", permission = Permission.COMMAND_VERBOSE, console = false)
 	public void onVerboseCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_VERBOSE, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		player.setVerbose(!(player.isVerbose()));
 
 		sender.sendMessage(ChatColor.GREEN + "Verbose messaging is now " + (player.isVerbose() ? ChatColor.GREEN : ChatColor.RED) + (player.isVerbose() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
-		
 	}
 
 	
-	@BaseCommand(aliases = { "reset" }, description = "Reset all your data. DANGEROUS!", usage = "")
+	@BaseCommand(aliases = { "reset" }, desc = "Reset all your data. DANGEROUS!", permission = Permission.COMMAND_RESET, console = false)
 	public void onResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(Permission.has(Permission.COMMAND_RESET, sender))) {
-			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
-			return;
-		}
-
-		if(!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
-			return;
-		}
-
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
 		SNClass targetClass = new Human();

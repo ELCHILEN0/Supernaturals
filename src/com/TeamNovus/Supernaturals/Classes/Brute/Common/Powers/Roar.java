@@ -3,10 +3,10 @@ package com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_5_R1.EntityCreature;
+import net.minecraft.server.v1_5_R2.EntityCreature;
 
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_5_R1.entity.CraftMonster;
+import org.bukkit.craftbukkit.v1_5_R2.entity.CraftMonster;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;

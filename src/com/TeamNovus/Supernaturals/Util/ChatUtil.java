@@ -12,7 +12,7 @@ public class ChatUtil {
 			bar += fullColor + "|";
 		}
 		
-		for (int i = 0; i < max - fill; i++) {
+		for (int i = 0; i < bars - fill; i++) {
 			bar += emptyColor + "|";
 		}
 		

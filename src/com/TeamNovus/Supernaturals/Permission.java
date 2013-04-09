@@ -3,6 +3,7 @@ package com.TeamNovus.Supernaturals;
 import org.bukkit.command.CommandSender;
 
 public enum Permission {
+	COMMAND_TUTORIAL("commands.tutorial"),
 	COMMAND_ONLINE("commands.online"),
 	COMMAND_INFO("commands.info"),
 	COMMAND_INFO_OTHERS("commands.info.others"), 
@@ -22,7 +23,8 @@ public enum Permission {
 	COMMAND_MODMANA("commands.modmana"),
 	COMMAND_MODEXP("commands.modexp"),
 	COMMAND_MODCLASS("commands.modclass"),
-	COMMAND_MODRESET("commands.modreset");
+	COMMAND_MODRESET("commands.modreset"),
+	NONE("");
 	
 	private String node;
 	

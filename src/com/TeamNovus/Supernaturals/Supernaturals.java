@@ -51,9 +51,9 @@ public class Supernaturals extends JavaPlugin {
 		// Commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());
 
-		CommandManager.registerClass(DefaultCommands.class);
-		CommandManager.registerClass(PluginCommands.class);
-		CommandManager.registerClass(AdminCommands.class);
+		CommandManager.register(DefaultCommands.class);
+		CommandManager.register(PluginCommands.class);
+		CommandManager.register(AdminCommands.class);
 
 		// Load all the data from the database.
 		StorageManager.getInstance().loadPlayers();			

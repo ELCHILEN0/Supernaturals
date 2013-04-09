@@ -1,80 +1,75 @@
 package com.TeamNovus.Supernaturals.Commands;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import org.bukkit.ChatColor;
 
 public class CommandManager {
-	private static ChatColor lightColor = ChatColor.AQUA;
-	private static ChatColor darkColor = ChatColor.BLUE;
-	private static ChatColor neutralColor = ChatColor.RED;
+	private static ChatColor light = ChatColor.AQUA;
+	private static ChatColor dark = ChatColor.BLUE;
+	private static ChatColor neutral = ChatColor.LIGHT_PURPLE;
+	private static ChatColor error = ChatColor.RED;
+	private static ChatColor warning = ChatColor.YELLOW;
 	
 	private static LinkedHashMap<BaseCommand, Method> commands = new LinkedHashMap<BaseCommand, Method>();
 	
-	public static ChatColor getLightColor() {
-		return lightColor;
+	public static ChatColor getLight() {
+		return light;
 	}
 	
-	public static ChatColor getDarkColor() {
-		return darkColor;
+	public static ChatColor getDark() {
+		return dark;
 	}
 	
-	public static ChatColor getNeutralColor() {
-		return neutralColor;
+	public static ChatColor getNeutral() {
+		return neutral;
 	}
 	
-	/**
-	 * Register all the commands annotated with @BaseCommand.
-	 * Commands are ordered by their order of registration.
-	 * When a class is registered the commands are registered
-	 * from top to bottom.
-	 * 
-	 */
-	public static void registerClass(Class<?> commandClass) {
-		// Loop through all the classes methods
-        Method[] methods = commandClass.getMethods();
+	public static ChatColor getError() {
+		return error;
+	}
+	
+	public static ChatColor getWarning() {
+		return warning;
+	}
+	
+	public static void register(Class<?> clazz) {
+        Method[] methods = clazz.getMethods();
+        
         for (Method method : methods) {
-        	// Check if BaseCommand is part of the method
             if (method.isAnnotationPresent(BaseCommand.class)) {
-                // Get the method and annotation and place it in the map
         		commands.put(method.getAnnotation(BaseCommand.class), method);
             }
         }
 	}
 	
-	/**
-	 * Unregister all commands.
-	 * 
-	 */
-	public static void unregisterCommands() {
+	public static void unregister(Class<?> clazz) {
+        Method[] methods = clazz.getMethods();
+        
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(BaseCommand.class)) {
+        		commands.remove(method.getAnnotation(BaseCommand.class));
+            }
+        }
+	}
+		
+	public static void unregisterAll() {
 		commands.clear();
 	}
-	
-	/**
-	 * Return a list of the BaseCommands that are registered.
-	 * If no commands are present it will return an empty list.
-	 * 
-	 */
-	public static ArrayList<BaseCommand> getCommands() {
-		ArrayList<BaseCommand> cmds = new ArrayList<BaseCommand>();
-		for(BaseCommand command : commands.keySet()) {
-			cmds.add(command);
-		}
-		return cmds;
+
+	public static LinkedList<BaseCommand> getCommands() {
+		LinkedList<BaseCommand> baseCommands = new LinkedList<BaseCommand>();
+		baseCommands.addAll(commands.keySet());
+
+		return baseCommands;
 	}
 	
-	/**
-	 * Fetch a BaseCommand object by searching for an alias.
-	 * It will return the first command where the alias
-	 * matches the specified commandLabel.
-	 * 
-	 */
-	public static BaseCommand getCommand(String commandLabel) {
-		for(BaseCommand command : commands.keySet()) {
-			for(String alias : command.aliases()) {
-				if(alias.equalsIgnoreCase(commandLabel)) {
+	public static BaseCommand getCommand(String label) {
+		for (BaseCommand command : commands.keySet()) {
+			for (String alias : command.aliases()) {
+				if(label.equalsIgnoreCase(alias)) {
 					return command;
 				}
 			}
@@ -83,18 +78,12 @@ public class CommandManager {
 		return null;
 	}
 	
-	/**
-	 * Invoke a command of by using the BaseCommand object.
-	 * The CommandSender, CommandLabel, Arguments and a JavaPlugin 
-	 * object should all be used when the command is sent.
-	 * 
-	 */
-	public static void dispatchCommand(BaseCommand command, Object... object) {
+	public static void execute(BaseCommand command, Object... args) {
 		try {
-			// Invoke the command by initializing a new class and sending the arguments to the method
-			commands.get(command).invoke(commands.get(command).getDeclaringClass().newInstance(), object);
+			commands.get(command).invoke(commands.get(command).getDeclaringClass().newInstance(), args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 }
