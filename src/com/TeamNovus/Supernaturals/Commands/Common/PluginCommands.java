@@ -244,9 +244,9 @@ public class PluginCommands {
 							+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 	}
 
-	@BaseCommand(aliases = { "powers" }, desc = "View powers for a class!", usage = "[Class]", permission = Permission.COMMAND_POWERS, min = 1, max = 2)
+	@BaseCommand(aliases = { "powers" }, desc = "View powers for a class!", usage = "[Class]", permission = Permission.COMMAND_POWERS, min = 0, max = 1)
 	public void onPowersCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!(sender instanceof Player) && args.length == 1) {
+		if(!(sender instanceof Player) && args.length == 0) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
 			return;
 		}
@@ -257,7 +257,7 @@ public class PluginCommands {
 		
 		SNClass targetClass = player.getPlayerClass();
 		
-		if(args.length == 2) {
+		if(args.length == 1) {
 			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
@@ -298,7 +298,7 @@ public class PluginCommands {
 			return;
 		}
 
-		if(!(sender instanceof Player) && args.length == 1) {
+		if(!(sender instanceof Player) && args.length == 0) {
 			sender.sendMessage(ChatColor.RED + "This command cannot be ran from the console!");
 			return;
 		}
@@ -309,7 +309,7 @@ public class PluginCommands {
 		
 		SNClass targetClass = player.getPlayerClass();
 		
-		if(args.length == 2) {
+		if(args.length == 1) {
 			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
