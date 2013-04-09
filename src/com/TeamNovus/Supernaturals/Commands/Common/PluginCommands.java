@@ -46,7 +46,7 @@ public class PluginCommands {
 		
 		try  {
 			if(args.length >= 2) {
-				page = Integer.valueOf(args[1]);
+				page = Integer.valueOf(args[0]);
 			}
 		} catch(NumberFormatException ignored) {
 			sender.sendMessage(ChatColor.RED + "The specified page was not found!");
@@ -156,7 +156,7 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
 
 		} else if(args.length == 1 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
-			SNPlayer player = SNPlayers.i.getPlayer(args[1]);
+			SNPlayer player = SNPlayers.i.getPlayer(args[0]);
 
 			if(player == null) {
 				sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
@@ -258,7 +258,7 @@ public class PluginCommands {
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 2) {
-			targetClass = SNClasses.i.getBestClass(args[1]);
+			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {
@@ -310,7 +310,7 @@ public class PluginCommands {
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 2) {
-			targetClass = SNClasses.i.getBestClass(args[1]);
+			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {
@@ -352,7 +352,7 @@ public class PluginCommands {
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 2) {
-			targetClass = SNClasses.i.getBestClass(args[1]);
+			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {

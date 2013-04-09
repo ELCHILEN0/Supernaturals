@@ -17,14 +17,14 @@ public class DefaultCommands {
 		// help [Page]
 		int max = 6;
 		
-		if(args.length != 1) {
-			if(!(StringUtil.isInteger(args[1])) || Math.abs(Integer.valueOf(args[1])) * max - max >= CommandManager.getCommands().size()) {
+		if(args.length != 0) {
+			if(!(StringUtil.isInteger(args[0])) || Math.abs(Integer.valueOf(args[0])) * max - max >= CommandManager.getCommands().size()) {
 				sender.sendMessage(ChatColor.RED + "The specified page was not found.");
 				return;
 			}
 		}
 		
-		int page = args.length == 1 ? 1 : Math.abs(Integer.valueOf(args[1]));
+		int page = args.length == 0 ? 1 : Math.abs(Integer.valueOf(args[0]));
 		int total = 0;
 		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + Supernaturals.getPlugin().getName() + CommandManager.getDark() + " ]______________");
 
