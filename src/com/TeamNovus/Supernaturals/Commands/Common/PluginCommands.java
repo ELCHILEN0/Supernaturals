@@ -518,6 +518,16 @@ public class PluginCommands {
 
 		sender.sendMessage(ChatColor.GREEN + "Verbose messaging is now " + (player.isVerbose() ? ChatColor.GREEN : ChatColor.RED) + (player.isVerbose() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
 	}
+	
+	@BaseCommand(aliases = { "gui" }, desc = "Toggle the gui.", permission = Permission.COMMAND_GUI, console = false)
+	public void onGuiCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		SNPlayer player = SNPlayers.i.get((Player) sender);
+
+		player.setUsingGUI(!(player.isUsingGUI()));
+		player.updateGUI();
+
+		sender.sendMessage(ChatColor.GREEN + "The GUI is now " + (player.isUsingGUI() ? ChatColor.GREEN : ChatColor.RED) + (player.isUsingGUI() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
+	}
 
 	
 	@BaseCommand(aliases = { "reset" }, desc = "Reset all your data. DANGEROUS!", permission = Permission.COMMAND_RESET, console = false)

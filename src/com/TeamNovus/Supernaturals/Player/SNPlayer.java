@@ -754,41 +754,35 @@ public class SNPlayer implements Serializable {
 	}
 	
 	public void updateGUI() {
-		if(isOffline() && !(isUsingGUI()))
+		if(isOffline())
 			return;
 		
 		ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-		Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
+		Scoreboard scoreboard = scoreboardManager.getMainScoreboard();
 		
-//		scoreboard.registerNewObjective("health", "dummy");
-//		
-//		Objective health = scoreboard.getObjective("health");
-//		health.setDisplaySlot(DisplaySlot.BELOW_NAME);
-//		
-//		health.getScore(Bukkit.getOfflinePlayer("Health: ")).setScore(getHealth());
-//		health.setDisplayName("/" + getMaxHealth());
-//		
-//		getPlayer().setScoreboard(scoreboard);
-//
-//		getPlayer().setScoreboard(scoreboard);
-		
-		scoreboard.registerNewObjective("stats", "dummy");
-		
-		Objective stats = scoreboard.getObjective("stats");
-		stats.setDisplaySlot(DisplaySlot.SIDEBAR);	
-		
-		int mana = getMana();
-		int maxMana = getMaxMana();
-		
-		int exp = getExperience() - getTotalExperienceFor(getLevel() - 1);
-		int maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
-		
-		stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
-		
-		stats.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%")).setScore(2);
-		stats.getScore(Bukkit.getOfflinePlayer(ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%")).setScore(1);
-
-		getPlayer().setScoreboard(scoreboard);
+		if(isUsingGUI()) {
+			scoreboard.registerNewObjective("stats", "dummy");
+			
+			Objective stats = scoreboard.getObjective("stats");
+			stats.setDisplaySlot(DisplaySlot.SIDEBAR);	
+			
+			int mana = getMana();
+			int maxMana = getMaxMana();
+			
+			int exp = getExperience() - getTotalExperienceFor(getLevel() - 1);
+			int maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
+			
+			stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
+			
+			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%")).setScore(2);
+			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%")).setScore(1);
+	
+			getPlayer().setScoreboard(scoreboard);			
+		} else {
+			scoreboard.clearSlot(DisplaySlot.PLAYER_LIST);
+			scoreboard.clearSlot(DisplaySlot.BELOW_NAME);
+			scoreboard.clearSlot(DisplaySlot.SIDEBAR);	
+		}
 	}
 	
 	/**

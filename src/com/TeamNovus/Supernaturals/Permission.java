@@ -19,6 +19,7 @@ public enum Permission {
 	COMMAND_DEVOLVE("commands.devolve"),
 	COMMAND_CLASSES("commands.classes"),
 	COMMAND_VERBOSE("commands.verbose"),
+	COMMAND_GUI("commands.gui"),
 	COMMAND_RESET("commands.reset"),
 	COMMAND_MODMANA("commands.modmana"),
 	COMMAND_MODEXP("commands.modexp"),
