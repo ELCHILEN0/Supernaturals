@@ -7,9 +7,11 @@ import java.util.LinkedList;
 import org.bukkit.ChatColor;
 
 public class CommandManager {
-	private static ChatColor light = ChatColor.AQUA;
-	private static ChatColor dark = ChatColor.BLUE;
-	private static ChatColor neutral = ChatColor.LIGHT_PURPLE;
+	private static ChatColor light = ChatColor.GREEN;
+	private static ChatColor dark = ChatColor.DARK_GREEN;
+	private static ChatColor neutral = ChatColor.WHITE;
+	private static ChatColor highlight = ChatColor.AQUA;
+	private static ChatColor extra = ChatColor.DARK_RED;
 	private static ChatColor error = ChatColor.RED;
 	private static ChatColor warning = ChatColor.YELLOW;
 	
@@ -25,6 +27,14 @@ public class CommandManager {
 	
 	public static ChatColor getNeutral() {
 		return neutral;
+	}
+	
+	public static ChatColor getHighlight() {
+		return highlight;
+	}
+	
+	public static ChatColor getExtra() {
+		return extra;
 	}
 	
 	public static ChatColor getError() {

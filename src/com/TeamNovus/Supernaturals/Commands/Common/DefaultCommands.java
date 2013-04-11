@@ -26,17 +26,18 @@ public class DefaultCommands {
 		
 		int page = args.length == 0 ? 1 : Math.abs(Integer.valueOf(args[0]));
 		int total = 0;
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + Supernaturals.getPlugin().getName() + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.getPlugin().getName() + CommandManager.getExtra() + " ].__________________");
 
 		sender.sendMessage(ChatColor.GRAY + "Required: < > Optional: [ ]");
 		for (int i = max * page - max; i < CommandManager.getCommands().size() && total < max - 1; i++) {
 			BaseCommand command = CommandManager.getCommands().get(i);
-			if(!(command.hidden())) {
-				sender.sendMessage(CommandManager.getDark() + "- " + "/" + commandLabel + " " + command.aliases()[0] + (command.usage() != "" ? " " + command.usage() : "") + CommandManager.getLight() + " - " + CommandManager.getDark() + command.desc());
+			if(!(command.hidden()) && Permission.has(command.permission(), sender)) {
+				sender.sendMessage(CommandManager.getExtra() + " - " + CommandManager.getDark() + "/" + commandLabel + " " + command.aliases()[0] + (!(command.usage().equals("")) ? " " + command.usage() : "") + ": " + CommandManager.getLight() + command.desc());
 				total++;
 			}
 		}
-		sender.sendMessage(CommandManager.getLight() + "For help type: " + CommandManager.getDark() + "/" + commandLabel + " help [Page]");
+		sender.sendMessage(CommandManager.getLight() + "For help type: " + CommandManager.getHighlight() + "/" + commandLabel + " help [Page]");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 	
 }

@@ -758,10 +758,11 @@ public class SNPlayer implements Serializable {
 			return;
 		
 		ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-		Scoreboard scoreboard = scoreboardManager.getMainScoreboard();
+		Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
 		
 		if(isUsingGUI()) {
-			scoreboard.registerNewObjective("stats", "dummy");
+			if(scoreboard.getObjective("stats") == null)
+				scoreboard.registerNewObjective("stats", "dummy");
 			
 			Objective stats = scoreboard.getObjective("stats");
 			stats.setDisplaySlot(DisplaySlot.SIDEBAR);	

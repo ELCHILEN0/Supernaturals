@@ -41,7 +41,7 @@ public class BaseCommandExecutor implements CommandExecutor {
 			return true;
 		}
 		
-		if(command.permission() != null && !(Permission.has(command.permission(), sender))) {
+		if(command.permission() != null && !(command.permission().equals(Permission.NONE)) && !(Permission.has(command.permission(), sender))) {
 			sender.sendMessage(CommandManager.getError() + "You do not have permission for this command!");
 			return true;
 		}
