@@ -1,6 +1,9 @@
 package com.TeamNovus.Supernaturals.Util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,9 +12,14 @@ import org.apache.commons.lang.StringUtils;
 public class StringUtil {
 
 	public static boolean startsWithVowel(String s) {
-		return s.toLowerCase().startsWith("a".toLowerCase()) || s.toLowerCase().startsWith("e".toLowerCase()) ||
-				s.toLowerCase().startsWith("i".toLowerCase()) || s.toLowerCase().startsWith("a".toLowerCase()) ||
-				s.toLowerCase().startsWith("o".toLowerCase()) || s.toLowerCase().startsWith("u".toLowerCase());
+		ArrayList<String> vowels = new ArrayList<String>();
+		vowels.add("a");
+		vowels.add("e");
+		vowels.add("i");
+		vowels.add("o");
+		vowels.add("u");
+		
+		return vowels.contains(s.toLowerCase().substring(0, 1));
 	}
 	
 	public static boolean startsWithConsonant(String s) {
@@ -20,16 +28,47 @@ public class StringUtil {
 	
 	public static boolean isInteger(String s) {
 		try {
-			Integer.valueOf(s);
-			return true;
+			Integer.valueOf(s);			
 		} catch (NumberFormatException e) {
 			return false;
 		}
+		
+		return true;
 	}
 
-	public static String concat(String[] s, int start, int end) {
+	public static String concat(String[] s, String separator, int start, int end) {
 		String[] args = Arrays.copyOfRange(s, start, end);
-		return StringUtils.join(args, " ");
+
+		return StringUtils.join(args, separator);
+	}
+	
+	public static LinkedList<String> paginate(List<String> input, Integer page, Integer length) {
+		LinkedList<String> output = new LinkedList<String>();
+		
+		int start;
+		int end;
+		
+		start = page * length;
+		end = start + length - 1;
+		
+		if(input.size() == 0 || start < 0 || end < 0)
+			return output;
+		
+		if(start >= input.size())
+			start = input.size() - 1;
+		
+		if(end >= input.size())
+			end = input.size() - 1;
+				
+		for (int i = start; i <= end; i++) {
+			output.add(input.get(i));
+		}
+		
+		return output;
+	}
+	
+	public static int maxPages(List<String> input, Integer length) {
+		return (int) Math.ceil(1.0 * input.size() / length);
 	}
 
 	public final static long SECONDS = 60;

@@ -777,13 +777,13 @@ public class SNPlayer implements Serializable {
 			
 			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%")).setScore(2);
 			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%")).setScore(1);
-	
-			getPlayer().setScoreboard(scoreboard);			
 		} else {
 			scoreboard.clearSlot(DisplaySlot.PLAYER_LIST);
 			scoreboard.clearSlot(DisplaySlot.BELOW_NAME);
 			scoreboard.clearSlot(DisplaySlot.SIDEBAR);	
 		}
+		
+		getPlayer().setScoreboard(scoreboard);
 	}
 	
 	/**
@@ -872,15 +872,15 @@ public class SNPlayer implements Serializable {
 		return "SNPlayer [id=" + id + ", name=" + name + ", mana=" + mana
 				+ ", maxMana=" + maxMana + ", foodLevel=" + foodLevel
 				+ ", maxFoodLevel=" + maxFoodLevel + ", playerClassName="
-				+ playerClassName + ", binding="
-				+ binding + ", cooldowns=" + cooldowns + ", experience="
-				+ experience + ", attributePoints=" + attributePoints
-				+ ", healthAttribute=" + healthAttribute
-				+ ", healthRegenAttribute=" + healthRegenAttribute
-				+ ", manaAttribute=" + manaAttribute + ", manaRegenAttribute="
-				+ manaRegenAttribute + ", speedAttribute=" + speedAttribute
-				+ ", attackAttribute=" + attackAttribute
-				+ ", defenseAttribute=" + defenseAttribute + "]";
+				+ playerClassName + ", binding=" + binding + ", cooldowns="
+				+ cooldowns + ", experience=" + experience
+				+ ", attributePoints=" + attributePoints + ", healthAttribute="
+				+ healthAttribute + ", healthRegenAttribute="
+				+ healthRegenAttribute + ", manaAttribute=" + manaAttribute
+				+ ", manaRegenAttribute=" + manaRegenAttribute
+				+ ", speedAttribute=" + speedAttribute + ", attackAttribute="
+				+ attackAttribute + ", defenseAttribute=" + defenseAttribute
+				+ ", verbose=" + verbose + ", gui=" + gui + "]";
 	}
 	
 	@Override

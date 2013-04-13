@@ -23,64 +23,42 @@ import com.TeamNovus.Supernaturals.Util.ChatUtil;
 import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class PluginCommands {
-	/* Player Commands:
-	 * 	Default:
-	 *  /sn online
-	 *  /sn info [Player]
-	 *  /sn mana
-	 *  /sn speed
-	 *  /sn health
-	 *  /sn hunger
-	 *  /sn level
-	 *  /sn classes
-	 *  /sn specs <Class>
-	 *  /sn evolve <Class>
-	 *  /sn devolve
-	 *  /sn reset
-	 *  
-	 */
 
 	@BaseCommand(aliases = { "tutorial", "tut" }, desc = "Learn all about Supernaturals!", permission = Permission.COMMAND_TUTORIAL, usage = "[Page]", min = 0, max = 1)
-	public void onTutorialCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Integer page = 0;
-		
-		try  {
-			if(args.length >= 2) {
-				page = Integer.valueOf(args[0]);
-			}
-		} catch(NumberFormatException ignored) {
-			sender.sendMessage(ChatColor.RED + "The specified page was not found!");
-			return;
-		}
+	public void onTutorialCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {		
+		int page = args.length >= 1 && StringUtil.isInteger(args[0]) ? Math.abs(Integer.valueOf(args[0])) : 1;
 		
 		switch (Math.abs(page)) {
 		case 0:
 		case 1:
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 1" + CommandManager.getDark() + " ]______________");
-			sender.sendMessage(CommandManager.getNeutral() + "Welcome to Supernaturals!");
-			sender.sendMessage(CommandManager.getNeutral() + "First, try joining a class! /sn evolve <Class>");
-			sender.sendMessage(CommandManager.getNeutral() + "To see all the classes you can join type /sn path");
-			sender.sendMessage(CommandManager.getNeutral() + "Now that you have joined a class you can devolve by typing /sn devolve!");
-			sender.sendMessage(CommandManager.getNeutral() + "To continue type /sn tut 2");
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (1/3)" + CommandManager.getExtra() + " ].___________________");
+			sender.sendMessage(CommandManager.getLight() + "Welcome to Supernaturals!");
+			sender.sendMessage(CommandManager.getLight() + "First, try joining a class! /sn evolve <Class>");
+			sender.sendMessage(CommandManager.getLight() + "To see all the classes you can join type /sn path");
+			sender.sendMessage(CommandManager.getLight() + "Now that you have joined a class you can devolve by typing /sn devolve!");
+			sender.sendMessage(CommandManager.getLight() + "To continue type /sn tutorial 2");
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 			break;
 			
 		case 2:
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 2" + CommandManager.getDark() + " ]______________");
-			sender.sendMessage(CommandManager.getNeutral() + "When you are in a class you gain Experience from different sources!");
-			sender.sendMessage(CommandManager.getNeutral() + "This experience can be seen in /sn level.  This also tells you how much to level up!");
-			sender.sendMessage(CommandManager.getNeutral() + "Leveling up lets you unlock new powers, abilities and specs!");
-			sender.sendMessage(CommandManager.getNeutral() + "To see the unlockable perks type: /sn powers, /sn abilities and /sn specs");
-			sender.sendMessage(CommandManager.getNeutral() + "To continue type /sn tut 3");		
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (2/3)" + CommandManager.getExtra() + " ].___________________");
+			sender.sendMessage(CommandManager.getLight() + "When you are in a class you gain Experience from different sources!");
+			sender.sendMessage(CommandManager.getLight() + "This experience can be seen in /sn level.  This also tells you how much to level up!");
+			sender.sendMessage(CommandManager.getLight() + "Leveling up lets you unlock new powers, abilities and specs!");
+			sender.sendMessage(CommandManager.getLight() + "To see the unlockable perks type: /sn powers, /sn abilities and /sn specs");
+			sender.sendMessage(CommandManager.getLight() + "To continue type /sn tutorial 3");		
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 			break;
 			
 		case 3:
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Tutorial Page 2" + CommandManager.getDark() + " ]______________");
-			sender.sendMessage(CommandManager.getNeutral() + "When you are in a class you gain Experience from different sources!");
-			sender.sendMessage(CommandManager.getNeutral() + "Different classes have different and unique powers!");
-			sender.sendMessage(CommandManager.getNeutral() + "To cast a power you left-click with a blaze rod!  To switch powers, right-click!");
-			sender.sendMessage(CommandManager.getNeutral() + "Abilities are passive and are active at all times.");
-			sender.sendMessage(CommandManager.getNeutral() + "Thats it!  We hope you enjoy using Supernaturals!");
-			sender.sendMessage(CommandManager.getNeutral() + "To see all available commands type /sn help [Page]");		
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (3/3)" + CommandManager.getExtra() + " ].___________________");
+			sender.sendMessage(CommandManager.getLight() + "When you are in a class you gain Experience from different sources!");
+			sender.sendMessage(CommandManager.getLight() + "Different classes have different and unique powers!");
+			sender.sendMessage(CommandManager.getLight() + "To cast a power you left-click with a blaze rod!  To switch powers, right-click!");
+			sender.sendMessage(CommandManager.getLight() + "Abilities are passive and are active at all times.");
+			sender.sendMessage(CommandManager.getLight() + "Thats it!  We hope you enjoy using Supernaturals!");
+			sender.sendMessage(CommandManager.getLight() + "To see all available commands type /sn help [Page]");		
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 			break;
 
 		default:
@@ -91,7 +69,6 @@ public class PluginCommands {
 	
 	@BaseCommand(aliases = { "online" }, desc = "View information on online players.", permission = Permission.COMMAND_ONLINE)
 	public void onOnlineCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Online Players" + CommandManager.getDark() + " ]______________");
 		
 		ArrayList<SNClass> classes = new ArrayList<SNClass>();
 
@@ -116,9 +93,18 @@ public class PluginCommands {
 
 		}
 
+		if(lines.size() == 0) {
+			sender.sendMessage(CommandManager.getError() + "There are no players online!");
+			return;
+		}
+		
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Online Players" + CommandManager.getExtra() + " ].__________________");
+		
 		for(String line : lines) {
 			sender.sendMessage(line);
 		}
+		
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "info", "stats" }, desc = "View information on online players.", usage = "[Player]", permission = Permission.COMMAND_INFO, max = 1)
@@ -131,7 +117,7 @@ public class PluginCommands {
 
 			SNPlayer player = SNPlayers.i.get((Player) sender);
 
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Info" + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Info" + CommandManager.getExtra() + " ].___________________");
 			
 			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
 			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
@@ -155,6 +141,7 @@ public class PluginCommands {
 			
 			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
 
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 		} else if(args.length == 1 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
 			SNPlayer player = SNPlayers.i.getPlayer(args[0]);
 
@@ -163,7 +150,7 @@ public class PluginCommands {
 				return;
 			}
 
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Info" + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Info" + CommandManager.getExtra() + " ].___________________");
 			
 			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
 			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
@@ -186,6 +173,8 @@ public class PluginCommands {
 								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
 			
 			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+			
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 		} else {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
 		}
@@ -195,53 +184,55 @@ public class PluginCommands {
 	public void onSpeedCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Speed" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Speed" + CommandManager.getExtra() + " ].___________________");
 		sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
+
 	}
 
 	@BaseCommand(aliases = { "mana" }, desc = "View your current mana.", permission = Permission.COMMAND_MANA, console = false)
 	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Mana" + CommandManager.getDark() + " ]______________");
-		
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Mana" + CommandManager.getExtra() + " ].___________________");
 		sender.sendMessage(CommandManager.getDark() + "Mana: " 
 	 			+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
 				+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "health" }, desc = "View your current health.", permission = Permission.COMMAND_HEALTH, console = false)
 	public void onHealthCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Health" + CommandManager.getDark() + " ]______________");
-		
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Health" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Health: "
 				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
 				+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "hunger", "food" }, desc = "View your current health.", permission = Permission.COMMAND_HUNGER, console = false)
 	public void onHungerCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Hunger" + CommandManager.getDark() + " ]______________");
-		
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Hunger" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Hunger: " 
 				+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
 				+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "level" }, desc = "View your current level.", permission = Permission.COMMAND_LEVEL, console = false)
 	public void onLevelCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Level" + CommandManager.getDark() + " ]______________");
-		
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Level" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 		player.sendMessage(CommandManager.getDark() + "Experience: "
 							+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 							+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "powers" }, desc = "View powers for a class!", usage = "[Class]", permission = Permission.COMMAND_POWERS, min = 0, max = 1)
@@ -253,7 +244,7 @@ public class PluginCommands {
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Powers" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Powers" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -278,9 +269,9 @@ public class PluginCommands {
 				
 				for(Power power : targetClass.getUniquePowers(i)) {
 					if(player.getPowers().contains(power)) {
-						sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + power.getName() + ": " + power.getDesc());
+						sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + power.getName() + ": " + CommandManager.getLight() + power.getDesc());
 					} else {
-						sender.sendMessage(ChatColor.RED + "Level " + i + " - "  + ChatColor.GOLD + power.getName() + ": " + power.getDesc());
+						sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + power.getName() + ": " + CommandManager.getLight() + power.getDesc());
 					}
 				}
 			}
@@ -305,7 +296,7 @@ public class PluginCommands {
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Abilities" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Abilities" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -330,9 +321,9 @@ public class PluginCommands {
 				
 				for(Ability ability : targetClass.getUniqueAbilities(i)) {
 					if(player.getAbilities().contains(ability)) {
-						sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + ability.getName() + ": " + ability.getDesc());
+						sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + ": " + CommandManager.getLight() + ability.getDesc());
 					} else {
-						sender.sendMessage(ChatColor.RED + "Level " + i + " - "  + ChatColor.GOLD + ability.getName() + ": " + ability.getDesc());
+						sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + ability.getName() + ": " + CommandManager.getLight() + ability.getDesc());
 					}
 				}
 			}
@@ -347,7 +338,7 @@ public class PluginCommands {
 	public void onSpecsCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Class Specs" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Specs" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
@@ -371,37 +362,37 @@ public class PluginCommands {
 
 			if(player.getLevel() >= i && player.getPlayerClass().equals(targetClass)) {
 				if(targetClass.getMaxHealth(i) != targetClass.getMaxHealth(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + "Health: " + targetClass.getMaxHealth(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Health: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
 				}
 				
 				if(targetClass.getMaxMana(i) != targetClass.getMaxMana(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + "Mana: " + targetClass.getMaxMana(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Mana: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
 				}
 				
 				if(targetClass.getMaxFoodLevel(i) != targetClass.getMaxFoodLevel(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + "Hunger: " + targetClass.getMaxFoodLevel(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Hunger: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
 				}
 				
 				if(targetClass.getSpeed(i) != targetClass.getSpeed(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + " - " + ChatColor.GOLD + "Speed: " + targetClass.getSpeed(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Speed: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
 				}
 
 
 			} else {
 				if(targetClass.getMaxHealth(i) != targetClass.getMaxHealth(i - 1)) {
-					sender.sendMessage(ChatColor.RED + "Level " + i + " - " + ChatColor.GOLD + "Health: " + targetClass.getMaxHealth(i));
+					sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Health: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
 				}
 				
 				if(targetClass.getMaxMana(i) != targetClass.getMaxMana(i - 1)) {
-					sender.sendMessage(ChatColor.RED + "Level " + i + " - " + ChatColor.GOLD + "Mana: " + targetClass.getMaxMana(i));
+					sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Mana: " + CommandManager.getLight() + targetClass.getMaxMana(i));
 				}
 				
 				if(targetClass.getMaxFoodLevel(i) != targetClass.getMaxFoodLevel(i - 1)) {
-					sender.sendMessage(ChatColor.RED + "Level " + i + " - " + ChatColor.GOLD + "Hunger: " + targetClass.getMaxFoodLevel(i));
+					sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Hunger: " + CommandManager.getLight() + targetClass.getMaxFoodLevel(i));
 				}
 				
 				if(targetClass.getSpeed(i) != targetClass.getSpeed(i - 1)) {
-					sender.sendMessage(ChatColor.RED + "Level " + i + " - " + ChatColor.GOLD + "Speed: " + targetClass.getSpeed(i));
+					sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Speed: " + CommandManager.getLight() + targetClass.getSpeed(i));
 				}
 			}
 		}
@@ -413,7 +404,7 @@ public class PluginCommands {
 	
 	@BaseCommand(aliases = { "classes" }, desc = "View available classes.", permission = Permission.COMMAND_CLASSES, console = false)
 	public void onClassesCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + "Player Classes" + CommandManager.getDark() + " ]______________");
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Player Classes" + CommandManager.getExtra() + " ].__________________");		
 		
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
@@ -449,6 +440,8 @@ public class PluginCommands {
 				sender.sendMessage(CommandManager.getDark() + "Locked Classes: " + ChatColor.RESET + StringUtils.join(unjoinableClasses, ", "));
 			}
 		}
+		
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
 
 	@BaseCommand(aliases = { "evolve", "convert" }, desc = "Evolve to another class.", usage = "<Class>", permission = Permission.COMMAND_EVOLVE, console = false, min = 1, max = 1)
