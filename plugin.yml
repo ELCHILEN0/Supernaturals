@@ -1,7 +1,8 @@
 name: Supernaturals
+version: 2.0.0
 author: ELCHILEN0
 description: Bring a RPG experience to Minecraft!
-version: 2.0.0
+website: http://www.novuscraft.org
 main: com.TeamNovus.Supernaturals.Supernaturals
 commands:
   supernaturals:

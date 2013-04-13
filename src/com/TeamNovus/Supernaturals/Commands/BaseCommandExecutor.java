@@ -15,11 +15,12 @@ public class BaseCommandExecutor implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(CommandManager.getDark() + "______________[ " + CommandManager.getLight() + Supernaturals.getPlugin().getName() + CommandManager.getDark() + " ]______________");
+			sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.getPlugin().getName() + CommandManager.getExtra() + " ].__________________");
 			sender.sendMessage(CommandManager.getDark() + "Description: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getDescription());
 			sender.sendMessage(CommandManager.getDark() + "Author: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getAuthors().get(0));
 			sender.sendMessage(CommandManager.getDark() + "Version: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getVersion());
 			sender.sendMessage(CommandManager.getDark() + "Website: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getWebsite());
+			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 			return true;
 		}
 		
