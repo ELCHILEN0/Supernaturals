@@ -1,0 +1,9 @@
+name: Supernaturals
+version: ${project.version}
+author: ELCHILEN0
+description: Bring a RPG experience to Minecraft!
+website: http://www.novuscraft.org
+main: com.TeamNovus.Supernaturals.Supernaturals
+commands:
+  supernaturals:
+    aliases: [supernatural, sn]
