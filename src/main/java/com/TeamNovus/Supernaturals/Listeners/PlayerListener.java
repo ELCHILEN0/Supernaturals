@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -38,6 +39,23 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(final PlayerLoginEvent event) {
+		SNPlayers.i.get(event.getPlayer());
+		
+		Bukkit.getServer().getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
+			
+			public void run() {
+				SNPlayer player = SNPlayers.i.get(event.getPlayer());
+				
+				if(player.isOnline()) {
+					player.syncFields(false);
+					player.updateGUI();
+				}
+			}
+		});
+	}
+	
+	@EventHandler
+	public void onPlayerChangedWorld(final PlayerChangedWorldEvent event) {
 		SNPlayers.i.get(event.getPlayer());
 		
 		Bukkit.getServer().getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {

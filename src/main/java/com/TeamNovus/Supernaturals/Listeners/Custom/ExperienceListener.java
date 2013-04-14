@@ -25,7 +25,7 @@ public class ExperienceListener implements Listener {
 	
 	public ExperienceListener() {
 		// Setup block break sources:
-		blockBreakSources.put(Material.LOG, 2);
+		blockBreakSources.put(Material.LOG, 1);
 		blockBreakSources.put(Material.COAL_ORE, 2);
 		blockBreakSources.put(Material.IRON_ORE, 4);
 		blockBreakSources.put(Material.GOLD_ORE, 6);
