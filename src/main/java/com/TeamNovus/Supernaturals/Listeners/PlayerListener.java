@@ -61,6 +61,11 @@ public class PlayerListener implements Listener {
 
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
+		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
+			player.sendMessage(ChatColor.RED + "Supernaturals is disabled in " + ChatColor.YELLOW + player.getPlayer().getWorld().getName() + ChatColor.RED + "!");
+			return;
+		}
+		
 		// Bind/Switch:
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
 				event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
