@@ -3,6 +3,8 @@
 clear
 echo "Building and Packaging Project"
 
+mvn package
+
 while getopts o:c option
 do
         case "${option}"
