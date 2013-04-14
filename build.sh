@@ -5,6 +5,8 @@ echo "Building and Packaging Project"
 
 mvn package
 
+echo "JAR file packaged sucessfully!"
+
 while getopts o:c option
 do
         case "${option}"
@@ -18,8 +20,8 @@ if [ -z "$OUTPUT" ]
   then
     echo "No file path specified.  Skipping copy."
   else
-    echo "Copying packaged file…"
-    cp target/*.jar $OUTPUT
+    echo "Copying packaged file..."
+    cp target/*-standalone.jar $OUTPUT
 fi
 
 if [ $CLEAR ]
