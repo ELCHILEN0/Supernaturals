@@ -775,8 +775,19 @@ public class SNPlayer implements Serializable {
 			
 			stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
 			
-			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%")).setScore(2);
-			stats.getScore(Bukkit.getOfflinePlayer(ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%")).setScore(1);
+			String manaDisplay = ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%";
+			String expDisplay = ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%";
+			
+			if(manaDisplay.length() > 16) {
+				manaDisplay = manaDisplay.substring(0, 15);
+			}
+			
+			if(expDisplay.length() > 16) {
+				expDisplay = expDisplay.substring(0, 15);
+			}
+			
+			stats.getScore(Bukkit.getOfflinePlayer(manaDisplay)).setScore(2);
+			stats.getScore(Bukkit.getOfflinePlayer(expDisplay)).setScore(1);
 		} else {
 			scoreboard.clearSlot(DisplaySlot.PLAYER_LIST);
 			scoreboard.clearSlot(DisplaySlot.BELOW_NAME);
