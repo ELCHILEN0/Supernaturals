@@ -12,20 +12,45 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
+import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
+import com.comphenix.taghelper.ReceiveNameTagEvent;
+import com.comphenix.taghelper.TagHelperMod;
 
 public class PlayerListener implements Listener {
+	
+	@EventHandler
+	public void onRecieveNameTag(ReceiveNameTagEvent event) {
+		SNPlayer player = SNPlayers.i.get(event.getWatched());
+		
+		event.setTag(player.getPlayerClass().getColor() + event.getWatched().getName());
+	}
+	
+	@EventHandler
+	public void onPlayerClassChange(final PlayerClassChangeEvent event) {
+		final TagHelperMod tagHelper = (TagHelperMod) Bukkit.getPluginManager().getPlugin("TagHelper");
+
+		if(tagHelper != null) {
+			Bukkit.getScheduler().runTaskLater(Supernaturals.getPlugin(), new Runnable() {
+				
+				@Override
+				public void run() {
+					tagHelper.refreshPlayer(event.getPlayer());		
+				}
+			}, 1);
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerManaChange(PlayerManaChangeEvent event) {			
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
 		if(player.getMana() < player.getMaxMana()) {
-			if(player.getMana() + event.getAmount() >  player.getMaxMana()) {
+			if(player.getMana() + event.getAmount() > player.getMaxMana()) {
 				event.setAmount(player.getMaxMana() - player.getMana());
 			}
 			
