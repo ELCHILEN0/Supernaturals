@@ -34,7 +34,7 @@ public class PluginCommands {
 			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (1/3)" + CommandManager.getExtra() + " ].___________________");
 			sender.sendMessage(CommandManager.getLight() + "Welcome to Supernaturals!");
 			sender.sendMessage(CommandManager.getLight() + "First, try joining a class! /sn evolve <Class>");
-			sender.sendMessage(CommandManager.getLight() + "To see all the classes you can join type /sn path");
+			sender.sendMessage(CommandManager.getLight() + "To see all the classes you can join type /sn classes");
 			sender.sendMessage(CommandManager.getLight() + "Now that you have joined a class you can devolve by typing /sn devolve!");
 			sender.sendMessage(CommandManager.getLight() + "To continue type /sn tutorial 2");
 			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
