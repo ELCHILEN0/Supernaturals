@@ -1,7 +1,9 @@
 package com.TeamNovus.Supernaturals.Listeners.Custom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -16,7 +18,10 @@ import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Commands.CommandManager;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
+import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
+import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.TeamNovus.Supernaturals.Util.ChatUtil;
 
 public class ExperienceListener implements Listener {
@@ -56,6 +61,43 @@ public class ExperienceListener implements Listener {
 		
 		event.getPlayer().sendMessage(ChatColor.GREEN + "You are now level " + ChatColor.YELLOW + player.getLevel() + ChatColor.GREEN + "!");
 		Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now a level " + ChatColor.YELLOW + player.getLevel() + " " + player.getPlayerClass().getColor() + player.getPlayerClass().getName() + ChatColor.GREEN + "!");
+	
+		SNClass playerClass = player.getPlayerClass();
+
+		if(playerClass.hasChangedFrom(player.getLevel() - 1, player.getLevel())) {
+			player.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Level Up" + CommandManager.getExtra() + " ].___________________");		
+
+			if(playerClass.getMaxHealth(player.getLevel()) != playerClass.getMaxHealth(player.getLevel() - 1))
+				player.sendMessage(CommandManager.getDark() + "Max Health: " + CommandManager.getLight() + playerClass.getMaxHealth(player.getLevel()));
+			if(playerClass.getMaxMana(player.getLevel()) != playerClass.getMaxMana(player.getLevel() - 1))
+				player.sendMessage(CommandManager.getDark() + "Max Mana: " + CommandManager.getLight() + playerClass.getMaxMana(player.getLevel()));
+			if(playerClass.getMaxMana(player.getLevel()) != playerClass.getMaxFoodLevel(player.getLevel() - 1))
+				player.sendMessage(CommandManager.getDark() + "Max Hunger: " + CommandManager.getLight() + playerClass.getMaxMana(player.getLevel()));
+			if(playerClass.getMaxMana(player.getLevel()) != playerClass.getMaxMana(player.getLevel() - 1))
+				player.sendMessage(CommandManager.getDark() + "Max Speed: " + CommandManager.getLight() + playerClass.getSpeed(player.getLevel()));
+			
+			if(playerClass.getUniquePowers(player.getLevel()).size() > 0) {
+				ArrayList<String> powers = new ArrayList<String>();
+				
+				for(Power power : playerClass.getUniquePowers(player.getLevel())) {
+					powers.add(power.getName());
+				}
+				
+				player.sendMessage(CommandManager.getDark() + "New Powers: " + CommandManager.getLight() + StringUtils.join(powers.toArray(), ", "));
+			}
+
+			if(playerClass.getUniqueAbilities(player.getLevel()).size() > 0) {
+				ArrayList<String> abilities = new ArrayList<String>();
+				
+				for(Ability ability : playerClass.getUniqueAbilities(player.getLevel())) {
+					abilities.add(ability.getName());
+				}
+				
+				player.sendMessage(CommandManager.getDark() + "New Abilities: " + CommandManager.getLight() + StringUtils.join(abilities.toArray(), ", "));
+			}
+			
+			player.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
+		}
 	}
 	
 	public void gainExp(SNPlayer player, Integer exp) {
