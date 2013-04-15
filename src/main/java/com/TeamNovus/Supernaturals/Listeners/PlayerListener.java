@@ -26,7 +26,7 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onRecieveNameTag(ReceiveNameTagEvent event) {
 		SNPlayer player = SNPlayers.i.get(event.getWatched());
-		
+
 		event.setTag(player.getPlayerClass().getColor() + event.getWatched().getName());
 	}
 	

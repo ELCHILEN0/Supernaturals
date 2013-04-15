@@ -7,3 +7,4 @@ main: com.TeamNovus.Supernaturals.Supernaturals
 commands:
   supernaturals:
     aliases: [supernatural, sn]
+soft-depend: [ProtocolLib, TagHelper]
