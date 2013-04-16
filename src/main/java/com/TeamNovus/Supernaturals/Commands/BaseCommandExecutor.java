@@ -1,16 +1,20 @@
 package com.TeamNovus.Supernaturals.Commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.Supernaturals;
 
-public class BaseCommandExecutor implements CommandExecutor {
+public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
@@ -55,4 +59,16 @@ public class BaseCommandExecutor implements CommandExecutor {
 		return true;
 	}
 	
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		for(BaseCommand command : CommandManager.getCommands()) {
+			for(String alias : command.aliases()) {
+				list.add(alias);
+			}
+		}
+		
+		return list;		
+	}
 }
