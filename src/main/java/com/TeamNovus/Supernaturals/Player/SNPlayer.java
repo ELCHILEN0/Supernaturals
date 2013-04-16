@@ -73,6 +73,13 @@ public class SNPlayer implements Serializable {
 	@Column(name = "attribute_points")
 	private Integer attributePoints;
 
+	// Stats:
+	@Column(name = "kills")
+	private Integer kills;
+	
+	@Column(name = "deaths")
+	private Integer deaths;
+	
 	// Attributes:
 	private Integer healthAttribute;
 	private Integer healthRegenAttribute;
@@ -104,7 +111,11 @@ public class SNPlayer implements Serializable {
 		this.experience = 0;
 		this.attributePoints = 0;
 
-		// Statistics:
+		// Stats:
+		this.kills = 0;
+		this.deaths = 0;
+		
+		// Attributes:
 		this.healthAttribute = 0;
 		this.healthRegenAttribute = 0;
 		this.manaAttribute = 0;
@@ -571,6 +582,52 @@ public class SNPlayer implements Serializable {
 	 */
 	public void setLevel(Integer level) {
 		setExperience(getExperienceFor(level));
+	}
+	
+	/**
+	 * Get the total number of kills.
+	 * 
+	 * @return - The total number of kills.
+	 */
+	public Integer getKills() {
+		return kills;
+	}
+	
+	/**
+	 * Set the total number of kills.
+	 * 
+	 * @param kills - The new number of kills.
+	 */
+	public void setKills(Integer kills) {
+		this.kills = kills;
+	}
+	
+	public double getKD() {
+		if(kills == 0) {
+			return -deaths;
+		} else if(deaths == 0) {
+			return kills;
+		} else {
+			return 1.0 * kills / deaths;
+		}
+	}
+	
+	/**
+	 * Get the total number of player deaths.
+	 * 
+	 * @return - The total number of player deaths.
+	 */
+	public Integer getDeaths() {
+		return deaths;
+	}
+	
+	/**
+	 * Set the total number of player deaths.
+	 * 
+	 * @param deaths - The total number of player deaths.
+	 */
+	public void setDeaths(Integer deaths) {
+		this.deaths = deaths;
 	}
 
 	/**

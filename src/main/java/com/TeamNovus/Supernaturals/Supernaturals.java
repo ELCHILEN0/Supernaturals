@@ -16,6 +16,7 @@ import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
+import com.TeamNovus.Supernaturals.Listeners.Custom.KillDeathListener;
 import com.TeamNovus.Supernaturals.Tasks.CooldownTask;
 import com.TeamNovus.Supernaturals.Tasks.EntityTickTask;
 import com.TeamNovus.Supernaturals.Tasks.ManaRegainTask;
@@ -40,6 +41,7 @@ public class Supernaturals extends JavaPlugin {
 		// Custom Field Listeners:
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ExperienceListener(), this);
+		Bukkit.getPluginManager().registerEvents(new KillDeathListener(), this);
 
 		// Schedule Tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);
@@ -60,11 +62,14 @@ public class Supernaturals extends JavaPlugin {
 	}
 
 	public void onDisable() {
-
 		// Save all the data to the database.
 		StorageManager.getInstance().savePlayers();
 		StorageManager.getInstance().saveEntities();
 		
+		// Unscheudle all the tasks.
+		Bukkit.getScheduler().cancelTasks(this);
+		
+		// Nullify any static references.
 		plugin = null;
 	}
 

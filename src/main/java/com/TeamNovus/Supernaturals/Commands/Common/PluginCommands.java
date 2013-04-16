@@ -1,6 +1,7 @@
 package com.TeamNovus.Supernaturals.Commands.Common;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -106,7 +107,57 @@ public class PluginCommands {
 		
 		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 	}
-
+	
+	@BaseCommand(aliases = { "kd" }, desc = "View your kill-death ratio.", permission = Permission.COMMAND_KD, console = false)
+	public void onKillDeathCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		SNPlayer player = SNPlayers.i.get((Player) sender);
+		
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Player KD" + CommandManager.getExtra() + " ].__________________");
+		
+		sender.sendMessage(CommandManager.getDark() + "Kills: " + CommandManager.getLight() + player.getKills());
+		sender.sendMessage(CommandManager.getDark() + "Deaths: " + CommandManager.getLight() + player.getDeaths());
+		sender.sendMessage(CommandManager.getDark() + "Ratio: " + CommandManager.getLight() + (player.getDeaths() > 0 ? 1.0 * player.getKills() / player.getDeaths() : player.getKills()));
+		
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
+	}
+	
+	@BaseCommand(aliases = { "top" }, desc = "View the top players on the server!", permission = Permission.COMMAND_TOP)
+	public void onTopCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {		
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Top Players" + CommandManager.getExtra() + " ].__________________");
+		
+		LinkedList<SNPlayer> maxPlayers = new LinkedList<SNPlayer>();
+		
+		int limit = 10;
+		for (int i = 0; i < limit; i++) {
+			SNPlayer maxPlayer = null;
+			for(SNPlayer player : SNPlayers.i.getAllPlayers()) {
+				if(maxPlayers.contains(player))
+					continue;
+				
+				if(maxPlayer == null) {
+					maxPlayer = player;
+				} else {
+					if(player.getKD() > maxPlayer.getKD()) {
+						maxPlayer = player;
+					}
+				}
+			}
+			
+			if(maxPlayer != null)
+				maxPlayers.add(maxPlayer);
+		}
+		
+		for (int i = 0; i < maxPlayers.size(); i++) {
+			SNPlayer player = maxPlayers.get(i);
+			
+			sender.sendMessage(CommandManager.getDark() + "" + (i + 1) + ". " + CommandManager.getLight() + player.getName() + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + ", " + CommandManager.getDark() + "KD: " + CommandManager.getLight() + player.getKD());
+		
+//			"1. ELCHILEN0 - Level: 23, KD: 10.0"
+		}
+		
+		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
+	}
+	
 	@BaseCommand(aliases = { "info", "stats" }, desc = "View information on online players.", usage = "[Player]", permission = Permission.COMMAND_INFO, max = 1)
 	public void onInfoCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0 && Permission.has(Permission.COMMAND_INFO, sender)) {
@@ -119,9 +170,9 @@ public class PluginCommands {
 
 			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Info" + CommandManager.getExtra() + " ].___________________");
 			
-			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
-			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-			sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(CommandManager.getDark() + "Name: " + CommandManager.getLight() + player.getName());
+			sender.sendMessage(CommandManager.getDark() + "Class: " + CommandManager.getLight() + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
+			sender.sendMessage(CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
 			player.sendMessage(CommandManager.getDark() + "Experience: "
 								+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"

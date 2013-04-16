@@ -5,6 +5,8 @@ import org.bukkit.command.CommandSender;
 public enum Permission {
 	COMMAND_TUTORIAL("commands.tutorial"),
 	COMMAND_ONLINE("commands.online"),
+	COMMAND_KD("commands.kd"),
+	COMMAND_TOP("commands.top"),
 	COMMAND_INFO("commands.info"),
 	COMMAND_INFO_OTHERS("commands.info.others"), 
 	COMMAND_SPEED("commands.speed"),
