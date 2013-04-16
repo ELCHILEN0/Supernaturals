@@ -28,11 +28,11 @@ public class Blind extends Ability {
 				((LivingEntity) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, duration, getAmplifier()));
 
 				if(event.getEntity() instanceof Player) {
-					((Player) event.getEntity()).sendMessage(ChatColor.ITALIC + "" + ChatColor.GREEN + "Enemy Poisioned!");
+					((Player) event.getEntity()).sendMessage(ChatColor.ITALIC + "" + ChatColor.GREEN + "Enemy has been blinded!");
 				}
 				
 				if(event.getDamager() instanceof Player) {
-					((Player) event.getDamager()).sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "You have been poisioned!");
+					((Player) event.getDamager()).sendMessage(ChatColor.ITALIC + "" + ChatColor.RED + "You have been blinded!");
 				}
 			}
 		}

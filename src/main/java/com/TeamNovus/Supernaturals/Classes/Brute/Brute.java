@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Abilities.Block;
+import com.TeamNovus.Supernaturals.Classes.Brute.Common.Abilities.Spikes;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Earthquake;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Explode;
 import com.TeamNovus.Supernaturals.Classes.Brute.Common.Powers.Roar;
@@ -28,7 +29,7 @@ public class Brute extends SNClass {
 						new Reagent(40, new ItemBag(new ItemStack(Material.TNT, 5), new ItemStack(Material.SULPHUR, 10)))));
 		
 		addAbility(5, new Block("Block", "Small chance to block attacks!", 0, 2));
-		addAbility(5, new Block("Spikes", "Small chance to inflict damage to attackers!", 0, 2));
+		addAbility(25, new Spikes("Spikes", "Small chance to inflict damage to attackers!", 0, 2, 3));
 		
 		setMaxMana(1, 20);
 		setMaxMana(5, 25);
