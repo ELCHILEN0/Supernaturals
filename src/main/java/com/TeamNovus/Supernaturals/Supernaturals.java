@@ -17,6 +17,7 @@ import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.KillDeathListener;
+import com.TeamNovus.Supernaturals.Listeners.Custom.TagListener;
 import com.TeamNovus.Supernaturals.Tasks.CooldownTask;
 import com.TeamNovus.Supernaturals.Tasks.EntityTickTask;
 import com.TeamNovus.Supernaturals.Tasks.ManaRegainTask;
@@ -42,6 +43,7 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ExperienceListener(), this);
 		Bukkit.getPluginManager().registerEvents(new KillDeathListener(), this);
+		Bukkit.getPluginManager().registerEvents(new TagListener(), this);
 
 		// Schedule Tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);
