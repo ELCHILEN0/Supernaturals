@@ -17,12 +17,15 @@ public class KillDeathListener implements Listener {
 		
 		if(event.getEntity() instanceof Player) {
 			SNPlayer killed = SNPlayers.i.get((Player) event.getEntity());
-			SNPlayer killer = SNPlayers.i.get((Player) event.getEntity().getKiller());
 
 			killed.setDeaths(killed.getDeaths() + 1);
 			
-			if(!(killer.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
-				killer.setKills(killer.getKills() + 1);
+			if(event.getEntity().getKiller() != null) {
+				SNPlayer killer = SNPlayers.i.get((Player) event.getEntity().getKiller());
+				
+				if(!(killer.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
+					killer.setKills(killer.getKills() + 1);
+				}
 			}
 		}
 	}
