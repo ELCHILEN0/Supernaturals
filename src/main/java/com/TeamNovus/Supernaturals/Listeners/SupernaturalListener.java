@@ -159,15 +159,15 @@ public class SupernaturalListener implements Listener {
 			if(e instanceof Player) {
 				effects.addAll(SNPlayers.i.get((Player) e).getAbilities());
 			}
-			
-			if(e instanceof LivingEntity) {
+			 
+			if(e instanceof LivingEntity && SNEntities.i.get((LivingEntity) e) != null) {
 				effects.addAll(SNEntities.i.get((LivingEntity) e).getEffects());
 			}
 		}
-		
-		if (event instanceof PlayerEvent) {
-			effects.addAll(SNPlayers.i.get(((PlayerEvent) event).getPlayer()).getAbilities());
-		}
+//		
+//		if (event instanceof PlayerEvent) {
+//			effects.addAll(SNPlayers.i.get(((PlayerEvent) event).getPlayer()).getAbilities());
+//		}
 				
 		for (Effect effect : effects) {			
 			for (Method method : effect.getClass().getMethods()) {

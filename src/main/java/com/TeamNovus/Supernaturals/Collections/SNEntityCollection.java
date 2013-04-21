@@ -11,16 +11,16 @@ import com.TeamNovus.Supernaturals.Entity.SNEntity;
 public class SNEntityCollection {
 	private HashMap<UUID, SNEntity> entities = new HashMap<UUID, SNEntity>();
 
+	public Collection<SNEntity> getEntites() {
+		return entities.values();
+	}
+	
 	public SNEntity get(LivingEntity entity) {
-		if(entities.containsKey(entity.getUniqueId())) {
+		if(!(entities.containsKey(entity.getUniqueId()))) {
 			return attach(new SNEntity(entity));
 		}
 		
 		return entities.get(entity.getUniqueId());
-	}
-	
-	public Collection<SNEntity> getEntites() {
-		return entities.values();
 	}
 	
 	public Boolean attached(SNEntity e) {
@@ -34,7 +34,7 @@ public class SNEntityCollection {
 		return !(attached(e));
 	}
 	
-	public SNEntity attach(SNEntity e) {		
+	public SNEntity attach(SNEntity e) {
 		return entities.put(e.getUUID(), e);
 	}
 	
