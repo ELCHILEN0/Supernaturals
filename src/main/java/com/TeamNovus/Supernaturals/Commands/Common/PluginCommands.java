@@ -150,9 +150,7 @@ public class PluginCommands {
 		for (int i = 0; i < maxPlayers.size(); i++) {
 			SNPlayer player = maxPlayers.get(i);
 			
-			sender.sendMessage(CommandManager.getDark() + "" + (i + 1) + ". " + CommandManager.getLight() + player.getName() + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + ", " + CommandManager.getDark() + "KD: " + CommandManager.getLight() + player.getKD());
-		
-//			"1. ELCHILEN0 - Level: 23, KD: 10.0"
+			sender.sendMessage(CommandManager.getDark() + "" + (i + 1) + ". " + CommandManager.getLight() + player.getName() + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + ", " + CommandManager.getDark() + "KD: " + CommandManager.getLight() + player.getKD());		
 		}
 		
 		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
