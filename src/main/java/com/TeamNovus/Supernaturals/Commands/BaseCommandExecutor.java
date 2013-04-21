@@ -55,12 +55,12 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 			return true;
 		}
 		
-		CommandManager.execute(command, sender, cmd, commandLabel, commandArgs);
+		CommandManager.execute(command, sender, cmd, commandLabel, commandArgs);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 		return true;
 	}
 	
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {	
 		ArrayList<String> list = new ArrayList<String>();
 		
 		for(BaseCommand command : CommandManager.getCommands()) {
