@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import com.TeamNovus.Supernaturals.Classes.Brute.Classes.Vampire.Common.Abilities.NightDamage;
 import com.TeamNovus.Supernaturals.Classes.Brute.Classes.Vampire.Common.Abilities.VampiricBite;
 import com.TeamNovus.Supernaturals.Classes.Brute.Classes.Vampire.Common.Powers.Boost;
+import com.TeamNovus.Supernaturals.Classes.Brute.Classes.Vampire.Common.Powers.Leech;
 import com.TeamNovus.Supernaturals.Classes.Brute.Classes.Vampire.Common.Powers.Vanish;
 import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
@@ -18,7 +19,8 @@ public class Vampire extends SNClass {
 		addAbility(25, new VampiricBite("Vampiric Bite", "Your attacks occasionally cause your enemy to bleed!", 2, 30, 2));
 		
 		addPower(5, new Boost("Boost", "Temporarily boost your speed!", 60, 30, new Reagent(), new Reagent()));
-		addPower(25, new Vanish("Vanish", "Vanish from your enemies!", 60, 100, 30, new Reagent(), new Reagent()));
+		addPower(10, new Vanish("Vanish", "Vanish from your enemies!", 60, 100, 30, new Reagent(), new Reagent()));
+		addPower(25, new Leech("Leech", "Leech life from any enemies!", 120, 100, new Reagent(), new Reagent()));
 		
 		setMaxHealth(1, 17);
 		setMaxHealth(5, 19);
