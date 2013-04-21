@@ -22,30 +22,19 @@ public class HungerListener implements Listener {
 		if(event.getEntity() instanceof Player) {
 			final SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 			
-			System.out.println("Before: " + player.getFoodLevel() * 20 / player.getMaxFoodLevel());
-
 			player.setFoodLevel(player.getFoodLevel() + (event.getFoodLevel() - ((Player) event.getEntity()).getFoodLevel()));	
 
-			System.out.println("After: " + player.getFoodLevel() * 20 / player.getMaxFoodLevel());
-
 			// Rescales the client food level bar.
-//			Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
-//				
-//				@Override
-//				public void run() {
-//					player.updateFoodLevel();
-//					
-//				}
-//			});
+			Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
+				
+				@Override
+				public void run() {
+					player.updateFoodLevel();
+					
+				}
+			});
 			
-			int foodLevel = player.getFoodLevel() * 20 / player.getMaxFoodLevel();
-			System.out.println("food level" + foodLevel);
-			event.setFoodLevel(foodLevel);
-			
-//			event.setFoodLevel((int) Math.ceil(player.getFoodLevel() * 20.0 / player.getMaxFoodLevel()));
-
-
-			
+			event.setFoodLevel(player.getFoodLevel() * 20 / player.getMaxFoodLevel());
 		}
 	}
 	
