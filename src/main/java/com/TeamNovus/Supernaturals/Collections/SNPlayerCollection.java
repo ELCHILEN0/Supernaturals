@@ -1,7 +1,8 @@
 package com.TeamNovus.Supernaturals.Collections;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.Collection;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,10 +11,10 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class SNPlayerCollection {
-	private LinkedHashSet<SNPlayer> entities = new LinkedHashSet<SNPlayer>();
+	private HashMap<String, SNPlayer> players = new HashMap<String, SNPlayer>();
 	
-	public LinkedHashSet<SNPlayer> getAllPlayers() {
-		return entities;
+	public Collection<SNPlayer> getAllPlayers() {
+		return players.values();
 	}
 	
 	public ArrayList<SNPlayer> getOnlinePlayers() {
@@ -29,7 +30,7 @@ public class SNPlayerCollection {
 	public ArrayList<SNPlayer> getPlayersInClass(SNClass playerClass) {
 		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
 		
-		for (SNPlayer p : entities) {
+		for (SNPlayer p : getAllPlayers()) {
 			if (p.getPlayerClass().getName().equals(playerClass.getName())) {
 				players.add(p);
 			}
@@ -41,8 +42,8 @@ public class SNPlayerCollection {
 	public ArrayList<SNPlayer> getOnlinePlayersInClass(SNClass race) {
 		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
 		
-		for (SNPlayer p : entities) {
-			if (p.isOnline() && p.getPlayerClass().equals(race.getName())) {
+		for (SNPlayer p : getOnlinePlayers()) {
+			if (p.getPlayerClass().equals(race.getName())) {
 				players.add(p);
 			}
 		}
@@ -50,44 +51,43 @@ public class SNPlayerCollection {
 		return players;
 	}
 	
-	public SNPlayer getPlayer(String s) {
-		for(SNPlayer p : getOnlinePlayers()) {
-			if(s.toLowerCase().startsWith(p.getName().toLowerCase())) {
-				return p;
+	public SNPlayer getPlayer(String name) {
+		for(SNPlayer player : getOnlinePlayers()) {
+			if(player.getName().startsWith(name.toLowerCase())) {
+				return player;
 			}
 		}
 		
 		return null;
 	}
 	
-	public SNPlayer getPlayerExact(String s) {
-		for(SNPlayer p : getOnlinePlayers()) {
-			if(s.equals(p.getName())) {
-				return p;
+	public SNPlayer getPlayerExact(String name) {
+		for(SNPlayer player : getOnlinePlayers()) {
+			if(player.getName().equals(name)) {
+				return player;
 			}
 		}
 		
 		return null;
 	}
 	
-	public SNPlayer get(Player p) {
-		for (SNPlayer e : entities) {			
-			if (e.getName().equals(p.getName())) {
-				return e;
-			}
+	public SNPlayer get(Player player) {
+		if(players.containsKey(player.getName())) {
+			return players.put(player.getName(), new SNPlayer(player));
 		}
 		
-		SNPlayer e = new SNPlayer(p);
-//		e.setId(getNextId());
-		entities.add(e);
-		return e;
+		return get(player.getName());
+	}
+
+	public SNPlayer get(String name) {
+		return players.get(name);
 	}
 	
 	public Boolean attached(SNPlayer p) {
 		if (p.getName() == null)
 			return false;
 		
-		return entities.contains(p);
+		return players.containsKey(p.getName());
 	}
 	
 	public Boolean detached(SNPlayer p) {
@@ -95,15 +95,11 @@ public class SNPlayerCollection {
 	}
 	
 	public void attach(SNPlayer p) {		
-		entities.add(p);
+		players.put(p.getName(), p);
 	}
 	
 	public void detach(SNPlayer p) {
-		entities.remove(p);
-	}
-	
-	public void update(SNPlayer p) {
-		entities.add(p);
+		players.remove(p);
 	}
 	
 }
