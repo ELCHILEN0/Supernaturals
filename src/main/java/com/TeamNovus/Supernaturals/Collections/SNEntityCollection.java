@@ -1,51 +1,45 @@
 package com.TeamNovus.Supernaturals.Collections;
 
-import java.util.LinkedHashSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.entity.LivingEntity;
 
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 
 public class SNEntityCollection {
-	private LinkedHashSet<SNEntity> entities = new LinkedHashSet<SNEntity>();
+	private HashMap<UUID, SNEntity> entities = new HashMap<UUID, SNEntity>();
 
 	public SNEntity get(LivingEntity entity) {
-		for (SNEntity e : entities) {			
-			if (e.getUUID().equals(entity.getUniqueId())) {
-				return e;
-			}
+		if(entities.containsKey(entity.getUniqueId())) {
+			return attach(new SNEntity(entity));
 		}
 		
-		SNEntity e = new SNEntity(entity);
-		entities.add(e);
-		return e;
+		return entities.get(entity.getUniqueId());
 	}
 	
-	public LinkedHashSet<SNEntity> getEntites() {
-		return entities;
+	public Collection<SNEntity> getEntites() {
+		return entities.values();
 	}
 	
 	public Boolean attached(SNEntity e) {
 		if (e.getUUID() == null)
 			return false;
 		
-		return entities.contains(e);
+		return entities.containsKey(e.getUUID());
 	}
 	
 	public Boolean detached(SNEntity e) {
 		return !(attached(e));
 	}
 	
-	public void attach(SNEntity e) {		
-		entities.add(e);
+	public SNEntity attach(SNEntity e) {		
+		return entities.put(e.getUUID(), e);
 	}
 	
 	public void detach(SNEntity e) {
 		entities.remove(e);
-	}
-	
-	public void update(SNEntity e) {
-		entities.add(e);
 	}
 	
 }
