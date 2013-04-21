@@ -160,7 +160,7 @@ public class SupernaturalListener implements Listener {
 				effects.addAll(SNPlayers.i.get((Player) e).getAbilities());
 			}
 			 
-			if(e instanceof LivingEntity && SNEntities.i.get((LivingEntity) e) != null) {
+			if(e instanceof LivingEntity && SNEntities.i.attached((LivingEntity) e)) {
 				effects.addAll(SNEntities.i.get((LivingEntity) e).getEffects());
 			}
 		}

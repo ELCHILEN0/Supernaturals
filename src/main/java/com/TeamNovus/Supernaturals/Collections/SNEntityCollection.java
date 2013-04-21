@@ -23,23 +23,27 @@ public class SNEntityCollection {
 		return entities.get(entity.getUniqueId());
 	}
 	
-	public Boolean attached(SNEntity e) {
-		if (e.getUUID() == null)
-			return false;
-		
-		return entities.containsKey(e.getUUID());
-	}
-	
-	public Boolean detached(SNEntity e) {
-		return !(attached(e));
-	}
-	
 	public SNEntity attach(SNEntity e) {
 		return entities.put(e.getUUID(), e);
 	}
 	
 	public void detach(SNEntity e) {
 		entities.remove(e);
+	}
+
+	public boolean attached(LivingEntity e) {
+		return attached(new SNEntity(e));
+	}
+	
+	public boolean attached(SNEntity e) {
+		if (e.getUUID() == null)
+			return false;
+		
+		return entities.containsKey(e.getUUID());
+	}
+	
+	public boolean detached(SNEntity e) {
+		return !(attached(e));
 	}
 	
 }

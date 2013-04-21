@@ -83,23 +83,27 @@ public class SNPlayerCollection {
 		return players.get(name);
 	}
 	
-	public Boolean attached(SNPlayer p) {
-		if (p.getName() == null)
-			return false;
-		
-		return players.containsKey(p.getName());
-	}
-	
-	public Boolean detached(SNPlayer p) {
-		return !(attached(p));
-	}
-	
 	public SNPlayer attach(SNPlayer p) {		
 		return players.put(p.getName(), p);
 	}
 	
 	public void detach(SNPlayer p) {
 		players.remove(p);
+	}
+	
+	public boolean attached(Player p) {
+		return attached(new SNPlayer(p));
+	}
+	
+	public boolean attached(SNPlayer p) {
+		if (p.getName() == null)
+			return false;
+		
+		return players.containsKey(p.getName());
+	}
+	
+	public boolean detached(SNPlayer p) {
+		return !(attached(p));
 	}
 	
 }
