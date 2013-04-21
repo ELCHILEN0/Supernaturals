@@ -39,11 +39,11 @@ public class SNPlayerCollection {
 		return players;
 	}
 	
-	public ArrayList<SNPlayer> getOnlinePlayersInClass(SNClass race) {
+	public ArrayList<SNPlayer> getOnlinePlayersInClass(SNClass playerClass) {
 		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
 		
 		for (SNPlayer p : getOnlinePlayers()) {
-			if (p.getPlayerClass().equals(race.getName())) {
+			if (p.getPlayerClass().equals(playerClass.getName())) {
 				players.add(p);
 			}
 		}
@@ -72,8 +72,8 @@ public class SNPlayerCollection {
 	}
 	
 	public SNPlayer get(Player player) {
-		if(players.containsKey(player.getName())) {
-			return players.put(player.getName(), new SNPlayer(player));
+		if(!(players.containsKey(player.getName()))) {
+			return attach(new SNPlayer(player));
 		}
 		
 		return get(player.getName());
@@ -94,8 +94,8 @@ public class SNPlayerCollection {
 		return !(attached(p));
 	}
 	
-	public void attach(SNPlayer p) {		
-		players.put(p.getName(), p);
+	public SNPlayer attach(SNPlayer p) {		
+		return players.put(p.getName(), p);
 	}
 	
 	public void detach(SNPlayer p) {
