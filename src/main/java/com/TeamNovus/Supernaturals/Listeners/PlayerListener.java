@@ -2,10 +2,10 @@ package com.TeamNovus.Supernaturals.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -15,10 +15,19 @@ import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
 import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Player.Wand;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
+import com.TeamNovus.Supernaturals.Util.ItemUtil;
 
 public class PlayerListener implements Listener {
+	
+	@EventHandler
+	public void onPlayerCraft(CraftItemEvent event) {
+		if(Wand.isWand(event.getCurrentItem())) {
+			event.setCurrentItem(ItemUtil.addGlow(event.getCurrentItem()));
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerManaChange(PlayerManaChangeEvent event) {			
@@ -74,9 +83,9 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {	
 		// Bind all Spells to the BLAZE_ROD
-		if (!(event.getPlayer().getItemInHand().getData().getItemType().equals(Material.BLAZE_ROD)))
+		if (!(Wand.isWand(event.getPlayer().getItemInHand())))
 			return;
-
+		
 		SNPlayer player = SNPlayers.i.get(event.getPlayer());
 		
 		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {

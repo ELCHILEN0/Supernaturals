@@ -53,7 +53,7 @@ public class SNPlayerCollection {
 	
 	public SNPlayer getPlayer(String name) {
 		for(SNPlayer player : getOnlinePlayers()) {
-			if(player.getName().startsWith(name.toLowerCase())) {
+			if(player.getName().toLowerCase().startsWith(name.toLowerCase())) {
 				return player;
 			}
 		}

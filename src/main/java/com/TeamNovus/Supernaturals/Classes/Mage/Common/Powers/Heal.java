@@ -22,7 +22,6 @@ public class Heal extends Power {
 	
 	public Boolean cast(SNPlayer player) {
 		List<Entity> entities = player.getPlayer().getNearbyEntities(range, range, range);
-		
 		entities.add(player.getPlayer());
 		
 		int healed = 0;
@@ -31,7 +30,10 @@ public class Heal extends Power {
 			if(e instanceof Player) {
 				healed++;
 				
-				((Player) e).setHealth(SNPlayers.i.get((Player) e).getMaxHealth());
+				SNPlayer target = SNPlayers.i.get((Player) e);
+				
+				target.setHealth(target.getMaxHealth());
+				target.setFoodLevel(target.getMaxFoodLevel());
 				
 				if(!(e.equals(player.getPlayer()))) {
 					((Player) e).sendMessage(ChatColor.GREEN + "You were healed by " + ChatColor.YELLOW + player.getName() + ChatColor.GREEN + "!");
