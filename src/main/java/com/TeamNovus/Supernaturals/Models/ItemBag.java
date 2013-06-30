@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemBag {
-	private List<ItemStack> itemStacks;
+	private List<ItemStack> itemStacks = new ArrayList<ItemStack>();
 
 	public ItemBag(ItemStack... itemStacks) {
 		this.itemStacks = Arrays.asList(itemStacks);

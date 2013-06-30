@@ -2,6 +2,7 @@ package com.TeamNovus.Supernaturals.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -23,6 +24,8 @@ import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.SNClasses;
 import com.TeamNovus.Supernaturals.SNEntities;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent.ChangeClassCause;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
@@ -824,17 +827,29 @@ public class SNPlayer implements Serializable {
 			Objective stats = scoreboard.getObjective("stats");
 			stats.setDisplaySlot(DisplaySlot.SIDEBAR);	
 			
+			// Mana Numbers
 			int mana = getMana();
 			int maxMana = getMaxMana();
 			
+			// Exp Numbers
 			int exp = getExperience() - getTotalExperienceFor(getLevel() - 1);
 			int maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
-			
-			stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
-			
+						
 			String manaDisplay = ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%";
 			String expDisplay = ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%";
-			
+//			
+//			List<String> effects = new ArrayList<String>();
+//			for (int i = 0; i < getEntity().getEffects().size(); i++) {
+//				Effect effect = getEntity().getEffects().get(i);
+//				
+//				String effectDisplay = effect.getType().toString() + " - " + (effect.getDuration() - effect.getElapsed());
+//				if(effectDisplay.length() > 16) {
+//					effectDisplay = effectDisplay.substring(0, 15);
+//				}
+//				
+//				effects.add(effectDisplay);
+//			}
+//			
 			if(manaDisplay.length() > 16) {
 				manaDisplay = manaDisplay.substring(0, 15);
 			}
@@ -843,6 +858,8 @@ public class SNPlayer implements Serializable {
 				expDisplay = expDisplay.substring(0, 15);
 			}
 			
+			// Display
+			stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
 			stats.getScore(Bukkit.getOfflinePlayer(manaDisplay)).setScore(2);
 			stats.getScore(Bukkit.getOfflinePlayer(expDisplay)).setScore(1);
 		} else {
@@ -862,6 +879,28 @@ public class SNPlayer implements Serializable {
 	 */
 	public SNEntity getEntity() {
 		return SNEntities.i.get(getPlayer());
+	}
+	
+	public void tick() {
+		if(!(isOnline())) return;
+		
+		Iterator<Ability> abilityIterator = getAbilities().iterator();
+		while (abilityIterator.hasNext()) {
+			Ability ability = abilityIterator.next();
+			
+			Bukkit.getPluginManager().callEvent(new EntityEffectTickEvent(getPlayer(), ability));
+			
+			if (ability.isPeriodic()) {				
+				if (ability.getElapsed() % ability.getPeriod() == 0) {
+					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getPlayer(), ability));
+					
+					// Reset elapsed to ensure least amount of integer usage.
+					ability.setElapsed(0);
+				}
+			}
+			
+			ability.setElapsed(ability.getElapsed() + 1);
+		}
 	}
 	
 	public LivingEntity getTargetEntity(Integer range) {

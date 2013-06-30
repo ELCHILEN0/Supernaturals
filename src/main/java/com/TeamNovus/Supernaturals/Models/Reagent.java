@@ -9,26 +9,37 @@ public class Reagent {
 	private Integer mana;
 	private ItemBag items;
 	
+	public Reagent() {
+		this.exp = 0;
+		this.health = 0;
+		this.hunger = 0;
+		this.mana = 0;
+		this.items = new ItemBag();
+	}
+	
+	public Reagent(Integer mana) {
+		this();
+		this.mana = mana;
+	}
+	
+	public Reagent(ItemBag items) {
+		this();
+		this.items = items;
+	}
+	
 	public Reagent(Integer exp, Integer health, Integer hunger, Integer mana, ItemBag items) {
+		this();
 		this.exp = exp;
 		this.health = health;
 		this.hunger = hunger;
 		this.mana = mana;
 		this.items = items;
 	}
-	
-	public Reagent() {
-		this(0, 0, 0, 0, new ItemBag());
-	}
-	
-	public Reagent(ItemBag items) {
-		this(0, 0, 0, 0, items);
-	}
-	
-	public Reagent(Integer mana, ItemBag items) {
-		this(0, 0, 0, mana, items);
-	}
 
+	public Reagent(Reagent copy) {
+		this(copy.exp, copy.health, copy.hunger, copy.mana, copy.items);
+	}
+	
 	/**
 	 * Check if a player has all the required reagents.
 	 * 
@@ -63,20 +74,40 @@ public class Reagent {
 		return exp;
 	}
 	
+	public void setExpCost(Integer exp) {
+		this.exp = exp;
+	}
+	
 	public Integer getHealthCost() {
 		return health;
+	}
+	
+	public void setHealthCost(Integer health) {
+		this.health = health;
 	}
 	
 	public Integer getHungerCost() {
 		return hunger;
 	}
 	
+	public void setHungerCost(Integer hunger) {
+		this.hunger = hunger;
+	}
+
 	public Integer getManaCost() {
 		return mana;
 	}
 	
+	public void setManaCost(Integer mana) {
+		this.mana = mana;
+	}
+	
 	public ItemBag getItemBagCost() {
 		return items;
+	}
+	
+	public void setItemBagCost(ItemBag items) {
+		this.items = items;
 	}
 	
 	public String toString() {

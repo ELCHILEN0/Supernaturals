@@ -22,7 +22,7 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
-import com.TeamNovus.Supernaturals.Util.ChatUtil;
+import com.TeamNovus.Supernaturals.Util.StringUtil;
 
 public class ExperienceListener implements Listener {
 	private HashMap<Material, Integer> blockBreakSources = new HashMap<Material, Integer>();
@@ -38,7 +38,11 @@ public class ExperienceListener implements Listener {
 		blockBreakSources.put(Material.LAPIS_ORE, 3);
 		blockBreakSources.put(Material.REDSTONE_ORE, 3);
 
-		// Setup entity kill sources:
+		// Setup monster kill sources:
+		entityKillSources.put(EntityType.SILVERFISH, 3);
+		entityKillSources.put(EntityType.SLIME, 3);
+		entityKillSources.put(EntityType.WOLF, 3);
+		entityKillSources.put(EntityType.MAGMA_CUBE, 5);
 		entityKillSources.put(EntityType.BLAZE, 7);
 		entityKillSources.put(EntityType.CAVE_SPIDER, 8);
 		entityKillSources.put(EntityType.ENDERMAN, 8);
@@ -53,6 +57,16 @@ public class ExperienceListener implements Listener {
 		entityKillSources.put(EntityType.ENDER_DRAGON, 1000);
 		entityKillSources.put(EntityType.WITHER, 1500);
 		entityKillSources.put(EntityType.PLAYER, 50);
+		
+		// Setup animal kill sources:
+		entityKillSources.put(EntityType.SQUID, 2);
+		entityKillSources.put(EntityType.BAT, 2);
+		entityKillSources.put(EntityType.CHICKEN, 2);
+		entityKillSources.put(EntityType.PIG, 2);
+		entityKillSources.put(EntityType.COW, 3);
+		entityKillSources.put(EntityType.MUSHROOM_COW, 5);
+		entityKillSources.put(EntityType.SHEEP, 3);
+		entityKillSources.put(EntityType.OCELOT, 3);
 	}
 	
 	@EventHandler
@@ -110,7 +124,7 @@ public class ExperienceListener implements Listener {
 						
 			if(player.isVerbose()) {
 				player.sendMessage(CommandManager.getDark() + "Experience: "
-						+ ChatColor.RED + "[" + ChatUtil.fillBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+						+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
 						+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
 			}	
 		}

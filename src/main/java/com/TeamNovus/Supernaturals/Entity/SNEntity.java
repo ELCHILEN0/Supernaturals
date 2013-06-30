@@ -8,15 +8,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
+import com.TeamNovus.Persistence.Annotations.Table;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
+import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
+import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
+@Table(name = "sn_entities")
 public class SNEntity {
+	@Id
+	@Column(name = "id")
 	private int id;
 	
+	@Column(name = "uuid")
 	private String uuid;
 	
+	@OneToMany
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 	public SNEntity(LivingEntity e) {
@@ -81,6 +93,16 @@ public class SNEntity {
 			}
 		}
 	}
+	
+	public boolean hasEffect(EffectType type) {
+		for(Effect effect : effects) {
+			if(type.equals(effect.getType())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	public void tick() {
 		if(!(isAlive())) return;
@@ -88,6 +110,8 @@ public class SNEntity {
 		Iterator<Effect> effectIterator = effects.iterator();
 		while (effectIterator.hasNext()) {
 			Effect effect = effectIterator.next();
+			
+			Bukkit.getPluginManager().callEvent(new EntityEffectTickEvent(getEntity(), effect));
 			
 			if (effect.isLasting()) {		
 				if (effect.getElapsed() == 0) {
@@ -105,7 +129,7 @@ public class SNEntity {
 					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), effect));
 				}
 			}
-
+			
 			effect.setElapsed(effect.getElapsed() + 1);
 		}
 	}

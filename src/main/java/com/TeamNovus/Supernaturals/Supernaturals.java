@@ -10,7 +10,9 @@ import com.TeamNovus.Supernaturals.Commands.CommandManager;
 import com.TeamNovus.Supernaturals.Commands.Common.AdminCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.DefaultCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.PluginCommands;
+import com.TeamNovus.Supernaturals.Custom.Enchantment.EnchantmentListener;
 import com.TeamNovus.Supernaturals.Database.StorageManager;
+import com.TeamNovus.Supernaturals.Items.Recipes;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
 import com.TeamNovus.Supernaturals.Listeners.PlayerListener;
 import com.TeamNovus.Supernaturals.Listeners.SupernaturalListener;
@@ -18,7 +20,6 @@ import com.TeamNovus.Supernaturals.Listeners.Custom.ExperienceListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.HungerListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.KillDeathListener;
 import com.TeamNovus.Supernaturals.Listeners.Custom.TagListener;
-import com.TeamNovus.Supernaturals.Player.Wand;
 import com.TeamNovus.Supernaturals.Tasks.CooldownTask;
 import com.TeamNovus.Supernaturals.Tasks.EntityTickTask;
 import com.TeamNovus.Supernaturals.Tasks.ManaRegainTask;
@@ -46,15 +47,17 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new KillDeathListener(), this);
 		Bukkit.getPluginManager().registerEvents(new TagListener(), this);
 
+		// Custom Minecraft:
+		Bukkit.getPluginManager().registerEvents(new EnchantmentListener(), this);
+		
 		// Schedule Tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);
 		Bukkit.getScheduler().runTaskTimer(this, new CooldownTask(), 1, 1);
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegainTask(), 20 * 10, 20 * 10);
 		Bukkit.getScheduler().runTaskTimer(this, new SaveTask(), 20 * 10, 20 * 10);
-
 		
 		// Register the Wand Recipes:
-		Wand.addRecipies();
+		Recipes.register();
 		
 		// Commands:
 		getCommand("supernaturals").setExecutor(new BaseCommandExecutor());

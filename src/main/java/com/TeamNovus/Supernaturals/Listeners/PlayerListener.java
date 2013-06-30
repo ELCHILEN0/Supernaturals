@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -13,21 +11,34 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
-import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
-import com.TeamNovus.Supernaturals.Player.Wand;
-import com.TeamNovus.Supernaturals.Player.Class.Power;
-import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
-import com.TeamNovus.Supernaturals.Util.ItemUtil;
 
 public class PlayerListener implements Listener {
 	
 	@EventHandler
-	public void onPlayerCraft(CraftItemEvent event) {
-		if(Wand.isWand(event.getCurrentItem())) {
-			event.setCurrentItem(ItemUtil.addGlow(event.getCurrentItem()));
-		}
-	}
+    public void onPotionDrink(PlayerInteractEvent event) {
+//        Player player = event.getPlayer();
+//        
+//        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        	// Pseudo:
+        	/*
+        	 * final boolean switched = false;;
+        	 * 
+        	 * if(itemInHand().isManaPotion()) {
+        	 *  Bukkit.getScheduler.runTaskLater(Supernaturals.getPlugin, new Runnable() {
+        	 *          	 *  	public void run() {
+        	 *  		if(itemInHand().isEmptyManaPotion()) {
+        	 *  			player.restoreMana(itemInHand().getManaAmount());
+        	 *  		} else
+        	 *  	}
+        	 *  }, 35 (33));
+        	 * 
+        	 * 
+        	 * 
+        	 */
+        	
+//        }
+    }
 	
 	@EventHandler
 	public void onPlayerManaChange(PlayerManaChangeEvent event) {			
@@ -78,61 +89,6 @@ public class PlayerListener implements Listener {
 				}
 			}
 		});
-	}
-	
-	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent event) {	
-		// Bind all Spells to the BLAZE_ROD
-		if (!(Wand.isWand(event.getPlayer().getItemInHand())))
-			return;
-		
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
-		
-		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
-			player.sendMessage(ChatColor.RED + "Supernaturals is disabled in " + ChatColor.YELLOW + player.getPlayer().getWorld().getName() + ChatColor.RED + "!");
-			return;
-		}
-		
-		// Bind/Switch:
-		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
-				event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-
-			player.setNextBinding();
-
-			if (player.getSelectedPower() != null) {
-				player.sendMessage(ChatColor.GREEN + "Wand bound to " + ChatColor.YELLOW + player.getSelectedPower().getName() + ChatColor.GREEN + "!");
-			}
-		}
-
-		// Cast:
-		if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-			if (player.getSelectedPower() != null) {
-				Power power = player.getSelectedPower();
-								
-				if(player.getRemainingCooldownTicks(power) > 0) {
-					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTicks(power) / 20.0 + ChatColor.RED + " seconds to cast this spell!");
-				} else if (power.getRequired().has(player)) {
-					if (power.cast(player)) {
-						power.getConsume().consume(player);
-						player.setCooldown(new Cooldown(power, power.getCooldown()));
-					}
-				} else {
-					player.sendMessage(ChatColor.BLUE + "Requires:");
-					if (power.getRequired().getExpCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Experience: " + ChatColor.YELLOW + power.getRequired().getExpCost());
-					if (power.getRequired().getHealthCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Health: " + ChatColor.YELLOW + power.getRequired().getHealthCost());
-					if (power.getRequired().getHungerCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + power.getRequired().getHungerCost());
-					if (power.getRequired().getManaCost() != 0)
-						player.sendMessage(ChatColor.BLUE + "   Mana: " + ChatColor.YELLOW + power.getRequired().getManaCost());
-					if (power.getRequired().getItemBagCost() != new ItemBag())
-						player.sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + power.getRequired().getItemBagCost().toString());
-				}
-			} else {
-				player.sendMessage(ChatColor.RED + "Your wand is not bound to a power!");
-			}
-		}
 	}
 
 }

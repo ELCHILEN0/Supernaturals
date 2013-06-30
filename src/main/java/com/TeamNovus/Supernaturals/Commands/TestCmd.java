@@ -11,7 +11,6 @@ public class TestCmd extends SubCommand {
 		super("test", "test1", "test2");
 	}
 
-	@Override
 	protected ArrayList<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		ArrayList<String> list = new ArrayList<String>();
 		
@@ -28,7 +27,6 @@ public class TestCmd extends SubCommand {
 		return list;
 	}
 
-	@Override
 	protected boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 1) {
 			sender.sendMessage("daf");

@@ -4,7 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityEvent;
 
-import com.TeamNovus.Supernaturals.Entity.Effect;
+import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 
 public class EntityEffectTickEvent extends EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
@@ -12,6 +12,7 @@ public class EntityEffectTickEvent extends EntityEvent {
     
     public EntityEffectTickEvent(Entity entity, Effect effect) {
 		super(entity);
+		
 		this.effect = effect;
 	}
 

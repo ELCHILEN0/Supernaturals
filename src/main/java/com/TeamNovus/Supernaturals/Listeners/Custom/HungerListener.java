@@ -27,8 +27,7 @@ public class HungerListener implements Listener {
 			// Rescales the client food level bar.
 			Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
 				
-				@Override
-				public void run() {
+							public void run() {
 					player.updateFoodLevel();
 					
 				}

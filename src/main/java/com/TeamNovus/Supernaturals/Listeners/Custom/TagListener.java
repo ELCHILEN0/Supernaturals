@@ -31,8 +31,7 @@ public class TagListener implements Listener {
 			if(tagHelper != null) {
 				Bukkit.getScheduler().runTaskLater(Supernaturals.getPlugin(), new Runnable() {
 					
-					@Override
-					public void run() {
+									public void run() {
 						tagHelper.refreshPlayer(event.getPlayer());		
 					}
 				}, 1);

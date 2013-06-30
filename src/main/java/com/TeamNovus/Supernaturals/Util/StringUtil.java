@@ -8,9 +8,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 
 public class StringUtil {
 
+	public static String createBar(int bars, ChatColor fullColor, ChatColor emptyColor, int amount, int max) {
+		int fill = (int) (amount * 1.0 * bars/max);
+		String bar = new String();
+		
+		for (int i = 0; i < fill; i++) {
+			bar += fullColor + "|";
+		}
+		
+		for (int i = 0; i < bars - fill; i++) {
+			bar += emptyColor + "|";
+		}
+		
+		return bar;
+	}
+	
 	public static boolean startsWithVowel(String s) {
 		ArrayList<String> vowels = new ArrayList<String>();
 		vowels.add("a");

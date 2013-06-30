@@ -17,9 +17,9 @@ public class SNEntityCollection {
 	
 	public SNEntity get(LivingEntity entity) {
 		if(!(entities.containsKey(entity.getUniqueId()))) {
-			return attach(new SNEntity(entity));
+			attach(new SNEntity(entity));
 		}
-		
+
 		return entities.get(entity.getUniqueId());
 	}
 	
