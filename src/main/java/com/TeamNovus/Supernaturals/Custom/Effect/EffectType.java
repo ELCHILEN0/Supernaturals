@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.BlindingArrow;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Critical;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Evasion;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Invisibility;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.PoisonArrow;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Resistance;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Slowness;
@@ -57,6 +59,8 @@ Blind Arrows
 	public static final EffectType EVASION 		= new Evasion();
 	public static final EffectType POISON_ARROW 	= new PoisonArrow();
 	public static final EffectType BLINDING_ARROW	= new BlindingArrow();
+	public static final EffectType INVISIBILITY = new Invisibility();
+	public static final EffectType CRITICAL		= new Critical();
 	
 	private Integer id;
 	
