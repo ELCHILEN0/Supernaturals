@@ -3,6 +3,7 @@ package com.TeamNovus.Supernaturals.Classes.Rogue;
 import org.bukkit.ChatColor;
 
 import com.TeamNovus.Supernaturals.Classes.Rogue.Classes.Archer.Archer;
+import com.TeamNovus.Supernaturals.Classes.Rogue.Classes.Assassin.Assassin;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Powers.Lunge;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Powers.Quicken;
 import com.TeamNovus.Supernaturals.Classes.Rogue.Powers.Sneak;
@@ -48,6 +49,7 @@ public class Rogue extends SNClass {
 		addAbility(1, new Ability(EffectType.EVASION, "Evade", "Occasionally evade your enemies blows!", 5));
 		
 		addJoinableClass(1, new Archer(this));
+		addJoinableClass(1, new Assassin(this));
 	}
 
 }
