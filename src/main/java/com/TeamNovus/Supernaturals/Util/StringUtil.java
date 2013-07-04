@@ -12,8 +12,8 @@ import org.bukkit.ChatColor;
 
 public class StringUtil {
 
-	public static String createBar(int bars, ChatColor fullColor, ChatColor emptyColor, int amount, int max) {
-		int fill = (int) (amount * 1.0 * bars/max);
+	public static String createBar(int bars, ChatColor fullColor, ChatColor emptyColor, double d, double e) {
+		int fill = (int) (d * 1.0 * bars/e);
 		String bar = new String();
 		
 		for (int i = 0; i < fill; i++) {

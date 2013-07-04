@@ -10,13 +10,13 @@ public class EntityDamageEntityEvent extends EntityEvent implements Cancellable 
 	private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
     private Entity damaged;
-    private Integer damage;
+    private double damage;
     private DamageCause cause;
     
-    public EntityDamageEntityEvent(Entity damager, Entity damaged, Integer damage, DamageCause cause) {
+    public EntityDamageEntityEvent(Entity damager, Entity damaged, double d, DamageCause cause) {
 		super(damager);
 		this.damaged = damaged;
-		this.damage = damage;
+		this.damage = d;
 		this.cause = cause;
 	}
     
@@ -24,12 +24,12 @@ public class EntityDamageEntityEvent extends EntityEvent implements Cancellable 
 		return damaged;
 	}
 	
-	public Integer getDamage() {
+	public double getDamage() {
 		return damage;
 	}
 	
-	public void setDamage(Integer damage) {
-		this.damage = damage;
+	public void setDamage(double d) {
+		this.damage = d;
 	}
 	
 	public DamageCause getCause() {

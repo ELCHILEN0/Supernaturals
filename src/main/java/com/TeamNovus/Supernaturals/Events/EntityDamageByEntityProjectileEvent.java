@@ -11,11 +11,11 @@ public class EntityDamageByEntityProjectileEvent extends EntityEvent implements 
 	private static final HandlerList handlers = new HandlerList();
     private boolean cancelled ;
     private Entity damager;
-    private Integer damage;
+    private double damage;
     private DamageCause cause;
     private Projectile projectile;
     
-    public EntityDamageByEntityProjectileEvent(Entity damager, Entity damaged, Integer damage, DamageCause cause, Projectile projectile) {
+    public EntityDamageByEntityProjectileEvent(Entity damager, Entity damaged, double damage, DamageCause cause, Projectile projectile) {
 		super(damaged);
 		this.damager = damager;
 		this.damage = damage;
@@ -27,11 +27,11 @@ public class EntityDamageByEntityProjectileEvent extends EntityEvent implements 
 		return damager;
 	}
 	
-	public Integer getDamage() {
+	public double getDamage() {
 		return damage;
 	}
 	
-	public void setDamage(Integer damage) {
+	public void setDamage(double damage) {
 		this.damage = damage;
 	}
 	
