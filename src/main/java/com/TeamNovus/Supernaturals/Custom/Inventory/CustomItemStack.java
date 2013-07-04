@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
-import net.minecraft.server.v1_5_R3.NBTTagList;
+import net.minecraft.server.v1_6_R1.NBTTagCompound;
+import net.minecraft.server.v1_6_R1.NBTTagList;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_5_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -313,7 +313,7 @@ public class CustomItemStack {
 	 * Add a visible glow to the ItemStack.
 	 */
 	public void addGlow() {
-		net.minecraft.server.v1_5_R3.ItemStack nmsStack = getNMSStack();
+		net.minecraft.server.v1_6_R1.ItemStack nmsStack = getNMSStack();
 		NBTTagCompound compound = nmsStack.tag;
 
 		if (compound == null) {
@@ -330,7 +330,7 @@ public class CustomItemStack {
 	 * Remove a glow from the ItemStack.
 	 */
 	public void removeGlow() {
-		net.minecraft.server.v1_5_R3.ItemStack nmsStack = getNMSStack();
+		net.minecraft.server.v1_6_R1.ItemStack nmsStack = getNMSStack();
 		NBTTagCompound compound = nmsStack.tag;
 
 		if (compound == null) {
@@ -349,7 +349,7 @@ public class CustomItemStack {
 	 * @return True if the glow is present, false otherwise.
 	 */
 	public boolean hasGlow() {
-		net.minecraft.server.v1_5_R3.ItemStack nmsStack = getNMSStack();
+		net.minecraft.server.v1_6_R1.ItemStack nmsStack = getNMSStack();
 		NBTTagCompound compound = nmsStack.tag;
 
 		if (compound == null) {
@@ -365,7 +365,7 @@ public class CustomItemStack {
 	 * 
 	 * @return The NMS ItemStack.
 	 */
-	public net.minecraft.server.v1_5_R3.ItemStack getNMSStack() {
+	public net.minecraft.server.v1_6_R1.ItemStack getNMSStack() {
 		return CraftItemStack.asNMSCopy(handle);
 	}
 	
