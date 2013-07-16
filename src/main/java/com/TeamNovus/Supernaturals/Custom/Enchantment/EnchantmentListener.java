@@ -24,10 +24,13 @@ public class EnchantmentListener implements Listener {
 		CustomItemStack itemStack = new CustomItemStack(event.getPlayer().getItemInHand());
 		
 		for(Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
+			System.out.println(entry.getKey());
+			
+			System.out.println(entry.getKey().getClass().isAssignableFrom(CustomEnchantment.class));
 			if(entry.getKey() instanceof CustomEnchantment) {
 				CustomEnchantment enchantment = (CustomEnchantment) entry.getKey();
 				int level = entry.getValue();
-
+				System.out.println("hi!");
 				enchantment.onInteract(event, level);
 			}
 		}

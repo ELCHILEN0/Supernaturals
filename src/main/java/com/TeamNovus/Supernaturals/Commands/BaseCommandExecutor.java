@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.Supernaturals;
@@ -18,11 +19,13 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
+			PluginDescriptionFile desc = Supernaturals.getPlugin().getDescription();
+			
 			sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.getPlugin().getName() + CommandManager.getExtra() + " ].__________________");
-			sender.sendMessage(CommandManager.getDark() + "Description: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getDescription());
-			sender.sendMessage(CommandManager.getDark() + "Author: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getAuthors().get(0));
-			sender.sendMessage(CommandManager.getDark() + "Version: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getVersion());
-			sender.sendMessage(CommandManager.getDark() + "Website: " + CommandManager.getLight() + Supernaturals.getPlugin().getDescription().getWebsite());
+			sender.sendMessage(CommandManager.getDark() + "Description: " + CommandManager.getLight() + desc.getDescription());
+			sender.sendMessage(CommandManager.getDark() + "Author: " + CommandManager.getLight() + desc.getAuthors().get(0));
+			sender.sendMessage(CommandManager.getDark() + "Version: " + CommandManager.getLight() + desc.getVersion());
+			sender.sendMessage(CommandManager.getDark() + "Website: " + CommandManager.getLight() + desc.getWebsite());
 			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 			return true;
 		}

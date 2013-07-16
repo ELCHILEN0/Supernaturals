@@ -380,7 +380,7 @@ public class PluginCommands {
 				
 				for(Ability ability : targetClass.getUniqueAbilities(i)) {
 					if(player.getAbilities().contains(ability)) {
-						sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + ": " + CommandManager.getLight() + ability.getDesc());
+						sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + ability.getName() + ": " + CommandManager.getLight() + ability.getDesc());
 					} else {
 						sender.sendMessage(ChatColor.RED + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + ability.getName() + ": " + CommandManager.getLight() + ability.getDesc());
 					}
@@ -543,15 +543,19 @@ public class PluginCommands {
 	public void onDevolveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		SNPlayer player = SNPlayers.i.get((Player) sender);
 
+		SNClass lastClass = player.getPlayerClass();
 		SNClass targetClass = player.getPlayerClass().getParentClass();
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "You cannot devolve any further!");
 			return;
 		}
+		
+		int level = targetClass.getLevelRequiredForClass(lastClass);
+		int amount = 5;
 
-		player.setPlayerClass(targetClass, true);
-		player.setExperience(0);
+		player.setPlayerClass(targetClass, false);
+		player.setLevel(level - amount >= 1 ? level - amount : 1);
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());

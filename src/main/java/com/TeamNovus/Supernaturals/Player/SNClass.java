@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 
@@ -203,7 +204,7 @@ public abstract class SNClass {
 				while (dataIterator.hasNext()) {
 					Ability d = dataIterator.next();
 					
-					if (d.getClass().equals(t.getClass())) {
+					if (d.getType().getClass().equals(t.getType().getClass())) {
 						dataIterator.remove();
 					}
 				}
@@ -261,6 +262,16 @@ public abstract class SNClass {
 	
 	public void addJoinableClass(Integer level, SNClass joinableClass) {
 		joinableClasses.put(level, joinableClass);
+	}
+	
+	public int getLevelRequiredForClass(SNClass joinableClass) {
+		for (Entry<Integer, SNClass> entry : joinableClasses.entries()) {
+			if(entry.getValue().getName() == joinableClass.getName()) {
+				return entry.getKey();
+			}
+		}
+		
+		return -1;
 	}
 	
 	public Boolean hasChangedFrom(Integer last, Integer current) {

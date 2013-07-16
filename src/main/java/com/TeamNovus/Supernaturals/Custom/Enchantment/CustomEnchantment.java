@@ -18,7 +18,7 @@ public abstract class CustomEnchantment extends Enchantment {
 		super(id);
 
 		if(id > 256) {
-			throw new IllegalArgumentException("Id must bebe lower then 256!");
+			throw new IllegalArgumentException("Id must be lower then 256!");
 		}
 		
 		try {

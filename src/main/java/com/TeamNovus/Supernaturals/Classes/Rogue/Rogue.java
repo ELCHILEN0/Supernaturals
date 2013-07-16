@@ -49,7 +49,7 @@ public class Rogue extends SNClass {
 		addAbility(1, new Ability(EffectType.EVASION, "Evade", "Occasionally evade your enemies blows!", 5));
 		
 		addJoinableClass(1, new Archer(this));
-		addJoinableClass(1, new Assassin(this));
+		addJoinableClass(10, new Assassin(this));
 	}
 
 }

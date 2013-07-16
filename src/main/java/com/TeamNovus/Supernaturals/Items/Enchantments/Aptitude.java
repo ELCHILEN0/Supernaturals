@@ -153,5 +153,9 @@ public class Aptitude extends CustomEnchantment {
 		
 	}
 
+	@Override
+	public String getName() {
+		return "APTITUDE";
+	}
 
 }

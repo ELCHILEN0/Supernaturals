@@ -24,7 +24,7 @@ public class Sneak extends EffectType {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 			
-			player.getPlayer().setSneaking(true);
+			player.getPlayer().setSneaking(false);
 			player.sendMessage(ChatColor.RED + "You are no longer sneaking!");				
 		}
 	}

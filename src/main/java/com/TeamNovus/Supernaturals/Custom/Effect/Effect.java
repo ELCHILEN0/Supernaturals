@@ -45,6 +45,13 @@ public class Effect {
 		this.amplifier = amplifier;
 	}
 	
+	public Effect(EffectType type, Integer duration, Integer period, Integer amplifier) {
+		this(type, duration);
+		
+		this.period = period;
+		this.amplifier = amplifier;
+	}
+	
 	public Integer getEntityId() {
 		return entityId;
 	}
@@ -101,12 +108,16 @@ public class Effect {
 		return period > 0;
 	}
 	
-	public boolean isComplete() {
-		return elapsed > duration;
+	public boolean isExpired() {
+		return elapsed >= duration;
 	}
 	
-	public boolean isRunning() {
-		return !(isComplete());
+	public boolean isActive() {
+		return !(isExpired());
+	}
+	
+	public void end() {
+		elapsed = duration;
 	}
 	
 	public void tick() {

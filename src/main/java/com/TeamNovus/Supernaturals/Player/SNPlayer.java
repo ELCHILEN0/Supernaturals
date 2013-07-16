@@ -228,7 +228,7 @@ public class SNPlayer implements Serializable {
 	 * @return The players current health.
 	 */
 	public double getHealth() {
-		return getPlayer().getHealth() * 20 / getPlayerClass().getMaxHealth(getLevel());
+		return getPlayer().getHealth();
 	}
 
 	/**

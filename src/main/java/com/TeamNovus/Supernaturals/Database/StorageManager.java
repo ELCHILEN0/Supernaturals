@@ -29,20 +29,20 @@ public class StorageManager {
 	public StorageManager() {		
 		FileConfiguration config = Supernaturals.getPlugin().getConfig();
 		
-		if(config.getString("storage.type").equalsIgnoreCase("mysql")) {
+		if(config.getString("database.type").equalsIgnoreCase("mysql")) {
 			MySQLConfiguration configuration = new MySQLConfiguration();
 			
-			configuration.setHost(config.getString("storage.mysql.host"));
-			configuration.setPort(config.getString("storage.mysql.port"));
-			configuration.setUsername(config.getString("storage.mysql.username"));
-			configuration.setPassword(config.getString("storage.mysql.password"));
-			configuration.setDatabase(config.getString("storage.mysql.database"));
+			configuration.setHost(config.getString("database.mysql.host"));
+			configuration.setPort(config.getString("database.mysql.port"));
+			configuration.setUsername(config.getString("database.mysql.username"));
+			configuration.setPassword(config.getString("database.mysql.password"));
+			configuration.setDatabase(config.getString("database.mysql.database"));
 			
 			database = new MySQLDatabase(configuration);
-		} else if(config.getString("storage.type").equalsIgnoreCase("sqlite")) {
+		} else if(config.getString("database.type").equalsIgnoreCase("sqlite")) {
 			SQLiteConfiguration configuration = new SQLiteConfiguration();
 			
-			configuration.setFilePath(Supernaturals.getPlugin().getDataFolder() + File.separator + config.getString("storage.sqlite.file"));
+			configuration.setFilePath(Supernaturals.getPlugin().getDataFolder() + File.separator + config.getString("database.sqlite.file"));
 			
 			database = new SQLiteDatabase(configuration);
 		}

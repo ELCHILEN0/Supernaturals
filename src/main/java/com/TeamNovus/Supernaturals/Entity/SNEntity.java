@@ -118,7 +118,7 @@ public class SNEntity {
 					Bukkit.getPluginManager().callEvent(new EntityEffectBeginEvent(getEntity(), effect));
 				}
 
-				if (effect.isComplete()) {
+				if (effect.isExpired()) {
 					effectIterator.remove();
 					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), effect));
 				}				

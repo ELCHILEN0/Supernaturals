@@ -1,8 +1,8 @@
-name: Supernaturals
+name: ${project.name}
 version: ${project.version}
-author: ELCHILEN0
-description: Bring a RPG experience to Minecraft!
-website: http://www.novuscraft.org
+description: ${project.description}
+website: ${project.url}
+authors: [ELCHILEN0]
 main: com.TeamNovus.Supernaturals.Supernaturals
 commands:
   supernaturals:

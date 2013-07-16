@@ -1,4 +1,4 @@
-package com.TeamNovus.Supernaturals.Custom.Recipe;
+package com.TeamNovus.Supernaturals.Custom.Recipe.RecipeTypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,37 +7,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
 import com.TeamNovus.Supernaturals.Custom.Inventory.CustomItemStack;
+import com.TeamNovus.Supernaturals.Custom.Recipe.CustomRecipe;
 import com.google.common.base.Splitter;
 
-public class CustomRecipeShaped {
-	private CustomItemStack result;
+public class CustomRecipeShaped extends CustomRecipe {
 	private Material[] materials;
-	
+
 	public CustomRecipeShaped(CustomItemStack result) {
-		this.result = result;
+		super(result);
 	}
 	
 	public void addIngredients(Material... materials) {
 		this.materials = materials;
 	}
-	
-	public CustomItemStack getResult() {
-		return result;
-	}
 
-	public Material[] getItems() {
+	public Material[] getIngredients() {
 		return materials;
 	}
 
 	public Recipe getBukkitRecipe() {
 		ShapedRecipe recipe = new ShapedRecipe(result.getItemStack());
-		
+
 		char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
 		Map<Material, Character> charMapping = new HashMap<Material, Character>();
 				
@@ -79,8 +74,15 @@ public class CustomRecipeShaped {
 		return recipe;
 	}
 	
-	public void registerRecipe() {
-		Bukkit.addRecipe(getBukkitRecipe());
+	@Override
+	public boolean sameAs(Recipe recipe) {
+		if(recipe instanceof ShapedRecipe) {
+			ShapedRecipe r = (ShapedRecipe) recipe;
+			
+			return r.getIngredientMap().equals(((ShapedRecipe) getBukkitRecipe()).getIngredientMap());
+		}
+		
+		return false;
 	}
 	
 }
