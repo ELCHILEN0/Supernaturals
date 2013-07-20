@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -24,14 +25,11 @@ public class EnchantmentListener implements Listener {
 		CustomItemStack itemStack = new CustomItemStack(event.getPlayer().getItemInHand());
 		
 		for(Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
-			System.out.println(entry.getKey());
-			
-			System.out.println(entry.getKey().getClass().isAssignableFrom(CustomEnchantment.class));
+			System.out.println(entry.getKey() instanceof CustomEnchantment);
 			if(entry.getKey() instanceof CustomEnchantment) {
 				CustomEnchantment enchantment = (CustomEnchantment) entry.getKey();
-				int level = entry.getValue();
-				System.out.println("hi!");
-				enchantment.onInteract(event, level);
+
+				enchantment.onInteract(event, entry.getValue());
 			}
 		}
 		
@@ -97,21 +95,24 @@ public class EnchantmentListener implements Listener {
 	
 	@EventHandler
 	public void onDamageEntity(EntityDamageEntityEvent event) {
-		if(event.getEntity() instanceof Player && ((Player) event.getEntity()).getItemInHand() == null)
-			return;
-		
-		CustomItemStack itemStack = new CustomItemStack(((Player) event.getEntity()).getItemInHand());
-		
-		for(Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
-			if(entry.getKey() instanceof CustomEnchantment) {
-				CustomEnchantment enchantment = (CustomEnchantment) entry.getKey();
-				int level = entry.getValue();
-				
-				enchantment.onDamageEntity(event, level);
+		if(event.getEntity() instanceof Player) {
+			if(((Player) event.getEntity()).getItemInHand() != null) {
+				return;
 			}
+			
+			CustomItemStack itemStack = new CustomItemStack(((Player) event.getEntity()).getItemInHand());
+			
+			for(Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
+				if(entry.getKey() instanceof CustomEnchantment) {
+					CustomEnchantment enchantment = (CustomEnchantment) entry.getKey();
+					int level = entry.getValue();
+					
+					enchantment.onDamageEntity(event, level);
+				}
+			}
+			
+			((Player) event.getEntity()).setItemInHand(itemStack.getItemStack());
 		}
-		
-		((Player) event.getEntity()).setItemInHand(itemStack.getItemStack());
 	}
 
 }

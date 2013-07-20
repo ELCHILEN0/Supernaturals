@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -75,11 +78,20 @@ public class CustomRecipeShaped extends CustomRecipe {
 	}
 	
 	@Override
-	public boolean sameAs(Recipe recipe) {
-		if(recipe instanceof ShapedRecipe) {
-			ShapedRecipe r = (ShapedRecipe) recipe;
+	public boolean matches(Inventory inventory) {
+		if(inventory instanceof CraftingInventory) {
+			ItemStack[] items = ((CraftingInventory) inventory).getMatrix();
 			
-			return r.getIngredientMap().equals(((ShapedRecipe) getBukkitRecipe()).getIngredientMap());
+			for (int i = 0; i < 9; i++) {
+				Material table = items[i].getType();
+				Material recipe = materials[i] == null ? Material.AIR : materials[i];
+
+				if(!(table.equals(recipe))) {
+					return false;
+				}
+			}
+			
+			return true;
 		}
 		
 		return false;

@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Custom.Recipe;
 
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.Recipe;
 
 import com.TeamNovus.Supernaturals.Custom.Inventory.CustomItemStack;
@@ -16,7 +17,7 @@ public abstract class CustomRecipe {
 	}
 
 	public abstract Recipe getBukkitRecipe();
-	public abstract boolean sameAs(Recipe recipe);
+	public abstract boolean matches(Inventory inventory);
 	
 	public void register() {
 		CustomRecipes.registerRecipe(this);

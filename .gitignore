@@ -1,7 +1,9 @@
-# Eclipse stuff
+# IDE
 .classpath
 .project
 .settings
+.idea
+*.iml
 
 # Potential build files
 build

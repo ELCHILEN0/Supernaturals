@@ -11,6 +11,7 @@ import com.TeamNovus.Supernaturals.Commands.Common.AdminCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.DefaultCommands;
 import com.TeamNovus.Supernaturals.Commands.Common.PluginCommands;
 import com.TeamNovus.Supernaturals.Custom.Enchantment.EnchantmentListener;
+import com.TeamNovus.Supernaturals.Custom.Recipe.RecipeListener;
 import com.TeamNovus.Supernaturals.Database.StorageManager;
 import com.TeamNovus.Supernaturals.Items.Recipes;
 import com.TeamNovus.Supernaturals.Listeners.EntityListener;
@@ -35,7 +36,7 @@ public class Supernaturals extends JavaPlugin {
 		if(!(new File(getDataFolder(), "config.yml").exists())) {
 			saveDefaultConfig();
 		}
-		
+
 		// Primary Listeners:
 		Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -49,6 +50,7 @@ public class Supernaturals extends JavaPlugin {
 
 		// Custom Minecraft:
 		Bukkit.getPluginManager().registerEvents(new EnchantmentListener(), this);
+		Bukkit.getPluginManager().registerEvents(new RecipeListener(), this);
 		
 		// Schedule Tasks:
 		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);

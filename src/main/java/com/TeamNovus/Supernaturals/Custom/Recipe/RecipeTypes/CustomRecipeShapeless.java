@@ -1,6 +1,8 @@
 package com.TeamNovus.Supernaturals.Custom.Recipe.RecipeTypes;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
@@ -35,11 +37,18 @@ public class CustomRecipeShapeless extends CustomRecipe {
 	}
 	
 	@Override
-	public boolean sameAs(Recipe recipe) {
-		if(recipe instanceof ShapelessRecipe) {
-			ShapelessRecipe r = (ShapelessRecipe) recipe;
-			
-			return r.getIngredientList().equals(((ShapelessRecipe) getBukkitRecipe()).getIngredientList());
+	public boolean matches(Inventory inventory) {
+		if(inventory instanceof CraftingInventory) {
+			CraftingInventory i = (CraftingInventory) inventory;
+
+			if(i.getRecipe() instanceof ShapelessRecipe) {
+				ShapelessRecipe r = (ShapelessRecipe) i.getRecipe();
+				ShapelessRecipe recipe = (ShapelessRecipe) getBukkitRecipe();
+				
+				if(r.getIngredientList().equals(recipe.getIngredientList())) {
+					return true;
+				}				
+			}
 		}
 		
 		return false;
