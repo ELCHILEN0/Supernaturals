@@ -313,12 +313,7 @@ public class CustomItemStack {
 	 */
 	public void addGlow() {
 		net.minecraft.server.v1_6_R2.ItemStack nmsStack = getNMSStack();
-		NBTTagCompound compound = nmsStack.tag;
-
-		if (compound == null) {
-			compound = new NBTTagCompound();
-			nmsStack.tag = compound;
-		}
+		NBTTagCompound compound = getTag();
 
 		compound.set("ench", new NBTTagList());
 		
@@ -330,12 +325,7 @@ public class CustomItemStack {
 	 */
 	public void removeGlow() {
 		net.minecraft.server.v1_6_R2.ItemStack nmsStack = getNMSStack();
-		NBTTagCompound compound = nmsStack.tag;
-
-		if (compound == null) {
-			compound = new NBTTagCompound();
-			nmsStack.tag = compound;
-		}
+		NBTTagCompound compound = getTag();
 
 		compound.set("ench", null);
 		
@@ -348,15 +338,11 @@ public class CustomItemStack {
 	 * @return True if the glow is present, false otherwise.
 	 */
 	public boolean hasGlow() {
-		net.minecraft.server.v1_6_R2.ItemStack nmsStack = getNMSStack();
-		NBTTagCompound compound = nmsStack.tag;
-
-		if (compound == null) {
-			compound = new NBTTagCompound();
-			nmsStack.tag = compound;
-		}
-
-		return compound.hasKey("ench");
+		return getTag().hasKey("ench");
+	}
+	
+	public NBTTagCompound getTag() {
+		return getNMSStack().tag == null ? new NBTTagCompound() : getNMSStack().tag;
 	}
 	
 	/**
