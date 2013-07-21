@@ -1,5 +1,6 @@
 package com.TeamNovus.Supernaturals.Listeners;
 
+import com.TeamNovus.Supernaturals.Events.EntityDamageByEntityProjectileEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -18,15 +19,15 @@ public class EntityListener implements Listener {
 			EntityDamageEntityByProjectileEvent entityDamageEntityByProjectile = new EntityDamageEntityByProjectileEvent(((Projectile) event.getDamager()).getShooter(), event.getEntity(), event.getDamage(), event.getCause(), (Projectile) event.getDamager());
 			
 			Bukkit.getPluginManager().callEvent(entityDamageEntityByProjectile);
-			
+
 			event.setDamage(entityDamageEntityByProjectile.getDamage());
-			
+
 			if (entityDamageEntityByProjectile.isCancelled())
 				event.setCancelled(true);
 			
 			// Called when an entity is damaged by a projectile.
-			EntityDamageEntityByProjectileEvent entityDamageByEntityProjectile = new EntityDamageEntityByProjectileEvent(((Projectile) event.getDamager()).getShooter(), event.getEntity(), event.getDamage(), event.getCause(), (Projectile) event.getDamager());
-			
+			EntityDamageByEntityProjectileEvent entityDamageByEntityProjectile = new EntityDamageByEntityProjectileEvent(((Projectile) event.getDamager()).getShooter(), event.getEntity(), event.getDamage(), event.getCause(), (Projectile) event.getDamager());
+
 			Bukkit.getPluginManager().callEvent(entityDamageByEntityProjectile);
 			
 			event.setDamage(entityDamageByEntityProjectile.getDamage());
