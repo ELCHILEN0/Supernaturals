@@ -33,6 +33,7 @@ import com.TeamNovus.Supernaturals.Events.EntityDamageByEntityProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
@@ -171,7 +172,6 @@ public class SupernaturalListener implements Listener {
         }
 
 		for (Effect effect : effects) {
-            System.out.println(effect);
 			EffectType effectType = effect.getType();
 
 			for (Method method : effectType.getClass().getMethods()) {
@@ -183,6 +183,14 @@ public class SupernaturalListener implements Listener {
                     Type type = types[i];
 
                     if(type.equals(eventClass)) {
+                    	if(event instanceof EntityEffectEvent) {
+                    		EntityEffectEvent e = (EntityEffectEvent) event;
+                    		
+                    		if(!(effect.getType().equals(e.getEffectType()))) {
+                    			break;
+                    		}
+                    	}
+                    	
                         params[i] = event;
                         isListener = true;
                     } else if(type.equals(Effect.class)) {
