@@ -3,19 +3,7 @@ package com.TeamNovus.Supernaturals.Custom.Effect;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.BlindingArrow;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Confusion;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Critical;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Evasion;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Invisibility;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.PoisonArrow;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Resistance;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Revive;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Slowness;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Sneak;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Speed;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Strength;
-import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.Weakness;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes.*;
 
 public abstract class EffectType {
 	public static List<EffectType> types = new ArrayList<EffectType>();
@@ -64,8 +52,8 @@ Blind Arrows
 	public static final EffectType INVISIBILITY = new Invisibility();
 	public static final EffectType CRITICAL		= new Critical();
 	public static final EffectType CONFUSION	= new Confusion();
-	public static final EffectType REVIVE		= new Revive();
-	
+    public static final EffectType REVIVE		= new Revive();
+
 	private Integer id;
 	
 	public EffectType() {

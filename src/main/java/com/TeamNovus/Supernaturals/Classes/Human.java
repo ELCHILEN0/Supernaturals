@@ -1,5 +1,7 @@
 package com.TeamNovus.Supernaturals.Classes;
 
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import org.bukkit.ChatColor;
 
 import com.TeamNovus.Supernaturals.Classes.Barbarian.Barbarian;
