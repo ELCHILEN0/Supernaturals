@@ -4,7 +4,6 @@ import java.util.Map.Entry;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -23,9 +22,8 @@ public class EnchantmentListener implements Listener {
 			return;
 		
 		CustomItemStack itemStack = new CustomItemStack(event.getPlayer().getItemInHand());
-		
+
 		for(Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
-			System.out.println(entry.getKey() instanceof CustomEnchantment);
 			if(entry.getKey() instanceof CustomEnchantment) {
 				CustomEnchantment enchantment = (CustomEnchantment) entry.getKey();
 
