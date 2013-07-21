@@ -73,7 +73,7 @@ public class Supernaturals extends JavaPlugin {
 		StorageManager.getInstance().loadEntities();			
 	}
 
-	public void onDisable() {
+	public void onDisable() {		
 		// Save all the data to the database.
 		StorageManager.getInstance().savePlayers();
 		StorageManager.getInstance().saveEntities();
