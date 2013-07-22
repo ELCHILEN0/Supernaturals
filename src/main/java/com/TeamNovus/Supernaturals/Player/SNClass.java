@@ -266,7 +266,7 @@ public abstract class SNClass {
 	
 	public int getLevelRequiredForClass(SNClass joinableClass) {
 		for (Entry<Integer, SNClass> entry : joinableClasses.entries()) {
-			if(entry.getValue().getName() == joinableClass.getName()) {
+			if(entry.getValue().getName().equals(joinableClass.getName())) {
 				return entry.getKey();
 			}
 		}
