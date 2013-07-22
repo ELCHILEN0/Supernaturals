@@ -6,14 +6,8 @@ import com.TeamNovus.Supernaturals.Player.SNClass;
 
 public class Bandit extends SNClass {
 
-	public Bandit() {
-		super("Bandit", ChatColor.GOLD, 30);
-		
-		setMaxMana(1, 10);
-		setMaxMana(5, 15);
-		setMaxMana(10, 20);
-		setMaxMana(25, 25);
-		setMaxMana(30, 30);
+	public Bandit(SNClass parentClass) {
+		super("Bandit", ChatColor.GOLD, 30, parentClass);
 		
 		setMaxHealth(1, 23);
 		setMaxHealth(5, 24);
@@ -32,6 +26,12 @@ public class Bandit extends SNClass {
 		setSpeed(10, 0.19f);
 		setSpeed(25, 0.20f);
 		setSpeed(30, 0.21f);
+		
+		setMaxMana(1, 10);
+		setMaxMana(5, 15);
+		setMaxMana(10, 20);
+		setMaxMana(25, 25);
+		setMaxMana(30, 30);
 	}
 
 }

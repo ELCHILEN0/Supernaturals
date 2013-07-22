@@ -9,12 +9,6 @@ public class Brute extends SNClass {
 	public Brute(SNClass parentClass) {
 		super("Brute", ChatColor.DARK_RED, 30, parentClass);
 		
-		setMaxMana(1, 15);
-		setMaxMana(5, 20);
-		setMaxMana(10, 25);
-		setMaxMana(25, 30);
-		setMaxMana(30, 35);
-		
 		setMaxHealth(1, 30);
 		setMaxHealth(5, 32);
 		setMaxHealth(10, 34);
@@ -32,6 +26,12 @@ public class Brute extends SNClass {
 		setSpeed(10, 0.15f);
 		setSpeed(25, 0.16f);
 		setSpeed(30, 0.17f);
+		
+		setMaxMana(1, 15);
+		setMaxMana(5, 20);
+		setMaxMana(10, 25);
+		setMaxMana(25, 30);
+		setMaxMana(30, 35);
 	}
 
 }

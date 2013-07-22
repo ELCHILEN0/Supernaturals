@@ -30,8 +30,6 @@ public class EnchantmentListener implements Listener {
 				enchantment.onInteract(event, entry.getValue());
 			}
 		}
-		
-		event.getPlayer().setItemInHand(itemStack.getItemStack());
 	}
 	
 	@EventHandler
@@ -48,9 +46,7 @@ public class EnchantmentListener implements Listener {
 				
 				enchantment.onInteractEntity(event, level);
 			}
-		}
-		
-		event.getPlayer().setItemInHand(itemStack.getItemStack());
+		}		
 	}
 	
 	@EventHandler
@@ -67,9 +63,7 @@ public class EnchantmentListener implements Listener {
 				
 				enchantment.onBlockDamage(event, level);
 			}
-		}
-		
-		event.getPlayer().setItemInHand(itemStack.getItemStack());
+		}		
 	}
 	
 	@EventHandler
@@ -86,9 +80,7 @@ public class EnchantmentListener implements Listener {
 				
 				enchantment.onBlockBreak(event, level);
 			}
-		}
-		
-		event.getPlayer().setItemInHand(itemStack.getItemStack());
+		}		
 	}
 	
 	@EventHandler
@@ -108,8 +100,6 @@ public class EnchantmentListener implements Listener {
 					enchantment.onDamageEntity(event, level);
 				}
 			}
-			
-			((Player) event.getEntity()).setItemInHand(itemStack.getItemStack());
 		}
 	}
 

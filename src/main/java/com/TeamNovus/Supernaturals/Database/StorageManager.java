@@ -55,6 +55,10 @@ public class StorageManager {
 			Bukkit.getLogger().severe("-----------------------------------------------------");
 			Bukkit.getServer().getPluginManager().disablePlugin(Supernaturals.getPlugin());
 			return;
+		} else {
+			Bukkit.getLogger().info("-----------------------------------------------------");
+			Bukkit.getLogger().info("Database connection sucessful!");
+			Bukkit.getLogger().info("-----------------------------------------------------");
 		}
 		
 		database.connect();
