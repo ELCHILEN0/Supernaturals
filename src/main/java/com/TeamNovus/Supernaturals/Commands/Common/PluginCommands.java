@@ -401,7 +401,7 @@ public class PluginCommands {
 		
 		SNClass targetClass = player.getPlayerClass();
 		
-		if(args.length == 2) {
+		if(args.length == 1) {
 			targetClass = SNClasses.i.getBestClass(args[0]);
 		}
 		
