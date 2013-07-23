@@ -324,7 +324,11 @@ public class PluginCommands {
 			}
 			
 			if(targetClass.getUniquePowers(i).size() > 0) {
-				containsContent = true;
+				if(!containsContent) {
+					containsContent = true;
+
+					sender.sendMessage(CommandManager.getDark() + "Class: " + targetClass.getColor() + targetClass.getName());
+				}
 				
 				for(Power power : targetClass.getUniquePowers(i)) {
 					if(player.getPowers().contains(power)) {
@@ -376,7 +380,11 @@ public class PluginCommands {
 			}
 			
 			if(targetClass.getUniqueAbilities(i).size() > 0) {
-				containsContent = true;
+				if(!containsContent) {
+					containsContent = true;
+
+					sender.sendMessage(CommandManager.getDark() + "Class: " + targetClass.getColor() + targetClass.getName());
+				}
 				
 				for(Ability ability : targetClass.getUniqueAbilities(i)) {
 					if(player.getAbilities().contains(ability)) {
@@ -417,8 +425,12 @@ public class PluginCommands {
 				continue;
 			}
 			
-			containsContent = true;
+			if(!containsContent) {
+				containsContent = true;
 
+				sender.sendMessage(CommandManager.getDark() + "Class: " + targetClass.getColor() + targetClass.getName());
+			}
+			
 			if(player.getLevel() >= i && player.getPlayerClass().equals(targetClass)) {
 				if(targetClass.getMaxHealth(i) != targetClass.getMaxHealth(i - 1)) {
 					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Health: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
