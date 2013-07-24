@@ -56,7 +56,7 @@ public class Supernaturals extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(this, new EntityTickTask(), 1, 1);
 		Bukkit.getScheduler().runTaskTimer(this, new CooldownTask(), 1, 1);
 		Bukkit.getScheduler().runTaskTimer(this, new ManaRegainTask(), 20 * 10, 20 * 10);
-		Bukkit.getScheduler().runTaskTimer(this, new SaveTask(), 20 * 10, 20 * 10);
+		Bukkit.getScheduler().runTaskTimer(this, new SaveTask(), 20 * 60 * 5, 20 * 60 * 5);
 		
 		// Register the Wand Recipes:
 		Recipes.register();

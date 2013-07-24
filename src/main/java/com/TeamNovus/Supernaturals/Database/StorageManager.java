@@ -73,7 +73,13 @@ public class StorageManager {
 	}
 
 	public void savePlayers() {	
-		database.saveAll(SNPlayers.i.getAllPlayers());
+		Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
+			
+			@Override
+			public void run() {
+				database.saveAll(SNPlayers.i.getAllPlayers());				
+			}
+		});
 	}
 
 	public void loadEntities() {
