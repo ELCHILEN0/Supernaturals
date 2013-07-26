@@ -3,8 +3,9 @@ package com.TeamNovus.Supernaturals.Listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.TeamNovus.Supernaturals.SNPlayers;
@@ -14,30 +15,14 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class PlayerListener implements Listener {
 	
-//	@EventHandler
-//    public void onPlayerPotionDrink(PlayerCon event) {
-//        Player player = event.getPlayer();
-//        
-//        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-        	// Pseudo:
-        	/*
-        	 * final boolean switched = false;;
-        	 * 
-        	 * if(itemInHand().isManaPotion()) {
-        	 *  Bukkit.getScheduler.runTaskLater(Supernaturals.getPlugin, new Runnable() {
-        	 *          	 *  	public void run() {
-        	 *  		if(itemInHand().isEmptyManaPotion()) {
-        	 *  			player.restoreMana(itemInHand().getManaAmount());
-        	 *  		} else
-        	 *  	}
-        	 *  }, 35 (33));
-        	 * 
-        	 * 
-        	 * 
-        	 */
-        	
-//        }
-//    }
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+
+		event.setFormat(event.getFormat().replace("{{ CLASS_COLOR }}", player.getPlayerClass().getColor() + ""));
+		event.setFormat(event.getFormat().replace("{{ CLASS }}", player.getPlayerClass().getName()));
+		event.setFormat(event.getFormat().replace("{{ LEVEL }}", player.getLevel() + ""));
+	}
 	
 	@EventHandler
 	public void onPlayerManaChange(PlayerManaChangeEvent event) {	
@@ -58,23 +43,6 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(final PlayerLoginEvent event) {
-		SNPlayers.i.get(event.getPlayer());
-		
-		Bukkit.getServer().getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
-			
-			public void run() {
-				SNPlayer player = SNPlayers.i.get(event.getPlayer());
-				
-				if(player.isOnline()) {
-					player.syncFields(false);
-					player.updateGUI();
-				}
-			}
-		});
-	}
-	
-	@EventHandler
-	public void onPlayerChangedWorld(final PlayerChangedWorldEvent event) {
 		SNPlayers.i.get(event.getPlayer());
 		
 		Bukkit.getServer().getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
