@@ -25,7 +25,10 @@ public class Evasion extends EffectType {
 	}
 	
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event, Effect effect) {
-		if(new Random(101).nextInt() < effect.getAmplifier()) {
+		System.out.println("Ampl:" + effect.getAmplifier());
+		System.out.println("Rand:" + new Random().nextInt(101));
+			
+		if(new Random().nextInt(101) < effect.getAmplifier()) {
 			event.setCancelled(true);
 		
 			if(event.getEntity() instanceof Player) {
@@ -33,13 +36,15 @@ public class Evasion extends EffectType {
 				
 				player.getPlayer().setSneaking(true);
 				player.sendMessage(ChatColor.GREEN + "Evaded!");
-			} else if(event.getDamager() instanceof Player) {
-				SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			} 
+			
+			if(event.getDamager() instanceof Player) {
+				SNPlayer player = SNPlayers.i.get((Player) event.getDamager());
 				
 				player.getPlayer().setSneaking(true);
 				player.sendMessage(ChatColor.GREEN + "Your enemy evaded your blow!");
-			} else if(event.getEntity() instanceof Projectile) {
-				SNPlayer player = SNPlayers.i.get((Player) ((Projectile) event.getEntity()).getShooter());
+			} else if(event.getDamager() instanceof Projectile) {
+				SNPlayer player = SNPlayers.i.get((Player) ((Projectile) event.getDamager()).getShooter());
 				
 				player.getPlayer().setSneaking(true);
 				player.sendMessage(ChatColor.GREEN + "Your enemy evaded your shot!");
