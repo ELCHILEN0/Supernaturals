@@ -46,7 +46,7 @@ public class Rogue extends SNClass {
 		addPower(30, new Quicken("Quicken", "Temporarily give yourself a speed booost!", 20 * 60, new Reagent(20), new Reagent(20)).setDuration(20 * 30).setAmplifier(2));
 		
 		addAbility(5, new Ability(EffectType.EVASION, "Evade", "Occasionally evade your enemies blows!", 3));
-		addAbility(25, new Ability(EffectType.POISON_ARROW, "Poison Arrow", "Dip your arrows in poison occasionally poisioning your enemies!", 2));
+		addAbility(25, new Ability(EffectType.POISON_ARROW, "Poison Arrow", "Dip your arrows in poison occasionally poisioning your enemies!", 5));
 		
 		addJoinableClass(25, new Archer(this));
 		addJoinableClass(25, new Assassin(this));
