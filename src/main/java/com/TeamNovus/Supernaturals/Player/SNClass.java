@@ -81,15 +81,15 @@ public abstract class SNClass {
 	}
 		
 	public Integer getMaxMana(Integer level) {
-		Integer max = 0;
+		int l = 0;
 		
 		for(Integer i : maxMana.keySet()) {
-			if(i > level) break;
-			
-			max = maxMana.get(i);
+			if(i <= level && i > l) {
+				l = i;
+			}
 		}
 		
-		return max;
+		return maxMana.get(l);
 	}
 	
 	public void setMaxMana(Integer level, Integer maxMana) {
@@ -97,15 +97,15 @@ public abstract class SNClass {
 	}
 	
 	public Integer getMaxHealth(Integer level) {
-		Integer max = 0;
+		int l = 0;
 		
 		for(Integer i : maxHealth.keySet()) {
-			if(i > level) break;
-			
-			max = maxHealth.get(i);
+			if(i <= level && i > l) {
+				l = i;
+			}
 		}
 		
-		return max;
+		return maxHealth.get(l);
 	}
 	
 	public void setMaxHealth(Integer level, Integer maxHealth) {
@@ -113,15 +113,15 @@ public abstract class SNClass {
 	}
 	
 	public Integer getMaxFoodLevel(Integer level) {
-		Integer max = 0;
+		int l = 0;
 		
 		for(Integer i : maxFoodLevel.keySet()) {
-			if(i > level) break;
-			
-			max = maxFoodLevel.get(i);
+			if(i <= level && i > l) {
+				l = i;
+			}
 		}
 		
-		return max;
+		return maxFoodLevel.get(l);
 	}
 	
 	public void setMaxFoodLevel(Integer level, Integer maxFoodLevel) {
@@ -129,15 +129,15 @@ public abstract class SNClass {
 	}
 	
 	public Float getSpeed(Integer level) {
-		Float max = 0f;
+		int l = 0;
 		
 		for(Integer i : speed.keySet()) {
-			if(i > level) break;
-			
-			max = speed.get(i);
+			if(i <= level && i > l) {
+				l = i;
+			}
 		}
 		
-		return max;
+		return speed.get(l);
 	}
 	
 	public void setSpeed(Integer level, Float speed) {
