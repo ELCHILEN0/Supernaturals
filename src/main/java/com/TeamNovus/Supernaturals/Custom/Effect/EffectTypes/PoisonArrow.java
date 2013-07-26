@@ -28,13 +28,11 @@ public class PoisonArrow extends EffectType {
 	
 	@EffectTypeListener
 	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event, Effect effect) {
-		System.out.println("poisoned!");
-
-		if(new Random(101).nextInt() < effect.getAmplifier()) {
+		if(new Random().nextInt(101) < effect.getAmplifier()) {
 			if(event.getDamaged() instanceof LivingEntity) {
 				LivingEntity target = (LivingEntity) event.getDamaged();
-				System.out.println("poisoned!");
-				target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 5 * effect.getAmplifier(), effect.getAmplifier()));
+
+				target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 3 * effect.getAmplifier(), effect.getAmplifier()));
 			}
 		}
 	}

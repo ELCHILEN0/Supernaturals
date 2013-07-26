@@ -2,7 +2,13 @@ package com.TeamNovus.Supernaturals.Classes.Rogue.Classes.Archer;
 
 import org.bukkit.ChatColor;
 
+import com.TeamNovus.Supernaturals.Classes.Rogue.Classes.Archer.Powers.Barrage;
+import com.TeamNovus.Supernaturals.Classes.Rogue.Classes.Archer.Powers.Heal;
+import com.TeamNovus.Supernaturals.Classes.Rogue.Powers.Sneak;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
 
 public class Archer extends SNClass {
 
@@ -33,11 +39,12 @@ public class Archer extends SNClass {
 		setMaxMana(25, 55);
 		setMaxMana(30, 60);
 		
-//		addPower(1, new Heal("Heal", "Quickly heal yourself in times of need!", 20 * 30, new Reagent(10), new Reagent(10)).setAmplifier(2));
-//		addPower(1, new Sneak("Sneak", "Hide your nametag from your enemies!", 60 * 20, new Reagent(15), new Reagent(15)).setDuration(30 * 20));
-//		
-//		addAbility(1, new Ability(EffectType.BLINDING_ARROW, "Blinding Arrow", "Occasionally blind your enemies with your arrows!", 3));
-//		addAbility(1, new Ability(EffectType.POISON_ARROW, "Poison Arrow", "Occasionally poison your enemies with your arrows!", 3));
+		addPower(1, new Heal("Heal", "Quickly heal yourself in times of need!", 20 * 30, new Reagent(10), new Reagent(10)).setAmplifier(2));
+		addPower(10, new Sneak("Sneak", "Hide your nametag from your enemies!", 60 * 20, new Reagent(15), new Reagent(15)).setDuration(30 * 20));
+		addPower(30, new Barrage("Barrage", "Send a volley of arrows at your enemies!!", 60 * 20, new Reagent(15), new Reagent(15)));
+		
+		addAbility(5, new Ability(EffectType.BLINDING_ARROW, "Blinding Arrow", "Occasionally blind your enemies with your arrows!", 4));
+		addAbility(25, new Ability(EffectType.POISON_ARROW, "Poison Arrow", "Occasionally poison your enemies with your arrows!", 4));
 	}
 	
 }

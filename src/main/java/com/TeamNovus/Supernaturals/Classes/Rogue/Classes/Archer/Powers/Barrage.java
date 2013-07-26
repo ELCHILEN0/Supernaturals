@@ -23,7 +23,6 @@ public class Barrage extends Power {
 	
 	@Override
 	public Boolean cast(SNPlayer player) {
-		
 		for (int i = 0; i < arrows; i++) {
 			player.getPlayer().launchProjectile(Arrow.class);
 		}
