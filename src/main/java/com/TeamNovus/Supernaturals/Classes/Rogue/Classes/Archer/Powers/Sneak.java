@@ -15,7 +15,7 @@ public class Sneak extends Power {
 		duration = 30 * 20;
 	}
 
-	public Sneak setAmplifier(Integer duration) {
+	public Sneak setDuration(Integer duration) {
 		this.duration = duration;
 		
 		return this;
@@ -27,7 +27,5 @@ public class Sneak extends Power {
 		
 		return true;
 	}
-
-
 
 }
