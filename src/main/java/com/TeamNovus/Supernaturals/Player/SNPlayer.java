@@ -244,6 +244,7 @@ public class SNPlayer implements Serializable {
 			health = 0;
 		
 		getPlayer().setHealth(health);
+		getPlayer().setHealthScaled(false);
 	}
 
 	/**
@@ -456,13 +457,16 @@ public class SNPlayer implements Serializable {
 		setMaxHealth(getPlayerClass().getMaxHealth(getLevel()));
 		setMaxFoodLevel(getPlayerClass().getMaxFoodLevel(getLevel()));
 		
+		
 		if(heal) {
 			setMana(getMaxMana(), false);
 			setHealth(getMaxHealth());
 			setFoodLevel(getMaxFoodLevel());
-			
-			updateFoodLevel();
-		}
+		} else {
+			setMana(getMana());
+			setHealth(getHealth());
+			setFoodLevel(getFoodLevel());
+		}		
 	}
 
 	/**
