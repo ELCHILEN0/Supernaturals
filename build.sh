@@ -1,11 +1,8 @@
 #! /bin/bash
 
-clear
-echo "Building and Packaging Project"
+rm -rf target/*.jar
 
 mvn package
-
-echo "JAR file packaged sucessfully!"
 
 while getopts o:c option
 do
