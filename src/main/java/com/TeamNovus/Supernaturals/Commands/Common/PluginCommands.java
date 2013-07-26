@@ -437,15 +437,15 @@ public class PluginCommands {
 				}
 				
 				if(targetClass.getMaxMana(i) != targetClass.getMaxMana(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Mana: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Mana: " + CommandManager.getLight() + targetClass.getMaxMana(i));
 				}
 				
 				if(targetClass.getMaxFoodLevel(i) != targetClass.getMaxFoodLevel(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Hunger: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Hunger: " + CommandManager.getLight() + targetClass.getMaxFoodLevel(i));
 				}
 				
 				if(targetClass.getSpeed(i) != targetClass.getSpeed(i - 1)) {
-					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Speed: " + CommandManager.getLight() + targetClass.getMaxHealth(i));
+					sender.sendMessage(ChatColor.GREEN + "Level " + i + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Speed: " + CommandManager.getLight() + targetClass.getSpeed(i));
 				}
 
 
