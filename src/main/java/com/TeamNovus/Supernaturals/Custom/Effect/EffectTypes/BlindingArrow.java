@@ -27,7 +27,7 @@ public class BlindingArrow extends EffectType {
 	}
 	
 	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event, Effect effect) {
-		if(new Random().nextInt(101) < effect.getAmplifier()) {
+		if(new Random().nextInt(101) <= effect.getAmplifier()) {
 			if(event.getEntity() instanceof LivingEntity) {
 				LivingEntity target = (LivingEntity) event.getEntity();
 				

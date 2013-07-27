@@ -1,5 +1,7 @@
 package com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes;
 
+import java.util.Random;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
@@ -30,14 +32,16 @@ public class Revive extends EffectType {
 			Damageable entity = (Damageable) event.getEntity();
 			
 			if(entity.getHealth() - event.getDamage() <= 0) {
-				event.setCancelled(true);
-				entity.setHealth(2 * effect.getAmplifier());
-				effect.end();
-				
-				if(entity instanceof Player) {
-					SNPlayer player = SNPlayers.i.get((Player) entity);
+				if(new Random().nextInt(101) <= effect.getAmplifier()) {
+					event.setCancelled(true);
+					entity.setHealth(2 * effect.getAmplifier());
+					effect.end();
 					
-					player.sendMessage(ChatColor.GREEN + "You have risen from the dead!");
+					if(entity instanceof Player) {
+						SNPlayer player = SNPlayers.i.get((Player) entity);
+						
+						player.sendMessage(ChatColor.GREEN + "You have risen from the dead!");
+					}
 				}
 			}
 		}

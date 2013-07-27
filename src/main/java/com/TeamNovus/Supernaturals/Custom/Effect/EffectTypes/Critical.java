@@ -14,7 +14,7 @@ import com.TeamNovus.Supernaturals.Player.SNPlayer;
 public class Critical extends EffectType {
 
 	public void onEntityDamageEntity(EntityDamageEntityEvent event, Effect effect) {
-		if(new Random().nextInt(101) < effect.getAmplifier()) {
+		if(new Random().nextInt(101) <= effect.getAmplifier()) {
 			event.setDamage(event.getDamage() * 2);
 			
 			if(event.getEntity() instanceof Player) {

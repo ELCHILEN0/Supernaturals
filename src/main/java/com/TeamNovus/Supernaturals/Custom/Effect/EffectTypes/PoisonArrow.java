@@ -28,7 +28,7 @@ public class PoisonArrow extends EffectType {
 	
 	@EffectTypeListener
 	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event, Effect effect) {
-		if(new Random().nextInt(101) < effect.getAmplifier()) {
+		if(new Random().nextInt(101) <= effect.getAmplifier()) {
 			if(event.getDamaged() instanceof LivingEntity) {
 				LivingEntity target = (LivingEntity) event.getDamaged();
 

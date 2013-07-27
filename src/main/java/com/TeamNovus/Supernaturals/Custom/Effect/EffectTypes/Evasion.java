@@ -20,15 +20,12 @@ public class Evasion extends EffectType {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 			
 			player.getPlayer().setSneaking(true);
-			player.sendMessage(ChatColor.GREEN + "You have begun sneaking!");
+			player.sendMessage(ChatColor.GREEN + "You gain energy to evade attacks!");
 		}
 	}
 	
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event, Effect effect) {
-		System.out.println("Ampl:" + effect.getAmplifier());
-		System.out.println("Rand:" + new Random().nextInt(101));
-			
-		if(new Random().nextInt(101) < effect.getAmplifier()) {
+		if(new Random().nextInt(101) <= effect.getAmplifier()) {
 			event.setCancelled(true);
 		
 			if(event.getEntity() instanceof Player) {
@@ -57,7 +54,7 @@ public class Evasion extends EffectType {
 			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
 			
 			player.getPlayer().setSneaking(true);
-			player.sendMessage(ChatColor.RED + "You are no longer sneaking!");				
+			player.sendMessage(ChatColor.RED + "You are to tired to evade enemies blows!");				
 		}
 	}
 }
