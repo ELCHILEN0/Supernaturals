@@ -43,10 +43,10 @@ public class Leech extends Power {
 			if(target instanceof Player) {
 				SNPlayer t = SNPlayers.i.get((Player) target);
 				
-				t.sendMessage("You feel your health being drained by an enemy!");
+				t.sendMessage(ChatColor.RED + "You feel your health being drained by an enemy!");
 			}
 			
-			player.sendMessage("You feel rejuvenated and resume fighting with new vigor!");
+			player.sendMessage(ChatColor.GREEN + "You feel rejuvenated and resume fighting with new vigor!");
 			return true;
 		}
 		

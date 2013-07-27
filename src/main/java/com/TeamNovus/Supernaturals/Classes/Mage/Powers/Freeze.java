@@ -73,7 +73,7 @@ public class Freeze extends Power {
 						entry.getKey().setType(entry.getValue());
 					}
 				}
-			}, 20 * duration);
+			}, duration);
 			
 			
 			return true;

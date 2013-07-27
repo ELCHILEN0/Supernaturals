@@ -40,7 +40,7 @@ public class Confuse extends Power {
 		
 		if(t != null && t instanceof Player) {
 			SNPlayer target = SNPlayers.i.get((Player) t);
-			target.getEntity().addEffect(new Effect(EffectType.CONFUSION, duration));
+			target.getEntity().addEffect(new Effect(EffectType.CONFUSION, duration, 3));
 			
 			player.sendMessage(ChatColor.GREEN + "You have confused your enemy!");
 			return true;
