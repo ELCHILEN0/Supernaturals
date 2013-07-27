@@ -18,7 +18,15 @@ public class ItemBag {
 		return itemStacks;
 	}
 	
-	public Boolean has(Player player) {		
+	public boolean isEmpty() {
+		return itemStacks.size() == 0;
+	}
+	
+	public boolean containsItems() {
+		return !(isEmpty());
+	}
+	
+	public boolean has(Player player) {		
 		for (ItemStack stack : itemStacks) {
 			int total = 0;
 			for (ItemStack s : player.getInventory().all(stack.getType()).values()) {
