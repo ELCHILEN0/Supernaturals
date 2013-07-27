@@ -28,8 +28,8 @@ public class BlindingArrow extends EffectType {
 	
 	public void onEntityDamageEntityByProjectile(EntityDamageEntityByProjectileEvent event, Effect effect) {
 		if(new Random().nextInt(101) <= effect.getAmplifier()) {
-			if(event.getEntity() instanceof LivingEntity) {
-				LivingEntity target = (LivingEntity) event.getEntity();
+			if(event.getDamaged() instanceof LivingEntity) {
+				LivingEntity target = (LivingEntity) event.getDamaged();
 				
 				target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 5 * effect.getAmplifier(), effect.getAmplifier()));
 			}
