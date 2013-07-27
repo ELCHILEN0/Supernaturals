@@ -53,6 +53,7 @@ Blind Arrows
 	public static final EffectType CRITICAL		= new Critical();
 	public static final EffectType CONFUSION	= new Confusion();
     public static final EffectType REVIVE		= new Revive();
+    public static final EffectType SHIELD		= new Shield();
 
 	private Integer id;
 	
