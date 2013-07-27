@@ -15,7 +15,6 @@ import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Custom.Enchantment.CustomEnchantment;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
-import com.TeamNovus.Supernaturals.Models.ItemBag;
 import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
@@ -124,7 +123,7 @@ public class Aptitude extends CustomEnchantment {
 						player.sendMessage(ChatColor.BLUE + "   Hunger: " + ChatColor.YELLOW + required.getHungerCost());
 					if (required.getManaCost() != 0)
 						player.sendMessage(ChatColor.BLUE + "   Mana: " + ChatColor.YELLOW + required.getManaCost());
-					if (required.getItemBagCost() != new ItemBag())
+					if (required.getItemBagCost().containsItems())
 						player.sendMessage(ChatColor.BLUE + "   Items: " + ChatColor.YELLOW + required.getItemBagCost().toString());
 				}
 			} else {
