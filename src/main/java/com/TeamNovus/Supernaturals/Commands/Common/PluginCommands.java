@@ -61,7 +61,7 @@ public class PluginCommands {
 			break;
 
 		case 4:
-			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (3/4)" + CommandManager.getExtra() + " ].___________________");
+			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Tutorial (4/4)" + CommandManager.getExtra() + " ].___________________");
 			sender.sendMessage(CommandManager.getLight() + "You can craft different wands with different aptitudes!");
 			sender.sendMessage(CommandManager.getLight() + "    | _ R _ |    | G G G |    | D D D |");
 			sender.sendMessage(CommandManager.getLight() + "    | _ S _ |    | _ B _ |    | G B G |");
