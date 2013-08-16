@@ -1,0 +1,137 @@
+package com.TeamNovus.Supernaturals.Entity;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
+
+import com.TeamNovus.Persistence.Annotations.Table;
+import com.TeamNovus.Persistence.Annotations.Columns.Column;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
+import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
+import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
+import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
+
+@Table(name = "sn_entities")
+public class SNEntity {
+	@Id
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name = "uuid")
+	private String uuid;
+	
+	@OneToMany
+	private ArrayList<Effect> effects = new ArrayList<Effect>();
+
+	public SNEntity(LivingEntity e) {
+		uuid = e.getUniqueId().toString();
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	public UUID getUUID() {
+		return UUID.fromString(uuid);
+	}
+
+	public LivingEntity getEntity() {
+		for (World w : Bukkit.getWorlds()) {
+			for (LivingEntity e : w.getLivingEntities()) {
+				if (e.getUniqueId().toString().equals(uuid)) {
+					return e;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Boolean isAlive() {
+		return getEntity() != null;
+	}
+
+	public ArrayList<Effect> getEffects() {
+		return effects;
+	}
+
+	public void setEffects(ArrayList<Effect> effects) {
+		this.effects = effects;
+	}
+
+	public void addEffect(Effect effect) {
+		Iterator<Effect> effectIterator = effects.iterator();
+		while (effectIterator.hasNext()) {
+			Effect e = effectIterator.next();
+			if (e.getClass().equals(effect.getClass())) {				
+				e = effect;
+				return;
+			}
+		}
+
+		effects.add(effect);
+	}
+
+	public void removeEffect(Effect effect) {
+		Iterator<Effect> effectIterator = effects.iterator();
+		while (effectIterator.hasNext()) {
+			Effect e = effectIterator.next();
+			if (e.getClass().equals(effect.getClass())) {				
+				effectIterator.remove();
+			}
+		}
+	}
+	
+	public boolean hasEffect(EffectType type) {
+		for(Effect effect : effects) {
+			if(type.equals(effect.getType())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public void tick() {
+		if(!(isAlive())) return;
+		
+		Iterator<Effect> effectIterator = effects.iterator();
+		while (effectIterator.hasNext()) {
+			Effect effect = effectIterator.next();
+			
+			Bukkit.getPluginManager().callEvent(new EntityEffectTickEvent(getEntity(), effect));
+			
+			if (effect.isLasting()) {		
+				if (effect.getElapsed() == 0) {
+					Bukkit.getPluginManager().callEvent(new EntityEffectBeginEvent(getEntity(), effect));
+				}
+
+				if (effect.isExpired()) {
+					effectIterator.remove();
+					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), effect));
+				}				
+			}
+			
+			if (effect.isPeriodic()) {				
+				if (effect.getElapsed() % effect.getPeriod() == 0) {
+					Bukkit.getPluginManager().callEvent(new EntityEffectTriggerEvent(getEntity(), effect));
+				}
+			}
+			
+			effect.setElapsed(effect.getElapsed() + 1);
+		}
+	}
+
+}
