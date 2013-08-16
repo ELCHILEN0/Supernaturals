@@ -3,8 +3,7 @@ version: ${project.version}
 description: ${project.description}
 website: ${project.url}
 authors: [ELCHILEN0]
-main: com.TeamNovus.Supernaturals.Supernaturals
+main: com.TeamNovus.Bounties.Bounties
 commands:
-  supernaturals:
-    aliases: [supernatural, sn]
-soft-depend: [ProtocolLib, TagHelper]
+  bounties:
+    aliases: [bounty, bn]

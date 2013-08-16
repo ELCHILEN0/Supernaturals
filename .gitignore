@@ -1,9 +1,17 @@
-# IDE
-.classpath
+*.pydevproject
 .project
-.settings
-.idea
-*.iml
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
 
 # Potential build files
 build
@@ -13,5 +21,35 @@ manifest.mf
 build.xml
 target
 
-# Mac filesystem dust
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# Java
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Mac File System Dust
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes

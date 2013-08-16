@@ -1,6 +1,4 @@
 settings:
-  disabled-worlds:
-  - world_meridia
   save-interval: 60
 database:
   type: sqlite
