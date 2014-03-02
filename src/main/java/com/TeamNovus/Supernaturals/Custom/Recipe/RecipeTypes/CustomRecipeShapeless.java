@@ -29,7 +29,7 @@ public class CustomRecipeShapeless extends CustomRecipe {
 		
 		for(Material material : materials) {
 			if(material != null) {
-				recipe.addIngredient(material, -1);
+				recipe.addIngredient(material);
 			}
 		}
 		

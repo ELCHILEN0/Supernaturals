@@ -26,7 +26,7 @@ public class DefaultCommands {
 		
 		int page = args.length == 0 ? 1 : Math.abs(Integer.valueOf(args[0]));
 		int total = 0;
-		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.getPlugin().getName() + CommandManager.getExtra() + " ].__________________");
+		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.plugin.getName() + CommandManager.getExtra() + " ].__________________");
 
 		sender.sendMessage(ChatColor.GRAY + "Required: < > Optional: [ ]");
 		for (int i = maxLines * page - maxLines; i < CommandManager.getCommands().size() && total < maxLines - 1; i++) {

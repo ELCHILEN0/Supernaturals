@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Custom.Enchantment.CustomEnchantment;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
@@ -79,16 +79,17 @@ public class Aptitude extends CustomEnchantment {
 
 	@Override
 	public void onInteract(PlayerInteractEvent event, int level) {	
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		SNPlayer player = SNPlayer.getPlayer(event.getPlayer());
 		
-		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
+		if(Supernaturals.plugin.getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
 			player.sendMessage(ChatColor.RED + "Supernaturals is disabled in " + ChatColor.YELLOW + player.getPlayer().getWorld().getName() + ChatColor.RED + "!");
 			return;
 		}
 		
 		// Bind/Switch:
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-			player.setNextBinding();
+			player.setNextPowerBinding();
+			player.save();
 
 			if (player.getSelectedPower() != null) {
 				player.sendMessage(ChatColor.GREEN + "Wand bound to " + ChatColor.YELLOW + player.getSelectedPower().getName() + ChatColor.GREEN + "!");
@@ -106,12 +107,13 @@ public class Aptitude extends CustomEnchantment {
 				required.setManaCost(required.getManaCost() - level);
 				consume.setManaCost(required.getManaCost() - level);
 				
-				if(player.getRemainingCooldownTicks(power) > 0) {
-					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTicks(power) / 20.0 + ChatColor.RED + " seconds to cast this spell!");
+				if(player.getRemainingCooldownTime(power) > 0) {
+					player.sendMessage(ChatColor.RED + "You must wait " + ChatColor.YELLOW + player.getRemainingCooldownTime(power) + ChatColor.RED + " seconds to cast this spell!");
 				} else if (required.has(player)) {
 					if (power.cast(player)) {
 						consume.consume(player);
 						player.setCooldown(new Cooldown(power, power.getCooldown()));
+						player.save();
 					}
 				} else {
 					player.sendMessage(ChatColor.BLUE + "Requires:");

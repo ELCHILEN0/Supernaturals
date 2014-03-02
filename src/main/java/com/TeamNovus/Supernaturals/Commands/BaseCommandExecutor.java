@@ -19,9 +19,9 @@ public class BaseCommandExecutor implements CommandExecutor, TabCompleter {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(args.length == 0) {
-			PluginDescriptionFile desc = Supernaturals.getPlugin().getDescription();
+			PluginDescriptionFile desc = Supernaturals.plugin.getDescription();
 			
-			sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.getPlugin().getName() + CommandManager.getExtra() + " ].__________________");
+			sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + Supernaturals.plugin.getName() + CommandManager.getExtra() + " ].__________________");
 			sender.sendMessage(CommandManager.getDark() + "Description: " + CommandManager.getLight() + desc.getDescription());
 			sender.sendMessage(CommandManager.getDark() + "Author: " + CommandManager.getLight() + desc.getAuthors().get(0));
 			sender.sendMessage(CommandManager.getDark() + "Version: " + CommandManager.getLight() + desc.getVersion());

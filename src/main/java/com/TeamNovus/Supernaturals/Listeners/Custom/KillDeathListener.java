@@ -7,7 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class KillDeathListener implements Listener {
@@ -16,15 +16,17 @@ public class KillDeathListener implements Listener {
 	public void onEntityDeathEvent(EntityDeathEvent event) {
 		
 		if(event.getEntity() instanceof Player) {
-			SNPlayer killed = SNPlayers.i.get((Player) event.getEntity());
+			SNPlayer killed = SNPlayer.getPlayer((Player) event.getEntity());
 
 			killed.setDeaths(killed.getDeaths() + 1);
-			
+			killed.save();
+
 			if(event.getEntity().getKiller() != null) {
-				SNPlayer killer = SNPlayers.i.get((Player) event.getEntity().getKiller());
+				SNPlayer killer = SNPlayer.getPlayer((Player) event.getEntity().getKiller());
 				
 				if(!(killer.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
 					killer.setKills(killer.getKills() + 1);
+					killer.save();
 				}
 			}
 		}

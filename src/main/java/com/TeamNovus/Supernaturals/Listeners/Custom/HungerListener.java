@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
@@ -20,16 +20,16 @@ public class HungerListener implements Listener {
 			return;
 		
 		if(event.getEntity() instanceof Player) {
-			final SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			final SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 			
 			player.setFoodLevel(player.getFoodLevel() + (event.getFoodLevel() - ((Player) event.getEntity()).getFoodLevel()));	
-
+			player.save();
+			
 			// Rescales the client food level bar.
-			Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.getPlugin(), new Runnable() {
+			Bukkit.getScheduler().runTaskAsynchronously(Supernaturals.plugin, new Runnable() {
 				
-							public void run() {
-					player.updateFoodLevel();
-					
+				public void run() {
+					player.updateFoodLevel();	
 				}
 			});
 			
@@ -39,9 +39,11 @@ public class HungerListener implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		SNPlayer player = SNPlayer.getPlayer(event.getPlayer());
 
 		player.setFoodLevel(player.getMaxFoodLevel());
+		player.save();
+		
 		player.updateFoodLevel();
 	}
 		

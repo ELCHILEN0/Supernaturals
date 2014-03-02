@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Commands.CommandManager;
 import com.TeamNovus.Supernaturals.Events.PlayerLevelUpEvent;
@@ -71,15 +71,15 @@ public class ExperienceListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLevelUp(PlayerLevelUpEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
-		
+		SNPlayer player = SNPlayer.getPlayer(event.getPlayer());
+
 		event.getPlayer().sendMessage(ChatColor.GREEN + "You are now level " + ChatColor.YELLOW + player.getLevel() + ChatColor.GREEN + "!");
 		Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now a level " + ChatColor.YELLOW + player.getLevel() + " " + player.getPlayerClass().getColor() + player.getPlayerClass().getName() + ChatColor.GREEN + "!");
 	
 		SNClass playerClass = player.getPlayerClass();
 
 		if(playerClass.hasChangedFrom(player.getLevel() - 1, player.getLevel())) {
-			player.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Level Up" + CommandManager.getExtra() + " ].___________________");		
+			player.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + StringUtils.center("Level Up", 5) + CommandManager.getExtra() + " ].___________________");		
 
 			if(playerClass.getMaxHealth(player.getLevel()) != playerClass.getMaxHealth(player.getLevel() - 1))
 				player.sendMessage(CommandManager.getDark() + "Max Health: " + CommandManager.getLight() + playerClass.getMaxHealth(player.getLevel()));
@@ -115,7 +115,7 @@ public class ExperienceListener implements Listener {
 	}
 	
 	public void gainExp(SNPlayer player, Integer exp) {
-		if(Supernaturals.getPlugin().getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
+		if(Supernaturals.plugin.getConfig().getStringList("settings.disabled-worlds").contains(player.getPlayer().getWorld().getName().toLowerCase())) {
 			return;
 		}
 		
@@ -132,7 +132,7 @@ public class ExperienceListener implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getPlayer());
+		SNPlayer player = SNPlayer.getPlayer(event.getPlayer());
 		
 		if(blockBreakSources.keySet().contains(event.getBlock().getType())) {
 			gainExp(player, blockBreakSources.get(event.getBlock().getType()));
@@ -141,9 +141,10 @@ public class ExperienceListener implements Listener {
 	
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
-		if(event.getEntity().getKiller() == null) return;
+		if(event.getEntity().getKiller() == null || event.getEntity().getUniqueId().equals(event.getEntity().getKiller().getUniqueId()))
+			return;
 		
-		SNPlayer player = SNPlayers.i.get(event.getEntity().getKiller());
+		SNPlayer player = SNPlayer.getPlayer(event.getEntity().getKiller());
 		
 		if(entityKillSources.keySet().contains(event.getEntityType())) {
 			gainExp(player, entityKillSources.get(event.getEntityType()));

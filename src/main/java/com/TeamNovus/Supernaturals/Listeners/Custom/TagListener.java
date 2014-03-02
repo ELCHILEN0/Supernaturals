@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Supernaturals;
 import com.TeamNovus.Supernaturals.Events.PlayerClassChangeEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
@@ -16,7 +16,7 @@ public class TagListener implements Listener {
 	
 	@EventHandler
 	public void onRecieveNameTag(ReceiveNameTagEvent event) {
-		SNPlayer player = SNPlayers.i.get(event.getWatched());
+		SNPlayer player = SNPlayer.getPlayer(event.getWatched());
 
 		event.setTag(player.getPlayerClass().getColor() + event.getWatched().getName());
 	}
@@ -29,9 +29,9 @@ public class TagListener implements Listener {
 			final TagHelperMod tagHelper = (TagHelperMod) pluginManager.getPlugin("TagHelper");
 	
 			if(tagHelper != null) {
-				Bukkit.getScheduler().runTaskLater(Supernaturals.getPlugin(), new Runnable() {
+				Bukkit.getScheduler().runTaskLater(Supernaturals.plugin, new Runnable() {
 					
-									public void run() {
+					public void run() {
 						tagHelper.refreshPlayer(event.getPlayer());		
 					}
 				}, 1);

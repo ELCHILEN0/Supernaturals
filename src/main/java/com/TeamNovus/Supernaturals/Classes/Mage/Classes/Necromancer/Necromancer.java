@@ -2,6 +2,10 @@ package com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer;
 
 import org.bukkit.ChatColor;
 
+import com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Powers.Ensnare;
+import com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Powers.Ignite;
+import com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Powers.Leech;
+import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 
 public class Necromancer extends SNClass {
@@ -32,6 +36,10 @@ public class Necromancer extends SNClass {
 		setMaxMana(10, 45);
 		setMaxMana(25, 50);
 		setMaxMana(30, 55);
+		
+		addPower(1, new Ensnare("Ensnare", "Trap your enemies in cobwebs!", 60, new Reagent(25)).setDuration(15 * 20).setRadius(2).setRange(100));
+		addPower(1, new Ignite("Ignite", "Light your enemies on fire!", 30, new Reagent(15)).setRange(25).setDuration(20 * 15));
+		addPower(1, new Leech("Life Steal", "Steal the life of your enemies!", 30, new Reagent(15)).setAmount(8).setRange(25));
 	}
 
 }

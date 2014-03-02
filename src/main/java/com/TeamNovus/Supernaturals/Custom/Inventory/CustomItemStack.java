@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.server.v1_6_R2.NBTTagCompound;
-import net.minecraft.server.v1_6_R2.NBTTagList;
+import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R1.NBTTagList;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,15 +34,15 @@ public class CustomItemStack {
 	}
 	
 	public CustomItemStack(int id) {
-		handle = new ItemStack(id);
+		handle = new ItemStack(Material.getMaterial(id));
 	}
 	
 	public CustomItemStack(int id, int amount) {
-		handle = new ItemStack(id, amount);
+		handle = new ItemStack(Material.getMaterial(id), amount);
 	}
 	
 	public CustomItemStack(int id, int amount, short damage) {
-		handle = new ItemStack(id, amount, damage);
+		handle = new ItemStack(Material.getMaterial(id), amount, damage);
 	}
 	
 	public CustomItemStack(ItemStack i) {
@@ -64,7 +64,7 @@ public class CustomItemStack {
 	 * @return The Material ID.
 	 */
 	public int getTypeId() {
-		return handle.getTypeId();
+		return handle.getType().getId();
 	}
 	
 	/**
@@ -312,7 +312,7 @@ public class CustomItemStack {
 	 * Add a visible glow to the ItemStack.
 	 */
 	public void addGlow() {
-		net.minecraft.server.v1_6_R2.ItemStack nmsStack = getNMSStack();
+		net.minecraft.server.v1_7_R1.ItemStack nmsStack = getNMSStack();
 		NBTTagCompound compound = getTag();
 
 		compound.set("ench", new NBTTagList());
@@ -324,7 +324,7 @@ public class CustomItemStack {
 	 * Remove a glow from the ItemStack.
 	 */
 	public void removeGlow() {
-		net.minecraft.server.v1_6_R2.ItemStack nmsStack = getNMSStack();
+		net.minecraft.server.v1_7_R1.ItemStack nmsStack = getNMSStack();
 		NBTTagCompound compound = getTag();
 
 		compound.set("ench", null);
@@ -350,7 +350,7 @@ public class CustomItemStack {
 	 * 
 	 * @return The NMS ItemStack.
 	 */
-	public net.minecraft.server.v1_6_R2.ItemStack getNMSStack() {
+	public net.minecraft.server.v1_7_R1.ItemStack getNMSStack() {
 		return CraftItemStack.asNMSCopy(handle);
 	}
 	

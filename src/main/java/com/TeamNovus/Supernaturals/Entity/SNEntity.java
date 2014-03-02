@@ -1,7 +1,7 @@
 package com.TeamNovus.Supernaturals.Entity;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -11,40 +11,76 @@ import org.bukkit.entity.LivingEntity;
 import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Persistence.Annotations.Columns.Column;
 import com.TeamNovus.Persistence.Annotations.Columns.Id;
-import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Database.Database;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 
+import static com.TeamNovus.Persistence.Queries.Expression.Expressions.*;
+
 @Table(name = "sn_entities")
 public class SNEntity {
-	@Id
-	@Column(name = "id")
-	private int id;
+	public static final String ID 	= "ID";
+	public static final String UUID = "UUID";
 	
-	@Column(name = "uuid")
+	@Id
+	@Column(name = ID)
+	private Integer id;
+	
+	@Column(name = UUID)
 	private String uuid;
 	
-	@OneToMany
-	private ArrayList<Effect> effects = new ArrayList<Effect>();
-
+	public static List<SNEntity> getAllEntities() {
+		return Database.findAll(SNEntity.class);
+	}
+	
+	public static SNEntity getEntity(int id) {
+		return Database.find(SNEntity.class, id);
+	}
+		
+	public static boolean isAttached(LivingEntity entity) {
+		return Database.select(SNEntity.class).where(equal(UUID, entity.getUniqueId().toString())).findOne() == null;
+	}
+	
+	public static SNEntity getEntity(LivingEntity entity) {
+		SNEntity e = Database.select(SNEntity.class).where(equal(UUID, entity.getUniqueId().toString())).findOne();
+		
+		if(e == null) {
+			e = new SNEntity(entity);
+			e.save();
+		}
+		
+		return e;
+	}
+	
+	public boolean save() {
+		return Database.save(this);
+	}
+	
+	public boolean delete() {
+		return Database.drop(this);
+	}
+	
+	// Empty constructor for reflection.
+	public SNEntity() {  }
+	
 	public SNEntity(LivingEntity e) {
 		uuid = e.getUniqueId().toString();
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getId() {
+		if(id == null) {
+			save();
+		}
+		
 		return id;
 	}
 	
 	public UUID getUUID() {
-		return UUID.fromString(uuid);
+		return java.util.UUID.fromString(uuid);
 	}
 
 	public LivingEntity getEntity() {
@@ -63,39 +99,38 @@ public class SNEntity {
 		return getEntity() != null;
 	}
 
-	public ArrayList<Effect> getEffects() {
-		return effects;
-	}
-
-	public void setEffects(ArrayList<Effect> effects) {
-		this.effects = effects;
+	public List<Effect> getEffects() {
+		return Database.select(Effect.class).where(equal(ID, getId())).findList();
 	}
 
 	public void addEffect(Effect effect) {
-		Iterator<Effect> effectIterator = effects.iterator();
+		effect.setEntityId(getId());
+		
+		Iterator<Effect> effectIterator = getEffects().iterator();
 		while (effectIterator.hasNext()) {
 			Effect e = effectIterator.next();
 			if (e.getClass().equals(effect.getClass())) {				
 				e = effect;
+				e.save();
 				return;
 			}
 		}
 
-		effects.add(effect);
+		effect.save();
 	}
 
 	public void removeEffect(Effect effect) {
-		Iterator<Effect> effectIterator = effects.iterator();
+		Iterator<Effect> effectIterator = getEffects().iterator();
 		while (effectIterator.hasNext()) {
 			Effect e = effectIterator.next();
 			if (e.getClass().equals(effect.getClass())) {				
-				effectIterator.remove();
+				e.delete();
 			}
 		}
 	}
 	
 	public boolean hasEffect(EffectType type) {
-		for(Effect effect : effects) {
+		for(Effect effect : getEffects()) {
 			if(type.equals(effect.getType())) {
 				return true;
 			}
@@ -106,8 +141,8 @@ public class SNEntity {
 
 	public void tick() {
 		if(!(isAlive())) return;
-		
-		Iterator<Effect> effectIterator = effects.iterator();
+
+		Iterator<Effect> effectIterator = getEffects().iterator();
 		while (effectIterator.hasNext()) {
 			Effect effect = effectIterator.next();
 			
@@ -119,8 +154,9 @@ public class SNEntity {
 				}
 
 				if (effect.isExpired()) {
-					effectIterator.remove();
 					Bukkit.getPluginManager().callEvent(new EntityEffectExpireEvent(getEntity(), effect));
+					effect.delete();
+					continue;
 				}				
 			}
 			
@@ -130,7 +166,12 @@ public class SNEntity {
 				}
 			}
 			
-			effect.setElapsed(effect.getElapsed() + 1);
+			effect.setElapsed(effect.getElapsed() + 1);			
+			effect.save();
+		}
+		
+		if(getEffects().size() == 0) {
+			delete();
 		}
 	}
 

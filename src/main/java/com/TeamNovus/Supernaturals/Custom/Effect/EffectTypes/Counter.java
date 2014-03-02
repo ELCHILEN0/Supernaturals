@@ -15,26 +15,31 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Util.ParticleEffectUtils;
 
-public class Critical extends EffectType {
+public class Counter extends EffectType {
 	public void onEffectBegin(EntityEffectBeginEvent event) {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayer.getPlayer(((Player) event.getEntity()));
 		
-			player.sendMessage(ChatColor.GREEN + "You can now deal critical damage!");				
+			player.sendMessage(ChatColor.GREEN + "You can now counter attacks!");				
 		}
 	}
 	
 	public void onEntityDamageEntity(EntityDamageEntityEvent event, Effect effect) {
-		if(new Random().nextInt(101) <= effect.getAmplifier()) {
-			event.setDamage(event.getDamage() * 2);
-			
+		if(new Random().nextInt(101) <= effect.getAmplifier()) {			
 			if(event.getEntity() instanceof Player) {		
 				SNPlayer player = SNPlayer.getPlayer(((Player) event.getEntity()));
 				
-				player.sendMessage(ChatColor.GREEN + "**Critical**");
+				player.sendMessage(ChatColor.GREEN + "**Countered**");
 			}
 			
-			ParticleEffectUtils.fireworkParticleShower(event.getDamaged().getLocation(), Color.RED);
+			if(event.getDamaged() instanceof Player) {		
+				SNPlayer damaged = SNPlayer.getPlayer(((Player) event.getDamaged()));
+				
+				damaged.sendMessage(ChatColor.GREEN + "**Counter Attacked**");
+			}
+			
+			ParticleEffectUtils.fireworkParticleShower(event.getEntity().getLocation(), Color.RED);
+			ParticleEffectUtils.fireworkParticleShower(event.getDamaged().getLocation(), Color.GREEN);
 		}
 	}
 
@@ -42,7 +47,7 @@ public class Critical extends EffectType {
 		if(event.getEntity() instanceof Player) {
 			SNPlayer player = SNPlayer.getPlayer(((Player) event.getEntity()));
 
-			player.sendMessage(ChatColor.RED + "You can no longer deal critical damage!");				
+			player.sendMessage(ChatColor.RED + "You can no longer counter attacks!");				
 		}
 	}
 }

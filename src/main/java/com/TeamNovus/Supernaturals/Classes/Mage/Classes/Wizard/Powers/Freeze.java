@@ -1,4 +1,4 @@
-package com.TeamNovus.Supernaturals.Classes.Mage.Powers;
+package com.TeamNovus.Supernaturals.Classes.Mage.Classes.Wizard.Powers;
 
 import java.util.HashMap;
 import java.util.Map.Entry;

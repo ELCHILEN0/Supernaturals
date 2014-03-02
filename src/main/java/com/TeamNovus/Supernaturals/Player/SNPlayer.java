@@ -1,6 +1,5 @@
 package com.TeamNovus.Supernaturals.Player;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,16 +12,15 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.BlockIterator;
 
 import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Persistence.Annotations.Columns.Column;
 import com.TeamNovus.Persistence.Annotations.Columns.Id;
-import com.TeamNovus.Persistence.Annotations.Relationships.OneToMany;
 import com.TeamNovus.Supernaturals.SNClasses;
-import com.TeamNovus.Supernaturals.SNEntities;
+import com.TeamNovus.Supernaturals.Database.Database;
 import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
@@ -34,53 +32,66 @@ import com.TeamNovus.Supernaturals.Player.Class.Ability;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 
+import static com.TeamNovus.Persistence.Queries.Expression.Expressions.*;
+
 @Table(name = "sn_players")
-public class SNPlayer implements Serializable {
-	private static final long serialVersionUID = 1L;
-			
+public class SNPlayer {			
+	public static final String ID 				= "id";
+	public static final String NAME 			= "name";
+	public static final String MANA 			= "mana";
+	public static final String MAX_MANA 		= "max_mana";
+	public static final String FOOD_LEVEL 		= "food_level";
+	public static final String MAX_FOOD_LEVEL 	= "max_food_level";
+	public static final String PLAYER_CLASS 	= "player_class";
+	public static final String POWER_BINDING 	= "power_binding";
+	public static final String EXPERIENCE 		= "experience";
+	public static final String KILLS 			= "kills";
+	public static final String DEATHS 			= "deaths";
+	public static final String VERBOSE			= "verbose";
+	public static final String GUI	 			= "gui";
+	
 	@Id
-	@Column(name = "id")
+	@Column(name = ID)
 	private Integer id;
 	
-	@Column(name = "name")
+	@Column(name = NAME)
 	private String name;
 
 	// Data Values:
-	@Column(name = "mana")
+	@Column(name = MANA)
 	private Integer mana;
 	
-	@Column(name = "max_mana")
+	@Column(name = MAX_MANA)
 	private Integer maxMana;
 	
-	@Column(name = "food_level")
+	@Column(name = FOOD_LEVEL)
 	private Integer foodLevel;
 	
-	@Column(name = "max_food_level")
+	@Column(name = MAX_FOOD_LEVEL)
 	private Integer maxFoodLevel;
 
 	// Class:
-	@Column(name = "player_class_name")
-	private String playerClassName;
+	@Column(name = PLAYER_CLASS)
+	private String playerClass;
 	
-	@Column(name = "binding")
-	private Integer binding;
-
-	// Powers:
-	@OneToMany
-	private List<Cooldown> cooldowns = new ArrayList<Cooldown>();
+	@Column(name = POWER_BINDING)
+	private Integer powerBinding;
 	
 	// Leveling:
-	@Column(name = "experience")
+	@Column(name = EXPERIENCE)
 	private Integer experience;
 	
-	@Column(name = "attribute_points")
+	private Integer quest;
+	
+	private Integer questProgress;
+	
 	private Integer attributePoints;
 
 	// Stats:
-	@Column(name = "kills")
+	@Column(name = KILLS)
 	private Integer kills;
 	
-	@Column(name = "deaths")
+	@Column(name = DEATHS)
 	private Integer deaths;
 	
 	// Attributes:
@@ -92,12 +103,50 @@ public class SNPlayer implements Serializable {
 	private Integer attackAttribute;
 	private Integer defenseAttribute;
 	
-	@Column(name = "verbose")
+	@Column(name = VERBOSE)
 	private Boolean verbose;
 	
-	@Column(name = "gui")
+	@Column(name = GUI)
 	private Boolean gui;
 	
+	public static SNPlayer getPlayer(int id) {
+		return Database.find(SNPlayer.class, id);
+	}
+	
+	public static SNPlayer getPlayer(String name) {
+		return Database.select(SNPlayer.class).where(equal(NAME, name)).findOne();
+	}
+	
+	public static SNPlayer getPlayer(Player player) {
+		SNPlayer p = getPlayer(player.getName());
+		
+		if(p == null) {
+			p = new SNPlayer(player);
+			p.save();
+		}
+		
+		return p;
+	}
+	
+	public static List<SNPlayer> getAllPlayers() {
+		return Database.findAll(SNPlayer.class);
+	}
+	
+	public static List<SNPlayer> getOnlinePlayers() {
+		ArrayList<SNPlayer> players = new ArrayList<SNPlayer>();
+				
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			players.add(getPlayer(p));
+		}
+				
+		return players;
+	}
+	
+	public static List<SNPlayer> getPlayersInClass(SNClass playerClass) {
+		return Database.select(SNPlayer.class).where(equal(PLAYER_CLASS, playerClass.getName())).findList();
+	}
+	
+	// Empty constructor for reflection.
 	public SNPlayer() {		
 		// Data Values:
 		this.mana = 0;
@@ -107,8 +156,8 @@ public class SNPlayer implements Serializable {
 		this.maxFoodLevel = 20;
 
 		// Class:
-		this.playerClassName = SNClasses.i.getBaseClass().getName();
-		this.binding = 0;
+		this.playerClass = SNClasses.getBaseClass().getName();
+		this.powerBinding = 0;
 
 		// Leveling:
 		this.experience = 0;
@@ -128,7 +177,7 @@ public class SNPlayer implements Serializable {
 		this.defenseAttribute = 0;			
 		
 		this.verbose = true;
-		this.gui = true;
+		this.gui = true;		
 	}
 	
 	public SNPlayer(Player p) { 
@@ -136,19 +185,20 @@ public class SNPlayer implements Serializable {
 		this.name = p.getName();
 	}
 	
+	public boolean save() {
+		return Database.save(this);
+	}
+	
 	/**
 	 * Get the players id
 	 * 
 	 */
 	public Integer getId() {
+		if(id == null) {
+			save();
+		}
+		
 		return id;
-	}
-
-	/**
-	 * Set the players id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	
 	/**
@@ -351,15 +401,11 @@ public class SNPlayer implements Serializable {
 	 * @return The players class.
 	 */
 	public SNClass getPlayerClass() {
-		return SNClasses.i.getExactClass(playerClassName);
-	}
-	
-	public String getPlayerClassName() {
-		return playerClassName;
+		return SNClasses.getExactClass(playerClass);
 	}
 
-	public void setPlayerClassName(String playerClassName) {
-		this.playerClassName = playerClassName;
+	public void setPlayerClass(String playerClassName) {
+		this.playerClass = playerClassName;
 	}
 	
 	/**
@@ -375,13 +421,13 @@ public class SNPlayer implements Serializable {
 			Bukkit.getPluginManager().callEvent(event);
 			
 			// Change the target class if modified.
-			playerClassName = event.getTo().getName();
+			this.playerClass = event.getTo().getName();
 			
 			if(event.isCancelled())
 				return;
 		}
 
-		this.playerClassName = playerClass.getName();
+		this.playerClass = playerClass.getName();
 		
 		syncFields(fire);
 	}
@@ -419,15 +465,12 @@ public class SNPlayer implements Serializable {
 	 * @return The players power cooldowns.
 	 */
 	public List<Cooldown> getCooldowns() {		
-		return cooldowns;
+		return Database.select(Cooldown.class).where(equal(Cooldown.PLAYER_ID, getId())).findList();
 	}
 	
-	public void setCooldowns(ArrayList<Cooldown> cooldowns) {
-		this.cooldowns = cooldowns;
-	}
-	
-	public void setCooldown(Cooldown cooldown) {		
-		cooldowns.add(cooldown);
+	public void setCooldown(Cooldown cooldown) {	
+		cooldown.setPlayerId(getId());
+		cooldown.save();
 	}
 	
 	/**
@@ -436,10 +479,10 @@ public class SNPlayer implements Serializable {
 	 * @param power - The power to check.
 	 * @return The players remaining cooldown.
 	 */
-	public int getRemainingCooldownTicks(Power power) {
-		for(Cooldown cooldown : cooldowns) {
+	public int getRemainingCooldownTime(Power power) {
+		for(Cooldown cooldown : getCooldowns()) {
 			if(cooldown.getPower().equals(power.getName())) {	
-				return cooldown.getRemainingTicks();
+				return cooldown.getRemaining();
 			}
 		}
 		
@@ -474,8 +517,8 @@ public class SNPlayer implements Serializable {
 	 * 
 	 * @return The players power binding.
 	 */
-	public Integer getBinding() {
-		return binding;
+	public Integer getPowerBinding() {
+		return powerBinding;
 	}
 
 	/**
@@ -483,19 +526,19 @@ public class SNPlayer implements Serializable {
 	 * 
 	 * @param binding - The players new power binding.
 	 */
-	public void setBinding(Integer binding) {
-		this.binding = binding;
+	public void setPowerBinding(Integer powerBinding) {
+		this.powerBinding = powerBinding;
 	}
 
 	/**
 	 * Sets players binding to the id of the next available power.
 	 * 
 	 */
-	public void setNextBinding() {
-		if (binding + 1 >= getPowers().size()) {
-			binding = 0;
+	public void setNextPowerBinding() {
+		if (powerBinding + 1 >= getPowers().size()) {
+			powerBinding = 0;
 		} else {
-			binding++;
+			powerBinding++;
 		}
 	}
 
@@ -506,7 +549,7 @@ public class SNPlayer implements Serializable {
 	 */
 	public Power getSelectedPower() {
 		try {
-			return getPowers().get(binding);
+			return getPowers().get(powerBinding);
 		} catch (Exception e) {
 			return null;
 		}
@@ -531,7 +574,9 @@ public class SNPlayer implements Serializable {
 		int lastLevel = getLevel();
 		
 		this.experience = experience;
-		
+		save();
+		syncFields(false);
+
 		if(getLevel() > lastLevel && isOnline()) {
 			PlayerLevelUpEvent event = new PlayerLevelUpEvent(getPlayer());
 			
@@ -588,7 +633,7 @@ public class SNPlayer implements Serializable {
 	 * @param level - The new level.
 	 */
 	public void setLevel(Integer level) {
-		setExperience(getExperienceFor(level));
+		setExperience(getTotalExperienceFor(level));
 	}
 	
 	/**
@@ -821,56 +866,38 @@ public class SNPlayer implements Serializable {
 		if(isOffline())
 			return;
 		
-		ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-		Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 		
-		if(isUsingGUI()) {
-			if(scoreboard.getObjective("stats") == null)
-				scoreboard.registerNewObjective("stats", "dummy");
+		if(isUsingGUI()) {			
+			if(scoreboard.getObjective("info") == null)
+				scoreboard.registerNewObjective("info", "dummy");
 			
-			Objective stats = scoreboard.getObjective("stats");
-			stats.setDisplaySlot(DisplaySlot.SIDEBAR);	
+			Objective info = scoreboard.getObjective("info");
+			info.setDisplaySlot(DisplaySlot.SIDEBAR);
 			
-			// Mana Numbers
-			int mana = getMana();
-			int maxMana = getMaxMana();
+			info.setDisplayName(getPlayerClass().getColor() + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE  + getPlayerClass().getName() + ChatColor.RESET + ChatColor.RED + ChatColor.ITALIC + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
 			
-			// Exp Numbers
-			int exp = getExperience() - getTotalExperienceFor(getLevel() - 1);
-			int maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
-						
-			String manaDisplay = ChatColor.BLUE + "Mana:  " + ChatColor.RESET + new Double((mana * 100.0)/(maxMana * 1.0)).intValue() + "%";
-			String expDisplay = ChatColor.GOLD + "Exp:   " + ChatColor.RESET + new Double((exp * 100.0)/(maxExp * 1.0)).intValue() + "%";
-//			
-//			List<String> effects = new ArrayList<String>();
-//			for (int i = 0; i < getEntity().getEffects().size(); i++) {
-//				Effect effect = getEntity().getEffects().get(i);
-//				
-//				String effectDisplay = effect.getType().toString() + " - " + (effect.getDuration() - effect.getElapsed());
-//				if(effectDisplay.length() > 16) {
-//					effectDisplay = effectDisplay.substring(0, 15);
-//				}
-//				
-//				effects.add(effectDisplay);
-//			}
-//			
-			if(manaDisplay.length() > 16) {
-				manaDisplay = manaDisplay.substring(0, 15);
-			}
+			Score mana = info.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Mana:"));
+			Score exp = info.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Exp:"));
 			
-			if(expDisplay.length() > 16) {
-				expDisplay = expDisplay.substring(0, 15);
-			}
+			mana.setScore((int) ((getMana() * 100.0)/getMaxMana()));
 			
-			// Display
-			stats.setDisplayName(" " + getPlayerClass().getColor() + getPlayerClassName() + ChatColor.RED + " " + getLevel() + "/" + getPlayerClass().getMaxLevel());
-			stats.getScore(Bukkit.getOfflinePlayer(manaDisplay)).setScore(2);
-			stats.getScore(Bukkit.getOfflinePlayer(expDisplay)).setScore(1);
-		} else {
-			scoreboard.clearSlot(DisplaySlot.PLAYER_LIST);
-			scoreboard.clearSlot(DisplaySlot.BELOW_NAME);
-			scoreboard.clearSlot(DisplaySlot.SIDEBAR);	
+			double currentExp = getExperience() - getTotalExperienceFor(getLevel() - 1);
+			double maxExp = getTotalExperienceFor(getLevel()) - getTotalExperienceFor(getLevel() - 1);
+			exp.setScore((int) ((currentExp * 100.0)/maxExp));
 		}
+		
+		if(scoreboard.getObjective("health") == null)
+			scoreboard.registerNewObjective("health", "dummy");
+		
+		Objective health = scoreboard.getObjective("health");
+		health.setDisplaySlot(DisplaySlot.BELOW_NAME);
+		
+		health.setDisplayName("health");
+		 
+		for(Player player : Bukkit.getOnlinePlayers()){
+			health.getScore(player).setScore((int) player.getHealth());
+		}	
 		
 		getPlayer().setScoreboard(scoreboard);
 	}
@@ -882,7 +909,7 @@ public class SNPlayer implements Serializable {
 	 * @return The SNEntity of the player.
 	 */
 	public SNEntity getEntity() {
-		return SNEntities.i.get(getPlayer());
+		return SNEntity.getEntity(getPlayer());
 	}
 	
 	public void tick() {
@@ -978,19 +1005,22 @@ public class SNPlayer implements Serializable {
 	}
 
 	// Java:
+	@Override
 	public String toString() {
 		return "SNPlayer [id=" + id + ", name=" + name + ", mana=" + mana
 				+ ", maxMana=" + maxMana + ", foodLevel=" + foodLevel
-				+ ", maxFoodLevel=" + maxFoodLevel + ", playerClassName="
-				+ playerClassName + ", binding=" + binding + ", cooldowns="
-				+ cooldowns + ", experience=" + experience
-				+ ", attributePoints=" + attributePoints + ", healthAttribute="
-				+ healthAttribute + ", healthRegenAttribute="
-				+ healthRegenAttribute + ", manaAttribute=" + manaAttribute
-				+ ", manaRegenAttribute=" + manaRegenAttribute
-				+ ", speedAttribute=" + speedAttribute + ", attackAttribute="
-				+ attackAttribute + ", defenseAttribute=" + defenseAttribute
-				+ ", verbose=" + verbose + ", gui=" + gui + "]";
+				+ ", maxFoodLevel=" + maxFoodLevel + ", playerClass="
+				+ playerClass + ", powerBinding=" + powerBinding
+				+ ", experience=" + experience + ", quest=" + quest
+				+ ", questProgress=" + questProgress + ", attributePoints="
+				+ attributePoints + ", kills=" + kills + ", deaths=" + deaths
+				+ ", healthAttribute=" + healthAttribute
+				+ ", healthRegenAttribute=" + healthRegenAttribute
+				+ ", manaAttribute=" + manaAttribute + ", manaRegenAttribute="
+				+ manaRegenAttribute + ", speedAttribute=" + speedAttribute
+				+ ", attackAttribute=" + attackAttribute
+				+ ", defenseAttribute=" + defenseAttribute + ", verbose="
+				+ verbose + ", gui=" + gui + "]";
 	}
 	
 	public int hashCode() {

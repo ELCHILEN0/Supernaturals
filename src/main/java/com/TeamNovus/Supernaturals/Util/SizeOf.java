@@ -7,7 +7,7 @@ import sun.misc.Unsafe;
 @SuppressWarnings("restriction")
 public class SizeOf {
 	private static Runtime runtime = Runtime.getRuntime();
-
+	
 	/**
 	 * Estimate the size of an object.
 	 * 

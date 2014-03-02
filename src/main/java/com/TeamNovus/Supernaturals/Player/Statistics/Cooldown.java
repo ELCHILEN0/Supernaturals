@@ -1,65 +1,83 @@
 package com.TeamNovus.Supernaturals.Player.Statistics;
 
-import java.io.Serializable;
-
 import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Persistence.Annotations.Columns.Column;
-import com.TeamNovus.Persistence.Annotations.Columns.ForeignKey;
 import com.TeamNovus.Persistence.Annotations.Columns.Id;
+import com.TeamNovus.Supernaturals.Database.Database;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
 @Table(name = "sn_player_cooldowns")
-public class Cooldown implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Cooldown {	
+	public static final String ID 				= "id";
+	public static final String PLAYER_ID 		= "player_id";
+	public static final String POWER 			= "power";
+	public static final String REMAINING 		= "remaining";
 	
 	@Id
-	@Column(name = "id")
+	@Column(name = ID)
 	private Integer id;
 	
-	@ForeignKey
-	@Column(name = "player_id")
+	@Column(name = PLAYER_ID)
 	private Integer playerId;
 	
-	@Column(name = "power")
+	@Column(name = POWER)
 	private String power;
 	
-	@Column(name = "remaining_ticks")
-	private Integer remainingTicks;
+	@Column(name = REMAINING)
+	private Integer remaining;
 	
 	public Cooldown() { }
 	
-	public Cooldown(String power, Integer remainingTicks) {
+	public Cooldown(String power, Integer remaining) {
 		this.power = power;
-		this.remainingTicks = remainingTicks;
+		this.remaining = remaining;
 	}
 	
-	public Cooldown(Power power, Integer remainingTicks) {
+	public Cooldown(Power power, Integer remaining) {
 		this.power = power.getName();
-		this.remainingTicks = remainingTicks;
+		this.remaining = remaining;
+	}
+		
+	public boolean save() {
+		return Database.save(this);
+	}
+	
+	public boolean delete() {
+		return Database.drop(this);
 	}
 	
 	public Integer getId() {
+		if(id == null) {
+			save();
+		}
+		
 		return id;
 	}
 	
-	public void setId(Integer id) {
-		this.id = id;
+	public Cooldown setPlayerId(Integer playerId) {
+		this.playerId = playerId;
+		
+		return this;
 	}
 	
 	public String getPower() {
 		return power;
 	}
 	
-	public void setPower(String power) {
+	public Cooldown setPower(String power) {
 		this.power = power;
+		
+		return this;
 	}
 	
-	public Integer getRemainingTicks() {
-		return remainingTicks;
+	public Integer getRemaining() {
+		return remaining;
 	}
 	
-	public void setRemainingTicks(Integer remainingTicks) {
-		this.remainingTicks = remainingTicks;
+	public Cooldown setRemaining(Integer remaining) {
+		this.remaining = remaining;
+		
+		return this;
 	}
 
 	// Java:

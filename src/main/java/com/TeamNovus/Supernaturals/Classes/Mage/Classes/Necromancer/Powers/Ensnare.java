@@ -1,4 +1,4 @@
-package com.TeamNovus.Supernaturals.Classes.Mage.Powers;
+package com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Powers;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -14,12 +14,12 @@ import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Power;
 
-public class Freeze extends Power {
+public class Ensnare extends Power {
 	private int range;
 	private int radius;
 	private int duration;
 	
-	public Freeze(String name, String desc, Integer cooldown, Reagent required, Reagent consume) {
+	public Ensnare(String name, String desc, Integer cooldown, Reagent required, Reagent consume) {
 		super(name, desc, cooldown, required, consume);
 		
 		range = 256;
@@ -27,19 +27,23 @@ public class Freeze extends Power {
 		duration = 30;
 	}
 	
-	public Freeze setRange(int range) {
+	public Ensnare(String name, String desc, Integer cooldown, Reagent reagent) {
+		this(name, desc, cooldown, reagent, reagent);
+	}
+	
+	public Ensnare setRange(int range) {
 		this.range = range;
 		
 		return this;
 	}
 	
-	public Freeze setRadius(int radius) {
+	public Ensnare setRadius(int radius) {
 		this.radius = radius;
 		
 		return this;
 	}
 	
-	public Freeze setDuration(int duration) {
+	public Ensnare setDuration(int duration) {
 		this.duration = duration;
 		
 		return this;
@@ -57,10 +61,10 @@ public class Freeze extends Power {
 					for (int z = -radius; z <= radius; z++) {
 						Block b = target.getLocation().getBlock().getRelative(x, y, z);
 						
-						if(b.getType() != Material.ICE) {
-							if(b.getType() == Material.AIR || b.getType() == Material.WATER) {
+						if(b.getType() != Material.WEB) {
+							if(b.getType() == Material.AIR) {
 								changed.put(b, b.getType());
-								b.setType(Material.ICE);
+								b.setType(Material.WEB);
 							}
 						}
 					}

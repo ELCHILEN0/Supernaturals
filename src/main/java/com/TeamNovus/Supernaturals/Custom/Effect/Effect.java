@@ -1,28 +1,67 @@
 package com.TeamNovus.Supernaturals.Custom.Effect;
 
+import static com.TeamNovus.Persistence.Queries.Expression.Expressions.equal;
+
+import java.util.List;
+
+import org.bukkit.entity.LivingEntity;
+
 import com.TeamNovus.Persistence.Annotations.Table;
 import com.TeamNovus.Persistence.Annotations.Columns.Column;
-import com.TeamNovus.Persistence.Annotations.Columns.ForeignKey;
+import com.TeamNovus.Persistence.Annotations.Columns.Id;
+import com.TeamNovus.Supernaturals.Database.Database;
 
 @Table(name = "sn_effects")
 public class Effect {
-	@ForeignKey
+	public static final String ID 			= "id";
+	public static final String ENTITY_ID 	= "entity_id";
+	public static final String TYPE 		= "type";
+	public static final String ELAPSED 		= "elapsed";
+	public static final String DURATION 	= "duration";
+	public static final String PERIOD 		= "period";
+	public static final String AMPLIFIER 	= "amplifier";
+	
+	@Id
+	@Column(name = ID)
+	private Integer id;
+	
+	@Column(name = ENTITY_ID)
 	private Integer entityId;
 	
-	@Column(name = "type")
+	@Column(name = TYPE)
 	private Integer type;
 	
-	@Column(name = "elapsed")
+	@Column(name = ELAPSED)
 	private Integer elapsed;
 	
-	@Column(name = "duration")
+	@Column(name = DURATION)
 	private Integer duration;
 	
-	@Column(name = "period")
+	@Column(name = PERIOD)
 	private Integer period;
 	
-	@Column(name = "amplifier")
+	@Column(name = AMPLIFIER)
 	private Integer amplifier;
+	
+	public static List<Effect> getAllEntities() {
+		return Database.findAll(Effect.class);
+	}
+	
+	public static Effect getEntity(int id) {
+		return Database.find(Effect.class, id);
+	}
+	
+	public static List<Effect> getEffects(LivingEntity e) {
+		return Database.select(Effect.class).where(equal(ENTITY_ID, e.getUniqueId())).findList();
+	}
+	
+	public boolean save() {
+		return Database.save(this);
+	}
+	
+	public boolean delete() {
+		return Database.drop(this);
+	}
 	
 	public Effect(EffectType type) {
 		this.type = type.getId();
@@ -50,6 +89,18 @@ public class Effect {
 		
 		this.period = period;
 		this.amplifier = amplifier;
+	}
+	
+	public int getId() {
+		if(id == null) {
+			save();
+		}
+		
+		return id;
+	}
+	
+	public void setEntityId(Integer entityId) {
+		this.entityId = entityId;
 	}
 	
 	public Integer getEntityId() {

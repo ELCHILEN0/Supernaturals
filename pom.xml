@@ -5,7 +5,7 @@
 	<groupId>com.TeamNovus.Supernaturals</groupId>
 	<artifactId>Supernaturals</artifactId>
 	<name>Supernaturals</name>
-	<version>2.2.7</version>
+	<version>2.3.0</version>
 	<url>http://www.novuscraft.org</url>
 
 	<build>
@@ -34,7 +34,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -51,7 +51,7 @@
 							<shadedClassifierName>standalone</shadedClassifierName>
 							<artifactSet>
 								<includes>
-									<include>com.TeamNovus:persistencelib</include>
+									<include>com.TeamNovus:PersistenceLib</include>
 								</includes>
 							</artifactSet>
 							<relocations>
@@ -96,19 +96,21 @@
 		<dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
+        
+        <!-- CraftBukkit -->
+       	<dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.1-SNAPSHOT</version>
         </dependency>
 
 		<!-- PersistenceLib -->
 		<dependency>
 			<groupId>com.TeamNovus</groupId>
-			<artifactId>persistencelib</artifactId>
-			<version>1.0.0</version>
+			<artifactId>PersistenceLib</artifactId>
+			<version>2.0.5</version>
 		</dependency>
 
 		<!-- TagHelper -->

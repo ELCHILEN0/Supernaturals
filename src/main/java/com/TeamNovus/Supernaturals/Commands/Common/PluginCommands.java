@@ -2,6 +2,7 @@ package com.TeamNovus.Supernaturals.Commands.Common;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -10,12 +11,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.TeamNovus.Persistence.Enums.Order;
+import com.TeamNovus.Persistence.Queries.Queries.SelectQuery;
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNClasses;
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
 import com.TeamNovus.Supernaturals.Commands.CommandManager;
+import com.TeamNovus.Supernaturals.Database.Database;
 import com.TeamNovus.Supernaturals.Player.SNClass;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Class.Ability;
@@ -83,7 +87,7 @@ public class PluginCommands {
 		
 		ArrayList<SNClass> classes = new ArrayList<SNClass>();
 
-		for(SNPlayer player : SNPlayers.i.getOnlinePlayers()) {
+		for(SNPlayer player : SNPlayer.getOnlinePlayers()) {
 			if(!(classes.contains(player.getPlayerClass()))) {
 				classes.add(player.getPlayerClass());
 			}
@@ -94,7 +98,7 @@ public class PluginCommands {
 		for(SNClass playerClass : classes) {
 			ArrayList<String> names = new ArrayList<String>();
 
-			for(SNPlayer player : SNPlayers.i.getPlayersInClass(playerClass)) {
+			for(SNPlayer player : SNPlayer.getPlayersInClass(playerClass)) {
 				if(player.isOnline()) {
 					names.add(player.getName());
 				}
@@ -120,7 +124,7 @@ public class PluginCommands {
 	
 	@BaseCommand(aliases = { "kd" }, desc = "View your kill-death ratio.", permission = Permission.COMMAND_KD, console = false)
 	public void onKillDeathCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 		
 		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Player KD" + CommandManager.getExtra() + " ].__________________");
 		
@@ -134,33 +138,14 @@ public class PluginCommands {
 	@BaseCommand(aliases = { "top" }, desc = "View the top players on the server!", permission = Permission.COMMAND_TOP)
 	public void onTopCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {		
 		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Top Players" + CommandManager.getExtra() + " ].__________________");
+		Integer page = args.length == 0 || Integer.valueOf(args[0]) == null || Integer.valueOf(args[0]) == 0 ? 1 : Math.abs(Integer.valueOf(args[0]));
 		
-		LinkedList<SNPlayer> maxPlayers = new LinkedList<SNPlayer>();
+		List<SNPlayer> players = Database.select(SNPlayer.class).orderBy(Order.DESC, SNPlayer.KILLS).limit((page - 1) * 10, 10).findList();		
 		
-		int limit = 10;
-		for (int i = 0; i < limit; i++) {
-			SNPlayer maxPlayer = null;
-			for(SNPlayer player : SNPlayers.i.getAllPlayers()) {
-				if(maxPlayers.contains(player))
-					continue;
-				
-				if(maxPlayer == null) {
-					maxPlayer = player;
-				} else {
-					if(player.getKD() > maxPlayer.getKD()) {
-						maxPlayer = player;
-					}
-				}
-			}
-			
-			if(maxPlayer != null)
-				maxPlayers.add(maxPlayer);
-		}
-		
-		for (int i = 0; i < maxPlayers.size(); i++) {
-			SNPlayer player = maxPlayers.get(i);
-			
+		int i = (page - 1) * 10;
+		for (SNPlayer player : players) {
 			sender.sendMessage(CommandManager.getDark() + "" + (i + 1) + ". " + CommandManager.getLight() + player.getName() + CommandManager.getExtra() + " - " + CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + ", " + CommandManager.getDark() + "KD: " + CommandManager.getLight() + player.getKD());		
+			i++;
 		}
 		
 		sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
@@ -174,35 +159,35 @@ public class PluginCommands {
 				return;
 			}
 
-			SNPlayer player = SNPlayers.i.get((Player) sender);
+			SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Info" + CommandManager.getExtra() + " ].___________________");
 			
-			sender.sendMessage(CommandManager.getDark() + "Name: " + CommandManager.getLight() + player.getName());
-			sender.sendMessage(CommandManager.getDark() + "Class: " + CommandManager.getLight() + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-			sender.sendMessage(CommandManager.getDark() + "Level: " + CommandManager.getLight() + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Name:", CommandManager.getLight() + player.getName()));
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Class:", CommandManager.getLight() + "" + player.getPlayerClass().getColor() + player.getPlayerClass().getName()));
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Level:", CommandManager.getLight() + "" + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel()));
 			
-			player.sendMessage(CommandManager.getDark() + "Experience: "
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
-								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Experience:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")"));
 			
-			sender.sendMessage(CommandManager.getDark() + "Health: "
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
-								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Health:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
+								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")"));
 			
-			sender.sendMessage(CommandManager.getDark() + "Mana: " 
-					 			+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
-								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Mana:", 
+					 			ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
+								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")"));
 						
-			sender.sendMessage(CommandManager.getDark() + "Hunger: " 
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
-								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Hunger:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
+								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")"));
 			
-			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Speed:", ChatColor.RESET + "" + player.getSpeed() + "/0.2"));
 
 			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 		} else if(args.length == 1 && Permission.has(Permission.COMMAND_INFO_OTHERS, sender)) {
-			SNPlayer player = SNPlayers.i.getPlayer(args[0]);
+			SNPlayer player = SNPlayer.getPlayer(args[0]);
 
 			if(player == null) {
 				sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
@@ -211,28 +196,29 @@ public class PluginCommands {
 
 			sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Info" + CommandManager.getExtra() + " ].___________________");
 			
-			sender.sendMessage(CommandManager.getDark() + "Name: " + ChatColor.RESET + player.getName());
-			sender.sendMessage(CommandManager.getDark() + "Class: " + ChatColor.RESET + player.getPlayerClass().getColor() + player.getPlayerClass().getName());
-			sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
 			
-			player.sendMessage(CommandManager.getDark() + "Experience: "
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
-								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Name:", CommandManager.getLight() + player.getName()));
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Class:", CommandManager.getLight() + "" + player.getPlayerClass().getColor() + player.getPlayerClass().getName()));
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Level:", CommandManager.getLight() + "" + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel()));
 			
-			sender.sendMessage(CommandManager.getDark() + "Health: "
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
-								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Experience:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.GOLD, ChatColor.GRAY, (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)), (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1))) + ChatColor.RED + "]"
+								+ " (" + (player.getExperience() - player.getTotalExperienceFor(player.getLevel() - 1)) + "/" + (player.getTotalExperienceFor(player.getLevel()) - player.getTotalExperienceFor(player.getLevel() - 1)) + ")"));
 			
-			sender.sendMessage(CommandManager.getDark() + "Mana: " 
-					 			+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
-								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Health:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_RED, ChatColor.GRAY, player.getHealth(), player.getMaxHealth()) + ChatColor.RED + "]"
+								+ " (" + player.getHealth() + "/" + player.getMaxHealth() + ")"));
+			
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Mana:", 
+					 			ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_BLUE, ChatColor.GRAY, player.getMana(), player.getMaxMana()) + ChatColor.RED + "]"
+								+ " (" + player.getMana() + "/" + player.getMaxMana() + ")"));
 						
-			sender.sendMessage(CommandManager.getDark() + "Hunger: " 
-								+ ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
-								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")");
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Hunger:",
+								ChatColor.RED + "[" + StringUtil.createBar(50, ChatColor.DARK_GREEN, ChatColor.GRAY, player.getFoodLevel(), player.getMaxFoodLevel()) + ChatColor.RED + "]"
+								+ " (" + player.getFoodLevel() + "/" + player.getMaxFoodLevel() + ")"));
 			
-			sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
-			
+			sender.sendMessage(String.format("%-13s %s", CommandManager.getDark() + "Speed:", ChatColor.RESET + "" + player.getSpeed() + "/0.2"));
+
 			sender.sendMessage(CommandManager.getExtra() + "---------------------------------------------------");
 		} else {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this command!");
@@ -241,7 +227,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "speed" }, desc = "View your current speed.", permission = Permission.COMMAND_SPEED, console = false)
 	public void onSpeedCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Speed" + CommandManager.getExtra() + " ].___________________");
 		sender.sendMessage(CommandManager.getDark() + "Speed: " + ChatColor.RESET + player.getSpeed() + "/0.2");
@@ -251,7 +237,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "mana" }, desc = "View your current mana.", permission = Permission.COMMAND_MANA, console = false)
 	public void onManaCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Mana" + CommandManager.getExtra() + " ].___________________");
 		sender.sendMessage(CommandManager.getDark() + "Mana: " 
@@ -262,7 +248,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "health" }, desc = "View your current health.", permission = Permission.COMMAND_HEALTH, console = false)
 	public void onHealthCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Health" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Health: "
@@ -273,7 +259,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "hunger", "food" }, desc = "View your current health.", permission = Permission.COMMAND_HUNGER, console = false)
 	public void onHungerCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Hunger" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Hunger: " 
@@ -284,7 +270,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "level" }, desc = "View your current level.", permission = Permission.COMMAND_LEVEL, console = false)
 	public void onLevelCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Player Level" + CommandManager.getExtra() + " ].___________________");		
 		sender.sendMessage(CommandManager.getDark() + "Level: " + ChatColor.RESET + player.getLevel() + "/" + player.getPlayerClass().getMaxLevel());
@@ -301,14 +287,14 @@ public class PluginCommands {
 			return;
 		}
 		
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Powers" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 1) {
-			targetClass = SNClasses.i.getBestClass(args[0]);
+			targetClass = SNClasses.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {
@@ -357,14 +343,14 @@ public class PluginCommands {
 			return;
 		}
 		
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Abilities" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 1) {
-			targetClass = SNClasses.i.getBestClass(args[0]);
+			targetClass = SNClasses.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {
@@ -403,14 +389,14 @@ public class PluginCommands {
 	
 	@BaseCommand(aliases = { "specs" }, desc = "View specifications for a class!", usage = "[Class]", permission = Permission.COMMAND_SPECS, console = false, min = 0, max = 1)
 	public void onSpecsCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		sender.sendMessage(CommandManager.getExtra() + "___________________.[ " + CommandManager.getHighlight() + "Class Specs" + CommandManager.getExtra() + " ].___________________");		
 		
 		SNClass targetClass = player.getPlayerClass();
 		
 		if(args.length == 1) {
-			targetClass = SNClasses.i.getBestClass(args[0]);
+			targetClass = SNClasses.getBestClass(args[0]);
 		}
 		
 		if(targetClass == null) {
@@ -477,7 +463,7 @@ public class PluginCommands {
 	public void onClassesCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		sender.sendMessage(CommandManager.getExtra() + "__________________.[ " + CommandManager.getHighlight() + "Player Classes" + CommandManager.getExtra() + " ].__________________");		
 		
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		if(player.getPlayerClass().getParentClass() != null)
 			sender.sendMessage(CommandManager.getDark() + "Parent Class: " + ChatColor.RESET + player.getPlayerClass().getParentClass().getColor() + player.getPlayerClass().getParentClass().getName());
@@ -517,8 +503,8 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "evolve", "convert" }, desc = "Evolve to another class.", usage = "<Class>", permission = Permission.COMMAND_EVOLVE, console = false, min = 1, max = 1)
 	public void onEvoloveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
-		SNClass targetClass = SNClasses.i.getBestClass(args[0]);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
+		SNClass targetClass = SNClasses.getBestClass(args[0]);
 
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class was not found!");
@@ -541,6 +527,7 @@ public class PluginCommands {
 
 		player.setPlayerClass(targetClass, true);
 		player.setExperience(0);
+		player.save();
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
@@ -553,7 +540,7 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "devolve" }, desc = "Devolve to your parent race.", permission = Permission.COMMAND_DEVOLVE, console = false)
 	public void onDevolveCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		SNClass lastClass = player.getPlayerClass();
 		SNClass targetClass = player.getPlayerClass().getParentClass();
@@ -568,6 +555,8 @@ public class PluginCommands {
 
 		player.setPlayerClass(targetClass, false);
 		player.setLevel(level - amount >= 1 ? level - amount : 1);
+		player.setMana(0);
+		player.save();
 
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
@@ -580,19 +569,21 @@ public class PluginCommands {
 
 	@BaseCommand(aliases = { "verbose" }, desc = "Toggle verbose messages.", permission = Permission.COMMAND_VERBOSE, console = false)
 	public void onVerboseCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		player.setVerbose(!(player.isVerbose()));
+		player.save();
 
 		sender.sendMessage(ChatColor.GREEN + "Verbose messaging is now " + (player.isVerbose() ? ChatColor.GREEN : ChatColor.RED) + (player.isVerbose() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
 	}
 	
 	@BaseCommand(aliases = { "gui" }, desc = "Toggle the gui.", permission = Permission.COMMAND_GUI, console = false)
 	public void onGuiCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		player.setUsingGUI(!(player.isUsingGUI()));
 		player.updateGUI();
+		player.save();
 
 		sender.sendMessage(ChatColor.GREEN + "The GUI is now " + (player.isUsingGUI() ? ChatColor.GREEN : ChatColor.RED) + (player.isUsingGUI() ? "enabled" : "disabled") + ChatColor.GREEN + "!");
 	}
@@ -600,13 +591,14 @@ public class PluginCommands {
 	
 	@BaseCommand(aliases = { "reset" }, desc = "Reset all your data. DANGEROUS!", permission = Permission.COMMAND_RESET, console = false)
 	public void onResetCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.get((Player) sender);
+		SNPlayer player = SNPlayer.getPlayer((Player) sender);
 
 		SNClass targetClass = new Human();
 
 		player.setPlayerClass(targetClass, true);
 		player.setExperience(0);
-
+		player.save();
+		
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());

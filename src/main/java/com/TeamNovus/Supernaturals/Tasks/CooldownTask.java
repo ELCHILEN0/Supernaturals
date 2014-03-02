@@ -1,23 +1,19 @@
 package com.TeamNovus.Supernaturals.Tasks;
 
-import java.util.Iterator;
-
-import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
 import com.TeamNovus.Supernaturals.Player.Statistics.Cooldown;
 
 public class CooldownTask implements Runnable {
 
 	public void run() {
-		for(SNPlayer p : SNPlayers.i.getOnlinePlayers()) {
-			Iterator<Cooldown> iterator = p.getCooldowns().iterator();
-			while(iterator.hasNext()) {
-				Cooldown cooldown = iterator.next();
+		for(SNPlayer p : SNPlayer.getOnlinePlayers()) {			
+			for (Cooldown cooldown : p.getCooldowns()) {
+				cooldown.setRemaining(cooldown.getRemaining() - 1);
+				cooldown.save();
 				
-				cooldown.setRemainingTicks(cooldown.getRemainingTicks() - 1);
-				
-				if(cooldown.getRemainingTicks() <= 0) {
-					iterator.remove();
+				// If there is nothing left in the cooldown we can delete it...
+				if(cooldown.getRemaining() <= 0) {
+					cooldown.delete();
 					
 					// TODO: Power Refresh Event
 				}

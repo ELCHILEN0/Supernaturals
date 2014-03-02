@@ -25,10 +25,9 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import com.TeamNovus.Supernaturals.SNEntities;
-import com.TeamNovus.Supernaturals.SNPlayers;
 import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Entity.SNEntity;
 import com.TeamNovus.Supernaturals.Events.EntityDamageByEntityProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityByProjectileEvent;
 import com.TeamNovus.Supernaturals.Events.EntityDamageEntityEvent;
@@ -38,6 +37,7 @@ import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTickEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectTriggerEvent;
 import com.TeamNovus.Supernaturals.Events.PlayerManaChangeEvent;
+import com.TeamNovus.Supernaturals.Player.SNPlayer;
 
 public class EffectListener implements Listener {
 
@@ -92,7 +92,6 @@ public class EffectListener implements Listener {
 	@EventHandler
 	public void onEntityDamageEntityByProjectileEvent(EntityDamageEntityByProjectileEvent event) {
 		invokeEvent(event, EntityDamageEntityByProjectileEvent.class);
-        System.out.println("SHOOTING EVENT?");
 	}
 
 	// Start Player Events
@@ -155,19 +154,21 @@ public class EffectListener implements Listener {
 		if (event instanceof EntityEvent) {
 			Entity e = ((EntityEvent) event).getEntity();
 
-			if(e instanceof LivingEntity && SNEntities.i.attached((LivingEntity) e)) {
-				effects.addAll(SNEntities.i.get((LivingEntity) e).getEffects());
+			if(e instanceof LivingEntity && SNEntity.isAttached((LivingEntity) e)) {
+				for (Effect effect : SNEntity.getEntity((LivingEntity) e).getEffects()) {
+					effects.add(effect);
+				}
 			}
 		}
 
         // Add Player Abilities
 		if (event instanceof PlayerEvent) {
-			effects.addAll(SNPlayers.i.get(((PlayerEvent) event).getPlayer()).getAbilities());
+			effects.addAll(SNPlayer.getPlayer(((PlayerEvent) event).getPlayer()).getAbilities());
 		} else if (event instanceof EntityEvent) {
             Entity e = ((EntityEvent) event).getEntity();
 
             if(e instanceof Player) {
-                effects.addAll(SNPlayers.i.get((Player) e).getAbilities());
+                effects.addAll(SNPlayer.getPlayer((Player) e).getAbilities());
             }
         }
 

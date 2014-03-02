@@ -9,17 +9,8 @@ public abstract class EffectType {
 	public static List<EffectType> types = new ArrayList<EffectType>();
 
 	/*
-	Resistance
-Weakness
-Strength
-Speed
-Slowness
-Sneak
-Invisibility
 Confusion
-Invulnerability
 Hunger
-Metabolism
 Regen
 Bleed
 Mana Regen
@@ -27,33 +18,33 @@ Mana Drain
 Night Vision
 Scare
 Target
-Swiftness
-Counterattack
 Water Breathe
 Water Walk
 Jumping
 Fire Resistance
 Phoenix Rise
 Blind Attacker
-Poison Arrows
-Blind Arrows
 	 */
 	
 	// Effects:
-	public static final EffectType RESISTANCE 	= new Resistance();
-	public static final EffectType WEAKNESS 	= new Weakness();
+	public static final EffectType BARRAGE 		= new Barrage();
 	public static final EffectType STRENGTH 	= new Strength();
-	public static final EffectType SPEED 		= new Speed();
-	public static final EffectType SLOWNESS 	= new Slowness();
-	public static final EffectType SNEAK 		= new Sneak();
+	public static final EffectType CRITICAL		= new Critical();
+	
+    public static final EffectType BLOCK		= new Block();
 	public static final EffectType EVASION 		= new Evasion();
+	public static final EffectType RESISTANCE 	= new Resistance();
+
 	public static final EffectType POISON_ARROW 	= new PoisonArrow();
 	public static final EffectType BLINDING_ARROW	= new BlindingArrow();
+	
+	public static final EffectType SNEAK 		= new Sneak();
 	public static final EffectType INVISIBILITY = new Invisibility();
-	public static final EffectType CRITICAL		= new Critical();
-	public static final EffectType CONFUSION	= new Confusion();
-    public static final EffectType REVIVE		= new Revive();
-    public static final EffectType SHIELD		= new Shield();
+	
+	public static final EffectType METABOLISM 	= new Metabolism();
+	public static final EffectType SPEED 		= new Speed();
+	
+    public static final EffectType SECOND_WIND	= new SecondWind();
 
 	private Integer id;
 	

@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 
 import com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Necromancer;
 import com.TeamNovus.Supernaturals.Classes.Mage.Classes.Wizard.Wizard;
-import com.TeamNovus.Supernaturals.Classes.Mage.Powers.Confuse;
 import com.TeamNovus.Supernaturals.Classes.Mage.Powers.Freeze;
 import com.TeamNovus.Supernaturals.Classes.Mage.Powers.Leech;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
@@ -43,15 +42,11 @@ public class Mage extends SNClass {
 		
 		addJoinableClass(25, new Wizard(this));
 		addJoinableClass(25, new Necromancer(this));
-		
-		addPower(1, new Freeze("Freeze", "Encase your enemies in a ball of ice!", 20 * 60, new Reagent(30), new Reagent(30)).setRange(50).setRadius(3).setDuration(20 * 5));
-		addPower(1, new Confuse("Confuse", "Disorient your enemies!", 20 * 30, new Reagent(15), new Reagent(15)).setRange(50).setDuration(20 * 5));
-		addPower(1, new Leech("Leech", "Steal health from your enemies!", 20 * 30, new Reagent(20), new Reagent(20)).setRange(50).setAmount(4));
-		
-		addAbility(5, new Ability(EffectType.SHIELD, "Shield", "Small chance to rise from the ashes!", 6));
-		addAbility(25, new Ability(EffectType.REVIVE, "Phoenix Rise", "Small chance to rise from the ashes!", 3));
-		// Freeze, Leech, Meditate
-		// Shield, Phoenix
+				
+//		addAbility(15, new Ability(EffectType.SHIELD, "Shield", "Small chance to take no damage from attacks!", 6));
+		addPower(20, new Freeze("Freeze", "Temporarily encase your enemies in ice!", 60, new Reagent(30), new Reagent(30)).setRange(50).setRadius(3).setDuration(5));
+		addPower(30, new Leech("Drain", "Damage your enemies and heal yourself!", 30, new Reagent(20), new Reagent(20)).setRange(50).setAmount(5));
+
 	}
 	
 }

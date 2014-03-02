@@ -3,26 +3,28 @@ package com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectTypeListener;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Util.ParticleEffectUtils;
 
-public class Revive extends EffectType {
+public class SecondWind extends EffectType {
 
 	public void onEffectBegin(EntityEffectBeginEvent event) {
 		if(event.getEntity() instanceof Player) {
-			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 			
-			player.sendMessage(ChatColor.GREEN + "You gain the ability to occasionaly revive yourself!");
+			player.sendMessage(ChatColor.GREEN + "You can get a second wind!");
 		}
 	}
 	
@@ -35,13 +37,16 @@ public class Revive extends EffectType {
 				if(new Random().nextInt(101) <= effect.getAmplifier()) {
 					event.setCancelled(true);
 					entity.setHealth(2 * effect.getAmplifier());
-					effect.end();
 					
 					if(entity instanceof Player) {
-						SNPlayer player = SNPlayers.i.get((Player) entity);
+						SNPlayer player = SNPlayer.getPlayer((Player) entity);
 						
-						player.sendMessage(ChatColor.GREEN + "You have risen from the dead!");
+						player.sendMessage(ChatColor.GREEN + "**Second Wind**");
 					}
+					
+					ParticleEffectUtils.fireworkParticleShower(entity.getLocation(), Color.GREEN);
+					
+					effect.end();
 				}
 			}
 		}
@@ -49,9 +54,9 @@ public class Revive extends EffectType {
 	
 	public void onEffectExpire(EntityEffectExpireEvent event) {
 		if(event.getEntity() instanceof Player) {
-			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 			
-			player.sendMessage(ChatColor.RED + "You no longer have the ability to revive yourself!");				
+			player.sendMessage(ChatColor.RED + "You can no longer get a second wind!");				
 		}
 	}
 

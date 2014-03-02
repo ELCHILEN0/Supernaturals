@@ -18,6 +18,10 @@ public abstract class Power {
 		this.consume = consume;
 	}
 	
+	public Power(String name, String desc, Integer cooldown, Reagent reagent) {
+		this(name, desc, cooldown, reagent, reagent);
+	}
+	
 	public String getName() {
 		return name;
 	}

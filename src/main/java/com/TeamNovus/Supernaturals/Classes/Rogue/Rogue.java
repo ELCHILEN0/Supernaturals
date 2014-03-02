@@ -41,9 +41,9 @@ public class Rogue extends SNClass {
 		setMaxMana(25, 45);
 		setMaxMana(30, 50);
 		
-		addPower(1, new Sneak("Sneak", "Hide your nametag from enemies for 30 seconds.", 20 * 30, new Reagent(15), new Reagent(15)).setDuration(20 * 30));
-		addPower(10, new Lunge("Lunge", "Lunge to a far away location!", 20 * 10, new Reagent(10), new Reagent(10)).setMaxDistance(50));
-		addPower(30, new Quicken("Quicken", "Temporarily give yourself a speed booost!", 20 * 60, new Reagent(20), new Reagent(20)).setDuration(20 * 30).setAmplifier(2));
+		addPower(1, new Sneak("Sneak", "Hide your nametag from enemies for 30 seconds.", 30, new Reagent(15), new Reagent(15)).setDuration(30));
+		addPower(10, new Lunge("Lunge", "Lunge to a far away location!", 10, new Reagent(10), new Reagent(10)).setMaxDistance(50));
+		addPower(30, new Quicken("Quicken", "Temporarily give yourself a speed booost!", 60, new Reagent(20), new Reagent(20)).setDuration(30).setAmplifier(2));
 		
 		addAbility(5, new Ability(EffectType.EVASION, "Evade", "Occasionally evade your enemies blows!", 3));
 		addAbility(25, new Ability(EffectType.POISON_ARROW, "Poison Arrow", "Dip your arrows in poison occasionally poisioning your enemies!", 5));

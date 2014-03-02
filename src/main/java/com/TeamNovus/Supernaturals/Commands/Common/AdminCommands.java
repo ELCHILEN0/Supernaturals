@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import com.TeamNovus.Supernaturals.Permission;
 import com.TeamNovus.Supernaturals.SNClasses;
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Classes.Human;
 import com.TeamNovus.Supernaturals.Commands.BaseCommand;
 import com.TeamNovus.Supernaturals.Player.SNClass;
@@ -23,7 +23,7 @@ public class AdminCommands {
 			return;
 		}
 		
-		SNPlayer player = SNPlayers.i.getPlayer(args[1]);
+		SNPlayer player = SNPlayer.getPlayer(args[1]);
 		
 		if(player == null) {
 			sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
@@ -53,6 +53,8 @@ public class AdminCommands {
 			player.sendMessage(ChatColor.GREEN + "Your mana has been set to " + ChatColor.YELLOW + "" + mana + ChatColor.GREEN + " mana.");
 			sender.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + "'s mana has been reset to " + ChatColor.YELLOW + mana + ChatColor.GREEN +" mana!"); 
 		}
+		
+		player.save();
 	}
 	
 	@BaseCommand(aliases = { "modexp" }, desc = "Change a players exp.", permission = Permission.COMMAND_MODEXP, usage = "<Give/Take/Reset> <Player> <Exp>", min = 3, max = 3)
@@ -62,7 +64,7 @@ public class AdminCommands {
 			return;
 		}
 		
-		SNPlayer player = SNPlayers.i.getPlayer(args[1]);
+		SNPlayer player = SNPlayer.getPlayer(args[1]);
 		
 		if(player == null) {
 			sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
@@ -92,18 +94,20 @@ public class AdminCommands {
 			player.sendMessage(ChatColor.GREEN + "Your exp has been set to " + ChatColor.YELLOW + "" + exp + ChatColor.GREEN + " exp.");
 			sender.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + "'s exp has been reset to " + ChatColor.YELLOW + exp + ChatColor.GREEN +" exp!"); 
 		}
+		
+		player.save();
 	}
 	
 	@BaseCommand(aliases = { "modclass" }, desc = "Change a players class.", permission = Permission.COMMAND_MODCLASS, usage = "<Player> <Class>", min = 2, max = 2)
 	public void onModClassCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		SNPlayer player = SNPlayers.i.getPlayer(args[0]);
+		SNPlayer player = SNPlayer.getPlayer(args[0]);
 		
 		if(player == null) {
 			sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
 			return;
 		}
 
-		SNClass targetClass = SNClasses.i.getBestClass(args[1]);
+		SNClass targetClass = SNClasses.getBestClass(args[1]);
 		
 		if(targetClass == null) {
 			sender.sendMessage(ChatColor.RED + "The specified class does not exist!");
@@ -111,6 +115,8 @@ public class AdminCommands {
 		}
 		
 		player.setPlayerClass(targetClass, true);
+		player.save();
+
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());
@@ -127,7 +133,7 @@ public class AdminCommands {
 			return;
 		}
 		
-		SNPlayer player = SNPlayers.i.getPlayer(args[0]);
+		SNPlayer player = SNPlayer.getPlayer(args[0]);
 		
 		if(player == null) {
 			sender.sendMessage(ChatColor.RED + "The specified player could not be found!");
@@ -137,6 +143,8 @@ public class AdminCommands {
 		SNClass targetClass = new Human();
 		
 		player.setPlayerClass(targetClass, true);
+		player.save();
+		
 		if(StringUtil.startsWithVowel(targetClass.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You are now an " + targetClass.getColor() + targetClass.getName());
 			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " is now an " + targetClass.getColor() + targetClass.getName());

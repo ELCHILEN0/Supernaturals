@@ -1,4 +1,4 @@
-package com.TeamNovus.Supernaturals.Classes.Mage.Powers;
+package com.TeamNovus.Supernaturals.Classes.Mage.Classes.Necromancer.Powers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +18,10 @@ public class Leech extends Power {
 		
 		range = 256;
 		amount = 4;
+	}
+	
+	public Leech(String name, String desc, Integer cooldown, Reagent reagent) {
+		this(name, desc, cooldown, reagent, reagent);
 	}
 	
 	public Leech setRange(int range) {

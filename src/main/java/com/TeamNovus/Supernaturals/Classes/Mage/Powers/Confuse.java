@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
 import com.TeamNovus.Supernaturals.Models.Reagent;
@@ -19,7 +19,7 @@ public class Confuse extends Power {
 		super(name, desc, cooldown, required, consume);
 		
 		range = 256;
-		duration = 20 * 5;
+		duration = 5;
 	}
 	
 	public Confuse setRange(int range) {
@@ -39,7 +39,7 @@ public class Confuse extends Power {
 		LivingEntity t = player.getTargetEntity(range);
 		
 		if(t != null && t instanceof Player) {
-			SNPlayer target = SNPlayers.i.get((Player) t);
+			SNPlayer target = SNPlayer.getPlayer((Player) t);
 			target.getEntity().addEffect(new Effect(EffectType.CONFUSION, duration, 3));
 			
 			player.sendMessage(ChatColor.GREEN + "You have confused your enemy!");

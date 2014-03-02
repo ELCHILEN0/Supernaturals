@@ -4,7 +4,12 @@ import org.bukkit.ChatColor;
 
 import com.TeamNovus.Supernaturals.Classes.Barbarian.Classes.Bandit.Bandit;
 import com.TeamNovus.Supernaturals.Classes.Barbarian.Classes.Brute.Brute;
+import com.TeamNovus.Supernaturals.Classes.Barbarian.Powers.Mar;
+import com.TeamNovus.Supernaturals.Classes.Barbarian.Powers.Quicken;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
+import com.TeamNovus.Supernaturals.Models.Reagent;
 import com.TeamNovus.Supernaturals.Player.SNClass;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
 
 public class Barbarian extends SNClass {
 
@@ -37,6 +42,10 @@ public class Barbarian extends SNClass {
 		
 		addJoinableClass(25, new Brute(this));
 		addJoinableClass(25, new Bandit(this));
+		
+		addPower(15, new Mar("Mar", "Damage your oponents armor.", 120, new Reagent(15)).setRange(15).setDamage(20));
+		addPower(20, new Quicken("Quicken", "Temporarily increase your speed.", 60, new Reagent(15)).setAmplifier(2).setDuration(15 * 20));
+		addAbility(30, new Ability(EffectType.BARRAGE, "Tripple Strike", "Small chance to strike three times per attack.", 3));
 	}
 
 }

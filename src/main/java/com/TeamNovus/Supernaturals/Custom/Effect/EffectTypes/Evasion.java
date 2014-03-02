@@ -3,24 +3,25 @@ package com.TeamNovus.Supernaturals.Custom.Effect.EffectTypes;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import com.TeamNovus.Supernaturals.SNPlayers;
+
 import com.TeamNovus.Supernaturals.Custom.Effect.Effect;
 import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
 import com.TeamNovus.Supernaturals.Events.EntityEffectBeginEvent;
 import com.TeamNovus.Supernaturals.Events.EntityEffectExpireEvent;
 import com.TeamNovus.Supernaturals.Player.SNPlayer;
+import com.TeamNovus.Supernaturals.Util.ParticleEffectUtils;
 
 public class Evasion extends EffectType {
 	public void onEffectBegin(EntityEffectBeginEvent event) {
 		if(event.getEntity() instanceof Player) {
-			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 			
-			player.getPlayer().setSneaking(true);
-			player.sendMessage(ChatColor.GREEN + "You gain energy to evade attacks!");
+			player.sendMessage(ChatColor.GREEN + "You can now evade attacks!");
 		}
 	}
 	
@@ -29,32 +30,29 @@ public class Evasion extends EffectType {
 			event.setCancelled(true);
 		
 			if(event.getEntity() instanceof Player) {
-				SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+				SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 				
-				player.getPlayer().setSneaking(true);
-				player.sendMessage(ChatColor.GREEN + "Evaded!");
+				player.sendMessage(ChatColor.GREEN + "**Evaded**");
+				ParticleEffectUtils.fireworkParticleShower(player.getPlayer().getLocation(), Color.GREEN);
 			} 
 			
 			if(event.getDamager() instanceof Player) {
-				SNPlayer player = SNPlayers.i.get((Player) event.getDamager());
+				SNPlayer player = SNPlayer.getPlayer((Player) event.getDamager());
 				
-				player.getPlayer().setSneaking(true);
-				player.sendMessage(ChatColor.GREEN + "Your enemy evaded your blow!");
+				player.sendMessage(ChatColor.RED + "**Enemy Evaded**");
 			} else if(event.getDamager() instanceof Projectile) {
-				SNPlayer player = SNPlayers.i.get((Player) ((Projectile) event.getDamager()).getShooter());
+				SNPlayer player = SNPlayer.getPlayer((Player) ((Projectile) event.getDamager()).getShooter());
 				
-				player.getPlayer().setSneaking(true);
-				player.sendMessage(ChatColor.GREEN + "Your enemy evaded your shot!");
+				player.sendMessage(ChatColor.RED + "**Enemy Evaded**");
 			}
 		}		
 	}
 
 	public void onEffectExpire(EntityEffectExpireEvent event) {
 		if(event.getEntity() instanceof Player) {
-			SNPlayer player = SNPlayers.i.get((Player) event.getEntity());
+			SNPlayer player = SNPlayer.getPlayer((Player) event.getEntity());
 			
-			player.getPlayer().setSneaking(true);
-			player.sendMessage(ChatColor.RED + "You are to tired to evade enemies blows!");				
+			player.sendMessage(ChatColor.RED + "You can no longer evade attacks!");				
 		}
 	}
 }

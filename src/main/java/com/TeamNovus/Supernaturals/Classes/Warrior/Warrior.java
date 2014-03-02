@@ -4,7 +4,9 @@ import org.bukkit.ChatColor;
 
 import com.TeamNovus.Supernaturals.Classes.Warrior.Classes.Knight.Knight;
 import com.TeamNovus.Supernaturals.Classes.Warrior.Classes.Lancer.Lancer;
+import com.TeamNovus.Supernaturals.Custom.Effect.EffectType;
 import com.TeamNovus.Supernaturals.Player.SNClass;
+import com.TeamNovus.Supernaturals.Player.Class.Ability;
 
 public class Warrior extends SNClass {
 
@@ -37,6 +39,8 @@ public class Warrior extends SNClass {
 		
 		addJoinableClass(25, new Knight(this));
 		addJoinableClass(25, new Lancer(this));
+		
+		addAbility(5, new Ability(EffectType.CRITICAL, "Strong Hits", "Occasionally deal massive damage!", 3));
 	}
 	
 }
